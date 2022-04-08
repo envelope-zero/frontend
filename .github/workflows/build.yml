@@ -1,16 +1,16 @@
-name: pre-commit
+name: Build
 
-on:
-  pull_request:
-  push:
-    branches:
-      - main
+on: push
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  pre-commit:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.0.0
+      - uses: actions/checkout@v3
       - name: Cache dependencies
         uses: actions/setup-node@v2
         with:
@@ -18,4 +18,5 @@ jobs:
           cache: 'npm'
       - name: install node modules
         run: npm install
-      - uses: pre-commit/action@v2.0.3
+      - name: build
+        run: npm run build
