@@ -5,7 +5,7 @@ repos:
     hooks:
       - id: commitlint
         stages: [commit-msg]
-        additional_dependencies: ["@commitlint/config-conventional"]
+        additional_dependencies: ['@commitlint/config-conventional']
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.6.2
@@ -14,6 +14,6 @@ repos:
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: 'v8.12.0'
     hooks:
-    - id: eslint
-      files: \.[jt]sx?$  # *.js, *.jsx, *.ts and *.tsx
-      types: [file]
+      - id: eslint
+        files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
+        types: [file]
