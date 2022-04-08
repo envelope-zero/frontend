@@ -11,4 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.0.0
+      - name: Cache dependencies
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - name: install node modules
+        run: npm install
       - uses: pre-commit/action@v2.0.3
