@@ -1,0 +1,13 @@
+{
+  "navigation": {
+    "closeSidebar": "Close Sidebar",
+    "openSidebar": "Open Sidebar",
+    "switchBudget": "Switch Budget",
+    "home": "Home",
+    "envelopes": "Envelopes",
+    "transactions": "Transactions",
+    "accounts": "Accounts",
+    "settings": "Settings",
+    "bugReport": "Bug Report"
+  }
+}

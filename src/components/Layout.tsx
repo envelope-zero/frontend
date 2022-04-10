@@ -13,21 +13,28 @@ import {
   ChevronRightIcon,
   ExclamationIcon,
 } from '@heroicons/react/outline'
-
-const navigation = [
-  { name: 'Home', href: '/', icon: HomeIcon },
-  { name: 'Envelopes', href: 'envelopes', icon: MailIcon },
-  { name: 'Transactions', href: 'transactions', icon: SwitchHorizontalIcon },
-  { name: 'Accounts', href: 'accounts', icon: CashIcon },
-  { name: 'Settings', href: 'settings', icon: CogIcon },
-]
+import { useTranslation } from 'react-i18next'
+import { Translation } from '../types'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Layout = () => {
+  const { t }: Translation = useTranslation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const navigation = [
+    { name: t('navigation.home'), href: '/', icon: HomeIcon },
+    { name: t('navigation.envelopes'), href: 'envelopes', icon: MailIcon },
+    {
+      name: t('navigation.transactions'),
+      href: 'transactions',
+      icon: SwitchHorizontalIcon,
+    },
+    { name: t('navigation.accounts'), href: 'accounts', icon: CashIcon },
+    { name: t('navigation.settings'), href: 'settings', icon: CogIcon },
+  ]
 
   return (
     <div>
@@ -74,7 +81,9 @@ const Layout = () => {
                     className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none"
                     onClick={() => setSidebarOpen(false)}
                   >
-                    <span className="sr-only">Close sidebar</span>
+                    <span className="sr-only">
+                      {t('navigation.closeSidebar')}
+                    </span>
                     <XIcon
                       className="h-6 w-6 text-red-800"
                       aria-hidden="true"
@@ -92,7 +101,7 @@ const Layout = () => {
                         to="budgets"
                         onClick={() => setSidebarOpen(false)}
                       >
-                        Switch Budget
+                        {t('navigation.switchBudget')}
                       </Link>
                     </div>
                   </div>
@@ -141,7 +150,7 @@ const Layout = () => {
                   to="https://github.com/envelope-zero/frontend/issues/new?labels=bug&template=bug_report.md"
                 >
                   <ExclamationIcon className="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" />{' '}
-                  Bug Report
+                  {t('navigation.bugReport')}
                 </Link>
               </div>
             </div>
@@ -165,7 +174,7 @@ const Layout = () => {
                     to="budgets"
                     onClick={() => setSidebarOpen(false)}
                   >
-                    Switch Budget
+                    {t('navigation.switchBudget')}
                   </Link>
                 </div>
               </div>
@@ -208,7 +217,7 @@ const Layout = () => {
               rel="noreferrer"
             >
               <ExclamationIcon className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" />{' '}
-              Bug Report
+              {t('navgiation.bugReport')}
             </a>
           </div>
         </div>
@@ -222,7 +231,7 @@ const Layout = () => {
               setSidebarOpen(true)
             }}
           >
-            <span className="sr-only">Open sidebar</span>
+            <span className="sr-only">{t('navigation.openSidebar')}</span>
             <MenuIcon className="h-6 w-6 text-red-800" aria-hidden="true" />
           </button>
         </div>
