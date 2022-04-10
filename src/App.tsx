@@ -8,6 +8,7 @@ import './App.css'
 import Dashboard from './components/Dashboard'
 import Budgets from './components/Budgets'
 import Layout from './components/Layout'
+import './i18n'
 
 const App = () => {
   return (
