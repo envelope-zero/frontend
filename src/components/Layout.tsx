@@ -217,7 +217,7 @@ const Layout = () => {
               rel="noreferrer"
             >
               <ExclamationIcon className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" />{' '}
-              {t('navgiation.bugReport')}
+              {t('navigation.bugReport')}
             </a>
           </div>
         </div>
