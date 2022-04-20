@@ -7,5 +7,12 @@
   "labels": ["renovate"],
   "rangeStrategy": "pin",
   "rebaseWhen": "behind-base-branch",
-  "semanticCommits": "enabled"
+  "semanticCommits": "enabled",
+  "packageRules": [
+    {
+      "matchManagers": ["npm", "github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    }
+  ]
 }
