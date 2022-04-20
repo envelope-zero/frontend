@@ -1,9 +1,15 @@
 import { useTranslation } from 'react-i18next'
 
-const Home = () => {
+type DashboardProps = { budgetId: number }
+
+const Home = ({ budgetId }: DashboardProps) => {
   const { t } = useTranslation()
 
-  return <>{t('TODO')}</>
+  return (
+    <>
+      <h1>{budgetId}</h1>
+    </>
+  )
 }
 
 export default Home
