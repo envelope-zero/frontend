@@ -2,8 +2,10 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Translation, Budget } from '../types'
+import { PencilIcon } from '@heroicons/react/solid'
 import cookie from '../lib/cookie'
 import getBudgets from '../lib/getBudgets'
+import { formatMoney } from '../lib/format'
 
 type BudgetSwitchProps = {
   setBudgetId: (id: string) => void
@@ -33,21 +35,42 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
 
   return (
     <>
+      <h1 className="header">{t('budgets.budgets')}</h1>
       {isLoading ? (
         <div>loading...</div>
       ) : (
-        budgets.map(budget => (
-          <div key={budget.id}>
-            <Link
-              to="/"
-              onClick={() => {
-                setBudgetId(budget.id.toString())
-              }}
+        <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6">
+          {budgets.map(budget => (
+            <li
+              key={budget.id}
+              className="col-span-1 flex shadow-sm rounded-md bg-gray-100 hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
             >
-              {budget.name || `Budget ${budget.id}`}
-            </Link>
-          </div>
-        ))
+              <Link
+                to="/"
+                className="w-full text-center"
+                onClick={() => {
+                  setBudgetId(budget.id.toString())
+                }}
+              >
+                <h3>{budget.name || `${t('budgets.budget')} ${budget.id}`}</h3>
+                {budget.note ? (
+                  <p className="text-sm text-gray-500">{budget.note}</p>
+                ) : null}
+                <div className="text-lime-600 mt-2 text-lg">
+                  <strong>{formatMoney(1337, budget.currency)}</strong>
+                </div>
+              </Link>
+              <div
+                onClick={() => {
+                  console.log('todo')
+                }}
+                title={t('edit')}
+              >
+                <PencilIcon className="icon" />
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
     </>
   )

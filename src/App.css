@@ -7,3 +7,23 @@
     @apply text-red-800;
   }
 }
+
+h1 {
+  @apply text-xl leading-6 font-black text-gray-900 tracking-wide;
+}
+
+h3 {
+  @apply text-lg leading-6 font-medium text-gray-900;
+}
+
+.header {
+  @apply w-full absolute top-[1.625rem] left-0 md:relative md:top-0 flex justify-center;
+}
+
+.header .header--action {
+  @apply absolute right-6 md:right-0 text-red-800;
+}
+
+.icon {
+  @apply text-red-800 h-6 w-6;
+}

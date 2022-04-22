@@ -1,4 +1,5 @@
 {
+  "edit": "Edit",
   "navigation": {
     "closeSidebar": "Close Sidebar",
     "openSidebar": "Open Sidebar",
@@ -9,5 +10,9 @@
     "accounts": "Accounts",
     "settings": "Settings",
     "bugReport": "Bug Report"
+  },
+  "budgets": {
+    "budgets": "Budgets",
+    "budget": "Budget"
   }
 }

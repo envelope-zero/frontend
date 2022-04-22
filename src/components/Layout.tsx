@@ -84,10 +84,7 @@ const Layout = () => {
                     <span className="sr-only">
                       {t('navigation.closeSidebar')}
                     </span>
-                    <XIcon
-                      className="h-6 w-6 text-red-800"
-                      aria-hidden="true"
-                    />
+                    <XIcon className="icon" aria-hidden="true" />
                   </button>
                 </div>
               </Transition.Child>
@@ -135,7 +132,7 @@ const Layout = () => {
                               {item.name}
                             </div>
                             {isActive ? (
-                              <ChevronLeftIcon className="text-red-800 h-6 w-6" />
+                              <ChevronLeftIcon className="icon" />
                             ) : (
                               <ChevronRightIcon className="text-gray-400 group-hover:text-gray-500 h-6 w-6" />
                             )}
@@ -225,21 +222,21 @@ const Layout = () => {
         </div>
       </div>
       <div className="md:pl-64 flex flex-col flex-1">
-        <div className="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-white">
+        <div className="sticky top-0 z-10 md:hidden px-6 pt-4">
           <button
             type="button"
-            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-800"
+            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center rounded-md text-gray-500 hover:text-gray-900"
             onClick={() => {
               setSidebarOpen(true)
             }}
           >
             <span className="sr-only">{t('navigation.openSidebar')}</span>
-            <MenuIcon className="h-6 w-6 text-red-800" aria-hidden="true" />
+            <MenuIcon className="icon" aria-hidden="true" />
           </button>
         </div>
         <main className="flex-1">
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="py-4 md:py-6">
+            <div className="max-w-7xl mx-auto px-6 md:px-8">
               <Outlet />
             </div>
           </div>
