@@ -6,6 +6,7 @@ import { PencilIcon } from '@heroicons/react/solid'
 import cookie from '../lib/cookie'
 import getBudgets from '../lib/getBudgets'
 import { formatMoney } from '../lib/format'
+import LoadingSpinner from './LoadingSpinner'
 
 type BudgetSwitchProps = {
   setBudgetId: (id: string) => void
@@ -37,7 +38,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
     <>
       <h1 className="header">{t('budgets.budgets')}</h1>
       {isLoading ? (
-        <div>loading...</div>
+        <LoadingSpinner />
       ) : (
         <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6">
           {budgets.map(budget => (
