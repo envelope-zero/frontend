@@ -9,6 +9,7 @@ import './App.css'
 import Dashboard from './components/Dashboard'
 import BudgetSwitch from './components/BudgetSwitch'
 import Layout from './components/Layout'
+import BudgetForm from './components/BudgetForm'
 import cookie from './lib/cookie'
 import './i18n'
 
@@ -33,6 +34,8 @@ const App = () => {
             path="budgets"
             element={<BudgetSwitch setBudgetId={setBudgetId} />}
           />
+          <Route path="budgets/new" element={<BudgetForm />} />
+          <Route path="budgets/:budgetId" element={<BudgetForm />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

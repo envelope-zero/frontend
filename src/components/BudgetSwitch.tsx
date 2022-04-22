@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Translation, Budget } from '../types'
 import { PencilIcon } from '@heroicons/react/solid'
 import cookie from '../lib/cookie'
-import getBudgets from '../lib/getBudgets'
+import { getBudgets } from '../lib/budgets'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 
@@ -61,14 +61,9 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                   <strong>{formatMoney(1337, budget.currency)}</strong>
                 </div>
               </Link>
-              <div
-                onClick={() => {
-                  console.log('todo')
-                }}
-                title={t('edit')}
-              >
+              <Link to={`/budgets/${budget.id}`} title={t('edit')}>
                 <PencilIcon className="icon" />
-              </div>
+              </Link>
             </li>
           ))}
         </ul>

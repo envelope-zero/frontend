@@ -1,5 +1,6 @@
 {
   "edit": "Edit",
+  "save": "Save",
   "navigation": {
     "closeSidebar": "Close Sidebar",
     "openSidebar": "Open Sidebar",
@@ -13,6 +14,10 @@
   },
   "budgets": {
     "budgets": "Budgets",
-    "budget": "Budget"
+    "budget": "Budget",
+    "name": "Name",
+    "currency": "Currency",
+    "note": "Note",
+    "delete": "Delete Budget"
   }
 }
