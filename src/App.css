@@ -17,13 +17,18 @@ h3 {
 }
 
 .header {
-  @apply w-full absolute top-[1.625rem] left-0 md:relative md:top-0 flex justify-center;
+  @apply fixed top-[1.625rem] left-0 right-0 m-auto text-center md:relative md:top-0 z-10 flex justify-center;
+  width: calc(100% - 9rem);
 }
 
 .header .header--action {
-  @apply absolute right-6 md:right-0 text-red-800;
+  @apply fixed right-6 md:right-0 text-red-800;
 }
 
 .icon {
   @apply text-red-800 h-6 w-6;
+}
+
+.box {
+  @apply shadow-sm rounded-md bg-gray-100;
 }

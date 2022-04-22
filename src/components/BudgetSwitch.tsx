@@ -44,7 +44,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
           {budgets.map(budget => (
             <li
               key={budget.id}
-              className="col-span-1 flex shadow-sm rounded-md bg-gray-100 hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+              className="box col-span-1 flex hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
             >
               <Link
                 to="/"
