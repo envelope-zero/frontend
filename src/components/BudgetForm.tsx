@@ -31,9 +31,7 @@ const BudgetForm = (props: BudgetFormProps) => {
   }
 
   const navigateToDashboard = (selectedBudget: ApiResponse<Budget>) => {
-    if (typeof budgetId === 'undefined') {
-      props.selectBudget(selectedBudget.data)
-    }
+    props.selectBudget(selectedBudget.data)
     navigate('/')
   }
 
