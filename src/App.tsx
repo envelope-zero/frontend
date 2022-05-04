@@ -34,8 +34,14 @@ const App = () => {
             path="budgets"
             element={<BudgetSwitch setBudgetId={setBudgetId} />}
           />
-          <Route path="budgets/new" element={<BudgetForm />} />
-          <Route path="budgets/:budgetId" element={<BudgetForm />} />
+          <Route
+            path="budgets/new"
+            element={<BudgetForm setBudgetId={setBudgetId} />}
+          />
+          <Route
+            path="budgets/:budgetId"
+            element={<BudgetForm setBudgetId={setBudgetId} />}
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

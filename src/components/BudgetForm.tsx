@@ -1,14 +1,20 @@
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Translation, Budget } from '../types'
-import { getBudget } from '../lib/budgets'
+import { Translation, UnpersistedBudget, Budget, ApiResponse } from '../types'
+import { createBudget, getBudget, updateBudget } from '../lib/api/budgets'
+import cookie from '../lib/cookie'
 
-const BudgetForm = () => {
+type BudgetFormProps = {
+  setBudgetId: (id: string) => void
+}
+
+const BudgetForm = (props: BudgetFormProps) => {
   const { t }: Translation = useTranslation()
   const { budgetId } = useParams()
+  const navigate = useNavigate()
 
-  const [budget, setBudget] = useState<Budget>()
+  const [budget, setBudget] = useState<UnpersistedBudget | Budget>()
 
   useEffect(() => {
     if (typeof budgetId !== 'undefined') {
@@ -17,7 +23,19 @@ const BudgetForm = () => {
   }, [budgetId])
 
   const updateValue = (key: keyof Budget, value: any) => {
-    setBudget({ ...(budget || { id: 42 /*TODO*/ }), [key]: value })
+    setBudget({ ...(budget || {}), [key]: value })
+  }
+
+  const navigateToDashboard = (selectedBudget: ApiResponse<Budget>) => {
+    cookie.set('budgetId', selectedBudget.data.id.toString())
+    props.setBudgetId(selectedBudget.data.id.toString())
+
+    const today = new Date()
+    navigate(
+      selectedBudget.links.month
+        .replace('YYYY', today.getFullYear().toString())
+        .replace('MM', '05') // TODO
+    )
   }
 
   return (
@@ -27,8 +45,19 @@ const BudgetForm = () => {
         <div
           className="header--action"
           onClick={() => {
-            // TODO
-            alert("I can't do that yet!")
+            if (typeof budget === 'undefined') {
+              return
+            }
+
+            if ('id' in budget) {
+              updateBudget(budget.id.toString(), budget).then(newBudget =>
+                navigateToDashboard(newBudget)
+              )
+            } else {
+              createBudget(budget).then(newBudget =>
+                navigateToDashboard(newBudget)
+              )
+            }
           }}
         >
           {t('save')}

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Translation, Budget } from '../types'
 import { PencilIcon } from '@heroicons/react/solid'
 import cookie from '../lib/cookie'
-import { getBudgets } from '../lib/budgets'
+import { getBudgets } from '../lib/api/budgets'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 
