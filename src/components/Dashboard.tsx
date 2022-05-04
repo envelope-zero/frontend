@@ -1,16 +1,18 @@
 import { useTranslation } from 'react-i18next'
-import { Translation } from '../types'
+import { Budget, Translation } from '../types'
 
-type DashboardProps = { budgetId: number }
+type DashboardProps = { budget: Budget }
 
-const Home = ({ budgetId }: DashboardProps) => {
+const Home = ({ budget }: DashboardProps) => {
   const { t }: Translation = useTranslation()
 
   return (
     <>
       <div className="header">
         <h1>
-          {t('budgets.budget')} {budgetId}
+          {typeof budget.name === 'undefined'
+            ? `${t('budgets.budget')} ${budget.id}`
+            : budget.name}
         </h1>
         <div className="header--action">TODO</div>
       </div>

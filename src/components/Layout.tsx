@@ -93,6 +93,7 @@ const Layout = () => {
                   <div className="flex-shrink-0 flex items-center px-4">
                     <div>
                       <div className="text-lg font-bold">Budget Morre</div>
+                      {/* TODO */}
                       <Link
                         className="link"
                         to="budgets"
@@ -167,7 +168,8 @@ const Layout = () => {
             <div>
               <div className="flex-shrink-0 flex items-center px-4">
                 <div>
-                  <div className="text-base font-bold">Budget Morre</div>
+                  <div className="text-base font-bold">Budget Morre</div>{' '}
+                  {/* TODO */}
                   <Link
                     className="link"
                     to="budgets"
