@@ -1,0 +1,21 @@
+FROM node:16-alpine AS builder
+ENV NODE_ENV production
+WORKDIR /app
+
+# copy package.json first to avoid unnecessary npm install
+COPY package.json package-lock.json /app/
+RUN npm install --production
+
+# Copy app files
+COPY src /app/src
+COPY public /app/public
+COPY tsconfig.json /app/
+
+# Build the app
+RUN npm run build
+
+# Bundle static assets with nginx
+FROM nginx:1.21.6-alpine
+ENV NODE_ENV production
+
+COPY --from=builder /app/build /usr/share/nginx/html
