@@ -4,13 +4,12 @@ import { useEffect, useState } from 'react'
 import { Translation, Budget } from '../types'
 import { PencilIcon } from '@heroicons/react/solid'
 import { PlusCircleIcon } from '@heroicons/react/outline'
-import cookie from '../lib/cookie'
 import { getBudgets } from '../lib/api/budgets'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 
 type BudgetSwitchProps = {
-  setBudgetId: (id: string) => void
+  selectBudget: (budget?: Budget) => void
 }
 
 const BudgetSwitch = (props: BudgetSwitchProps) => {
@@ -30,11 +29,6 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
     })
   }
 
-  const setBudgetId = (id: string) => {
-    cookie.set('budgetId', id)
-    props.setBudgetId(id)
-  }
-
   return (
     <>
       <h1 className="header">{t('budgets.budgets')}</h1>
@@ -52,7 +46,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                   to="/"
                   className="w-full text-center"
                   onClick={() => {
-                    setBudgetId(budget.id.toString())
+                    props.selectBudget(budget)
                   }}
                 >
                   <h3>
@@ -73,7 +67,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
               </li>
             ))}
           </ul>
-          <Link to="/budgets/new" title={t('bugets.create')}>
+          <Link to="/budgets/new" title={t('budgets.create')}>
             <PlusCircleIcon className="icon icon-lg mx-auto mt-4" />
           </Link>
         </>

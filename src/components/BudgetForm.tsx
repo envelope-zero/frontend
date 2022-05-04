@@ -8,10 +8,9 @@ import {
   updateBudget,
   deleteBudget,
 } from '../lib/api/budgets'
-import cookie from '../lib/cookie'
 
 type BudgetFormProps = {
-  setBudgetId: (id: string | undefined) => void
+  selectBudget: (budget?: Budget) => void
 }
 
 const BudgetForm = (props: BudgetFormProps) => {
@@ -33,9 +32,7 @@ const BudgetForm = (props: BudgetFormProps) => {
 
   const navigateToDashboard = (selectedBudget: ApiResponse<Budget>) => {
     if (typeof budgetId === 'undefined') {
-      const id = selectedBudget.data.id.toString()
-      cookie.set('budgetId', id)
-      props.setBudgetId(id)
+      props.selectBudget(selectedBudget.data)
     }
     navigate('/')
   }
@@ -140,8 +137,7 @@ const BudgetForm = (props: BudgetFormProps) => {
               onClick={() => {
                 if (window.confirm(t('budgets.confirmDelete'))) {
                   deleteBudget(budgetId).then(() => {
-                    props.setBudgetId(undefined)
-                    cookie.erase('budgetId')
+                    props.selectBudget(undefined)
                     navigate('/budgets')
                   })
                 }
