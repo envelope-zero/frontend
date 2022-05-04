@@ -42,7 +42,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout budget={budget} />}>
           <Route
             index
             element={

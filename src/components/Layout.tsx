@@ -14,13 +14,16 @@ import {
   ExclamationIcon,
 } from '@heroicons/react/outline'
 import { useTranslation } from 'react-i18next'
-import { Translation } from '../types'
+import { Budget, Translation } from '../types'
+import { budgetName } from '../lib/budget-helper'
+
+type LayoutProps = { budget?: Budget }
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Layout = () => {
+const Layout = ({ budget }: LayoutProps) => {
   const { t }: Translation = useTranslation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -92,8 +95,9 @@ const Layout = () => {
                 <div>
                   <div className="flex-shrink-0 flex items-center px-4">
                     <div>
-                      <div className="text-lg font-bold">Budget Morre</div>
-                      {/* TODO */}
+                      <div className="text-lg font-bold">
+                        {budgetName(budget)}
+                      </div>
                       <Link
                         className="link"
                         to="budgets"
@@ -168,8 +172,9 @@ const Layout = () => {
             <div>
               <div className="flex-shrink-0 flex items-center px-4">
                 <div>
-                  <div className="text-base font-bold">Budget Morre</div>{' '}
-                  {/* TODO */}
+                  <div className="text-base font-bold">
+                    {budgetName(budget)}
+                  </div>
                   <Link
                     className="link"
                     to="budgets"
