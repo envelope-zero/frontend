@@ -47,13 +47,9 @@ const BudgetForm = (props: BudgetFormProps) => {
             }
 
             if ('id' in budget) {
-              updateBudget(budget.id.toString(), budget).then(newBudget =>
-                navigateToDashboard(newBudget)
-              )
+              updateBudget(budget.id, budget).then(navigateToDashboard)
             } else {
-              createBudget(budget).then(newBudget =>
-                navigateToDashboard(newBudget)
-              )
+              createBudget(budget).then(navigateToDashboard)
             }
           }}
         >

@@ -10,7 +10,7 @@ const getBudgets = async () => {
     .then((data: { data: Budget[] }) => data.data)
 }
 
-const getBudget = async (id: string) => {
+const getBudget = async (id: number | string) => {
   return fetch(`${endpoint}/budgets/${id}`)
     .then(checkStatus)
     .then(parseJSON)
@@ -27,7 +27,7 @@ const createBudget = async (data: UnpersistedBudget) => {
     .then(parseJSON)
 }
 
-const updateBudget = async (id: string, data: Budget) => {
+const updateBudget = async (id: number | string, data: Budget) => {
   return fetch(`${endpoint}/budgets/${id}`, {
     method: 'PATCH',
     body: JSON.stringify(data),
