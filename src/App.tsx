@@ -44,27 +44,24 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout budget={budget} />}>
           <Route
-            index
-            element={
-              typeof budget === 'undefined' ? (
-                <BudgetSwitch selectBudget={selectBudget} />
-              ) : (
-                <Dashboard budget={budget} />
-              )
-            }
-          />
-          <Route
             path="budgets"
             element={<BudgetSwitch selectBudget={selectBudget} />}
-          />
-          <Route
-            path="budgets/new"
-            element={<BudgetForm selectBudget={selectBudget} />}
           />
           <Route
             path="budgets/:budgetId"
             element={<BudgetForm selectBudget={selectBudget} />}
           />
+          {typeof budget === 'undefined' ? (
+            <Route
+              path="/"
+              element={<BudgetSwitch selectBudget={selectBudget} />}
+            />
+          ) : (
+            <>
+              <Route index element={<Dashboard budget={budget} />} />
+              {/* TODO: more routes here */}
+            </>
+          )}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
