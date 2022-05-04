@@ -18,7 +18,7 @@ const BudgetForm = (props: BudgetFormProps) => {
   const { budgetId } = useParams()
   const navigate = useNavigate()
 
-  const [budget, setBudget] = useState<UnpersistedBudget | Budget>()
+  const [budget, setBudget] = useState<UnpersistedBudget | Budget>({})
 
   useEffect(() => {
     if (typeof budgetId !== 'undefined') {
