@@ -20,11 +20,13 @@ const BudgetForm = (props: BudgetFormProps) => {
 
   const [budget, setBudget] = useState<UnpersistedBudget | Budget>({})
 
+  const isPersisted = typeof budgetId !== 'undefined' && budgetId !== 'new'
+
   useEffect(() => {
-    if (typeof budgetId !== 'undefined') {
+    if (isPersisted) {
       getBudget(budgetId).then(setBudget)
     }
-  }, [budgetId])
+  }, [budgetId, isPersisted])
 
   const updateValue = (key: keyof Budget, value: any) => {
     setBudget({ ...(budget || {}), [key]: value })
@@ -124,7 +126,7 @@ const BudgetForm = (props: BudgetFormProps) => {
             </div>
           </div>
         </div>
-        {typeof budgetId === 'undefined' ? null : (
+        {isPersisted ? (
           <div className="pt-5">
             <button
               type="button"
@@ -141,7 +143,7 @@ const BudgetForm = (props: BudgetFormProps) => {
               {t('budgets.delete')}
             </button>
           </div>
-        )}
+        ) : null}
       </form>
     </>
   )
