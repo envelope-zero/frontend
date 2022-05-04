@@ -27,15 +27,12 @@ const BudgetForm = (props: BudgetFormProps) => {
   }
 
   const navigateToDashboard = (selectedBudget: ApiResponse<Budget>) => {
-    cookie.set('budgetId', selectedBudget.data.id.toString())
-    props.setBudgetId(selectedBudget.data.id.toString())
-
-    const today = new Date()
-    navigate(
-      selectedBudget.links.month
-        .replace('YYYY', today.getFullYear().toString())
-        .replace('MM', '05') // TODO
-    )
+    if (typeof budgetId === 'undefined') {
+      const id = selectedBudget.data.id.toString()
+      cookie.set('budgetId', id)
+      props.setBudgetId(id)
+    }
+    navigate('/')
   }
 
   return (

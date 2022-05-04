@@ -29,6 +29,10 @@ h3 {
   @apply text-red-800 h-6 w-6;
 }
 
+.icon-lg {
+  @apply h-10 w-10;
+}
+
 .box {
   @apply shadow-sm rounded-md bg-gray-100;
 }

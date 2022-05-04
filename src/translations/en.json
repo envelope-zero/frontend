@@ -18,6 +18,7 @@
     "name": "Name",
     "currency": "Currency",
     "note": "Note",
-    "delete": "Delete Budget"
+    "delete": "Delete Budget",
+    "create": "Create Budget"
   }
 }
