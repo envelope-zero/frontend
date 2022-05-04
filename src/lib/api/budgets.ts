@@ -37,4 +37,10 @@ const updateBudget = async (id: string, data: Budget) => {
     .then(parseJSON)
 }
 
-export { getBudgets, getBudget, createBudget, updateBudget }
+const deleteBudget = (id: string) => {
+  return fetch(`${endpoint}/budgets/${id}`, { method: 'DELETE' }).then(
+    checkStatus
+  )
+}
+
+export { getBudgets, getBudget, createBudget, updateBudget, deleteBudget }

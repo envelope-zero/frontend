@@ -19,6 +19,7 @@
     "currency": "Currency",
     "note": "Note",
     "delete": "Delete Budget",
-    "create": "Create Budget"
+    "create": "Create Budget",
+    "confirmDelete": "Are you sure you want to delete this budget?"
   }
 }
