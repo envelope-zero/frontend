@@ -2,11 +2,16 @@ import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Translation, UnpersistedBudget, Budget, ApiResponse } from '../types'
-import { createBudget, getBudget, updateBudget } from '../lib/api/budgets'
+import {
+  createBudget,
+  getBudget,
+  updateBudget,
+  deleteBudget,
+} from '../lib/api/budgets'
 import cookie from '../lib/cookie'
 
 type BudgetFormProps = {
-  setBudgetId: (id: string) => void
+  setBudgetId: (id: string | undefined) => void
 }
 
 const BudgetForm = (props: BudgetFormProps) => {
@@ -128,18 +133,25 @@ const BudgetForm = (props: BudgetFormProps) => {
             </div>
           </div>
         </div>
-
-        <div className="pt-5">
-          <button
-            type="button"
-            onClick={() => {
-              alert('lol no') // TODO
-            }}
-            className="box w-full text-red-800 py-2 px-4 text-sm font-medium hover:bg-gray-200"
-          >
-            {t('budgets.delete')}
-          </button>
-        </div>
+        {typeof budgetId === 'undefined' ? null : (
+          <div className="pt-5">
+            <button
+              type="button"
+              onClick={() => {
+                if (window.confirm(t('budgets.confirmDelete'))) {
+                  deleteBudget(budgetId).then(() => {
+                    props.setBudgetId(undefined)
+                    cookie.erase('budgetId')
+                    navigate('/budgets')
+                  })
+                }
+              }}
+              className="box w-full text-red-800 py-2 px-4 text-sm font-medium hover:bg-gray-200"
+            >
+              {t('budgets.delete')}
+            </button>
+          </div>
+        )}
       </form>
     </>
   )
