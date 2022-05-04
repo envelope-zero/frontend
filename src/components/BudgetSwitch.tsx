@@ -59,7 +59,9 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                     {budget.name || `${t('budgets.budget')} ${budget.id}`}
                   </h3>
                   {budget.note ? (
-                    <p className="text-sm text-gray-500">{budget.note}</p>
+                    <p className="text-sm text-gray-500 whitespace-pre-line">
+                      {budget.note}
+                    </p>
                   ) : null}
                   <div className="text-lime-600 mt-2 text-lg">
                     <strong>{formatMoney(1337, budget.currency)}</strong>
