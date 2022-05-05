@@ -31,13 +31,13 @@ const Layout = ({ budget }: LayoutProps) => {
 
   const navigation = [
     { name: t('navigation.home'), href: '/', icon: HomeIcon },
-    { name: t('navigation.envelopes'), href: 'envelopes', icon: MailIcon },
     {
       name: t('navigation.transactions'),
       href: 'transactions',
       icon: SwitchHorizontalIcon,
     },
     { name: t('navigation.accounts'), href: 'accounts', icon: CashIcon },
+    { name: t('navigation.envelopes'), href: 'envelopes', icon: MailIcon },
     { name: t('navigation.settings'), href: 'settings', icon: CogIcon },
   ]
 
