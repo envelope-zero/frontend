@@ -50,7 +50,13 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                     props.selectBudget(budget)
                   }}
                 >
-                  <h3>{budgetName(budget)}</h3>
+                  <h3
+                    className={
+                      typeof budget.name === 'undefined' ? 'italic' : ''
+                    }
+                  >
+                    {budgetName(budget)}
+                  </h3>
                   {budget.note ? (
                     <p className="text-sm text-gray-500 whitespace-pre-line">
                       {budget.note}
