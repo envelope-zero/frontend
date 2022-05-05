@@ -60,6 +60,15 @@ const App = () => {
             <>
               <Route index element={<Dashboard budget={budget} />} />
               {/* TODO: more routes here */}
+              <Route
+                path="/settings"
+                element={
+                  <BudgetForm
+                    selectBudget={selectBudget}
+                    selectedBudget={budget}
+                  />
+                }
+              />
             </>
           )}
           <Route path="*" element={<Navigate to="/" replace />} />

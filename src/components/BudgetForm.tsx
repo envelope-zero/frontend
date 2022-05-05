@@ -11,29 +11,34 @@ import {
 
 type BudgetFormProps = {
   selectBudget: (budget?: Budget) => void
+  selectedBudget?: Budget
 }
 
-const BudgetForm = (props: BudgetFormProps) => {
+const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
   const { t }: Translation = useTranslation()
-  const { budgetId } = useParams()
+  const params = useParams()
   const navigate = useNavigate()
+
+  const budgetId = params.budgetId || selectedBudget?.id.toString()
 
   const [budget, setBudget] = useState<UnpersistedBudget | Budget>({})
 
   const isPersisted = typeof budgetId !== 'undefined' && budgetId !== 'new'
 
   useEffect(() => {
-    if (isPersisted) {
+    if (typeof selectedBudget !== 'undefined') {
+      setBudget(selectedBudget)
+    } else if (isPersisted) {
       getBudget(budgetId).then(setBudget)
     }
-  }, [budgetId, isPersisted])
+  }, [budgetId, selectedBudget, isPersisted])
 
   const updateValue = (key: keyof Budget, value: any) => {
     setBudget({ ...(budget || {}), [key]: value })
   }
 
   const navigateToDashboard = (selectedBudget: ApiResponse<Budget>) => {
-    props.selectBudget(selectedBudget.data)
+    selectBudget(selectedBudget.data)
     navigate('/')
   }
 
@@ -134,7 +139,7 @@ const BudgetForm = (props: BudgetFormProps) => {
               onClick={() => {
                 if (window.confirm(t('budgets.confirmDelete'))) {
                   deleteBudget(budgetId).then(() => {
-                    props.selectBudget(undefined)
+                    selectBudget(undefined)
                     navigate('/budgets')
                   })
                 }
