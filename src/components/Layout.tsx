@@ -239,7 +239,7 @@ const Layout = ({ budget }: LayoutProps) => {
         <div className="sticky top-0 z-10 md:hidden px-6 pt-4 bg-white">
           <button
             type="button"
-            className={`-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center rounded-md text-gray-500 hover:text-gray-900 ${
+            className={`-ml-0.5 -mt-0.5 h-12 inline-flex items-center rounded-md text-gray-500 hover:text-gray-900 ${
               hideNav ? 'invisible' : 'visible'
             }`}
             onClick={() => {
