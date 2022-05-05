@@ -6,7 +6,7 @@ const budgetName = (budget?: Budget) => {
     return ''
   }
 
-  return budget.name || `${i18n.t('budgets.budget')} ${budget.id}`
+  return budget.name || `${i18n.t('untitled')} ${i18n.t('budgets.budget')}`
 }
 
 export { budgetName }
