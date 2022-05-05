@@ -36,46 +36,50 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <>
-          <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6">
-            {budgets.map(budget => (
-              <li
-                key={budget.id}
-                className="box col-span-1 flex hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
-              >
-                <Link
-                  to="/"
-                  className="w-full text-center"
-                  onClick={() => {
-                    props.selectBudget(budget)
-                  }}
+        <div className="mt-3">
+          {budgets.length ? (
+            <ul className="grid grid-cols-1 gap-5 sm:gap-6">
+              {budgets.map(budget => (
+                <li
+                  key={budget.id}
+                  className="box col-span-1 flex hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
-                  <h3
-                    className={
-                      typeof budget.name === 'undefined' ? 'italic' : ''
-                    }
+                  <Link
+                    to="/"
+                    className="w-full text-center"
+                    onClick={() => {
+                      props.selectBudget(budget)
+                    }}
                   >
-                    {budgetName(budget)}
-                  </h3>
-                  {budget.note ? (
-                    <p className="text-sm text-gray-500 whitespace-pre-line">
-                      {budget.note}
-                    </p>
-                  ) : null}
-                  <div className="text-lime-600 mt-2 text-lg">
-                    <strong>{formatMoney(1337, budget.currency)}</strong>
-                  </div>
-                </Link>
-                <Link to={`/budgets/${budget.id}`} title={t('edit')}>
-                  <PencilIcon className="icon" />
-                </Link>
-              </li>
-            ))}
-          </ul>
+                    <h3
+                      className={
+                        typeof budget.name === 'undefined' ? 'italic' : ''
+                      }
+                    >
+                      {budgetName(budget)}
+                    </h3>
+                    {budget.note ? (
+                      <p className="text-sm text-gray-500 whitespace-pre-line">
+                        {budget.note}
+                      </p>
+                    ) : null}
+                    <div className="text-lime-600 mt-2 text-lg">
+                      <strong>{formatMoney(1337, budget.currency)}</strong>
+                    </div>
+                  </Link>
+                  <Link to={`/budgets/${budget.id}`} title={t('edit')}>
+                    <PencilIcon className="icon" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div>{t('budgets.emptyList')}</div>
+          )}
           <Link to="/budgets/new" title={t('budgets.create')}>
             <PlusCircleIcon className="icon icon-lg mx-auto mt-4" />
           </Link>
-        </>
+        </div>
       )}
     </>
   )
