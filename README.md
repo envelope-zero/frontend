@@ -5,6 +5,13 @@ Envelope Zero is fundamentally rooted in two ideas:
 - Using the [envelope method](https://en.wikipedia.org/wiki/Envelope_system) to budget expenses into envelopes.
 - Zero Based Budeting, meaning that you assign all your money to an envelope. Saving for a vacation? Create an envelope and archive it after your vacation. Rent? Create an envelope that gets a fixed amount of money added every month.
 
+## Deployment
+
+The frontend currently has two requirements:
+
+- The API needs to be available at the same hostname with the prefix `/api`
+- Only `v1` of the API is supported
+
 ## Supported Versions
 
 This project is under heavy development. Therefore, only the latest release is supported.
