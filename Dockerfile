@@ -9,7 +9,7 @@ RUN npm install --production
 # Copy app files
 COPY src /app/src
 COPY public /app/public
-COPY tsconfig.json /app/
+COPY tsconfig.json tailwind.config.js /app/
 
 # Build the app
 RUN npm run build

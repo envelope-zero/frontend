@@ -1,7 +1,8 @@
 import { Budget, UnpersistedBudget } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 
-const endpoint = process.env.REACT_APP_API_ENDPOINT
+const endpoint =
+  process.env.REACT_APP_API_ENDPOINT || window.location.origin + '/api/v1'
 
 const getBudgets = async () => {
   return fetch(`${endpoint}/budgets`)
