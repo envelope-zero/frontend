@@ -38,28 +38,29 @@ const BudgetForm = (props: BudgetFormProps) => {
   }
 
   return (
-    <>
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+
+        if (typeof budget === 'undefined') {
+          return
+        }
+
+        if ('id' in budget) {
+          updateBudget(budget.id, budget).then(navigateToDashboard)
+        } else {
+          createBudget(budget).then(navigateToDashboard)
+        }
+      }}
+    >
       <div className="header">
         <h1>{t('budgets.budget')}</h1>
-        <div
-          className="header--action"
-          onClick={() => {
-            if (typeof budget === 'undefined') {
-              return
-            }
-
-            if ('id' in budget) {
-              updateBudget(budget.id, budget).then(navigateToDashboard)
-            } else {
-              createBudget(budget).then(navigateToDashboard)
-            }
-          }}
-        >
+        <button className="header--action" type="submit">
           {t('save')}
-        </div>
+        </button>
       </div>
 
-      <form className="space-y-8 divide-y divide-gray-200">
+      <div className="space-y-8 divide-y divide-gray-200">
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div>
             <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
@@ -144,8 +145,8 @@ const BudgetForm = (props: BudgetFormProps) => {
             </button>
           </div>
         ) : null}
-      </form>
-    </>
+      </div>
+    </form>
   )
 }
 
