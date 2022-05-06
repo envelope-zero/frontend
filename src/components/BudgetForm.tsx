@@ -10,8 +10,8 @@ import {
 } from '../lib/api/budgets'
 
 type BudgetFormProps = {
-  selectBudget: (budget?: Budget) => void
-  selectedBudget?: Budget
+  selectBudget: (budget?: ApiResponse<Budget>) => void
+  selectedBudget?: ApiResponse<Budget>
 }
 
 const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
@@ -19,9 +19,11 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
   const params = useParams()
   const navigate = useNavigate()
 
-  const budgetId = params.budgetId || selectedBudget?.id.toString()
+  const budgetId = params.budgetId || selectedBudget?.data.id.toString()
 
-  const [budget, setBudget] = useState<UnpersistedBudget | Budget>({})
+  const [budget, setBudget] = useState<ApiResponse<UnpersistedBudget | Budget>>(
+    { data: {} }
+  )
 
   const isPersisted = typeof budgetId !== 'undefined' && budgetId !== 'new'
 
@@ -34,13 +36,15 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
   }, [budgetId, selectedBudget, isPersisted])
 
   const updateValue = (key: keyof Budget, value: any) => {
-    setBudget({ ...(budget || {}), [key]: value })
+    setBudget({ ...budget, data: { ...budget.data, [key]: value } })
   }
 
   const navigateToDashboard = (selectedBudget: ApiResponse<Budget>) => {
-    selectBudget(selectedBudget.data)
+    selectBudget(selectedBudget)
     navigate('/')
   }
+
+  const budgetData = budget.data
 
   return (
     <form
@@ -51,10 +55,10 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
           return
         }
 
-        if ('id' in budget) {
-          updateBudget(budget.id, budget).then(navigateToDashboard)
+        if ('id' in budgetData) {
+          updateBudget(budgetData.id, budgetData).then(navigateToDashboard)
         } else {
-          createBudget(budget).then(navigateToDashboard)
+          createBudget(budgetData).then(navigateToDashboard)
         }
       }}
     >
@@ -82,7 +86,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
                       type="text"
                       name="name"
                       id="name"
-                      value={budget?.name || ''}
+                      value={budgetData?.name || ''}
                       onChange={e => updateValue('name', e.target.value)}
                       className="flex-1 block w-full min-w-0 sm:text-sm"
                     />
@@ -103,7 +107,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
                       type="text"
                       name="currency"
                       id="currency"
-                      value={budget?.currency || ''}
+                      value={budgetData?.currency || ''}
                       onChange={e => updateValue('currency', e.target.value)}
                       className="flex-1 block w-full min-w-0 sm:text-sm"
                     />
@@ -123,7 +127,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
                     id="note"
                     name="note"
                     rows={3}
-                    value={budget?.note || ''}
+                    value={budgetData?.note || ''}
                     onChange={e => updateValue('note', e.target.value)}
                     className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
                   />

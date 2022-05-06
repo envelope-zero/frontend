@@ -5,17 +5,11 @@ const endpoint =
   process.env.REACT_APP_API_ENDPOINT || window.location.origin + '/api/v1'
 
 const getBudgets = async () => {
-  return fetch(`${endpoint}/budgets`)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then((data: { data: Budget[] }) => data.data)
+  return fetch(`${endpoint}/budgets`).then(checkStatus).then(parseJSON)
 }
 
 const getBudget = async (id: number | string) => {
-  return fetch(`${endpoint}/budgets/${id}`)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(data => data.data)
+  return fetch(`${endpoint}/budgets/${id}`).then(checkStatus).then(parseJSON)
 }
 
 const createBudget = async (data: UnpersistedBudget) => {

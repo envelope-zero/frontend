@@ -6,17 +6,17 @@ import {
 } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import './App.css'
+import Layout from './components/Layout'
 import Dashboard from './components/Dashboard'
 import BudgetSwitch from './components/BudgetSwitch'
-import Layout from './components/Layout'
 import BudgetForm from './components/BudgetForm'
 import cookie from './lib/cookie'
 import './i18n'
-import { Budget } from './types'
+import { Budget, ApiResponse } from './types'
 import { getBudget } from './lib/api/budgets'
 
 const App = () => {
-  const [budget, setBudget] = useState<Budget>()
+  const [budget, setBudget] = useState<ApiResponse<Budget>>()
 
   useEffect(() => {
     loadBudget()
@@ -30,19 +30,19 @@ const App = () => {
     }
   }
 
-  const selectBudget = (budget?: Budget) => {
-    if (typeof budget === 'undefined') {
+  const selectBudget = (selectedBudget?: ApiResponse<Budget>) => {
+    if (typeof selectedBudget === 'undefined') {
       cookie.erase('budgetId')
     } else {
-      cookie.set('budgetId', budget.id.toString())
+      cookie.set('budgetId', selectedBudget.data.id.toString())
     }
-    setBudget(budget)
+    setBudget(selectedBudget)
   }
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout budget={budget} />}>
+        <Route path="/" element={<Layout budget={budget?.data} />}>
           <Route
             path="budgets"
             element={<BudgetSwitch selectBudget={selectBudget} />}

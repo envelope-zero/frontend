@@ -12,5 +12,5 @@ export type Budget = UnpersistedBudget & {
 
 export type ApiResponse<T> = {
   data: T
-  links: { [key: string]: string }
+  links?: { [key: string]: string }
 }
