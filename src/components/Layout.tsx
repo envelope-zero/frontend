@@ -36,7 +36,7 @@ const Layout = ({ budget }: LayoutProps) => {
       href: 'transactions',
       icon: SwitchHorizontalIcon,
     },
-    { name: t('navigation.accounts'), href: 'accounts', icon: CashIcon },
+    { name: t('navigation.accounts'), href: 'own-accounts', icon: CashIcon },
     { name: t('navigation.envelopes'), href: 'envelopes', icon: MailIcon },
     { name: t('navigation.settings'), href: 'settings', icon: CogIcon },
   ]
