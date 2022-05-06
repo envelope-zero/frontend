@@ -23,5 +23,11 @@
     "create": "Create Budget",
     "confirmDelete": "Are you sure you want to delete this budget?",
     "emptyList": "No budgets have been created yet. Create a new one below!"
+  },
+  "accounts": {
+    "accounts": "Accounts",
+    "create": "Create Account",
+    "emptyList": "No accounts have been created yet. Create a new one now!",
+    "offBudget": "Off Budget"
   }
 }
