@@ -7,7 +7,7 @@ import { PlusCircleIcon } from '@heroicons/react/outline'
 import { getBudgets } from '../lib/api/budgets'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
-import { budgetName } from '../lib/budget-helper'
+import { safeName } from '../lib/name-helper'
 
 type BudgetSwitchProps = {
   selectBudget: (budget?: ApiResponse<Budget>) => void
@@ -56,7 +56,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                         typeof budget.name === 'undefined' ? 'italic' : ''
                       }
                     >
-                      {budgetName(budget)}
+                      {safeName(budget, 'budget')}
                     </h3>
                     {budget.note ? (
                       <p className="text-sm text-gray-500 whitespace-pre-line">
