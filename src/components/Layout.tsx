@@ -15,7 +15,7 @@ import {
 } from '@heroicons/react/outline'
 import { useTranslation } from 'react-i18next'
 import { Budget, Translation } from '../types'
-import { budgetName } from '../lib/budget-helper'
+import { safeName } from '../lib/name-helper'
 
 type LayoutProps = { budget?: Budget }
 
@@ -100,7 +100,7 @@ const Layout = ({ budget }: LayoutProps) => {
                       <div className="flex-shrink-0 flex items-center px-4">
                         <div>
                           <div className="text-lg font-bold">
-                            {budgetName(budget)}
+                            {safeName(budget, 'budget')}
                           </div>
                           <Link
                             className="link"
@@ -177,7 +177,7 @@ const Layout = ({ budget }: LayoutProps) => {
                   <div className="flex-shrink-0 flex items-center px-4">
                     <div>
                       <div className="text-base font-bold">
-                        {budgetName(budget)}
+                        {safeName(budget, 'budget')}
                       </div>
                       <Link
                         className="link"
