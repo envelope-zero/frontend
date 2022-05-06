@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Translation, Budget } from '../types'
+import { Translation, Budget, ApiResponse } from '../types'
 import { PencilIcon } from '@heroicons/react/solid'
 import { PlusCircleIcon } from '@heroicons/react/outline'
 import { getBudgets } from '../lib/api/budgets'
@@ -10,14 +10,14 @@ import LoadingSpinner from './LoadingSpinner'
 import { budgetName } from '../lib/budget-helper'
 
 type BudgetSwitchProps = {
-  selectBudget: (budget?: Budget) => void
+  selectBudget: (budget?: ApiResponse<Budget>) => void
 }
 
 const BudgetSwitch = (props: BudgetSwitchProps) => {
   const { t }: Translation = useTranslation()
 
   const [isLoading, setIsLoading] = useState(true)
-  const [budgets, setBudgets] = useState<Budget[]>([])
+  const [budgets, setBudgets] = useState<ApiResponse<Budget[]>>({ data: [] })
 
   useEffect(() => {
     loadBudgets()
@@ -37,9 +37,9 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
         <LoadingSpinner />
       ) : (
         <div className="mt-3">
-          {budgets.length ? (
+          {budgets.data.length ? (
             <ul className="grid grid-cols-1 gap-5 sm:gap-6">
-              {budgets.map(budget => (
+              {budgets.data.map(budget => (
                 <li
                   key={budget.id}
                   className="box col-span-1 flex hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
@@ -48,7 +48,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                     to="/"
                     className="w-full text-center"
                     onClick={() => {
-                      props.selectBudget(budget)
+                      props.selectBudget({ data: budget })
                     }}
                   >
                     <h3
