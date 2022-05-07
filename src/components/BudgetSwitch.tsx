@@ -42,8 +42,15 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
               {budgets.data.map(budget => (
                 <li
                   key={budget.id}
-                  className="box col-span-1 flex hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+                  className="box col-span-1 hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
+                  <Link
+                    to={`/budgets/${budget.id}`}
+                    title={t('edit')}
+                    className="absolute right-10 md:right-12"
+                  >
+                    <PencilIcon className="icon" />
+                  </Link>
                   <Link
                     to="/"
                     className="w-full text-center"
@@ -66,9 +73,6 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                     <div className="text-lime-600 mt-2 text-lg">
                       <strong>{formatMoney(1337, budget.currency)}</strong>
                     </div>
-                  </Link>
-                  <Link to={`/budgets/${budget.id}`} title={t('edit')}>
-                    <PencilIcon className="icon" />
                   </Link>
                 </li>
               ))}
