@@ -44,8 +44,15 @@ const OwnAccountsList = ({ budget }: Props) => {
               {accounts.map(account => (
                 <li
                   key={account.id}
-                  className="box col-span-1 flex hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+                  className="box col-span-1 hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
+                  <Link
+                    to={`TODO`}
+                    title={t('edit')}
+                    className="absolute right-10 md:right-12"
+                  >
+                    <PencilIcon className="icon" />
+                  </Link>
                   <Link to="TODO" className="w-full text-center">
                     <h3
                       className={
@@ -72,9 +79,6 @@ const OwnAccountsList = ({ budget }: Props) => {
                         )}
                       </strong>
                     </div>
-                  </Link>
-                  <Link to={`TODO`} title={t('edit')}>
-                    <PencilIcon className="icon" />
                   </Link>
                 </li>
               ))}
