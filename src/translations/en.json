@@ -26,6 +26,8 @@
   },
   "accounts": {
     "accounts": "Accounts",
+    "internalAccounts": "Own Accounts",
+    "externalAccounts": "External Accounts",
     "create": "Create Account",
     "emptyList": "No accounts have been created yet. Create a new one now!",
     "offBudget": "Off Budget"
