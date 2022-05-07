@@ -8,6 +8,7 @@ import { getInternalAccounts } from '../lib/api/accounts'
 import { formatMoney } from '../lib/format'
 import { safeName } from '../lib/name-helper'
 import LoadingSpinner from './LoadingSpinner'
+import AccountListSwitch from './AccountListSwitch'
 
 type Props = {
   budget: ApiResponse<Budget>
@@ -32,7 +33,7 @@ const OwnAccountsList = ({ budget }: Props) => {
         <LoadingSpinner />
       ) : (
         <div>
-          <div>Own Accounts | External Accounts</div> {/* TODO */}
+          <AccountListSwitch selected="internal" />
           {accounts.length ? (
             <ul className="grid grid-cols-1 gap-5 sm:gap-6">
               {accounts.map(account => (
