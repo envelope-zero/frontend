@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Translation, Budget, Account, ApiResponse } from '../types'
 import { PencilIcon } from '@heroicons/react/solid'
-import { PlusCircleIcon } from '@heroicons/react/outline'
+import { PlusCircleIcon, PlusIcon } from '@heroicons/react/outline'
 import { getInternalAccounts } from '../lib/api/accounts'
 import { formatMoney } from '../lib/format'
 import { safeName } from '../lib/name-helper'
@@ -28,7 +28,12 @@ const OwnAccountsList = ({ budget }: Props) => {
 
   return (
     <>
-      <h1 className="header">{t('accounts.accounts')}</h1>
+      <div className="header">
+        <h1>{t('accounts.accounts')}</h1>
+        <Link to="TODO" className="header--action" title={t('accounts.create')}>
+          <PlusIcon className="icon" />
+        </Link>
+      </div>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
