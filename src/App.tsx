@@ -15,21 +15,17 @@ import cookie from './lib/cookie'
 import './i18n'
 import { Budget, ApiResponse } from './types'
 import { getBudget } from './lib/api/budgets'
+import LoadingSpinner from './components/LoadingSpinner'
 
 const App = () => {
   const [budget, setBudget] = useState<ApiResponse<Budget>>()
+  const budgetId = cookie.get('budgetId')
 
   useEffect(() => {
-    loadBudget()
-  }, [])
-
-  const loadBudget = () => {
-    const budgetId = cookie.get('budgetId')
-
     if (typeof budgetId !== 'undefined') {
       getBudget(budgetId).then(setBudget)
     }
-  }
+  }, [budgetId])
 
   const selectBudget = (selectedBudget?: ApiResponse<Budget>) => {
     if (typeof selectedBudget === 'undefined') {
@@ -52,11 +48,13 @@ const App = () => {
             path="budgets/:budgetId"
             element={<BudgetForm selectBudget={selectBudget} />}
           />
-          {typeof budget === 'undefined' ? (
+          {typeof budgetId === 'undefined' ? (
             <Route
               path="/"
               element={<BudgetSwitch selectBudget={selectBudget} />}
             />
+          ) : typeof budget === 'undefined' ? (
+            <Route path="*" element={<LoadingSpinner />} />
           ) : (
             <>
               <Route index element={<Dashboard budget={budget} />} />
