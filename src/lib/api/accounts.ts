@@ -48,4 +48,17 @@ const createAccount = async (
     .then(parseJSON)
 }
 
-export { getInternalAccounts, getAccount, updateAccount, createAccount }
+const deleteAccount = async (account: ApiResponse<Account>) => {
+  return fetch(
+    `${endpoint}/budgets/${account.data.budgetId}/accounts/${account.data.id}`,
+    { method: 'DELETE' }
+  ).then(checkStatus)
+}
+
+export {
+  getInternalAccounts,
+  getAccount,
+  updateAccount,
+  createAccount,
+  deleteAccount,
+}

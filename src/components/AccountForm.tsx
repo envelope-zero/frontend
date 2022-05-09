@@ -8,7 +8,12 @@ import {
   ApiResponse,
   Budget,
 } from '../types'
-import { getAccount, updateAccount, createAccount } from '../lib/api/accounts'
+import {
+  getAccount,
+  updateAccount,
+  createAccount,
+  deleteAccount,
+} from '../lib/api/accounts'
 import LoadingSpinner from './LoadingSpinner'
 
 type Props = { budget: ApiResponse<Budget>; type: 'internal' | 'external' }
@@ -154,7 +159,26 @@ const OwnAccountForm = ({ budget, type }: Props) => {
                 )}
               </div>
             </div>
-            {isPersisted ? 'TODO: delete & reconcile actions' : null}
+            {isPersisted ? (
+              <div className="pt-5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.confirm(t('accounts.confirmDelete'))) {
+                      deleteAccount(account as ApiResponse<Account>).then(
+                        () => {
+                          navigate(-1)
+                        }
+                      )
+                    }
+                  }}
+                  className="box w-full text-red-800 py-2 px-4 text-sm font-medium hover:bg-gray-200"
+                >
+                  {t('accounts.delete')}
+                </button>
+                TODO: reconcile
+              </div>
+            ) : null}
           </div>
           {isPersisted ? 'TODO: transactions' : null}
         </>

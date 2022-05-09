@@ -31,6 +31,8 @@
     "internalAccounts": "Own Accounts",
     "externalAccounts": "External Accounts",
     "create": "Create Account",
+    "delete": "Delete Account",
+    "confirmDelete": "Are you sure you want to delete this account?",
     "emptyList": "No accounts have been created yet. Create a new one now!",
     "offBudget": "Off Budget",
     "onBudget": "On Budget",
