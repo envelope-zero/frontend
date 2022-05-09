@@ -18,9 +18,11 @@ const OwnAccountForm = ({ budget, type }: Props) => {
   const { accountId } = useParams()
   const navigate = useNavigate()
 
+  const newAccount = { onBudget: true }
+
   const [account, setAccount] = useState<
     ApiResponse<UnpersistedAccount | Account>
-  >({ data: {} })
+  >({ data: newAccount })
 
   const isPersisted = typeof accountId !== 'undefined' && accountId !== 'new'
   const accountData = account?.data
