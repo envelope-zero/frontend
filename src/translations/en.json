@@ -26,10 +26,14 @@
   },
   "accounts": {
     "accounts": "Accounts",
+    "account": "Account",
     "internalAccounts": "Own Accounts",
     "externalAccounts": "External Accounts",
     "create": "Create Account",
     "emptyList": "No accounts have been created yet. Create a new one now!",
-    "offBudget": "Off Budget"
+    "offBudget": "Off Budget",
+    "onBudget": "On Budget",
+    "name": "Name",
+    "note": "Note"
   }
 }

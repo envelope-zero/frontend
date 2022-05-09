@@ -6,20 +6,18 @@ export type UnpersistedBudget = {
   note?: string
 }
 
-export type Budget = UnpersistedBudget & {
-  id: number
-}
+export type Budget = UnpersistedBudget & { id: number }
 
-export type Account = {
-  id: number
-  budgetId: number
+export type UnpersistedAccount = {
   balance?: number
   reconciledBalance?: number
-  external?: true
+  external?: boolean
   name?: string
   note?: string
   onBudget?: boolean
 }
+
+export type Account = UnpersistedAccount & { id: number; budgetId: number }
 
 export type ApiResponse<T> = {
   data: T
