@@ -1,3 +1,5 @@
+type ApiLinks = { [key: string]: string }
+
 export type Translation = { t: (key: string) => string }
 
 export type UnpersistedBudget = {
@@ -6,7 +8,7 @@ export type UnpersistedBudget = {
   note?: string
 }
 
-export type Budget = UnpersistedBudget & { id: number }
+export type Budget = UnpersistedBudget & { id: number; links: ApiLinks }
 
 export type UnpersistedAccount = {
   balance?: number
@@ -17,9 +19,21 @@ export type UnpersistedAccount = {
   onBudget?: boolean
 }
 
-export type Account = UnpersistedAccount & { id: number; budgetId: number }
+export type BudgetApiConnection = {
+  updateBudget: (budget: Budget) => Promise<Budget>
+  deleteBudget: (budget: Budget) => void
+  getBudgets: () => Promise<Budget[]>
+  getBudget: (id: number | string) => Promise<Budget>
+  createBudget: (data: UnpersistedBudget) => Promise<Budget>
+}
+
+export type Account = UnpersistedAccount & {
+  id: number
+  budgetId: number
+  links: ApiLinks
+}
 
 export type ApiResponse<T> = {
-  data: T
-  links?: { [key: string]: string }
+  data?: T
+  error?: any // TODO
 }

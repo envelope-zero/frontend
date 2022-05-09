@@ -1,34 +1,32 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Translation, Budget, ApiResponse } from '../types'
+import { Translation, Budget } from '../types'
 import { PencilIcon } from '@heroicons/react/solid'
 import { PlusCircleIcon } from '@heroicons/react/outline'
-import { getBudgets } from '../lib/api/budgets'
+import connectBudgetApi from '../lib/api/budgets'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 import { safeName } from '../lib/name-helper'
 
 type BudgetSwitchProps = {
-  selectBudget: (budget?: ApiResponse<Budget>) => void
+  selectBudget: (budget?: Budget) => void
 }
 
 const BudgetSwitch = (props: BudgetSwitchProps) => {
   const { t }: Translation = useTranslation()
 
   const [isLoading, setIsLoading] = useState(true)
-  const [budgets, setBudgets] = useState<ApiResponse<Budget[]>>({ data: [] })
+  const [budgets, setBudgets] = useState<Budget[]>([])
 
   useEffect(() => {
-    loadBudgets()
-  }, [])
-
-  const loadBudgets = () => {
-    getBudgets().then(data => {
-      setBudgets(data)
-      setIsLoading(false)
+    connectBudgetApi().then(api => {
+      api.getBudgets().then(data => {
+        setBudgets(data)
+        setIsLoading(false)
+      })
     })
-  }
+  }, [])
 
   return (
     <>
@@ -37,9 +35,9 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
         <LoadingSpinner />
       ) : (
         <div className="mt-3">
-          {budgets.data.length ? (
+          {budgets.length ? (
             <ul className="grid grid-cols-1 gap-5 sm:gap-6">
-              {budgets.data.map(budget => (
+              {budgets.map(budget => (
                 <li
                   key={budget.id}
                   className="box col-span-1 hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
@@ -55,7 +53,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                     to="/"
                     className="w-full text-center"
                     onClick={() => {
-                      props.selectBudget({ data: budget })
+                      props.selectBudget(budget)
                     }}
                   >
                     <h3

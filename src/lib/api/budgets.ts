@@ -1,41 +1,54 @@
 import { Budget, UnpersistedBudget } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
+import { getApiInfo } from './base'
 
-const endpoint =
-  process.env.REACT_APP_API_ENDPOINT || window.location.origin + '/api/v1'
-
-const getBudgets = async () => {
-  return fetch(`${endpoint}/budgets`).then(checkStatus).then(parseJSON)
-}
-
-const getBudget = async (id: number | string) => {
-  return fetch(`${endpoint}/budgets/${id}`).then(checkStatus).then(parseJSON)
-}
-
-const createBudget = async (data: UnpersistedBudget) => {
-  return fetch(`${endpoint}/budgets`, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: { 'Content-Type': 'application/json' },
-  })
-    .then(checkStatus)
-    .then(parseJSON)
-}
-
-const updateBudget = async (id: number | string, data: Budget) => {
-  return fetch(`${endpoint}/budgets/${id}`, {
+const updateBudget = async (budget: Budget) => {
+  return fetch(budget.links.self, {
     method: 'PATCH',
-    body: JSON.stringify(data),
+    body: JSON.stringify(budget),
     headers: { 'Content-Type': 'application/json' },
   })
     .then(checkStatus)
     .then(parseJSON)
+    .then(data => data.data)
 }
 
-const deleteBudget = (id: string) => {
-  return fetch(`${endpoint}/budgets/${id}`, { method: 'DELETE' }).then(
-    checkStatus
-  )
+const deleteBudget = (budget: Budget) => {
+  return fetch(budget.links.self, { method: 'DELETE' }).then(checkStatus)
 }
 
-export { getBudgets, getBudget, createBudget, updateBudget, deleteBudget }
+export default async function budgets() {
+  const endpoint = await getApiInfo().then(data => data.links.budgets)
+
+  return {
+    getBudgets: async () => {
+      return fetch(endpoint)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => data.data)
+    },
+
+    getBudget: async (id: number | string) => {
+      return fetch(`${endpoint}/${id}`)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => data.data)
+    },
+
+    createBudget: async (data: UnpersistedBudget) => {
+      return fetch(endpoint, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => data.data)
+    },
+
+    updateBudget,
+    deleteBudget,
+  }
+}
+
+export { updateBudget, deleteBudget }

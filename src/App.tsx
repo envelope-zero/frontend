@@ -13,26 +13,28 @@ import BudgetForm from './components/BudgetForm'
 import OwnAccountsList from './components/OwnAccountsList'
 import AccountForm from './components/AccountForm'
 import cookie from './lib/cookie'
+import connectBudgetApi from './lib/api/budgets'
 import './i18n'
-import { Budget, ApiResponse } from './types'
-import { getBudget } from './lib/api/budgets'
+import { Budget } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
 
 const App = () => {
-  const [budget, setBudget] = useState<ApiResponse<Budget>>()
+  const [budget, setBudget] = useState<Budget>()
   const budgetId = cookie.get('budgetId')
 
   useEffect(() => {
     if (typeof budgetId !== 'undefined') {
-      getBudget(budgetId).then(setBudget)
+      connectBudgetApi().then(api => {
+        api.getBudget(budgetId).then(setBudget)
+      })
     }
   }, [budgetId])
 
-  const selectBudget = (selectedBudget?: ApiResponse<Budget>) => {
+  const selectBudget = (selectedBudget?: Budget) => {
     if (typeof selectedBudget === 'undefined') {
       cookie.erase('budgetId')
     } else {
-      cookie.set('budgetId', selectedBudget.data.id.toString())
+      cookie.set('budgetId', selectedBudget.id.toString())
     }
     setBudget(selectedBudget)
   }
@@ -40,7 +42,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout budget={budget?.data} />}>
+        <Route path="/" element={<Layout budget={budget} />}>
           <Route
             path="budgets"
             element={<BudgetSwitch selectBudget={selectBudget} />}

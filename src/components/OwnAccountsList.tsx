@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Translation, Budget, Account, ApiResponse } from '../types'
+import { Translation, Budget, Account } from '../types'
 import { PencilIcon } from '@heroicons/react/solid'
 import { PlusCircleIcon, PlusIcon } from '@heroicons/react/outline'
 import { getInternalAccounts } from '../lib/api/accounts'
@@ -11,7 +11,7 @@ import LoadingSpinner from './LoadingSpinner'
 import AccountListSwitch from './AccountListSwitch'
 
 type Props = {
-  budget: ApiResponse<Budget>
+  budget: Budget
 }
 
 const OwnAccountsList = ({ budget }: Props) => {
@@ -79,10 +79,7 @@ const OwnAccountsList = ({ budget }: Props) => {
                     ) : null}
                     <div className="text-lime-600 mt-2 text-lg">
                       <strong>
-                        {formatMoney(
-                          account.balance || 0,
-                          budget.data.currency
-                        )}
+                        {formatMoney(account.balance || 0, budget.currency)}
                       </strong>
                     </div>
                   </Link>

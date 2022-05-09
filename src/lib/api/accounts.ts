@@ -1,58 +1,53 @@
-import { ApiResponse, Budget, Account, UnpersistedAccount } from '../../types'
+import { Budget, Account, UnpersistedAccount } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 
-const endpoint =
-  process.env.REACT_APP_API_ENDPOINT || window.location.origin + '/api/v1'
-
-const getAccounts = async (budget: ApiResponse<Budget>) => {
-  return fetch(budget.links?.accounts || 'TODO')
+const getAccounts = async (budget: Budget) => {
+  return fetch(budget.links.accounts)
     .then(checkStatus)
     .then(parseJSON)
+    .then(data => data.data)
 }
 
-const getInternalAccounts = async (budget: ApiResponse<Budget>) => {
-  return getAccounts(budget).then((accounts: ApiResponse<Account[]>) =>
-    accounts.data.filter(account => !account.external)
+const getInternalAccounts = async (budget: Budget) => {
+  return getAccounts(budget).then((accounts: Account[]) =>
+    accounts.filter(account => !account.external)
   )
 }
 
-const getAccount = async (id: string, budget: ApiResponse<Budget>) => {
-  return fetch(`${budget.links?.accounts}/${id}` || 'TODO')
+const getAccount = async (id: string, budget: Budget) => {
+  const url = new URL(budget.links.accounts)
+  url.pathname += `/${id}`
+
+  return fetch(url.href)
     .then(checkStatus)
     .then(parseJSON)
+    .then(data => data.data)
 }
 
 const updateAccount = async (account: Account) => {
-  return fetch(
-    `${endpoint}/budgets/${account.budgetId}/accounts/${account.id}`,
-    {
-      method: 'PATCH',
-      body: JSON.stringify(account),
-      headers: { 'Content-Type': 'application/json' },
-    }
-  )
+  return fetch(account.links.self, {
+    method: 'PATCH',
+    body: JSON.stringify(account),
+    headers: { 'Content-Type': 'application/json' },
+  })
     .then(checkStatus)
     .then(parseJSON)
+    .then(data => data.data)
 }
 
-const createAccount = async (
-  account: UnpersistedAccount,
-  budget: ApiResponse<Budget>
-) => {
-  return fetch(`${endpoint}/budgets/${budget.data.id}/accounts`, {
+const createAccount = async (account: UnpersistedAccount, budget: Budget) => {
+  return fetch(budget.links.accounts, {
     method: 'POST',
     body: JSON.stringify(account),
     headers: { 'Content-Type': 'application/json' },
   })
     .then(checkStatus)
     .then(parseJSON)
+    .then(data => data.data)
 }
 
-const deleteAccount = async (account: ApiResponse<Account>) => {
-  return fetch(
-    `${endpoint}/budgets/${account.data.budgetId}/accounts/${account.data.id}`,
-    { method: 'DELETE' }
-  ).then(checkStatus)
+const deleteAccount = async (account: Account) => {
+  return fetch(account.links.self, { method: 'DELETE' }).then(checkStatus)
 }
 
 export {
