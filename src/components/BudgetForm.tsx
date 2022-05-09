@@ -1,17 +1,20 @@
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Translation, UnpersistedBudget, Budget, ApiResponse } from '../types'
 import {
-  createBudget,
-  getBudget,
+  Translation,
+  UnpersistedBudget,
+  Budget,
+  BudgetApiConnection,
+} from '../types'
+import connectBudgetApi, {
   updateBudget,
   deleteBudget,
 } from '../lib/api/budgets'
 
 type BudgetFormProps = {
-  selectBudget: (budget?: ApiResponse<Budget>) => void
-  selectedBudget?: ApiResponse<Budget>
+  selectBudget: (budget?: Budget) => void
+  selectedBudget?: Budget
 }
 
 const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
@@ -19,32 +22,32 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
   const params = useParams()
   const navigate = useNavigate()
 
-  const budgetId = params.budgetId || selectedBudget?.data.id.toString()
+  const budgetId = params.budgetId || selectedBudget?.id.toString()
 
-  const [budget, setBudget] = useState<ApiResponse<UnpersistedBudget | Budget>>(
-    { data: {} }
-  )
+  const [budget, setBudget] = useState<UnpersistedBudget | Budget>({})
+  const [budgetApi, setBudgetApi] = useState<BudgetApiConnection>()
 
   const isPersisted = typeof budgetId !== 'undefined' && budgetId !== 'new'
 
   useEffect(() => {
-    if (typeof selectedBudget !== 'undefined') {
-      setBudget(selectedBudget)
-    } else if (isPersisted) {
-      getBudget(budgetId).then(setBudget)
-    }
+    connectBudgetApi().then(api => {
+      setBudgetApi(api)
+      if (typeof selectedBudget !== 'undefined') {
+        setBudget(selectedBudget)
+      } else if (isPersisted) {
+        api.getBudget(budgetId).then(setBudget)
+      }
+    })
   }, [budgetId, selectedBudget, isPersisted])
 
   const updateValue = (key: keyof Budget, value: any) => {
-    setBudget({ ...budget, data: { ...budget.data, [key]: value } })
+    setBudget({ ...budget, [key]: value })
   }
 
-  const navigateToDashboard = (selectedBudget: ApiResponse<Budget>) => {
+  const navigateToDashboard = (selectedBudget: Budget) => {
     selectBudget(selectedBudget)
     navigate('/')
   }
-
-  const budgetData = budget.data
 
   return (
     <form
@@ -55,10 +58,10 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
           return
         }
 
-        if ('id' in budgetData) {
-          updateBudget(budgetData.id, budgetData).then(navigateToDashboard)
+        if ('id' in budget) {
+          updateBudget(budget).then(navigateToDashboard)
         } else {
-          createBudget(budgetData).then(navigateToDashboard)
+          budgetApi?.createBudget(budget).then(navigateToDashboard)
         }
       }}
     >
@@ -89,7 +92,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
                       type="text"
                       name="name"
                       id="name"
-                      value={budgetData?.name || ''}
+                      value={budget?.name || ''}
                       onChange={e => updateValue('name', e.target.value)}
                       className="flex-1 block w-full min-w-0 sm:text-sm"
                     />
@@ -110,7 +113,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
                       type="text"
                       name="currency"
                       id="currency"
-                      value={budgetData?.currency || ''}
+                      value={budget?.currency || ''}
                       onChange={e => updateValue('currency', e.target.value)}
                       className="flex-1 block w-full min-w-0 sm:text-sm"
                     />
@@ -130,7 +133,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
                     id="note"
                     name="note"
                     rows={3}
-                    value={budgetData?.note || ''}
+                    value={budget?.note || ''}
                     onChange={e => updateValue('note', e.target.value)}
                     className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
                   />
@@ -145,7 +148,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
               type="button"
               onClick={() => {
                 if (window.confirm(t('budgets.confirmDelete'))) {
-                  deleteBudget(budgetId).then(() => {
+                  deleteBudget(budget as Budget).then(() => {
                     selectBudget(undefined)
                     navigate('/budgets')
                   })
