@@ -30,7 +30,11 @@ const OwnAccountsList = ({ budget }: Props) => {
     <>
       <div className="header">
         <h1>{t('accounts.accounts')}</h1>
-        <Link to="TODO" className="header--action" title={t('accounts.create')}>
+        <Link
+          to="/own-accounts/new"
+          className="header--action"
+          title={t('accounts.create')}
+        >
           <PlusIcon className="icon" />
         </Link>
       </div>
@@ -47,13 +51,15 @@ const OwnAccountsList = ({ budget }: Props) => {
                   className="box col-span-1 hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
                   <Link
-                    to={`TODO`}
-                    title={t('edit')}
-                    className="absolute right-10 md:right-12"
+                    to={`/own-accounts/${account.id}`}
+                    className="w-full text-center"
                   >
-                    <PencilIcon className="icon" />
-                  </Link>
-                  <Link to="TODO" className="w-full text-center">
+                    <div
+                      title={t('edit')}
+                      className="absolute right-10 md:right-12"
+                    >
+                      <PencilIcon className="icon" />
+                    </div>
                     <h3
                       className={
                         typeof account.name === 'undefined' ? 'italic' : ''
@@ -86,7 +92,7 @@ const OwnAccountsList = ({ budget }: Props) => {
           ) : (
             <div>{t('accounts.emptyList')}</div>
           )}
-          <Link to="TODO" title={t('accounts.create')}>
+          <Link to="/own-accounts/new" title={t('accounts.create')}>
             <PlusCircleIcon className="icon icon-lg mx-auto mt-4" />
           </Link>
         </div>

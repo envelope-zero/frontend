@@ -11,6 +11,7 @@ import Dashboard from './components/Dashboard'
 import BudgetSwitch from './components/BudgetSwitch'
 import BudgetForm from './components/BudgetForm'
 import OwnAccountsList from './components/OwnAccountsList'
+import AccountForm from './components/AccountForm'
 import cookie from './lib/cookie'
 import './i18n'
 import { Budget, ApiResponse } from './types'
@@ -61,6 +62,10 @@ const App = () => {
               <Route
                 path="own-accounts"
                 element={<OwnAccountsList budget={budget} />}
+              />
+              <Route
+                path="own-accounts/:accountId"
+                element={<AccountForm budget={budget} type="internal" />}
               />
               {/* TODO: more routes here */}
               <Route
