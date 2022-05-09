@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import {
   Translation,
   Account,
@@ -48,9 +48,12 @@ const OwnAccountForm = ({ budget, type }: Props) => {
     >
       <div className="header">
         <h1>{t('accounts.account')}</h1>
-        <button className="header--action" type="submit">
-          {t('save')}
-        </button>
+        <div className="header--action">
+          <Link to={-1 as any} className="header--action__secondary">
+            {t('cancel')}
+          </Link>
+          <button type="submit">{t('save')}</button>
+        </div>
       </div>
 
       {isPersisted && typeof account === 'undefined' ? (

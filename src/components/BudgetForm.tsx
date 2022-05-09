@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Translation, UnpersistedBudget, Budget, ApiResponse } from '../types'
 import {
@@ -64,9 +64,12 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
     >
       <div className="header">
         <h1>{t('budgets.budget')}</h1>
-        <button className="header--action" type="submit">
-          {t('save')}
-        </button>
+        <div className="header--action">
+          <Link to={-1 as any} className="header--action__secondary">
+            {t('cancel')}
+          </Link>
+          <button type="submit">{t('save')}</button>
+        </div>
       </div>
 
       <div className="space-y-8 divide-y divide-gray-200">
