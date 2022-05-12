@@ -38,7 +38,7 @@ const updateAccount = async (account: Account) => {
 const createAccount = async (account: UnpersistedAccount, budget: Budget) => {
   return fetch(budget.links.accounts, {
     method: 'POST',
-    body: JSON.stringify(account),
+    body: JSON.stringify({ ...account, budgetId: budget.id }),
     headers: { 'Content-Type': 'application/json' },
   })
     .then(checkStatus)
