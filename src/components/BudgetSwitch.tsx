@@ -40,12 +40,12 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
               {budgets.map(budget => (
                 <li
                   key={budget.id}
-                  className="box col-span-1 hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+                  className="box col-span-1 relative hover:bg-gray-200 p-4 md:hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
                   <Link
                     to={`/budgets/${budget.id}`}
                     title={t('edit')}
-                    className="absolute right-10 md:right-12"
+                    className="absolute right-4"
                   >
                     <PencilIcon className="icon" />
                   </Link>
