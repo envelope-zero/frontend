@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Translation, Budget } from '../types'
 import { PencilIcon } from '@heroicons/react/solid'
-import { PlusCircleIcon } from '@heroicons/react/outline'
+import { PlusCircleIcon, PlusIcon } from '@heroicons/react/outline'
 import connectBudgetApi from '../lib/api/budgets'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
@@ -30,7 +30,16 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
 
   return (
     <>
-      <h1 className="header">{t('budgets.budgets')}</h1>
+      <div className="header">
+        <h1>{t('budgets.budgets')}</h1>
+        <Link
+          to="/budgets/new"
+          className="header--action"
+          title={t('accounts.create')}
+        >
+          <PlusIcon className="icon" />
+        </Link>
+      </div>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
