@@ -21,6 +21,7 @@ const AccountForm = ({ budget, type }: Props) => {
 
   const [account, setAccount] = useState<UnpersistedAccount | Account>({
     ...newAccount,
+    external: type === 'external',
   })
 
   const isPersisted = typeof accountId !== 'undefined' && accountId !== 'new'
@@ -140,16 +141,6 @@ const AccountForm = ({ budget, type }: Props) => {
                     />
                   </div>
                 </div>
-
-                {isPersisted ? null : (
-                  <input
-                    type="checkbox"
-                    hidden
-                    readOnly
-                    name="external"
-                    checked={type === 'external'}
-                  />
-                )}
               </div>
             </div>
             {isPersisted ? (

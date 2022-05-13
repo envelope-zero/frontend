@@ -15,7 +15,10 @@ const AccountListSwitch = ({ selected }: Props) => {
       <Link to="/own-accounts" className={tabClasses(selected === 'internal')}>
         {t('accounts.internalAccounts')}
       </Link>
-      <Link to="TODO" className={tabClasses(selected === 'external')}>
+      <Link
+        to="/external-accounts"
+        className={tabClasses(selected === 'external')}
+      >
         {t('accounts.externalAccounts')}
       </Link>
     </div>

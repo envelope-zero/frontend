@@ -38,11 +38,13 @@ const OwnAccountsList = ({ budget }: Props) => {
           <PlusIcon className="icon" />
         </Link>
       </div>
+
+      <AccountListSwitch selected="internal" />
+
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         <div>
-          <AccountListSwitch selected="internal" />
           {accounts.length ? (
             <ul className="grid grid-cols-1 gap-5 sm:gap-6">
               {accounts.map(account => (
@@ -50,10 +52,7 @@ const OwnAccountsList = ({ budget }: Props) => {
                   key={account.id}
                   className="box col-span-1 hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
-                  <Link
-                    to={`/own-accounts/${account.id}`}
-                    className="w-full text-center"
-                  >
+                  <Link to={`${account.id}`} className="w-full text-center">
                     <div
                       title={t('edit')}
                       className="absolute right-10 md:right-12"
