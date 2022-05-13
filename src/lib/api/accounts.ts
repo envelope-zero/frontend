@@ -14,6 +14,12 @@ const getInternalAccounts = async (budget: Budget) => {
   )
 }
 
+const getExternalAccounts = async (budget: Budget) => {
+  return getAccounts(budget).then((accounts: Account[]) =>
+    accounts.filter(account => account.external)
+  )
+}
+
 const getAccount = async (id: string, budget: Budget) => {
   const url = new URL(budget.links.accounts)
   url.pathname += `/${id}`
@@ -52,6 +58,7 @@ const deleteAccount = async (account: Account) => {
 
 export {
   getInternalAccounts,
+  getExternalAccounts,
   getAccount,
   updateAccount,
   createAccount,

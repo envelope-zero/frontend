@@ -34,7 +34,7 @@ h3 {
 }
 
 .icon {
-  @apply text-red-800 h-6 w-6;
+  @apply text-red-800 h-6 w-6 flex-shrink-0;
 }
 
 .icon-lg {

@@ -33,7 +33,7 @@
     "create": "Create Account",
     "delete": "Delete Account",
     "confirmDelete": "Are you sure you want to delete this account?",
-    "emptyList": "No accounts have been created yet. Create a new one now!",
+    "emptyList": "No accounts found. Create a new one now!",
     "offBudget": "Off Budget",
     "onBudget": "On Budget",
     "name": "Name",
