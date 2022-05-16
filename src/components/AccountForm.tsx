@@ -9,6 +9,7 @@ import {
   deleteAccount,
 } from '../lib/api/accounts'
 import LoadingSpinner from './LoadingSpinner'
+import Error from './Error'
 
 type Props = { budget: Budget; type: 'internal' | 'external' }
 
@@ -19,6 +20,7 @@ const AccountForm = ({ budget, type }: Props) => {
 
   const newAccount = { onBudget: true }
 
+  const [error, setError] = useState('')
   const [account, setAccount] = useState<UnpersistedAccount | Account>({
     ...newAccount,
     external: type === 'external',
@@ -28,7 +30,14 @@ const AccountForm = ({ budget, type }: Props) => {
 
   useEffect(() => {
     if (isPersisted) {
-      getAccount(accountId, budget).then(setAccount)
+      getAccount(accountId, budget)
+        .then(data => {
+          setAccount(data)
+          setError('')
+        })
+        .catch(err => {
+          setError(err.message)
+        })
     }
   }, [accountId, budget, isPersisted])
 
@@ -41,9 +50,17 @@ const AccountForm = ({ budget, type }: Props) => {
       onSubmit={e => {
         e.preventDefault()
         if ('id' in account) {
-          updateAccount(account).then(() => navigate(-1))
+          updateAccount(account)
+            .then(() => navigate(-1))
+            .catch(err => {
+              setError(err.message)
+            })
         } else {
-          createAccount(account, budget).then(() => navigate(-1))
+          createAccount(account, budget)
+            .then(() => navigate(-1))
+            .catch(err => {
+              setError(err.message)
+            })
         }
       }}
     >
@@ -56,6 +73,8 @@ const AccountForm = ({ budget, type }: Props) => {
           <button type="submit">{t('save')}</button>
         </div>
       </div>
+
+      <Error error={error} />
 
       {isPersisted && typeof account === 'undefined' ? (
         <LoadingSpinner />
@@ -149,9 +168,13 @@ const AccountForm = ({ budget, type }: Props) => {
                   type="button"
                   onClick={() => {
                     if (window.confirm(t('accounts.confirmDelete'))) {
-                      deleteAccount(account as Account).then(() => {
-                        navigate(-1)
-                      })
+                      deleteAccount(account as Account)
+                        .then(() => {
+                          navigate(-1)
+                        })
+                        .catch(err => {
+                          setError(err.message)
+                        })
                     }
                   }}
                   className="box w-full text-red-800 py-2 px-4 text-sm font-medium hover:bg-gray-200"

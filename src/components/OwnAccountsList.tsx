@@ -9,6 +9,7 @@ import { formatMoney } from '../lib/format'
 import { safeName } from '../lib/name-helper'
 import LoadingSpinner from './LoadingSpinner'
 import AccountListSwitch from './AccountListSwitch'
+import Error from './Error'
 
 type Props = {
   budget: Budget
@@ -18,12 +19,19 @@ const OwnAccountsList = ({ budget }: Props) => {
   const { t }: Translation = useTranslation()
   const [isLoading, setIsLoading] = useState(true)
   const [accounts, setAccounts] = useState<Account[]>([])
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    getInternalAccounts(budget).then(data => {
-      setAccounts(data)
-      setIsLoading(false)
-    })
+    getInternalAccounts(budget)
+      .then(data => {
+        setAccounts(data)
+        setIsLoading(false)
+        setError('')
+      })
+      .catch(err => {
+        setError(err.message)
+        setIsLoading(false)
+      })
   }, [budget])
 
   return (
@@ -40,6 +48,7 @@ const OwnAccountsList = ({ budget }: Props) => {
       </div>
 
       <AccountListSwitch selected="internal" />
+      <Error error={error} />
 
       {isLoading ? (
         <LoadingSpinner />

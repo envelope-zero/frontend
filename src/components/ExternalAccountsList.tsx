@@ -5,6 +5,7 @@ import { Budget, Translation, Account } from '../types'
 import { PlusIcon } from '@heroicons/react/outline'
 import LoadingSpinner from './LoadingSpinner'
 import AccountListSwitch from './AccountListSwitch'
+import Error from './Error'
 import { getExternalAccounts } from '../lib/api/accounts'
 import { safeName } from '../lib/name-helper'
 import { PencilIcon } from '@heroicons/react/solid'
@@ -13,25 +14,32 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
   const { t }: Translation = useTranslation()
   const [isLoading, setIsLoading] = useState(true)
   const [accounts, setAccounts] = useState<{ [key: string]: Account[] }>({})
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    getExternalAccounts(budget).then(data => {
-      const groupedAccounts = data.reduce(
-        (object: { [letter: string]: Account[] }, account: Account) => {
-          const letter = (account.name || '').substring(0, 1).toUpperCase()
-          object[letter] ||= []
-          object[letter].push(account)
-          object[letter] = object[letter].sort((a, b) =>
-            safeName(a, 'account').localeCompare(safeName(b, 'account'))
-          )
-          return object
-        },
-        {}
-      )
+    getExternalAccounts(budget)
+      .then(data => {
+        const groupedAccounts = data.reduce(
+          (object: { [letter: string]: Account[] }, account: Account) => {
+            const letter = (account.name || '').substring(0, 1).toUpperCase()
+            object[letter] ||= []
+            object[letter].push(account)
+            object[letter] = object[letter].sort((a, b) =>
+              safeName(a, 'account').localeCompare(safeName(b, 'account'))
+            )
+            return object
+          },
+          {}
+        )
 
-      setAccounts(groupedAccounts)
-      setIsLoading(false)
-    })
+        setAccounts(groupedAccounts)
+        setIsLoading(false)
+        setError('')
+      })
+      .catch(err => {
+        setError(err.message)
+        setIsLoading(false)
+      })
   }, [budget])
 
   return (
@@ -48,6 +56,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
       </div>
 
       <AccountListSwitch selected="external" />
+      <Error error={error} />
       {/* TODO: search bar */}
 
       {isLoading ? (
