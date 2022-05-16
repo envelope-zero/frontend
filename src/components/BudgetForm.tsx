@@ -11,6 +11,7 @@ import connectBudgetApi, {
   updateBudget,
   deleteBudget,
 } from '../lib/api/budgets'
+import Error from './Error'
 
 type BudgetFormProps = {
   selectBudget: (budget?: Budget) => void
@@ -26,6 +27,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
 
   const [budget, setBudget] = useState<UnpersistedBudget | Budget>({})
   const [budgetApi, setBudgetApi] = useState<BudgetApiConnection>()
+  const [error, setError] = useState('')
 
   const isPersisted = typeof budgetId !== 'undefined' && budgetId !== 'new'
 
@@ -35,7 +37,15 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
       if (typeof selectedBudget !== 'undefined') {
         setBudget(selectedBudget)
       } else if (isPersisted) {
-        api.getBudget(budgetId).then(setBudget)
+        api
+          .getBudget(budgetId)
+          .then(data => {
+            setError('')
+            setBudget(data)
+          })
+          .catch(err => {
+            setError(err.message)
+          })
       }
     })
   }, [budgetId, selectedBudget, isPersisted])
@@ -45,6 +55,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
   }
 
   const navigateToDashboard = (selectedBudget: Budget) => {
+    setError('')
     selectBudget(selectedBudget)
     navigate('/')
   }
@@ -59,9 +70,18 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
         }
 
         if ('id' in budget) {
-          updateBudget(budget).then(navigateToDashboard)
+          updateBudget(budget)
+            .then(navigateToDashboard)
+            .catch(err => {
+              setError(err.message)
+            })
         } else {
-          budgetApi?.createBudget(budget).then(navigateToDashboard)
+          budgetApi
+            ?.createBudget(budget)
+            .then(navigateToDashboard)
+            .catch(err => {
+              setError(err.message)
+            })
         }
       }}
     >
@@ -74,6 +94,8 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
           <button type="submit">{t('save')}</button>
         </div>
       </div>
+
+      <Error error={error} />
 
       <div className="space-y-8 divide-y divide-gray-200">
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
@@ -148,10 +170,15 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
               type="button"
               onClick={() => {
                 if (window.confirm(t('budgets.confirmDelete'))) {
-                  deleteBudget(budget as Budget).then(() => {
-                    selectBudget(undefined)
-                    navigate('/budgets')
-                  })
+                  deleteBudget(budget as Budget)
+                    .then(() => {
+                      selectBudget(undefined)
+                      setError('')
+                      navigate('/budgets')
+                    })
+                    .catch(err => {
+                      setError(err.message)
+                    })
                 }
               }}
               className="box w-full text-red-800 py-2 px-4 text-sm font-medium hover:bg-gray-200"

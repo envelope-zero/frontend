@@ -8,6 +8,7 @@ import connectBudgetApi from '../lib/api/budgets'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 import { safeName } from '../lib/name-helper'
+import Error from './Error'
 
 type BudgetSwitchProps = {
   selectBudget: (budget?: Budget) => void
@@ -18,13 +19,21 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
 
   const [isLoading, setIsLoading] = useState(true)
   const [budgets, setBudgets] = useState<Budget[]>([])
+  const [error, setError] = useState('')
 
   useEffect(() => {
     connectBudgetApi().then(api => {
-      api.getBudgets().then(data => {
-        setBudgets(data)
-        setIsLoading(false)
-      })
+      api
+        .getBudgets()
+        .then(data => {
+          setBudgets(data)
+          setIsLoading(false)
+          setError('')
+        })
+        .catch(err => {
+          setError(err.message)
+          setIsLoading(false)
+        })
     })
   }, [])
 
@@ -40,6 +49,8 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
           <PlusIcon className="icon" />
         </Link>
       </div>
+      <Error error={error} />
+
       {isLoading ? (
         <LoadingSpinner />
       ) : (

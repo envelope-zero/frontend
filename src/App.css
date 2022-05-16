@@ -49,3 +49,7 @@ input,
 textarea {
   @apply border border-gray-300 rounded-md p-2 focus:ring-red-800 focus:border-red-800;
 }
+
+.error {
+  @apply bg-red-100 p-2 rounded-md;
+}

@@ -18,15 +18,25 @@ import connectBudgetApi from './lib/api/budgets'
 import './i18n'
 import { Budget } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
+import Error from './components/Error'
 
 const App = () => {
   const [budget, setBudget] = useState<Budget>()
+  const [error, setError] = useState('')
   const budgetId = cookie.get('budgetId')
 
   useEffect(() => {
     if (typeof budgetId !== 'undefined') {
       connectBudgetApi().then(api => {
-        api.getBudget(budgetId).then(setBudget)
+        api
+          .getBudget(budgetId)
+          .then(data => {
+            setBudget(data)
+            setError('')
+          })
+          .catch(err => {
+            setError(err.message)
+          })
       })
     }
   }, [budgetId])
@@ -44,50 +54,56 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Layout budget={budget} />}>
-          <Route
-            path="budgets"
-            element={<BudgetSwitch selectBudget={selectBudget} />}
-          />
-          <Route
-            path="budgets/:budgetId"
-            element={<BudgetForm selectBudget={selectBudget} />}
-          />
-          {typeof budgetId === 'undefined' ? (
-            <Route
-              path="/"
-              element={<BudgetSwitch selectBudget={selectBudget} />}
-            />
-          ) : typeof budget === 'undefined' ? (
-            <Route path="*" element={<LoadingSpinner />} />
+          {error ? (
+            <Route path="*" element={<Error error={error} />} />
           ) : (
             <>
-              <Route index element={<Dashboard budget={budget} />} />
               <Route
-                path="own-accounts"
-                element={<OwnAccountsList budget={budget} />}
+                path="budgets"
+                element={<BudgetSwitch selectBudget={selectBudget} />}
               />
               <Route
-                path="own-accounts/:accountId"
-                element={<AccountForm budget={budget} type="internal" />}
+                path="budgets/:budgetId"
+                element={<BudgetForm selectBudget={selectBudget} />}
               />
-              <Route
-                path="external-accounts"
-                element={<ExternalAccountsList budget={budget} />}
-              />
-              <Route
-                path="external-accounts/:accountId"
-                element={<AccountForm budget={budget} type="external" />}
-              />
-              {/* TODO: more routes here */}
-              <Route
-                path="/settings"
-                element={
-                  <BudgetForm
-                    selectBudget={selectBudget}
-                    selectedBudget={budget}
+              {typeof budgetId === 'undefined' ? (
+                <Route
+                  path="/"
+                  element={<BudgetSwitch selectBudget={selectBudget} />}
+                />
+              ) : typeof budget === 'undefined' ? (
+                <Route path="*" element={<LoadingSpinner />} />
+              ) : (
+                <>
+                  <Route index element={<Dashboard budget={budget} />} />
+                  <Route
+                    path="own-accounts"
+                    element={<OwnAccountsList budget={budget} />}
                   />
-                }
-              />
+                  <Route
+                    path="own-accounts/:accountId"
+                    element={<AccountForm budget={budget} type="internal" />}
+                  />
+                  <Route
+                    path="external-accounts"
+                    element={<ExternalAccountsList budget={budget} />}
+                  />
+                  <Route
+                    path="external-accounts/:accountId"
+                    element={<AccountForm budget={budget} type="external" />}
+                  />
+                  {/* TODO: more routes here */}
+                  <Route
+                    path="/settings"
+                    element={
+                      <BudgetForm
+                        selectBudget={selectBudget}
+                        selectedBudget={budget}
+                      />
+                    }
+                  />
+                </>
+              )}
             </>
           )}
           <Route path="*" element={<Navigate to="/" replace />} />
