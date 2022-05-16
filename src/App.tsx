@@ -13,6 +13,7 @@ import BudgetForm from './components/BudgetForm'
 import OwnAccountsList from './components/OwnAccountsList'
 import ExternalAccountsList from './components/ExternalAccountsList'
 import AccountForm from './components/AccountForm'
+import TransactionsList from './components/TransactionsList'
 import cookie from './lib/cookie'
 import connectBudgetApi from './lib/api/budgets'
 import './i18n'
@@ -91,6 +92,10 @@ const App = () => {
                   <Route
                     path="external-accounts/:accountId"
                     element={<AccountForm budget={budget} type="external" />}
+                  />
+                  <Route
+                    path="transactions"
+                    element={<TransactionsList budget={budget} />}
                   />
                   {/* TODO: more routes here */}
                   <Route

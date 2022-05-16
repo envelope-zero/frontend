@@ -35,5 +35,18 @@ export type Account = UnpersistedAccount & {
 
 export type ApiResponse<T> = {
   data?: T
-  error?: any // TODO
+  error?: string
+}
+
+export type Transaction = {
+  id: number
+  amount: number
+  date?: string
+  reconciled?: boolean
+  note?: string
+  budgetId: number
+  destinationAccountId: number
+  sourceAccountId: number
+  envelopeId?: number
+  links: ApiLinks
 }
