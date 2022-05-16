@@ -38,5 +38,12 @@
     "onBudget": "On Budget",
     "name": "Name",
     "note": "Note"
+  },
+  "transactions": {
+    "transactions": "Transactions",
+    "transaction": "Transaction",
+    "from": "From",
+    "to": "To",
+    "emptyList": "No transactions found. Create a new one now!"
   }
 }

@@ -57,6 +57,7 @@ const deleteAccount = async (account: Account) => {
 }
 
 export {
+  getAccounts,
   getInternalAccounts,
   getExternalAccounts,
   getAccount,
