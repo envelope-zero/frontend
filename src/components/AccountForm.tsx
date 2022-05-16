@@ -181,11 +181,11 @@ const AccountForm = ({ budget, type }: Props) => {
                 >
                   {t('accounts.delete')}
                 </button>
-                TODO: reconcile
+                {/* TODO: reconcile */}
               </div>
             ) : null}
           </div>
-          {isPersisted ? 'TODO: transactions' : null}
+          {/* {isPersisted ? 'TODO: transactions' : null} */}
         </>
       )}
     </form>
