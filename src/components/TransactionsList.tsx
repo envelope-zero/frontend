@@ -78,14 +78,17 @@ const TransactionsList = ({ budget }: Props) => {
                   if (sourceAccount?.external) {
                     sign = '+'
                     color = 'text-lime-700'
-                    title ||=
-                      `${t('transactions.from')} ${sourceAccount?.name}` || ''
+                    title ||= `${t('transactions.from')} ${safeName(
+                      sourceAccount,
+                      'account'
+                    )}`
                   } else if (destinationAccount?.external) {
                     sign = '-'
                     color = 'text-red-600'
-                    title ||=
-                      `${t('transactions.to')} ${destinationAccount?.name}` ||
-                      ''
+                    title ||= `${t('transactions.to')} ${safeName(
+                      destinationAccount,
+                      'account'
+                    )}`
                   } else {
                     sign = '±'
                     color = 'text-sky-600'
@@ -98,7 +101,7 @@ const TransactionsList = ({ budget }: Props) => {
                   return (
                     <li key={transaction.id}>
                       <Link
-                        to={`transactions/${transaction.id}`}
+                        to={`/transactions/${transaction.id}`}
                         className="block hover:bg-gray-50"
                       >
                         <div className="px-2 py-4 sm:px-6">

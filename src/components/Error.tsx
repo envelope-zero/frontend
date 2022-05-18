@@ -8,7 +8,7 @@ const Error = ({ error }: Props) => {
   }
 
   return (
-    <div className="error">
+    <div className="error mb-3">
       <ExclamationIcon className="icon inline mr-1" /> {error}
     </div>
   )
