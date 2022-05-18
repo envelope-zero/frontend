@@ -44,6 +44,16 @@
     "transaction": "Transaction",
     "from": "From",
     "to": "To",
-    "emptyList": "No transactions found. Create a new one now!"
+    "emptyList": "No transactions found. Create a new one now!",
+    "unlock": "Unlock",
+    "unlockBeforeEditing": "This transaction has been reconciled and is therefore locked. If you want to edit it, you need to unlock it, which will also mark it as unreconciled again.",
+    "delete": "Delete transaction",
+    "confirmDelete": "Are you sure you want to delete this transaction?",
+    "amount": "Amount",
+    "date": "Date",
+    "note": "Note",
+    "destinationAccountId": "Destination",
+    "sourceAccountId": "Source",
+    "envelopeId": "Envelope"
   }
 }
