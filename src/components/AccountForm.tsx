@@ -10,6 +10,8 @@ import {
 } from '../lib/api/accounts'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
+import FormFields from './FormFields'
+import FormField from './FormField'
 
 type Props = { budget: Budget; type: 'internal' | 'external' }
 
@@ -80,111 +82,91 @@ const AccountForm = ({ budget, type }: Props) => {
         <LoadingSpinner />
       ) : (
         <>
-          <div className="space-y-8 divide-y divide-gray-200">
-            <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-              <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                  >
-                    {t('accounts.name')}
-                  </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <div className="max-w-lg flex rounded-md shadow-sm">
-                      <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        value={account.name || ''}
-                        onChange={e => updateValue('name', e.target.value)}
-                        className="flex-1 block w-full min-w-0 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-                </div>
+          <FormFields>
+            <FormField
+              type="text"
+              name="name"
+              label={t('accounts.name')}
+              value={account.name || ''}
+              onChange={e => updateValue('name', e.target.value)}
+            />
 
-                {type === 'internal' ? (
-                  <div className="grid grid-cols-3 gap-4 items-center sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="onbudget">{t('accounts.onBudget')}</label>
-                    <div
-                      className="mt-px pt-2 pr-2 col-span-2 flex sm:block justify-end"
-                      onClick={e => {
-                        e.preventDefault()
-                        updateValue('onBudget', !account.onBudget)
-                      }}
-                    >
-                      <div
-                        className={`max-w-lg ${
-                          account.onBudget ? 'bg-lime-600' : 'bg-gray-200'
-                        } relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500`}
-                      >
-                        <span
-                          aria-hidden="true"
-                          className={`${
-                            account?.onBudget
-                              ? 'translate-x-5'
-                              : 'translate-x-0'
-                          } inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 pointer-events-none`}
-                        ></span>
-                        <input
-                          type="checkbox"
-                          id="onBudget"
-                          name="onBudget"
-                          className="absolute inset-0 sr-only"
-                          defaultChecked={account?.onBudget}
-                          onChange={e =>
-                            updateValue('onBudget', e.target.checked)
-                          }
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ) : null}
-
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label
-                    htmlFor="note"
-                    className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            {type === 'internal' ? (
+              <div className="grid grid-cols-3 gap-4 items-center sm:border-t sm:border-gray-200 sm:pt-5">
+                <label htmlFor="onbudget">{t('accounts.onBudget')}</label>
+                <div
+                  className="mt-px pt-2 pr-2 col-span-2 flex sm:block justify-end"
+                  onClick={e => {
+                    e.preventDefault()
+                    updateValue('onBudget', !account.onBudget)
+                  }}
+                >
+                  <div
+                    className={`max-w-lg ${
+                      account.onBudget ? 'bg-lime-600' : 'bg-gray-200'
+                    } relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500`}
                   >
-                    {t('accounts.note')}
-                  </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <textarea
-                      id="note"
-                      name="note"
-                      rows={3}
-                      value={account?.note || ''}
-                      onChange={e => updateValue('note', e.target.value)}
-                      className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
+                    <span
+                      aria-hidden="true"
+                      className={`${
+                        account?.onBudget ? 'translate-x-5' : 'translate-x-0'
+                      } inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 pointer-events-none`}
+                    ></span>
+                    <input
+                      type="checkbox"
+                      id="onBudget"
+                      name="onBudget"
+                      className="absolute inset-0 sr-only"
+                      defaultChecked={account?.onBudget}
+                      onChange={e => updateValue('onBudget', e.target.checked)}
                     />
                   </div>
                 </div>
               </div>
-            </div>
-            {isPersisted ? (
-              <div className="pt-5">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (window.confirm(t('accounts.confirmDelete'))) {
-                      deleteAccount(account as Account)
-                        .then(() => {
-                          navigate(-1)
-                        })
-                        .catch(err => {
-                          setError(err.message)
-                        })
-                    }
-                  }}
-                  className="btn-secondary"
-                >
-                  {t('accounts.delete')}
-                </button>
-                {/* TODO: reconcile */}
-              </div>
             ) : null}
-          </div>
+
+            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+              <label
+                htmlFor="note"
+                className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+              >
+                {t('accounts.note')}
+              </label>
+              <div className="mt-1 sm:mt-0 sm:col-span-2">
+                <textarea
+                  id="note"
+                  name="note"
+                  rows={3}
+                  value={account?.note || ''}
+                  onChange={e => updateValue('note', e.target.value)}
+                  className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
+                />
+              </div>
+            </div>
+          </FormFields>
+
+          {isPersisted ? (
+            <div className="pt-5">
+              <button
+                type="button"
+                onClick={() => {
+                  if (window.confirm(t('accounts.confirmDelete'))) {
+                    deleteAccount(account as Account)
+                      .then(() => {
+                        navigate(-1)
+                      })
+                      .catch(err => {
+                        setError(err.message)
+                      })
+                  }
+                }}
+                className="btn-secondary"
+              >
+                {t('accounts.delete')}
+              </button>
+              {/* TODO: reconcile */}
+            </div>
+          ) : null}
           {/* {isPersisted ? 'TODO: transactions' : null} */}
         </>
       )}

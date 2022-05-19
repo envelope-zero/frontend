@@ -17,6 +17,8 @@ import {
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
 import { LockClosedIcon } from '@heroicons/react/solid'
+import FormFields from './FormFields'
+import FormField from './FormField'
 
 type Props = { budget: Budget }
 
@@ -98,161 +100,73 @@ const TransactionForm = ({ budget }: Props) => {
             </div>
           ) : null}
 
-          <div className="space-y-8 divide-y divide-gray-200">
-            <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-              <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label
-                    htmlFor="note"
-                    className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                  >
-                    {t('transactions.note')}
-                  </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <div className="max-w-lg flex rounded-md shadow-sm">
-                      <input
-                        type="text"
-                        name="note"
-                        id="note"
-                        value={transaction.note || ''}
-                        onChange={e => updateValue('note', e.target.value)}
-                        className="flex-1 block w-full min-w-0 sm:text-sm"
-                        disabled={transaction.reconciled}
-                      />
-                    </div>
-                  </div>
-                </div>
+          <FormFields>
+            <FormField
+              type="text"
+              name="note"
+              label={t('transactions.note')}
+              value={transaction.note || ''}
+              onChange={e => updateValue('note', e.target.value)}
+              options={{ disabled: transaction.reconciled || false }}
+            />
 
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label
-                    htmlFor="amount"
-                    className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                  >
-                    {t('transactions.amount')}
-                  </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2 relative">
-                    <div className="max-w-lg flex rounded-md shadow-sm">
-                      <input
-                        type="number"
-                        name="amount"
-                        id="amount"
-                        value={transaction.amount || 0}
-                        onChange={e =>
-                          updateValue('amount', Number(e.target.value))
-                        }
-                        className="flex-1 block w-full min-w-0 sm:text-sm"
-                        disabled={transaction.reconciled}
-                      />
-                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <span className="text-gray-500 sm:text-sm">
-                          {budget.currency}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label
-                    htmlFor="date"
-                    className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                  >
-                    {t('transactions.date')}
-                  </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <div className="max-w-lg flex rounded-md shadow-sm">
-                      <input
-                        type="date"
-                        name="date"
-                        id="date"
-                        value={dateFromIsoString(transaction.date || '')}
-                        onChange={e =>
-                          updateValue('date', dateToIsoString(e.target.value))
-                        }
-                        className="flex-1 block w-full min-w-0 sm:text-sm"
-                        disabled={transaction.reconciled}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label
-                    htmlFor="sourceAccountId"
-                    className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                  >
-                    {t('transactions.sourceAccountId')}
-                  </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <div className="max-w-lg flex rounded-md shadow-sm">
-                      <input
-                        type="text"
-                        name="sourceAccountId"
-                        id="sourceAccountId"
-                        value={transaction.sourceAccountId || ''}
-                        onChange={e =>
-                          updateValue('sourceAccountId', Number(e.target.value))
-                        }
-                        className="flex-1 block w-full min-w-0 sm:text-sm"
-                        disabled={transaction.reconciled}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label
-                    htmlFor="destinationAccountId"
-                    className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                  >
-                    {t('transactions.destinationAccountId')}
-                  </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <div className="max-w-lg flex rounded-md shadow-sm">
-                      <input
-                        type="text"
-                        name="destinationAccountId"
-                        id="destinationAccountId"
-                        value={transaction.destinationAccountId || ''}
-                        onChange={e =>
-                          updateValue(
-                            'destinationAccountId',
-                            Number(e.target.value)
-                          )
-                        }
-                        className="flex-1 block w-full min-w-0 sm:text-sm"
-                        disabled={transaction.reconciled}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label
-                    htmlFor="envelopeId"
-                    className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                  >
-                    {t('transactions.envelopeId')}
-                  </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <div className="max-w-lg flex rounded-md shadow-sm">
-                      <input
-                        type="text"
-                        name="envelopeId"
-                        id="envelopeId"
-                        value={transaction.envelopeId || ''}
-                        onChange={e =>
-                          updateValue('envelopeId', Number(e.target.value))
-                        }
-                        className="flex-1 block w-full min-w-0 sm:text-sm"
-                        disabled={transaction.reconciled}
-                      />
-                    </div>
-                  </div>
-                </div>
+            <FormField
+              type="number"
+              name="amount"
+              label={t('transactions.amount')}
+              value={transaction.amount || 0}
+              onChange={e => updateValue('amount', Number(e.target.value))}
+              options={{ disabled: transaction.reconciled || false }}
+            >
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm">
+                  {budget.currency}
+                </span>
               </div>
-            </div>
-          </div>
+            </FormField>
+
+            <FormField
+              type="date"
+              name="date"
+              label={t('transactions.date')}
+              value={dateFromIsoString(transaction.date || '')}
+              onChange={e =>
+                updateValue('date', dateToIsoString(e.target.value))
+              }
+              options={{ disabled: transaction.reconciled || false }}
+            />
+
+            <FormField
+              type="text"
+              name="sourceAccountId"
+              label={t('transactions.sourceAccountId')}
+              value={transaction.sourceAccountId || ''}
+              onChange={e =>
+                updateValue('sourceAccountId', Number(e.target.value))
+              }
+              options={{ disabled: transaction.reconciled || false }}
+            />
+
+            <FormField
+              type="text"
+              name="destinationAccountId"
+              label={t('transactions.destinationAccountId')}
+              value={transaction.destinationAccountId || ''}
+              onChange={e =>
+                updateValue('destinationAccountId', Number(e.target.value))
+              }
+              options={{ disabled: transaction.reconciled || false }}
+            />
+
+            <FormField
+              type="text"
+              name="envelopeId"
+              label={t('transactions.envelopeId')}
+              value={transaction.envelopeId || ''}
+              onChange={e => updateValue('envelopeId', Number(e.target.value))}
+              options={{ disabled: transaction.reconciled || false }}
+            />
+          </FormFields>
 
           {isPersisted ? (
             <div className="pt-5">
