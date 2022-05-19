@@ -7,6 +7,7 @@ import {
   updateTransaction,
   createTransaction,
 } from '../lib/api/transactions'
+import { dateFromIsoString, dateToIsoString } from '../lib/date-helper'
 import {
   Budget,
   Translation,
@@ -161,11 +162,13 @@ const TransactionForm = ({ budget }: Props) => {
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <div className="max-w-lg flex rounded-md shadow-sm">
                       <input
-                        type="text"
+                        type="date"
                         name="date"
                         id="date"
-                        value={transaction.date || ''}
-                        onChange={e => updateValue('date', e.target.value)}
+                        value={dateFromIsoString(transaction.date || '')}
+                        onChange={e =>
+                          updateValue('date', dateToIsoString(e.target.value))
+                        }
                         className="flex-1 block w-full min-w-0 sm:text-sm"
                         disabled={transaction.reconciled}
                       />
