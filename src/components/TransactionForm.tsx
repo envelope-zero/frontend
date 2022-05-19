@@ -54,6 +54,11 @@ const TransactionForm = ({ budget }: Props) => {
       onSubmit={e => {
         e.preventDefault()
 
+        if (transaction.reconciled) {
+          setError(t('transactions.unlockBeforeEditingError'))
+          return
+        }
+
         let result
         if ('id' in transaction) {
           result = updateTransaction(transaction)
@@ -87,7 +92,7 @@ const TransactionForm = ({ budget }: Props) => {
                 {t('transactions.unlock')}
               </button>
               <small className="text-xs md:text-sm">
-                {t('transactions.unlockBeforeEditing')}
+                {t('transactions.unlockBeforeEditingNote')}
               </small>
             </div>
           ) : null}
@@ -111,6 +116,7 @@ const TransactionForm = ({ budget }: Props) => {
                         value={transaction.note || ''}
                         onChange={e => updateValue('note', e.target.value)}
                         className="flex-1 block w-full min-w-0 sm:text-sm"
+                        disabled={transaction.reconciled}
                       />
                     </div>
                   </div>
@@ -134,6 +140,7 @@ const TransactionForm = ({ budget }: Props) => {
                           updateValue('amount', Number(e.target.value))
                         }
                         className="flex-1 block w-full min-w-0 sm:text-sm"
+                        disabled={transaction.reconciled}
                       />
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <span className="text-gray-500 sm:text-sm">
@@ -160,6 +167,7 @@ const TransactionForm = ({ budget }: Props) => {
                         value={transaction.date || ''}
                         onChange={e => updateValue('date', e.target.value)}
                         className="flex-1 block w-full min-w-0 sm:text-sm"
+                        disabled={transaction.reconciled}
                       />
                     </div>
                   </div>
@@ -183,6 +191,7 @@ const TransactionForm = ({ budget }: Props) => {
                           updateValue('sourceAccountId', Number(e.target.value))
                         }
                         className="flex-1 block w-full min-w-0 sm:text-sm"
+                        disabled={transaction.reconciled}
                       />
                     </div>
                   </div>
@@ -209,6 +218,7 @@ const TransactionForm = ({ budget }: Props) => {
                           )
                         }
                         className="flex-1 block w-full min-w-0 sm:text-sm"
+                        disabled={transaction.reconciled}
                       />
                     </div>
                   </div>
@@ -232,6 +242,7 @@ const TransactionForm = ({ budget }: Props) => {
                           updateValue('envelopeId', Number(e.target.value))
                         }
                         className="flex-1 block w-full min-w-0 sm:text-sm"
+                        disabled={transaction.reconciled}
                       />
                     </div>
                   </div>
