@@ -90,7 +90,21 @@ const TransactionForm = ({ budget }: Props) => {
         <>
           {transaction.reconciled ? (
             <div>
-              <button type="button" className="btn-secondary font-bold">
+              <button
+                type="button"
+                className="btn-secondary font-bold"
+                onClick={e => {
+                  e.preventDefault()
+                  if ('id' in transaction) {
+                    updateTransaction({
+                      ...transaction,
+                      reconciled: false,
+                    })
+                      .then(setTransaction)
+                      .catch(err => setError(err.message))
+                  }
+                }}
+              >
                 <LockClosedIcon className="icon inline mr-1" />
                 {t('transactions.unlock')}
               </button>
