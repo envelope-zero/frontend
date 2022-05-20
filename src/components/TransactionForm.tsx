@@ -1,24 +1,28 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, Link } from 'react-router-dom'
+import { LockClosedIcon } from '@heroicons/react/solid'
 import {
   getTransaction,
   deleteTransaction,
   updateTransaction,
   createTransaction,
 } from '../lib/api/transactions'
+import { getAccounts } from '../lib/api/accounts'
 import { dateFromIsoString, dateToIsoString } from '../lib/date-helper'
+import { safeName } from '../lib/name-helper'
 import {
   Budget,
   Translation,
   Transaction,
   UnpersistedTransaction,
+  Account,
 } from '../types'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
-import { LockClosedIcon } from '@heroicons/react/solid'
 import FormFields from './FormFields'
 import FormField from './FormField'
+import Autocomplete from './Autocomplete'
 
 type Props = { budget: Budget }
 
@@ -28,6 +32,7 @@ const TransactionForm = ({ budget }: Props) => {
   const navigate = useNavigate()
 
   const [error, setError] = useState('')
+  const [accounts, setAccounts] = useState<Account[]>([])
   const [transaction, setTransaction] = useState<
     UnpersistedTransaction | Transaction
   >({ amount: 0, destinationAccountId: 0, sourceAccountId: 0 })
@@ -46,6 +51,19 @@ const TransactionForm = ({ budget }: Props) => {
           setError(err.message)
         })
     }
+
+    getAccounts(budget)
+      .then((accounts: Account[]) => {
+        setAccounts(
+          accounts.sort((a, b) =>
+            safeName(a, 'account').localeCompare(safeName(b, 'account'))
+          )
+        )
+        setError('')
+      })
+      .catch(err => {
+        setError(err.message)
+      })
   }, [budget, isPersisted, transactionId])
 
   const updateValue = (key: keyof Transaction, value: any) => {
@@ -150,36 +168,37 @@ const TransactionForm = ({ budget }: Props) => {
               options={{ disabled: transaction.reconciled || false }}
             />
 
-            <FormField
-              type="text"
-              name="sourceAccountId"
+            <Autocomplete<Account>
+              items={accounts}
+              itemLabel={account => safeName(account, 'account')}
+              itemId={account => account.id}
               label={t('transactions.sourceAccountId')}
-              value={transaction.sourceAccountId || ''}
-              onChange={e =>
-                updateValue('sourceAccountId', Number(e.target.value))
+              onChange={account => updateValue('sourceAccountId', account.id)}
+              value={
+                accounts.find(
+                  account => account.id === transaction.sourceAccountId
+                ) as Account
               }
-              options={{ disabled: transaction.reconciled || false }}
+              disabled={transaction.reconciled}
             />
 
-            <FormField
-              type="text"
-              name="destinationAccountId"
+            <Autocomplete<Account>
+              items={accounts}
+              itemLabel={account => safeName(account, 'account')}
+              itemId={account => account.id}
               label={t('transactions.destinationAccountId')}
-              value={transaction.destinationAccountId || ''}
-              onChange={e =>
-                updateValue('destinationAccountId', Number(e.target.value))
+              onChange={account =>
+                updateValue('destinationAccountId', account.id)
               }
-              options={{ disabled: transaction.reconciled || false }}
+              value={
+                accounts.find(
+                  account => account.id === transaction.destinationAccountId
+                ) as Account
+              }
+              disabled={transaction.reconciled}
             />
 
-            <FormField
-              type="text"
-              name="envelopeId"
-              label={t('transactions.envelopeId')}
-              value={transaction.envelopeId || ''}
-              onChange={e => updateValue('envelopeId', Number(e.target.value))}
-              options={{ disabled: transaction.reconciled || false }}
-            />
+            {/* TODO: envelopeId */}
           </FormFields>
 
           {isPersisted ? (
