@@ -36,14 +36,12 @@ const Autocomplete = <T,>({
 
   return (
     <Combobox as="div" value={value} onChange={onChange} disabled={disabled}>
-      <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <Combobox.Label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          {label}
-        </Combobox.Label>
-        <div className="mt-1 sm:mt-0 sm:col-span-2 relative">
-          <div className="max-w-lg flex rounded-md shadow-sm">
+      <div className="form-field--wrapper">
+        <Combobox.Label className="form-field--label">{label}</Combobox.Label>
+        <div className="input--outerg">
+          <div className="input--inner">
             <Combobox.Input
-              className="flex-1 block w-full min-w-0 sm:text-sm"
+              className="input"
               onChange={event => setQuery(event.target.value)}
               displayValue={(item: T) => (item ? itemLabel(item) : '')}
               autoComplete="off"

@@ -17,18 +17,15 @@ const FormField = ({
   onChange,
   children,
 }: Props) => (
-  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-    <label
-      htmlFor={name}
-      className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-    >
+  <div className="form-field--wrapper">
+    <label htmlFor={name} className="form-field--label">
       {label}
     </label>
 
-    <div className="mt-1 sm:mt-0 sm:col-span-2 relative">
-      <div className="max-w-lg flex rounded-md shadow-sm">
+    <div className="input--outer">
+      <div className="input--inner">
         <input
-          className="flex-1 block w-full min-w-0 sm:text-sm"
+          className="input"
           type={type}
           name={name}
           id={name}
