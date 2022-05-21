@@ -1,4 +1,4 @@
-import { Budget, UnpersistedBudget } from '../../types'
+import { Budget, UnpersistedBudget, UUID } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 import { getApiInfo } from './base'
 
@@ -28,7 +28,7 @@ export default async function budgets() {
         .then(data => data.data)
     },
 
-    getBudget: async (id: number | string) => {
+    getBudget: async (id: UUID | string) => {
       return fetch(`${endpoint}/${id}`)
         .then(checkStatus)
         .then(parseJSON)

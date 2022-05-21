@@ -1,4 +1,4 @@
-import { Budget, Transaction, UnpersistedTransaction } from '../../types'
+import { Budget, Transaction, UnpersistedTransaction, UUID } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 
 const getTransactions = async (budget: Budget) => {
@@ -8,7 +8,7 @@ const getTransactions = async (budget: Budget) => {
     .then(data => data.data)
 }
 
-const getTransaction = async (id: string, budget: Budget) => {
+const getTransaction = async (id: UUID, budget: Budget) => {
   const url = new URL(budget.links.transactions)
   url.pathname += `/${id}`
 
