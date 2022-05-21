@@ -26,7 +26,7 @@ export type BudgetApiConnection = {
   updateBudget: (budget: Budget) => Promise<Budget>
   deleteBudget: (budget: Budget) => void
   getBudgets: () => Promise<Budget[]>
-  getBudget: (id: UUID | string) => Promise<Budget>
+  getBudget: (id: UUID) => Promise<Budget>
   createBudget: (data: UnpersistedBudget) => Promise<Budget>
 }
 
