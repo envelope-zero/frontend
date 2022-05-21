@@ -28,7 +28,7 @@ export default async function budgets() {
         .then(data => data.data)
     },
 
-    getBudget: async (id: UUID | string) => {
+    getBudget: async (id: UUID) => {
       return fetch(`${endpoint}/${id}`)
         .then(checkStatus)
         .then(parseJSON)
