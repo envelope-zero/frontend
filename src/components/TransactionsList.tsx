@@ -71,32 +71,24 @@ const TransactionsList = ({ budget }: Props) => {
                     account => account.id === transaction.destinationAccountId
                   )
 
-                  let title = transaction.note
                   let color = 'inherit'
                   let sign = ''
 
                   if (sourceAccount?.external) {
                     sign = '+'
                     color = 'text-lime-700'
-                    title ||= `${t('transactions.from')} ${safeName(
-                      sourceAccount,
-                      'account'
-                    )}`
                   } else if (destinationAccount?.external) {
                     sign = '-'
                     color = 'text-red-600'
-                    title ||= `${t('transactions.to')} ${safeName(
-                      destinationAccount,
-                      'account'
-                    )}`
                   } else {
                     sign = '±'
                     color = 'text-sky-600'
-                    title ||= `${safeName(
-                      sourceAccount,
-                      'account'
-                    )} → ${safeName(destinationAccount, 'account')}`
                   }
+
+                  const counterparties = `${safeName(
+                    sourceAccount,
+                    'account'
+                  )} → ${safeName(destinationAccount, 'account')}`
 
                   return (
                     <li key={transaction.id}>
@@ -111,9 +103,9 @@ const TransactionsList = ({ budget }: Props) => {
                                 transaction.note ? '' : 'italic'
                               }`}
                             >
-                              {title ||
-                                `${t('untitled')}
-                                  ${t('transactions.transaction')}`}
+                              {transaction.note
+                                ? `${transaction.note} (${counterparties})`
+                                : counterparties}
                             </p>
                             <div className="flex items-center flex-shrink-0">
                               <div className="pl-2 flex items-center">
