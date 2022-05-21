@@ -1,4 +1,4 @@
-import { Budget, Account, UnpersistedAccount } from '../../types'
+import { Budget, Account, UnpersistedAccount, UUID } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 
 const getAccounts = async (budget: Budget) => {
@@ -20,7 +20,7 @@ const getExternalAccounts = async (budget: Budget) => {
   )
 }
 
-const getAccount = async (id: string, budget: Budget) => {
+const getAccount = async (id: UUID, budget: Budget) => {
   const url = new URL(budget.links.accounts)
   url.pathname += `/${id}`
 

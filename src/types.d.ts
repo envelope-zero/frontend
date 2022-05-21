@@ -1,5 +1,8 @@
 type ApiLinks = { [key: string]: string }
 
+// Example for a UUID: 6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b
+type UUID = string
+
 export type Translation = { t: (key: string) => string }
 
 export type UnpersistedBudget = {
@@ -8,7 +11,7 @@ export type UnpersistedBudget = {
   note?: string
 }
 
-export type Budget = UnpersistedBudget & { id: number; links: ApiLinks }
+export type Budget = UnpersistedBudget & { id: UUID; links: ApiLinks }
 
 export type UnpersistedAccount = {
   balance?: number
@@ -23,13 +26,13 @@ export type BudgetApiConnection = {
   updateBudget: (budget: Budget) => Promise<Budget>
   deleteBudget: (budget: Budget) => void
   getBudgets: () => Promise<Budget[]>
-  getBudget: (id: number | string) => Promise<Budget>
+  getBudget: (id: UUID) => Promise<Budget>
   createBudget: (data: UnpersistedBudget) => Promise<Budget>
 }
 
 export type Account = UnpersistedAccount & {
-  id: number
-  budgetId: number
+  id: UUID
+  budgetId: UUID
   links: ApiLinks
 }
 
@@ -43,17 +46,17 @@ export type UnpersistedTransaction = {
   date?: string
   reconciled?: boolean
   note?: string
-  destinationAccountId?: number
-  sourceAccountId?: number
+  destinationAccountId?: UUID
+  sourceAccountId?: UUID
   envelopeId?: number
 }
 
 export type Transaction = UnpersistedTransaction & {
-  id: number
+  id: UUID
   amount: number
   date: string
-  destinationAccountId: number
-  sourceAccountId: number
-  budgetId: number
+  destinationAccountId: UUID
+  sourceAccountId: UUID
+  budgetId: UUID
   links: ApiLinks
 }

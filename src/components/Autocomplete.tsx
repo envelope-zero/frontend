@@ -1,3 +1,4 @@
+import { UUID } from '../types'
 import { useState } from 'react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { Combobox } from '@headlessui/react'
@@ -13,7 +14,7 @@ type Props<T> = {
   disabled?: boolean
   onChange: (selectedItem: T) => void
   itemLabel: (item: T) => string
-  itemId: (item: T) => number
+  itemId: (item: T) => UUID
 }
 
 const Autocomplete = <T,>({
