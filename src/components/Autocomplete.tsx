@@ -2,6 +2,8 @@ import { UUID } from '../types'
 import { useState } from 'react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { Combobox } from '@headlessui/react'
+import { Translation } from '../types'
+import { useTranslation } from 'react-i18next'
 
 function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ')
@@ -26,6 +28,7 @@ const Autocomplete = <T,>({
   itemId,
   disabled,
 }: Props<T>) => {
+  const { t }: Translation = useTranslation()
   const [query, setQuery] = useState('')
 
   const filteredItems =
@@ -55,48 +58,65 @@ const Autocomplete = <T,>({
             </Combobox.Button>
           </div>
 
-          {filteredItems.length > 0 && (
-            <Combobox.Options className="absolute z-10 mt-1 max-h-60 max-w-lg w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {filteredItems.map(item => (
-                <Combobox.Option
-                  key={itemId(item)}
-                  value={item}
-                  className={({ active }) =>
-                    classNames(
-                      'relative cursor-default select-none py-2 pl-3 pr-9',
-                      active ? 'bg-indigo-600 text-white' : 'text-gray-900'
-                    )
-                  }
-                >
-                  {({ active, selected }) => (
-                    <>
-                      <div className="flex items-center">
-                        <span
-                          className={classNames(
-                            'ml-3 truncate',
-                            selected && 'font-semibold'
-                          )}
-                        >
-                          {itemLabel(item)}
-                        </span>
-                      </div>
+          <Combobox.Options className="absolute z-10 mt-1 max-h-60 max-w-lg w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            {filteredItems.map(item => (
+              <Combobox.Option
+                key={itemId(item)}
+                value={item}
+                className={({ active }) =>
+                  classNames(
+                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                    active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                  )
+                }
+              >
+                {({ active, selected }) => (
+                  <>
+                    <div className="flex items-center">
+                      <span
+                        className={classNames(
+                          'ml-3 truncate',
+                          selected && 'font-semibold'
+                        )}
+                      >
+                        {itemLabel(item)}
+                      </span>
+                    </div>
 
-                      {selected && (
-                        <span
-                          className={classNames(
-                            'absolute inset-y-0 right-0 flex items-center pr-4',
-                            active ? 'text-white' : 'text-indigo-600'
-                          )}
-                        >
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      )}
-                    </>
-                  )}
-                </Combobox.Option>
-              ))}
-            </Combobox.Options>
-          )}
+                    {selected && (
+                      <span
+                        className={classNames(
+                          'absolute inset-y-0 right-0 flex items-center pr-4',
+                          active ? 'text-white' : 'text-indigo-600'
+                        )}
+                      >
+                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                    )}
+                  </>
+                )}
+              </Combobox.Option>
+            ))}
+
+            <Combobox.Option
+              key={`new-${query}`}
+              value={{ name: query }}
+              className={({ active }) =>
+                classNames(
+                  'relative cursor-default select-none py-2 pl-3 pr-9',
+                  active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                )
+              }
+            >
+              <div className="flex items-center">
+                <span className="ml-3 truncate">
+                  {t('transactions.createResource', {
+                    name: query,
+                  })}
+                </span>
+              </div>
+            </Combobox.Option>
+          </Combobox.Options>
         </div>
       </div>
     </Combobox>

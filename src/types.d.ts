@@ -3,7 +3,9 @@ type ApiLinks = { [key: string]: string }
 // Example for a UUID: 6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b
 type UUID = string
 
-export type Translation = { t: (key: string) => string }
+export type Translation = {
+  t: (key: string, params?: { [key: string]: string }) => string
+}
 
 export type UnpersistedBudget = {
   name?: string
@@ -48,7 +50,7 @@ export type UnpersistedTransaction = {
   note?: string
   destinationAccountId?: UUID
   sourceAccountId?: UUID
-  envelopeId?: number
+  envelopeId?: UUID
 }
 
 export type Transaction = UnpersistedTransaction & {
