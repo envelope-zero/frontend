@@ -38,7 +38,7 @@ const Autocomplete = <T,>({
     <Combobox as="div" value={value} onChange={onChange} disabled={disabled}>
       <div className="form-field--wrapper">
         <Combobox.Label className="form-field--label">{label}</Combobox.Label>
-        <div className="input--outerg">
+        <div className="input--outer">
           <div className="input--inner">
             <Combobox.Input
               className="input"
