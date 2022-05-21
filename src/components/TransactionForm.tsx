@@ -107,6 +107,17 @@ const TransactionForm = ({ budget }: Props) => {
     }))
   }
 
+  const accountGroups = [
+    {
+      title: t('accounts.internalAccounts'),
+      items: accounts.filter(account => !account.external),
+    },
+    {
+      title: t('accounts.externalAccounts'),
+      items: accounts.filter(account => account.external),
+    },
+  ]
+
   return (
     <form
       onSubmit={e => {
@@ -218,7 +229,7 @@ const TransactionForm = ({ budget }: Props) => {
             />
 
             <Autocomplete<Account>
-              items={accounts}
+              groups={accountGroups}
               itemLabel={account => safeName(account, 'account')}
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.sourceAccountId')}
@@ -239,7 +250,7 @@ const TransactionForm = ({ budget }: Props) => {
             />
 
             <Autocomplete<Account>
-              items={accounts}
+              groups={accountGroups}
               itemLabel={account => safeName(account, 'account')}
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.destinationAccountId')}

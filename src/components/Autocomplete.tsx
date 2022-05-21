@@ -10,7 +10,7 @@ function classNames(...classes: (string | boolean)[]) {
 }
 
 type Props<T> = {
-  items: T[]
+  groups: { title: string; items: T[] }[]
   label: string
   value: T
   disabled?: boolean
@@ -20,7 +20,7 @@ type Props<T> = {
 }
 
 const Autocomplete = <T,>({
-  items,
+  groups,
   label,
   value,
   onChange,
@@ -31,12 +31,17 @@ const Autocomplete = <T,>({
   const { t }: Translation = useTranslation()
   const [query, setQuery] = useState('')
 
-  const filteredItems =
+  const filteredGroups =
     query === ''
-      ? items
-      : items.filter(item => {
-          return itemLabel(item).toLowerCase().includes(query.toLowerCase())
-        })
+      ? groups
+      : groups
+          .map(group => ({
+            title: group.title,
+            items: group.items.filter(item => {
+              return itemLabel(item).toLowerCase().includes(query.toLowerCase())
+            }),
+          }))
+          .filter(group => group.items.length)
 
   return (
     <Combobox as="div" value={value} onChange={onChange} disabled={disabled}>
@@ -59,43 +64,51 @@ const Autocomplete = <T,>({
           </div>
 
           <Combobox.Options className="absolute z-10 mt-1 max-h-60 max-w-lg w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredItems.map(item => (
-              <Combobox.Option
-                key={itemId(item)}
-                value={item}
-                className={({ active }) =>
-                  classNames(
-                    'relative cursor-default select-none py-2 pl-3 pr-9',
-                    active ? 'bg-indigo-600 text-white' : 'text-gray-900'
-                  )
-                }
-              >
-                {({ active, selected }) => (
-                  <>
-                    <div className="flex items-center">
-                      <span
-                        className={classNames(
-                          'ml-3 truncate',
-                          selected && 'font-semibold'
-                        )}
-                      >
-                        {itemLabel(item)}
-                      </span>
-                    </div>
+            {filteredGroups.map((group, i) => (
+              <div key={i}>
+                <div className="relative py-2 pl-3 pr-9 text-gray-800 bg-gray-200">
+                  {group.title}
+                </div>
 
-                    {selected && (
-                      <span
-                        className={classNames(
-                          'absolute inset-y-0 right-0 flex items-center pr-4',
-                          active ? 'text-white' : 'text-indigo-600'
+                {group.items.map(item => (
+                  <Combobox.Option
+                    key={itemId(item)}
+                    value={item}
+                    className={({ active }) =>
+                      classNames(
+                        'relative cursor-default select-none py-2 pl-3 pr-9',
+                        active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                      )
+                    }
+                  >
+                    {({ active, selected }) => (
+                      <>
+                        <div className="flex items-center">
+                          <span
+                            className={classNames(
+                              'ml-3 truncate',
+                              selected && 'font-semibold'
+                            )}
+                          >
+                            {itemLabel(item)}
+                          </span>
+                        </div>
+
+                        {selected && (
+                          <span
+                            className={classNames(
+                              'absolute inset-y-0 right-0 flex items-center pr-4',
+                              active ? 'text-white' : 'text-indigo-600'
+                            )}
+                          >
+                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                          </span>
                         )}
-                      >
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                      </span>
+                      </>
                     )}
-                  </>
-                )}
-              </Combobox.Option>
+                  </Combobox.Option>
+                ))}
+              </div>
             ))}
 
             {query.length ? (
@@ -104,13 +117,13 @@ const Autocomplete = <T,>({
                 value={{ name: query }}
                 className={({ active }) =>
                   classNames(
-                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                    'relative cursor-default select-none py-2 pl-3 pr-9 border-t',
                     active ? 'bg-indigo-600 text-white' : 'text-gray-900'
                   )
                 }
               >
                 <div className="flex items-center">
-                  <span className="ml-3 truncate">
+                  <span className="ml-3 truncate italic">
                     {t('transactions.createResource', {
                       name: query,
                     })}
