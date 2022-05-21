@@ -30,7 +30,7 @@ REACT_APP_API_ENDPOINT=http://localhost:8080/v1 npm run start
 
 If you used another port for the backend above, you’ll need to change it in the `REACT_APP_API_ENDPOINT` variable, too.
 
-You can also save the environment variable to `.env` file as `REACT_APP_API_ENDPOINT="=http://localhost:8080/v1"`. With this, you can just run `npm run start`.
+You can also save the environment variable to `.env` file as `REACT_APP_API_ENDPOINT="http://localhost:8080/v1"`. With this, you can just run `npm run start`.
 
 ## Commit messages
 
