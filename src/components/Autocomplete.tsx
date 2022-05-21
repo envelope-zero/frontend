@@ -98,24 +98,26 @@ const Autocomplete = <T,>({
               </Combobox.Option>
             ))}
 
-            <Combobox.Option
-              key={`new-${query}`}
-              value={{ name: query }}
-              className={({ active }) =>
-                classNames(
-                  'relative cursor-default select-none py-2 pl-3 pr-9',
-                  active ? 'bg-indigo-600 text-white' : 'text-gray-900'
-                )
-              }
-            >
-              <div className="flex items-center">
-                <span className="ml-3 truncate">
-                  {t('transactions.createResource', {
-                    name: query,
-                  })}
-                </span>
-              </div>
-            </Combobox.Option>
+            {query.length ? (
+              <Combobox.Option
+                key={`new-${query}`}
+                value={{ name: query }}
+                className={({ active }) =>
+                  classNames(
+                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                    active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                  )
+                }
+              >
+                <div className="flex items-center">
+                  <span className="ml-3 truncate">
+                    {t('transactions.createResource', {
+                      name: query,
+                    })}
+                  </span>
+                </div>
+              </Combobox.Option>
+            ) : null}
           </Combobox.Options>
         </div>
       </div>
