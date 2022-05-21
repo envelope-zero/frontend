@@ -71,7 +71,7 @@ textarea {
 }
 
 .input--inner {
-  @apply max-w-lg flex rounded-md shadow-sm;
+  @apply max-w-lg flex rounded-md shadow-sm relative;
 }
 
 .input {
