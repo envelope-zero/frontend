@@ -35,7 +35,7 @@ const TransactionForm = ({ budget }: Props) => {
   const [accounts, setAccounts] = useState<Account[]>([])
   const [transaction, setTransaction] = useState<
     UnpersistedTransaction | Transaction
-  >({ amount: 0, destinationAccountId: 0, sourceAccountId: 0 })
+  >({})
 
   const isPersisted =
     typeof transactionId !== 'undefined' && transactionId !== 'new'
@@ -146,7 +146,7 @@ const TransactionForm = ({ budget }: Props) => {
               type="number"
               name="amount"
               label={t('transactions.amount')}
-              value={transaction.amount || 0}
+              value={transaction.amount || ''}
               onChange={e => updateValue('amount', Number(e.target.value))}
               options={{ disabled: transaction.reconciled || false }}
             >

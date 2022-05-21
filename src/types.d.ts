@@ -39,18 +39,21 @@ export type ApiResponse<T> = {
 }
 
 export type UnpersistedTransaction = {
-  amount: number
+  amount?: number
   date?: string
   reconciled?: boolean
   note?: string
-  destinationAccountId: number
-  sourceAccountId: number
+  destinationAccountId?: number
+  sourceAccountId?: number
   envelopeId?: number
 }
 
 export type Transaction = UnpersistedTransaction & {
   id: number
+  amount: number
   date: string
+  destinationAccountId: number
+  sourceAccountId: number
   budgetId: number
   links: ApiLinks
 }
