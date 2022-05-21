@@ -8,7 +8,7 @@ import {
   updateTransaction,
   createTransaction,
 } from '../lib/api/transactions'
-import { getAccounts } from '../lib/api/accounts'
+import { createAccount, getAccounts } from '../lib/api/accounts'
 import { dateFromIsoString, dateToIsoString } from '../lib/date-helper'
 import { safeName } from '../lib/name-helper'
 import {
@@ -17,6 +17,7 @@ import {
   Transaction,
   UnpersistedTransaction,
   Account,
+  UnpersistedAccount,
 } from '../types'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
@@ -36,6 +37,10 @@ const TransactionForm = ({ budget }: Props) => {
   const [transaction, setTransaction] = useState<
     UnpersistedTransaction | Transaction
   >({})
+  const [sourceAccountToCreate, setSourceAccountToCreate] =
+    useState<UnpersistedAccount>()
+  const [destinationAccountToCreate, setDestinationAccountToCreate] =
+    useState<UnpersistedAccount>()
 
   const isPersisted =
     typeof transactionId !== 'undefined' && transactionId !== 'new'
@@ -70,6 +75,38 @@ const TransactionForm = ({ budget }: Props) => {
     setTransaction({ ...transaction, [key]: value })
   }
 
+  const createNewResources = async () => {
+    const promises = []
+    let { sourceAccountId, destinationAccountId } = transaction
+
+    if (sourceAccountToCreate) {
+      promises.push(
+        createAccount(
+          { ...sourceAccountToCreate, external: true },
+          budget
+        ).then(createdAccount => {
+          sourceAccountId = createdAccount.id
+        })
+      )
+    }
+
+    if (destinationAccountToCreate) {
+      promises.push(
+        createAccount(
+          { ...destinationAccountToCreate, external: true },
+          budget
+        ).then(createdAccount => {
+          destinationAccountId = createdAccount.id
+        })
+      )
+    }
+
+    return Promise.all(promises).then(() => ({
+      sourceAccountId,
+      destinationAccountId,
+    }))
+  }
+
   return (
     <form
       onSubmit={e => {
@@ -80,14 +117,26 @@ const TransactionForm = ({ budget }: Props) => {
           return
         }
 
-        let result
-        if ('id' in transaction) {
-          result = updateTransaction(transaction)
-        } else {
-          result = createTransaction(transaction, budget)
-        }
+        createNewResources()
+          .then(({ sourceAccountId, destinationAccountId }) => {
+            const transactionWithNewResources = {
+              ...transaction,
+              sourceAccountId,
+              destinationAccountId,
+            }
 
-        result.then(() => navigate(-1)).catch(err => setError(err.message))
+            let result
+            if (isPersisted) {
+              result = updateTransaction(
+                transactionWithNewResources as Transaction
+              )
+            } else {
+              result = createTransaction(transactionWithNewResources, budget)
+            }
+
+            return result.then(() => navigate(-1))
+          })
+          .catch(err => setError(err.message))
       }}
     >
       <div className="header">
@@ -171,13 +220,20 @@ const TransactionForm = ({ budget }: Props) => {
             <Autocomplete<Account>
               items={accounts}
               itemLabel={account => safeName(account, 'account')}
-              itemId={account => account.id}
+              itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.sourceAccountId')}
-              onChange={account => updateValue('sourceAccountId', account.id)}
+              onChange={account => {
+                if (!account.id) {
+                  setSourceAccountToCreate(account)
+                } else {
+                  setSourceAccountToCreate(undefined)
+                  updateValue('sourceAccountId', account.id)
+                }
+              }}
               value={
-                accounts.find(
+                (accounts.find(
                   account => account.id === transaction.sourceAccountId
-                ) as Account
+                ) as Account) || sourceAccountToCreate
               }
               disabled={transaction.reconciled}
             />
@@ -185,15 +241,20 @@ const TransactionForm = ({ budget }: Props) => {
             <Autocomplete<Account>
               items={accounts}
               itemLabel={account => safeName(account, 'account')}
-              itemId={account => account.id}
+              itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.destinationAccountId')}
-              onChange={account =>
-                updateValue('destinationAccountId', account.id)
-              }
+              onChange={account => {
+                if (!account.id) {
+                  setDestinationAccountToCreate(account)
+                } else {
+                  setDestinationAccountToCreate(undefined)
+                  updateValue('destinationAccountId', account.id)
+                }
+              }}
               value={
-                accounts.find(
+                (accounts.find(
                   account => account.id === transaction.destinationAccountId
-                ) as Account
+                ) as Account) || destinationAccountToCreate
               }
               disabled={transaction.reconciled}
             />

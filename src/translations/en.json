@@ -55,6 +55,7 @@
     "note": "Note",
     "destinationAccountId": "Destination",
     "sourceAccountId": "Source",
-    "envelopeId": "Envelope"
+    "envelopeId": "Envelope",
+    "createResource": "Create \"{{name}}\""
   }
 }
