@@ -12,6 +12,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ExclamationIcon,
+  LightningBoltIcon,
 } from '@heroicons/react/outline'
 import { useTranslation } from 'react-i18next'
 import { Budget, Translation } from '../types'
@@ -111,7 +112,15 @@ const Layout = ({ budget }: LayoutProps) => {
                           </Link>
                         </div>
                       </div>
-                      <nav className="mt-5 space-y-1">
+                      <Link
+                        to="/transactions/new"
+                        onClick={() => setSidebarOpen(false)}
+                        className="my-4 border-y text-sky-600 group flex items-center p-4 text-base font-medium"
+                      >
+                        <LightningBoltIcon className="inline mr-4 flex-shrink-0 h-6 w-6" />
+                        {t('transactions.add')}
+                      </Link>
+                      <nav className="space-y-1">
                         {navigation.map(item => (
                           <NavLink
                             key={item.name}
@@ -188,6 +197,14 @@ const Layout = ({ budget }: LayoutProps) => {
                       </Link>
                     </div>
                   </div>
+                  <Link
+                    to="/transactions/new"
+                    className="my-4 border-y text-sky-600 hover:text-sky-700 hover:bg-gray-50 group flex items-center p-4 text-sm font-medium"
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <LightningBoltIcon className="mr-3 flex-shrink-0 h-6 w-6" />
+                    {t('transactions.add')}
+                  </Link>
                   <nav className="mt-5 flex-1 bg-white space-y-1">
                     {navigation.map(item => (
                       <NavLink

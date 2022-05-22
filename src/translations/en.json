@@ -49,6 +49,7 @@
     "unlockBeforeEditingNote": "This transaction has been reconciled and is therefore locked. If you want to edit it, you need to unlock it, which will also mark it as unreconciled again.",
     "unlockBeforeEditingError": "This transaction has been reconciled and needs to be unlocked before updating it.",
     "delete": "Delete transaction",
+    "add": "Add transaction",
     "confirmDelete": "Are you sure you want to delete this transaction?",
     "amount": "Amount",
     "date": "Date",
