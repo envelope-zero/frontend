@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Translation, Budget } from '../types'
-import { PencilIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon, PencilIcon } from '@heroicons/react/solid'
 import { PlusCircleIcon, PlusIcon } from '@heroicons/react/outline'
 import connectBudgetApi from '../lib/api/budgets'
 import { formatMoney } from '../lib/format'
@@ -91,6 +91,14 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                     <div className="text-lime-600 mt-2 text-lg">
                       <strong>{formatMoney(1337, budget.currency)}</strong>
                     </div>
+                  </Link>
+                  <Link
+                    to="/transactions/new"
+                    onClick={() => props.selectBudget(budget)}
+                    className="text-sky-600 hover:text-sky-700 flex justify-end"
+                  >
+                    {t('transactions.add')}
+                    <ChevronRightIcon className="inline h-6" />
                   </Link>
                 </li>
               ))}
