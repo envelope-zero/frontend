@@ -8,7 +8,6 @@
   "rangeStrategy": "pin",
   "rebaseWhen": "behind-base-branch",
   "semanticCommits": "enabled",
-  "semanticCommitScope": "feat",
   "packageRules": [
     {
       "matchManagers": ["npm", "github-actions", "pre-commit"],
