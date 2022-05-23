@@ -11,6 +11,8 @@ COPY src /app/src
 COPY public /app/public
 COPY tsconfig.json tailwind.config.js /app/
 
+ARG REACT_APP_VERSION=0.0.0
+
 # Build the app
 RUN npm run build
 

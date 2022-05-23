@@ -160,15 +160,21 @@ const Layout = ({ budget }: LayoutProps) => {
                         ))}
                       </nav>
                     </div>
-                    <a
-                      className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-4 text-base font-medium"
-                      href="https://github.com/envelope-zero/frontend/issues/new?labels=bug&template=bug_report.md"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <ExclamationIcon className="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" />{' '}
-                      {t('navigation.bugReport')}
-                    </a>
+                    <div>
+                      <a
+                        className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-4 text-base font-medium"
+                        href="https://github.com/envelope-zero/frontend/issues/new?labels=bug&template=bug_report.md"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <ExclamationIcon className="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" />{' '}
+                        {t('navigation.bugReport')}
+                      </a>
+                      <div className="text-gray-400 flex items-center px-4 text-sm font-medium justify-end">
+                        {t('version')}{' '}
+                        {process.env.REACT_APP_VERSION || '0.0.0'}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Transition.Child>
@@ -237,15 +243,20 @@ const Layout = ({ budget }: LayoutProps) => {
                     ))}
                   </nav>
                 </div>
-                <a
-                  className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-2 text-sm font-medium"
-                  href="https://github.com/envelope-zero/frontend/issues/new?labels=bug&template=bug_report.md"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <ExclamationIcon className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" />{' '}
-                  {t('navigation.bugReport')}
-                </a>
+                <div>
+                  <a
+                    className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-2 text-sm font-medium"
+                    href="https://github.com/envelope-zero/frontend/issues/new?labels=bug&template=bug_report.md"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <ExclamationIcon className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" />{' '}
+                    {t('navigation.bugReport')}
+                  </a>
+                  <div className="text-gray-400 flex items-center px-4 text-sm font-medium">
+                    {t('version')} {process.env.REACT_APP_VERSION || '0.0.0'}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
