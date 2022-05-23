@@ -31,17 +31,16 @@ const Autocomplete = <T,>({
   const { t }: Translation = useTranslation()
   const [query, setQuery] = useState('')
 
-  const filteredGroups =
+  const filteredGroups = (
     query === ''
       ? groups
-      : groups
-          .map(group => ({
-            title: group.title,
-            items: group.items.filter(item => {
-              return itemLabel(item).toLowerCase().includes(query.toLowerCase())
-            }),
-          }))
-          .filter(group => group.items.length)
+      : groups.map(group => ({
+          title: group.title,
+          items: group.items.filter(item => {
+            return itemLabel(item).toLowerCase().includes(query.toLowerCase())
+          }),
+        }))
+  ).filter(group => group.items.length)
 
   return (
     <Combobox as="div" value={value} onChange={onChange} disabled={disabled}>
@@ -66,9 +65,11 @@ const Autocomplete = <T,>({
           <Combobox.Options className="absolute z-10 mt-1 max-h-60 max-w-lg w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredGroups.map((group, i) => (
               <div key={i}>
-                <div className="relative py-2 pl-3 pr-9 text-gray-800 bg-gray-200">
-                  {group.title}
-                </div>
+                {filteredGroups.length > 1 ? (
+                  <div className="relative py-2 pl-3 pr-9 text-gray-800 bg-gray-200">
+                    {group.title}
+                  </div>
+                ) : null}
 
                 {group.items.map(item => (
                   <Combobox.Option
