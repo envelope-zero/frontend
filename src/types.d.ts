@@ -16,8 +16,6 @@ export type UnpersistedBudget = {
 export type Budget = UnpersistedBudget & { id: UUID; links: ApiLinks }
 
 export type UnpersistedAccount = {
-  balance?: number
-  reconciledBalance?: number
   external?: boolean
   name?: string
   note?: string
@@ -33,6 +31,8 @@ export type BudgetApiConnection = {
 }
 
 export type Account = UnpersistedAccount & {
+  balance: number
+  reconciledBalance: number
   id: UUID
   budgetId: UUID
   links: ApiLinks

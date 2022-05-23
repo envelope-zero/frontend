@@ -82,9 +82,13 @@ const OwnAccountsList = ({ budget }: Props) => {
                         {account.note}
                       </p>
                     ) : null}
-                    <div className="text-lime-600 mt-2 text-lg">
+                    <div
+                      className={`${
+                        account.balance >= 0 ? 'text-lime-600' : 'text-red-600'
+                      } mt-2 text-lg`}
+                    >
                       <strong>
-                        {formatMoney(account.balance || 0, budget.currency)}
+                        {formatMoney(account.balance, budget.currency)}
                       </strong>
                     </div>
                   </Link>
