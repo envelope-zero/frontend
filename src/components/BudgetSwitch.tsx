@@ -88,7 +88,11 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                         {budget.note}
                       </p>
                     ) : null}
-                    <div className="text-lime-600 mt-2 text-lg">
+                    <div
+                      className={`${
+                        1337 >= 0 ? 'text-lime-600' : 'text-red-600'
+                      } mt-2 text-lg`}
+                    >
                       <strong>{formatMoney(1337, budget.currency)}</strong>
                     </div>
                   </Link>
