@@ -25,7 +25,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
   const params = useParams()
   const navigate = useNavigate()
 
-  const budgetId = params.budgetId || selectedBudget?.id.toString()
+  const budgetId = params.budgetId || selectedBudget?.id
 
   const [budget, setBudget] = useState<UnpersistedBudget | Budget>({})
   const [budgetApi, setBudgetApi] = useState<BudgetApiConnection>()
