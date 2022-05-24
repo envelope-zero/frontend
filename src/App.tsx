@@ -47,7 +47,7 @@ const App = () => {
     if (typeof selectedBudget === 'undefined') {
       cookie.erase('budgetId')
     } else {
-      cookie.set('budgetId', selectedBudget.id.toString())
+      cookie.set('budgetId', selectedBudget.id)
     }
     setBudget(selectedBudget)
   }
