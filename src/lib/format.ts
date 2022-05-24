@@ -12,4 +12,7 @@ const formatMoney = (
   }).format(amount)} ${currency}`
 }
 
-export { formatMoney }
+const formatDate = (date: string | Date) =>
+  new Date(date).toLocaleDateString(locale)
+
+export { formatMoney, formatDate }

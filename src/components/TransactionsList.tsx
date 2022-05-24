@@ -10,25 +10,37 @@ import {
 import { Budget, Translation, Transaction, Account } from '../types'
 import Error from './Error'
 import LoadingSpinner from './LoadingSpinner'
-import { formatMoney } from '../lib/format'
+import { formatDate, formatMoney } from '../lib/format'
 import { getTransactions } from '../lib/api/transactions'
 import { getAccounts } from '../lib/api/accounts'
 import { safeName } from '../lib/name-helper'
+import { groupBy } from '../lib/array-helper'
 
 type Props = { budget: Budget }
+type groupedTransactions = {
+  [key: string]: Transaction[]
+}
 
 const TransactionsList = ({ budget }: Props) => {
   const { t }: Translation = useTranslation()
 
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [transactions, setTransactions] = useState<groupedTransactions>({})
   const [accounts, setAccounts] = useState<Account[]>([])
 
   useEffect(() => {
     Promise.all([getTransactions(budget), getAccounts(budget)])
       .then(([transactionData, accountData]) => {
-        setTransactions(transactionData) // TODO: sort?
+        const groupedTransactions = groupBy(
+          transactionData.sort(
+            (a: Transaction, b: Transaction) =>
+              new Date(a.date).getTime() - new Date(b.date).getTime()
+          ),
+          ({ date }: Transaction) => formatDate(date)
+        )
+
+        setTransactions(groupedTransactions)
         setAccounts(accountData)
         setIsLoading(false)
         setError('')
@@ -39,7 +51,9 @@ const TransactionsList = ({ budget }: Props) => {
       })
   }, [budget])
 
-  const anyReconciled = transactions.some(transaction => transaction.reconciled)
+  const anyReconciled = Object.values(transactions)
+    .flat()
+    .some(transaction => transaction.reconciled)
 
   return (
     <>
@@ -60,89 +74,99 @@ const TransactionsList = ({ budget }: Props) => {
         <LoadingSpinner />
       ) : (
         <>
-          {transactions.length ? (
+          {Object.keys(transactions).length ? (
             <div className="bg-white sm:shadow overflow-hidden sm:rounded-md">
-              <ul className="divide-y divide-gray-200">
-                {transactions.map(transaction => {
-                  const sourceAccount = accounts.find(
-                    account => account.id === transaction.sourceAccountId
-                  )
-                  const destinationAccount = accounts.find(
-                    account => account.id === transaction.destinationAccountId
-                  )
+              <ul>
+                {Object.keys(transactions).map(date => (
+                  <div key={date}>
+                    <h3 className="border-t border-b border-gray-200 bg-gray-50 px-3 py-1 text-sm font-medium text-gray-500">
+                      {date}
+                    </h3>
+                    <div className="divide-y divide-gray-200">
+                      {transactions[date].map(transaction => {
+                        const sourceAccount = accounts.find(
+                          account => account.id === transaction.sourceAccountId
+                        )
+                        const destinationAccount = accounts.find(
+                          account =>
+                            account.id === transaction.destinationAccountId
+                        )
 
-                  let color = 'inherit'
-                  let sign = ''
+                        let color = 'inherit'
+                        let sign = ''
 
-                  if (sourceAccount?.external) {
-                    sign = '+'
-                    color = 'text-lime-700'
-                  } else if (destinationAccount?.external) {
-                    sign = '-'
-                    color = 'text-red-600'
-                  } else {
-                    sign = '±'
-                    color = 'text-sky-600'
-                  }
+                        if (sourceAccount?.external) {
+                          sign = '+'
+                          color = 'text-lime-700'
+                        } else if (destinationAccount?.external) {
+                          sign = '-'
+                          color = 'text-red-600'
+                        } else {
+                          sign = '±'
+                          color = 'text-sky-600'
+                        }
 
-                  const counterparties = `${safeName(
-                    sourceAccount,
-                    'account'
-                  )} → ${safeName(destinationAccount, 'account')}`
+                        const counterparties = `${safeName(
+                          sourceAccount,
+                          'account'
+                        )} → ${safeName(destinationAccount, 'account')}`
 
-                  return (
-                    <li key={transaction.id}>
-                      <Link
-                        to={`/transactions/${transaction.id}`}
-                        className="block hover:bg-gray-50"
-                      >
-                        <div className="px-2 py-4 sm:px-6">
-                          <div className="flex items-center justify-between">
-                            <p
-                              className={`text-sm font-medium truncate ${
-                                transaction.note ? '' : 'italic'
-                              }`}
+                        return (
+                          <li key={transaction.id}>
+                            <Link
+                              to={`/transactions/${transaction.id}`}
+                              className="block hover:bg-gray-50"
                             >
-                              {transaction.note
-                                ? `${transaction.note} (${counterparties})`
-                                : counterparties}
-                            </p>
-                            <div className="flex items-center flex-shrink-0">
-                              <div className="pl-2 flex items-center">
-                                <p
-                                  className={`px-2 inline-flex text-xs leading-5 font-bold rounded-full ${color}`}
-                                >
-                                  {sign}
-                                  {formatMoney(
-                                    transaction.amount,
-                                    budget.currency,
-                                    'never'
-                                  )}
-                                </p>
+                              <div className="px-2 py-4 sm:px-6">
+                                <div className="flex items-center justify-between">
+                                  <p
+                                    className={`text-sm font-medium truncate ${
+                                      transaction.note ? '' : 'italic'
+                                    }`}
+                                  >
+                                    {transaction.note
+                                      ? `${transaction.note} (${counterparties})`
+                                      : counterparties}
+                                  </p>
+                                  <div className="flex items-center flex-shrink-0">
+                                    <div className="pl-2 flex items-center">
+                                      <p
+                                        className={`px-2 inline-flex text-xs leading-5 font-bold rounded-full ${color}`}
+                                      >
+                                        {sign}
+                                        {formatMoney(
+                                          transaction.amount,
+                                          budget.currency,
+                                          'never'
+                                        )}
+                                      </p>
+                                    </div>
+                                    <div
+                                      className={`ml-1 flex ${
+                                        anyReconciled ? 'w-5' : 'hidden'
+                                      }`}
+                                    >
+                                      {transaction.reconciled ? (
+                                        <LockClosedIcon className="text-gray-500" />
+                                      ) : null}
+                                    </div>
+                                    <div
+                                      className={`${
+                                        anyReconciled ? 'ml-1' : ''
+                                      } flex w-5`}
+                                    >
+                                      <ChevronRightIcon className="text-gray-900" />
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-                              <div
-                                className={`ml-1 flex ${
-                                  anyReconciled ? 'w-5' : 'hidden'
-                                }`}
-                              >
-                                {transaction.reconciled ? (
-                                  <LockClosedIcon className="text-gray-500" />
-                                ) : null}
-                              </div>
-                              <div
-                                className={`${
-                                  anyReconciled ? 'ml-1' : ''
-                                } flex w-5`}
-                              >
-                                <ChevronRightIcon className="text-gray-900" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    </li>
-                  )
-                })}
+                            </Link>
+                          </li>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))}
               </ul>
             </div>
           ) : (
