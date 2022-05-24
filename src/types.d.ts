@@ -13,7 +13,11 @@ export type UnpersistedBudget = {
   note?: string
 }
 
-export type Budget = UnpersistedBudget & { id: UUID; links: ApiLinks }
+export type Budget = UnpersistedBudget & {
+  id: UUID
+  links: ApiLinks
+  balance: number
+}
 
 export type UnpersistedAccount = {
   external?: boolean

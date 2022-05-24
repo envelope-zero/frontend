@@ -90,10 +90,12 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                     ) : null}
                     <div
                       className={`${
-                        1337 >= 0 ? 'text-lime-600' : 'text-red-600'
+                        budget.balance >= 0 ? 'text-lime-600' : 'text-red-600'
                       } mt-2 text-lg`}
                     >
-                      <strong>{formatMoney(1337, budget.currency)}</strong>
+                      <strong>
+                        {formatMoney(budget.balance, budget.currency)}
+                      </strong>
                     </div>
                   </Link>
                   <Link
