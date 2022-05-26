@@ -35,7 +35,7 @@ const TransactionsList = ({ budget }: Props) => {
         const groupedTransactions = groupBy(
           transactionData.sort(
             (a: Transaction, b: Transaction) =>
-              new Date(a.date).getTime() - new Date(b.date).getTime()
+              new Date(b.date).getTime() - new Date(a.date).getTime()
           ),
           ({ date }: Transaction) => formatDate(date)
         )
