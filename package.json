@@ -10,7 +10,7 @@
     "@types/node": "17.0.36",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.5",
-    "i18next": "21.8.4",
+    "i18next": "21.8.5",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-i18next": "11.16.9",
