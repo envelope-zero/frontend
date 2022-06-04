@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/solid'
 import { Budget, Translation, Transaction, Account } from '../types'
 import { formatDate, formatMoney } from '../lib/format'
-import { groupBy } from '../lib/array-helper'
+import { groupBy } from '../lib/array'
 import { getConfiguration } from '../lib/transaction-helper'
 
 type Props = {
