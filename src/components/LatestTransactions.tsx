@@ -2,14 +2,15 @@ import { ChevronRightIcon, LockClosedIcon } from '@heroicons/react/solid'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { ApiObject, Translation, Transaction, Budget } from '../types'
+import { ApiObject, Translation, Transaction, Budget, Account } from '../types'
 import Error from './Error'
 import { getTransactions } from '../lib/api/transactions'
 import { formatMoney } from '../lib/format'
+import { getConfiguration } from '../lib/transaction-helper'
 
-type Props = { parent: ApiObject; budget: Budget }
+type Props = { parent: ApiObject; budget: Budget; accounts: Account[] }
 
-const LatestTransactions = ({ parent, budget }: Props) => {
+const LatestTransactions = ({ parent, budget, accounts }: Props) => {
   const { t }: Translation = useTranslation()
 
   const [error, setError] = useState('')
@@ -42,9 +43,10 @@ const LatestTransactions = ({ parent, budget }: Props) => {
         {transactions.length > 0 ? (
           <ul>
             {transactions.map(transaction => {
-              const counterparties = 'TODO'
-              const sign = '~' // TODO
-              const color = 'TODO'
+              const { sign, color, counterparties } = getConfiguration(
+                transaction,
+                accounts
+              )
 
               return (
                 <li key={transaction.id}>

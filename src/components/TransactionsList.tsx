@@ -9,7 +9,7 @@ import {
 import { Budget, Translation, Transaction, Account } from '../types'
 import { formatDate, formatMoney } from '../lib/format'
 import { groupBy } from '../lib/array-helper'
-import { counterpartiesString } from '../lib/transaction-helper'
+import { getConfiguration } from '../lib/transaction-helper'
 
 type Props = {
   budget: Budget
@@ -56,30 +56,9 @@ const TransactionsList = ({ budget, accounts, transactions }: Props) => {
                 </h3>
                 <div className="divide-y divide-gray-200">
                   {groupedTransactions[date].map(transaction => {
-                    const sourceAccount = accounts.find(
-                      account => account.id === transaction.sourceAccountId
-                    )
-                    const destinationAccount = accounts.find(
-                      account => account.id === transaction.destinationAccountId
-                    )
-
-                    let color = 'inherit'
-                    let sign = ''
-
-                    if (sourceAccount?.external) {
-                      sign = '+'
-                      color = 'text-lime-700'
-                    } else if (destinationAccount?.external) {
-                      sign = '-'
-                      color = 'text-red-600'
-                    } else {
-                      sign = '±'
-                      color = 'text-sky-600'
-                    }
-
-                    const counterparties = counterpartiesString(
-                      sourceAccount,
-                      destinationAccount
+                    const { sign, color, counterparties } = getConfiguration(
+                      transaction,
+                      accounts
                     )
 
                     return (
