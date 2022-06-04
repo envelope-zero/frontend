@@ -13,6 +13,7 @@ import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
 import LatestTransactions from './LatestTransactions'
+import RemainingHeightContainer from './RemainingHeightContainer'
 
 type Props = {
   budget: Budget
@@ -171,11 +172,13 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
           ) : null}
           {'links' in account ? (
             <div className="pt-8">
-              <LatestTransactions
-                accounts={accounts}
-                parent={account}
-                budget={budget}
-              />
+              <RemainingHeightContainer>
+                <LatestTransactions
+                  accounts={accounts}
+                  parent={account}
+                  budget={budget}
+                />
+              </RemainingHeightContainer>
             </div>
           ) : null}
         </>
