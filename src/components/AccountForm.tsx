@@ -14,9 +14,13 @@ import FormFields from './FormFields'
 import FormField from './FormField'
 import LatestTransactions from './LatestTransactions'
 
-type Props = { budget: Budget; type: 'internal' | 'external' }
+type Props = {
+  budget: Budget
+  type: 'internal' | 'external'
+  accounts: Account[]
+}
 
-const AccountForm = ({ budget, type }: Props) => {
+const AccountForm = ({ budget, type, accounts }: Props) => {
   const { t }: Translation = useTranslation()
   const { accountId } = useParams()
   const navigate = useNavigate()
@@ -167,7 +171,11 @@ const AccountForm = ({ budget, type }: Props) => {
           ) : null}
           {'links' in account ? (
             <div className="pt-8">
-              <LatestTransactions parent={account} budget={budget} />
+              <LatestTransactions
+                accounts={accounts}
+                parent={account}
+                budget={budget}
+              />
             </div>
           ) : null}
         </>

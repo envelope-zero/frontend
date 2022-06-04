@@ -97,7 +97,13 @@ const App = () => {
                   />
                   <Route
                     path="own-accounts/:accountId"
-                    element={<AccountForm budget={budget} type="internal" />}
+                    element={
+                      <AccountForm
+                        budget={budget}
+                        type="internal"
+                        accounts={accounts}
+                      />
+                    }
                   />
                   <Route
                     path="external-accounts"
@@ -105,7 +111,13 @@ const App = () => {
                   />
                   <Route
                     path="external-accounts/:accountId"
-                    element={<AccountForm budget={budget} type="external" />}
+                    element={
+                      <AccountForm
+                        budget={budget}
+                        type="external"
+                        accounts={accounts}
+                      />
+                    }
                   />
                   <Route
                     path="transactions"
