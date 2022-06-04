@@ -18,12 +18,16 @@ import TransactionForm from './components/TransactionForm'
 import cookie from './lib/cookie'
 import connectBudgetApi from './lib/api/budgets'
 import './i18n'
-import { Budget } from './types'
+import { Account, Budget, Transaction } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
 import Error from './components/Error'
+import { getAccounts } from './lib/api/accounts'
+import { getTransactions } from './lib/api/transactions'
 
 const App = () => {
   const [budget, setBudget] = useState<Budget>()
+  const [accounts, setAccounts] = useState<Account[]>([])
+  const [transactions, setTransactions] = useState<Transaction[]>([])
   const [error, setError] = useState('')
   const budgetId = cookie.get('budgetId')
 
@@ -34,6 +38,8 @@ const App = () => {
           .getBudget(budgetId)
           .then(data => {
             setBudget(data)
+            getBudgetAccounts(data)
+            getBudgetTransactions(data)
             setError('')
           })
           .catch(err => {
@@ -42,6 +48,13 @@ const App = () => {
       })
     }
   }, [budgetId])
+
+  const getBudgetAccounts = (budget: Budget) => {
+    getAccounts(budget).then(setAccounts)
+  }
+  const getBudgetTransactions = (budget: Budget) => {
+    getTransactions(budget).then(setTransactions)
+  }
 
   const selectBudget = (selectedBudget?: Budget) => {
     if (typeof selectedBudget === 'undefined') {
@@ -96,11 +109,19 @@ const App = () => {
                   />
                   <Route
                     path="transactions"
-                    element={<TransactionsList budget={budget} />}
+                    element={
+                      <TransactionsList
+                        budget={budget}
+                        accounts={accounts}
+                        transactions={transactions}
+                      />
+                    }
                   />
                   <Route
                     path="transactions/:transactionId"
-                    element={<TransactionForm budget={budget} />}
+                    element={
+                      <TransactionForm budget={budget} accounts={accounts} />
+                    }
                   />
                   {/* TODO: more routes here */}
                   <Route

@@ -8,7 +8,7 @@ import {
   updateTransaction,
   createTransaction,
 } from '../lib/api/transactions'
-import { createAccount, getAccounts } from '../lib/api/accounts'
+import { createAccount } from '../lib/api/accounts'
 import { dateFromIsoString, dateToIsoString } from '../lib/date-helper'
 import { safeName } from '../lib/name-helper'
 import {
@@ -25,15 +25,15 @@ import FormFields from './FormFields'
 import FormField from './FormField'
 import Autocomplete from './Autocomplete'
 
-type Props = { budget: Budget }
+type Props = { budget: Budget; accounts: Account[] }
 
-const TransactionForm = ({ budget }: Props) => {
+const TransactionForm = ({ budget, accounts }: Props) => {
   const { t }: Translation = useTranslation()
   const { transactionId } = useParams()
   const navigate = useNavigate()
 
   const [error, setError] = useState('')
-  const [accounts, setAccounts] = useState<Account[]>([])
+
   const [transaction, setTransaction] = useState<
     UnpersistedTransaction | Transaction
   >({})
@@ -56,19 +56,6 @@ const TransactionForm = ({ budget }: Props) => {
           setError(err.message)
         })
     }
-
-    getAccounts(budget)
-      .then((accounts: Account[]) => {
-        setAccounts(
-          accounts.sort((a, b) =>
-            safeName(a, 'account').localeCompare(safeName(b, 'account'))
-          )
-        )
-        setError('')
-      })
-      .catch(err => {
-        setError(err.message)
-      })
   }, [budget, isPersisted, transactionId])
 
   const updateValue = (key: keyof Transaction, value: any) => {
