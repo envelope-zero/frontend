@@ -1,11 +1,22 @@
-import { Budget, Transaction, UnpersistedTransaction, UUID } from '../../types'
+import {
+  ApiObject,
+  Budget,
+  Transaction,
+  UnpersistedTransaction,
+  UUID,
+} from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 
-const getTransactions = async (budget: Budget) => {
-  return fetch(budget.links.transactions)
+const getTransactions = async (parent: ApiObject) => {
+  return fetch(parent.links.transactions)
     .then(checkStatus)
     .then(parseJSON)
-    .then(data => data.data)
+    .then(data =>
+      data.data.sort(
+        (a: Transaction, b: Transaction) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+      )
+    )
 }
 
 const getTransaction = async (id: UUID, budget: Budget) => {
