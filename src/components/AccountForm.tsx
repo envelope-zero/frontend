@@ -12,6 +12,7 @@ import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
+import LatestTransactions from './LatestTransactions'
 
 type Props = { budget: Budget; type: 'internal' | 'external' }
 
@@ -164,7 +165,11 @@ const AccountForm = ({ budget, type }: Props) => {
               {/* TODO: reconcile */}
             </div>
           ) : null}
-          {/* {isPersisted ? 'TODO: transactions' : null} */}
+          {'links' in account ? (
+            <div className="pt-8">
+              <LatestTransactions parent={account} budget={budget} />
+            </div>
+          ) : null}
         </>
       )}
     </form>

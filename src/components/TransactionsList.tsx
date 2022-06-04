@@ -13,8 +13,8 @@ import LoadingSpinner from './LoadingSpinner'
 import { formatDate, formatMoney } from '../lib/format'
 import { getTransactions } from '../lib/api/transactions'
 import { getAccounts } from '../lib/api/accounts'
-import { safeName } from '../lib/name-helper'
 import { groupBy } from '../lib/array-helper'
+import { counterpartiesString } from '../lib/transaction-helper'
 
 type Props = { budget: Budget }
 type groupedTransactions = {
@@ -33,10 +33,7 @@ const TransactionsList = ({ budget }: Props) => {
     Promise.all([getTransactions(budget), getAccounts(budget)])
       .then(([transactionData, accountData]) => {
         const groupedTransactions = groupBy(
-          transactionData.sort(
-            (a: Transaction, b: Transaction) =>
-              new Date(b.date).getTime() - new Date(a.date).getTime()
-          ),
+          transactionData,
           ({ date }: Transaction) => formatDate(date)
         )
 
@@ -106,10 +103,10 @@ const TransactionsList = ({ budget }: Props) => {
                           color = 'text-sky-600'
                         }
 
-                        const counterparties = `${safeName(
+                        const counterparties = counterpartiesString(
                           sourceAccount,
-                          'account'
-                        )} → ${safeName(destinationAccount, 'account')}`
+                          destinationAccount
+                        )
 
                         return (
                           <li key={transaction.id}>

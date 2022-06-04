@@ -13,11 +13,10 @@ export type UnpersistedBudget = {
   note?: string
 }
 
-export type Budget = UnpersistedBudget & {
-  id: UUID
-  links: ApiLinks
-  balance: number
-}
+export type Budget = UnpersistedBudget &
+  ApiObject & {
+    balance: number
+  }
 
 export type UnpersistedAccount = {
   external?: boolean
@@ -34,17 +33,21 @@ export type BudgetApiConnection = {
   createBudget: (data: UnpersistedBudget) => Promise<Budget>
 }
 
-export type Account = UnpersistedAccount & {
-  balance: number
-  reconciledBalance: number
-  id: UUID
-  budgetId: UUID
-  links: ApiLinks
-}
+export type Account = UnpersistedAccount &
+  ApiObject & {
+    balance: number
+    reconciledBalance: number
+    budgetId: UUID
+  }
 
 export type ApiResponse<T> = {
   data?: T
   error?: string
+}
+
+export type ApiObject = {
+  id: UUID
+  links: ApiLinks
 }
 
 export type UnpersistedTransaction = {
@@ -57,12 +60,11 @@ export type UnpersistedTransaction = {
   envelopeId?: UUID
 }
 
-export type Transaction = UnpersistedTransaction & {
-  id: UUID
-  amount: number
-  date: string
-  destinationAccountId: UUID
-  sourceAccountId: UUID
-  budgetId: UUID
-  links: ApiLinks
-}
+export type Transaction = UnpersistedTransaction &
+  ApiObject & {
+    amount: number
+    date: string
+    destinationAccountId: UUID
+    sourceAccountId: UUID
+    budgetId: UUID
+  }
