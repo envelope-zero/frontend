@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
+import { ChevronRightIcon } from '@heroicons/react/solid'
 import { Translation, Account, UnpersistedAccount, Budget } from '../types'
 import {
   getAccount,
@@ -173,6 +174,16 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
           {'links' in account ? (
             <div className="pt-8">
               <RemainingHeightContainer>
+                <div className="flex justify-between">
+                  <h2>{t('transactions.transactions')}</h2>
+                  <Link
+                    to={`/transactions?account=${account.id}`}
+                    className="flex items-center link-blue"
+                  >
+                    {/* TODO: confirmation before navigating if unsaved data in form */}
+                    {t('seeAll')} <ChevronRightIcon className="inline h-6" />
+                  </Link>
+                </div>
                 <LatestTransactions
                   accounts={accounts}
                   parent={account}
