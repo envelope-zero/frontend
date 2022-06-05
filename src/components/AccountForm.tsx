@@ -30,6 +30,7 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
   const newAccount = { onBudget: true }
 
   const [error, setError] = useState('')
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
   const [account, setAccount] = useState<UnpersistedAccount | Account>({
     ...newAccount,
     external: type === 'external',
@@ -51,7 +52,14 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
   }, [accountId, budget, isPersisted])
 
   const updateValue = (key: keyof Account, value: any) => {
+    setHasUnsavedChanges(true)
     setAccount({ ...account, [key]: value })
+  }
+
+  const confirmDiscardingUnsavedChanges = (e: any) => {
+    if (hasUnsavedChanges && !window.confirm(t('discardUnsavedChanges'))) {
+      e.preventDefault()
+    }
   }
 
   return (
@@ -177,10 +185,10 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
                 <div className="flex justify-between">
                   <h2>{t('transactions.transactions')}</h2>
                   <Link
+                    onClick={confirmDiscardingUnsavedChanges}
                     to={`/transactions?account=${account.id}`}
                     className="flex items-center link-blue"
                   >
-                    {/* TODO: confirmation before navigating if unsaved data in form */}
                     {t('seeAll')} <ChevronRightIcon className="inline h-6" />
                   </Link>
                 </div>

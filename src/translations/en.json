@@ -5,6 +5,7 @@
   "untitled": "Untitled",
   "version": "Version",
   "seeAll": "See All",
+  "discardUnsavedChanges": "Discard unsaved changes?",
   "navigation": {
     "closeSidebar": "Close Sidebar",
     "openSidebar": "Open Sidebar",
