@@ -17,7 +17,7 @@ ARG REACT_APP_VERSION=0.0.0
 RUN npm run build
 
 # Bundle static assets with nginx
-FROM nginx:1.22.0-alpine
+FROM nginx:1.23.0-alpine
 ENV NODE_ENV production
 
 COPY default.conf /etc/nginx/conf.d/default.conf
