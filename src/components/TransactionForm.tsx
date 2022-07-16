@@ -25,9 +25,19 @@ import FormFields from './FormFields'
 import FormField from './FormField'
 import Autocomplete from './Autocomplete'
 
-type Props = { budget: Budget; accounts: Account[] }
+type Props = {
+  budget: Budget
+  accounts: Account[]
+  transactions: Transaction[]
+  setTransactions: (transactions: Transaction[]) => void
+}
 
-const TransactionForm = ({ budget, accounts }: Props) => {
+const TransactionForm = ({
+  budget,
+  accounts,
+  transactions,
+  setTransactions,
+}: Props) => {
   const { t }: Translation = useTranslation()
   const { transactionId } = useParams()
   const navigate = useNavigate()
@@ -117,7 +127,9 @@ const TransactionForm = ({ budget, accounts }: Props) => {
 
         createNewResources()
           .then(({ sourceAccountId, destinationAccountId }) => {
-            const transactionWithNewResources = {
+            const transactionWithNewResources:
+              | UnpersistedTransaction
+              | Transaction = {
               ...transaction,
               sourceAccountId,
               destinationAccountId,
@@ -127,9 +139,21 @@ const TransactionForm = ({ budget, accounts }: Props) => {
             if (isPersisted) {
               result = updateTransaction(
                 transactionWithNewResources as Transaction
-              )
+              ).then(updatedTransaction => {
+                setTransactions([
+                  updatedTransaction,
+                  ...transactions.filter(
+                    transaction => transaction.id !== updatedTransaction.id
+                  ),
+                ])
+              })
             } else {
-              result = createTransaction(transactionWithNewResources, budget)
+              result = createTransaction(
+                transactionWithNewResources,
+                budget
+              ).then(newTransaction => {
+                setTransactions([newTransaction, ...transactions])
+              })
             }
 
             return result.then(() => navigate(-1))
@@ -268,6 +292,13 @@ const TransactionForm = ({ budget, accounts }: Props) => {
                   if (window.confirm(t('transactions.confirmDelete'))) {
                     deleteTransaction(transaction as Transaction)
                       .then(() => {
+                        setTransactions(
+                          transactions.filter(
+                            oldTransaction =>
+                              oldTransaction.id !==
+                              (transaction as Transaction).id
+                          )
+                        )
                         navigate(-1)
                       })
                       .catch(err => {

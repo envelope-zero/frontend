@@ -132,7 +132,12 @@ const App = () => {
                   <Route
                     path="transactions/:transactionId"
                     element={
-                      <TransactionForm budget={budget} accounts={accounts} />
+                      <TransactionForm
+                        budget={budget}
+                        accounts={accounts}
+                        transactions={transactions}
+                        setTransactions={setTransactions}
+                      />
                     }
                   />
                   {/* TODO: more routes here */}
