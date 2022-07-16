@@ -11,12 +11,7 @@ const getTransactions = async (parent: ApiObject) => {
   return fetch(parent.links.transactions)
     .then(checkStatus)
     .then(parseJSON)
-    .then(data =>
-      data.data.sort(
-        (a: Transaction, b: Transaction) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime()
-      )
-    )
+    .then(data => data.data)
 }
 
 const getTransaction = async (id: UUID, budget: Budget) => {
