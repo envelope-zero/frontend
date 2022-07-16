@@ -1,4 +1,4 @@
-import { Budget, Account, UnpersistedAccount, UUID } from '../../types'
+import { Budget, Account } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 
 const getAccounts = async (budget: Budget) => {
@@ -20,48 +20,4 @@ const getExternalAccounts = async (budget: Budget) => {
   )
 }
 
-const getAccount = async (id: UUID, budget: Budget) => {
-  const url = new URL(budget.links.accounts)
-  url.pathname += `/${id}`
-
-  return fetch(url.href)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(data => data.data)
-}
-
-const updateAccount = async (account: Account) => {
-  return fetch(account.links.self, {
-    method: 'PATCH',
-    body: JSON.stringify(account),
-    headers: { 'Content-Type': 'application/json' },
-  })
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(data => data.data)
-}
-
-const createAccount = async (account: UnpersistedAccount, budget: Budget) => {
-  return fetch(budget.links.accounts, {
-    method: 'POST',
-    body: JSON.stringify({ ...account, budgetId: budget.id }),
-    headers: { 'Content-Type': 'application/json' },
-  })
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(data => data.data)
-}
-
-const deleteAccount = async (account: Account) => {
-  return fetch(account.links.self, { method: 'DELETE' }).then(checkStatus)
-}
-
-export {
-  getAccounts,
-  getInternalAccounts,
-  getExternalAccounts,
-  getAccount,
-  updateAccount,
-  createAccount,
-  deleteAccount,
-}
+export { getInternalAccounts, getExternalAccounts }
