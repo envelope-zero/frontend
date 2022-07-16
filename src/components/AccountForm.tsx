@@ -3,18 +3,15 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import { Translation, Account, UnpersistedAccount, Budget } from '../types'
-import {
-  getAccount,
-  updateAccount,
-  createAccount,
-  deleteAccount,
-} from '../lib/api/accounts'
+import { api } from '../lib/api/base'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
 import LatestTransactions from './LatestTransactions'
 import RemainingHeightContainer from './RemainingHeightContainer'
+
+const accountApi = api('accounts')
 
 type Props = {
   budget: Budget
@@ -40,7 +37,8 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
 
   useEffect(() => {
     if (isPersisted) {
-      getAccount(accountId, budget)
+      accountApi
+        .get(accountId, budget)
         .then(data => {
           setAccount(data)
           setError('')
@@ -67,13 +65,15 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
       onSubmit={e => {
         e.preventDefault()
         if ('id' in account) {
-          updateAccount(account)
+          accountApi
+            .update(account)
             .then(() => navigate(-1))
             .catch(err => {
               setError(err.message)
             })
         } else {
-          createAccount(account, budget)
+          accountApi
+            .create(account, budget)
             .then(() => navigate(-1))
             .catch(err => {
               setError(err.message)
@@ -163,7 +163,8 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
                 type="button"
                 onClick={() => {
                   if (window.confirm(t('accounts.confirmDelete'))) {
-                    deleteAccount(account as Account)
+                    accountApi
+                      .delete(account as Account)
                       .then(() => {
                         navigate(-1)
                       })

@@ -21,8 +21,10 @@ import './i18n'
 import { Account, Budget, Transaction } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
 import Error from './components/Error'
-import { getAccounts } from './lib/api/accounts'
-import { getTransactions } from './lib/api/transactions'
+import { api } from './lib/api/base'
+
+const transactionApi = api('transactions')
+const accountApi = api('accounts')
 
 const App = () => {
   const [budget, setBudget] = useState<Budget>()
@@ -50,10 +52,10 @@ const App = () => {
   }, [budgetId])
 
   const getBudgetAccounts = (budget: Budget) => {
-    getAccounts(budget).then(setAccounts)
+    accountApi.getAll(budget).then(setAccounts)
   }
   const getBudgetTransactions = (budget: Budget) => {
-    getTransactions(budget).then(setTransactions)
+    transactionApi.getAll(budget).then(setTransactions)
   }
 
   const selectBudget = (selectedBudget?: Budget) => {

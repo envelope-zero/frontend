@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { ApiObject, Translation, Transaction, Budget, Account } from '../types'
 import Error from './Error'
-import { getTransactions } from '../lib/api/transactions'
+import { api } from '../lib/api/base'
 import { formatMoney } from '../lib/format'
 import { getConfiguration } from '../lib/transaction-helper'
+
+const transactionApi = api('transactions')
 
 type Props = { parent: ApiObject; budget: Budget; accounts: Account[] }
 
@@ -17,7 +19,8 @@ const LatestTransactions = ({ parent, budget, accounts }: Props) => {
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
   useEffect(() => {
-    getTransactions(parent)
+    transactionApi
+      .getAll(parent)
       .then(transactionData => {
         setTransactions(transactionData)
         setError('')

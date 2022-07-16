@@ -2,13 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { LockClosedIcon } from '@heroicons/react/solid'
-import {
-  getTransaction,
-  deleteTransaction,
-  updateTransaction,
-  createTransaction,
-} from '../lib/api/transactions'
-import { createAccount } from '../lib/api/accounts'
+import { api } from '../lib/api/base'
 import { dateFromIsoString, dateToIsoString } from '../lib/dates'
 import { safeName } from '../lib/name-helper'
 import {
@@ -24,6 +18,9 @@ import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
 import Autocomplete from './Autocomplete'
+
+const transactionApi = api('transactions')
+const accountApi = api('accounts')
 
 type Props = {
   budget: Budget
@@ -57,7 +54,8 @@ const TransactionForm = ({
 
   useEffect(() => {
     if (isPersisted) {
-      getTransaction(transactionId, budget)
+      transactionApi
+        .get(transactionId, budget)
         .then(data => {
           setTransaction(data)
           setError('')
@@ -78,23 +76,21 @@ const TransactionForm = ({
 
     if (sourceAccountToCreate) {
       promises.push(
-        createAccount(
-          { ...sourceAccountToCreate, external: true },
-          budget
-        ).then(createdAccount => {
-          sourceAccountId = createdAccount.id
-        })
+        accountApi
+          .create({ ...sourceAccountToCreate, external: true }, budget)
+          .then(createdAccount => {
+            sourceAccountId = createdAccount.id
+          })
       )
     }
 
     if (destinationAccountToCreate) {
       promises.push(
-        createAccount(
-          { ...destinationAccountToCreate, external: true },
-          budget
-        ).then(createdAccount => {
-          destinationAccountId = createdAccount.id
-        })
+        accountApi
+          .create({ ...destinationAccountToCreate, external: true }, budget)
+          .then(createdAccount => {
+            destinationAccountId = createdAccount.id
+          })
       )
     }
 
@@ -137,23 +133,22 @@ const TransactionForm = ({
 
             let result
             if (isPersisted) {
-              result = updateTransaction(
-                transactionWithNewResources as Transaction
-              ).then(updatedTransaction => {
-                setTransactions([
-                  updatedTransaction,
-                  ...transactions.filter(
-                    transaction => transaction.id !== updatedTransaction.id
-                  ),
-                ])
-              })
+              result = transactionApi
+                .update(transactionWithNewResources as Transaction)
+                .then(updatedTransaction => {
+                  setTransactions([
+                    updatedTransaction,
+                    ...transactions.filter(
+                      transaction => transaction.id !== updatedTransaction.id
+                    ),
+                  ])
+                })
             } else {
-              result = createTransaction(
-                transactionWithNewResources,
-                budget
-              ).then(newTransaction => {
-                setTransactions([newTransaction, ...transactions])
-              })
+              result = transactionApi
+                .create(transactionWithNewResources, budget)
+                .then(newTransaction => {
+                  setTransactions([newTransaction, ...transactions])
+                })
             }
 
             return result.then(() => navigate(-1))
@@ -185,10 +180,11 @@ const TransactionForm = ({
                 onClick={e => {
                   e.preventDefault()
                   if ('id' in transaction) {
-                    updateTransaction({
-                      ...transaction,
-                      reconciled: false,
-                    })
+                    transactionApi
+                      .update({
+                        ...transaction,
+                        reconciled: false,
+                      })
                       .then(setTransaction)
                       .catch(err => setError(err.message))
                   }
@@ -290,7 +286,8 @@ const TransactionForm = ({
                 type="button"
                 onClick={() => {
                   if (window.confirm(t('transactions.confirmDelete'))) {
-                    deleteTransaction(transaction as Transaction)
+                    transactionApi
+                      .delete(transaction as Transaction)
                       .then(() => {
                         setTransactions(
                           transactions.filter(
