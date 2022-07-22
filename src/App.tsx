@@ -70,6 +70,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        <Route
+          path="/api"
+          element={<Navigate to={`${window.location.origin}`} replace />}
+        />
         <Route path="/" element={<Layout budget={budget} />}>
           {error ? (
             <Route path="*" element={<Error error={error} />} />
