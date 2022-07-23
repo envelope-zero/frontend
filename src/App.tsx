@@ -17,6 +17,7 @@ import TransactionsList from './components/TransactionsList'
 import TransactionForm from './components/TransactionForm'
 import EnvelopesList from './components/EnvelopesList'
 import EnvelopeForm from './components/EnvelopeForm'
+import CategoryForm from './components/CategoryForm'
 import cookie from './lib/cookie'
 import connectBudgetApi from './lib/api/budgets'
 import './i18n'
@@ -154,6 +155,10 @@ const App = () => {
                     element={
                       <EnvelopeForm budget={budget} accounts={accounts} />
                     }
+                  />
+                  <Route
+                    path="categories/:categoryId"
+                    element={<CategoryForm budget={budget} />}
                   />
                   {/* TODO: more routes here */}
                   <Route
