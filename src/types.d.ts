@@ -68,3 +68,23 @@ export type Transaction = UnpersistedTransaction &
     sourceAccountId: UUID
     budgetId: UUID
   }
+
+export type Category = ApiObject & {
+  budgetId: UUID
+  name: string
+  note: string
+  envelopes: Envelope[]
+}
+
+export type UnpersistetEnvelope = {
+  name?: string
+  note?: string
+  categoryId?: UUID
+}
+
+export type Envelope = UnpersistetEnvelope &
+  ApiObject & {
+    name: string
+    note: string
+    categoryId: UUID
+  }
