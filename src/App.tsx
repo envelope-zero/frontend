@@ -15,6 +15,8 @@ import ExternalAccountsList from './components/ExternalAccountsList'
 import AccountForm from './components/AccountForm'
 import TransactionsList from './components/TransactionsList'
 import TransactionForm from './components/TransactionForm'
+import EnvelopesList from './components/EnvelopesList'
+import EnvelopeForm from './components/EnvelopeForm'
 import cookie from './lib/cookie'
 import connectBudgetApi from './lib/api/budgets'
 import './i18n'
@@ -142,6 +144,14 @@ const App = () => {
                         setTransactions={setTransactions}
                       />
                     }
+                  />
+                  <Route
+                    path="envelopes"
+                    element={<EnvelopesList budget={budget} />}
+                  />
+                  <Route
+                    path="envelopes/:envelopeId"
+                    element={<EnvelopeForm />}
                   />
                   {/* TODO: more routes here */}
                   <Route

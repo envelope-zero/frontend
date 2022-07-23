@@ -61,5 +61,14 @@
     "sourceAccountId": "Source",
     "envelopeId": "Envelope",
     "createResource": "Create \"{{name}}\""
+  },
+  "envelopes": {
+    "envelopes": "Envelopes",
+    "envelope": "Envelope",
+    "new": "New Envelope"
+  },
+  "categories": {
+    "new": "New Category",
+    "category": "Category"
   }
 }
