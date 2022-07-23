@@ -125,6 +125,7 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
 
             <Autocomplete<Category>
               groups={[{ items: categories }]}
+              allowNewCreation={true}
               value={
                 (categories.find(
                   category => category.id === envelope.categoryId
