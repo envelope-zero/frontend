@@ -9,7 +9,7 @@ const set = (key: string, value: string) => {
   if (typeof get(key) !== 'undefined') {
     erase(key)
   }
-  document.cookie = `${key}=${value}`
+  document.cookie = `${key}=${value}; SameSite=None; Secure`
 }
 
 const erase = (key: string) => {
