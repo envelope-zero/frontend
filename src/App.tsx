@@ -45,6 +45,7 @@ const App = () => {
             setError('')
           })
           .catch(err => {
+            selectBudget()
             setError(err.message)
           })
       })
