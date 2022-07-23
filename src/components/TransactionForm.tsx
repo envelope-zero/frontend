@@ -12,6 +12,8 @@ import {
   UnpersistedTransaction,
   Account,
   UnpersistedAccount,
+  Envelope,
+  Category,
 } from '../types'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
@@ -21,6 +23,7 @@ import Autocomplete from './Autocomplete'
 
 const transactionApi = api('transactions')
 const accountApi = api('accounts')
+const categoryApi = api('categories')
 
 type Props = {
   budget: Budget
@@ -41,6 +44,9 @@ const TransactionForm = ({
 
   const [error, setError] = useState('')
 
+  const [groupedEnvelopes, setGroupedEnvelopes] = useState<
+    { title?: string; items: Envelope[] }[]
+  >([])
   const [transaction, setTransaction] = useState<
     UnpersistedTransaction | Transaction
   >({})
@@ -53,18 +59,29 @@ const TransactionForm = ({
     typeof transactionId !== 'undefined' && transactionId !== 'new'
 
   useEffect(() => {
+    const promises = [
+      categoryApi.getAll(budget).then((data: Category[]) =>
+        setGroupedEnvelopes(
+          data.map(category => ({
+            title: safeName(category, 'category', t('categories.category')),
+            items: category.envelopes,
+          }))
+        )
+      ),
+    ]
+
     if (isPersisted) {
-      transactionApi
-        .get(transactionId, budget)
-        .then(data => {
-          setTransaction(data)
-          setError('')
-        })
-        .catch(err => {
-          setError(err.message)
-        })
+      promises.push(
+        transactionApi.get(transactionId, budget).then(setTransaction)
+      )
     }
-  }, [budget, isPersisted, transactionId])
+
+    Promise.all(promises)
+      .then(() => setError(''))
+      .catch(err => {
+        setError(err.message)
+      })
+  }, [budget, isPersisted, transactionId, t])
 
   const updateValue = (key: keyof Transaction, value: any) => {
     setTransaction({ ...transaction, [key]: value })
@@ -237,6 +254,7 @@ const TransactionForm = ({
 
             <Autocomplete<Account>
               groups={accountGroups}
+              allowNewCreation={true}
               itemLabel={account => safeName(account, 'account')}
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.sourceAccountId')}
@@ -258,6 +276,7 @@ const TransactionForm = ({
 
             <Autocomplete<Account>
               groups={accountGroups}
+              allowNewCreation={true}
               itemLabel={account => safeName(account, 'account')}
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.destinationAccountId')}
@@ -277,7 +296,23 @@ const TransactionForm = ({
               disabled={transaction.reconciled}
             />
 
-            {/* TODO: envelopeId */}
+            <Autocomplete<Envelope>
+              groups={groupedEnvelopes}
+              allowNewCreation={false}
+              value={
+                groupedEnvelopes
+                  .flatMap(group => group.items)
+                  .find(
+                    envelope => envelope.id === transaction.envelopeId
+                  ) as Envelope
+              }
+              label={t('transactions.envelopeId')}
+              itemLabel={envelope => safeName(envelope, 'envelope')}
+              itemId={envelope => envelope.id || safeName(envelope, 'envelope')}
+              onChange={envelope => {
+                updateValue('envelopeId', envelope.id)
+              }}
+            />
           </FormFields>
 
           {isPersisted ? (

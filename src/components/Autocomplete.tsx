@@ -14,6 +14,7 @@ type Props<T> = {
   label: string
   value: T
   disabled?: boolean
+  allowNewCreation?: boolean
   onChange: (selectedItem: T) => void
   itemLabel: (item: T) => string
   itemId: (item: T) => UUID
@@ -27,6 +28,7 @@ const Autocomplete = <T,>({
   itemLabel,
   itemId,
   disabled,
+  allowNewCreation,
 }: Props<T>) => {
   const { t }: Translation = useTranslation()
   const [query, setQuery] = useState('')
@@ -112,7 +114,7 @@ const Autocomplete = <T,>({
               </div>
             ))}
 
-            {query.length ? (
+            {allowNewCreation && query.length ? (
               <Combobox.Option
                 key={`new-${query}`}
                 value={{ name: query }}
