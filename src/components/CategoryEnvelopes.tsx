@@ -41,7 +41,7 @@ const CategoryEnvelopes = ({ category }: { category: Category }) => {
           ) : null}
         </div>
 
-        <Link to="/TODO">
+        <Link to={`/categories/${category.id}`}>
           <PencilIcon className="icon mr-2" />
         </Link>
       </div>

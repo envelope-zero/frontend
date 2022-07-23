@@ -73,6 +73,10 @@
   },
   "categories": {
     "new": "New Category",
-    "category": "Category"
+    "category": "Category",
+    "name": "Name",
+    "note": "Note",
+    "delete": "Delete category",
+    "confirmDelete": "Are you sure you want to delete this category?"
   }
 }
