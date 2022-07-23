@@ -69,6 +69,11 @@ export type Transaction = UnpersistedTransaction &
     budgetId: UUID
   }
 
+export type UnpersistedCategory = {
+  name?: string
+  note?: string
+}
+
 export type Category = ApiObject & {
   budgetId: UUID
   name: string
