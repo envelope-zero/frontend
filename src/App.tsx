@@ -151,7 +151,9 @@ const App = () => {
                   />
                   <Route
                     path="envelopes/:envelopeId"
-                    element={<EnvelopeForm />}
+                    element={
+                      <EnvelopeForm budget={budget} accounts={accounts} />
+                    }
                   />
                   {/* TODO: more routes here */}
                   <Route

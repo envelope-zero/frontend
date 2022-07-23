@@ -10,7 +10,7 @@ function classNames(...classes: (string | boolean)[]) {
 }
 
 type Props<T> = {
-  groups: { title: string; items: T[] }[]
+  groups: { title?: string; items: T[] }[]
   label: string
   value: T
   disabled?: boolean

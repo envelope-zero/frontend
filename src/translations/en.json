@@ -65,7 +65,11 @@
   "envelopes": {
     "envelopes": "Envelopes",
     "envelope": "Envelope",
-    "new": "New Envelope"
+    "new": "New Envelope",
+    "name": "Name",
+    "category": "Category",
+    "delete": "Delete envelope",
+    "confirmDelete": "Are you sure you want to delete this envelope?"
   },
   "categories": {
     "new": "New Category",
