@@ -134,6 +134,16 @@ const Autocomplete = <T,>({
                 </div>
               </Combobox.Option>
             ) : null}
+
+            {filteredGroups.length === 0 && !allowNewCreation ? (
+              <Combobox.Option value={undefined} disabled>
+                <div className="flex items-center">
+                  <span className="ml-3 truncate italic">
+                    {t('autocomplete.empty')}
+                  </span>
+                </div>
+              </Combobox.Option>
+            ) : null}
           </Combobox.Options>
         </div>
       </div>

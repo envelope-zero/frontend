@@ -6,6 +6,9 @@
   "version": "Version",
   "seeAll": "See All",
   "discardUnsavedChanges": "Discard unsaved changes?",
+  "autocomplete": {
+    "empty": "No results"
+  },
   "navigation": {
     "closeSidebar": "Close Sidebar",
     "openSidebar": "Open Sidebar",
