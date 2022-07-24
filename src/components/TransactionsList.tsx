@@ -69,11 +69,7 @@ const TransactionsList = ({ budget, accounts, transactions }: Props) => {
                         >
                           <div className="px-2 py-4 sm:px-6">
                             <div className="flex items-center justify-between">
-                              <p
-                                className={`text-sm font-medium truncate ${
-                                  transaction.note ? '' : 'italic'
-                                }`}
-                              >
+                              <p className="text-sm font-medium truncate">
                                 {transaction.note
                                   ? `${transaction.note} (${counterparties})`
                                   : counterparties}
