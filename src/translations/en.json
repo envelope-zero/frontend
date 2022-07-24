@@ -79,6 +79,7 @@
     "category": "Category",
     "name": "Name",
     "note": "Note",
+    "envelopes": "Envelopes",
     "delete": "Delete category",
     "confirmDelete": "Are you sure you want to delete this category?"
   }

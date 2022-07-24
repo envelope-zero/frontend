@@ -1,12 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Budget, Category, Translation } from '../types'
+import { Budget, Category, Translation, UnpersistedCategory } from '../types'
 import { api } from '../lib/api/base'
 import Error from './Error'
 import LoadingSpinner from './LoadingSpinner'
 import FormFields from './FormFields'
 import FormField from './FormField'
+import { safeName } from '../lib/name-helper'
+import { ChevronRightIcon } from '@heroicons/react/solid'
 
 const categoryApi = api('categories')
 
@@ -16,7 +18,8 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
   const navigate = useNavigate()
 
   const [error, setError] = useState('')
-  const [category, setCategory] = useState<Category | undefined>()
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+  const [category, setCategory] = useState<Category | UnpersistedCategory>({})
 
   useEffect(() => {
     if (!categoryId) {
@@ -32,6 +35,17 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
       })
       .catch(err => setError(err.message))
   }, [budget, categoryId, navigate])
+
+  const confirmDiscardingUnsavedChanges = (e: any) => {
+    if (hasUnsavedChanges && !window.confirm(t('discardUnsavedChanges'))) {
+      e.preventDefault()
+    }
+  }
+
+  const updateValue = (key: keyof Category, value: any) => {
+    setHasUnsavedChanges(true)
+    setCategory({ ...category, [key]: value })
+  }
 
   return (
     <form
@@ -68,7 +82,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
               name="name"
               label={t('categories.name')}
               value={category.name || ''}
-              onChange={e => setCategory({ ...category, name: e.target.value })}
+              onChange={e => updateValue('name', e.target.value)}
             />
 
             <div className="form-field--wrapper">
@@ -81,9 +95,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
                   name="note"
                   rows={3}
                   value={category.note || ''}
-                  onChange={e =>
-                    setCategory({ ...category, note: e.target.value })
-                  }
+                  onChange={e => updateValue('note', e.target.value)}
                   className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
                 />
               </div>
@@ -111,7 +123,42 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
             </button>
           </div>
 
-          {/* TODO: list envelopes */}
+          <div className="pt-8">
+            <h2>{t('categories.envelopes')}</h2>
+            <ul className="divide-y divide-gray-200">
+              {'envelopes' in category ? (
+                category.envelopes.map(envelope => {
+                  return (
+                    <li key={envelope.id}>
+                      <Link
+                        onClick={confirmDiscardingUnsavedChanges}
+                        to={`/envelopes/${envelope.id}`}
+                        className="block hover:bg-gray-50"
+                      >
+                        <div className="px-2 py-4 sm:px-6">
+                          <div className="flex items-center justify-between">
+                            <p
+                              className={`text-sm font-medium truncate ${
+                                envelope.name ? '' : 'italic'
+                              }`}
+                            >
+                              {safeName(envelope, 'envelope')}
+                            </p>
+
+                            <div className={'flex w-5'}>
+                              <ChevronRightIcon className="text-gray-900" />
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </li>
+                  )
+                })
+              ) : (
+                <LoadingSpinner />
+              )}
+            </ul>
+          </div>
         </>
       )}
     </form>

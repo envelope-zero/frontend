@@ -36,7 +36,7 @@ const LatestTransactions = ({ parent, budget, accounts }: Props) => {
     <>
       <Error error={error} />
       {transactions.length > 0 ? (
-        <ul>
+        <ul className="divide-y divide-gray-200">
           {transactions.map(transaction => {
             const { sign, color, counterparties } = getConfiguration(
               transaction,
