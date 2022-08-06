@@ -86,31 +86,9 @@ const Autocomplete = <T,>({
                   )
                 }
               >
-                {({ active, selected }) => (
-                  <>
-                    <div className="flex items-center">
-                      <span
-                        className={classNames(
-                          'ml-3 truncate italic',
-                          selected && 'font-semibold'
-                        )}
-                      >
-                        {emptyLabel}
-                      </span>
-                    </div>
-
-                    {selected && (
-                      <span
-                        className={classNames(
-                          'absolute inset-y-0 right-0 flex items-center pr-4',
-                          active ? 'text-white' : 'text-indigo-600'
-                        )}
-                      >
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                    )}
-                  </>
-                )}
+                <div className="flex items-center">
+                  <span className="ml-3 truncate italic">{emptyLabel}</span>
+                </div>
               </Combobox.Option>
             ) : null}
 
