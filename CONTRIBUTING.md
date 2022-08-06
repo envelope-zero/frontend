@@ -17,20 +17,40 @@ Once those are installed, run `make setup` to perform the repository setup.
 To run a development server, you will need to run a backend instance. You can launch one as OCI image, for example with docker, run:
 
 ```sh
-docker run --rm -p 8080:80 -v ez-data:/data -e CORS_ALLOW_ORIGINS=http://localhost:3000 ghcr.io/envelope-zero/backend:v0.22.0
+npm run backend
 ```
 
-This will persist the database in a docker volume called `ez-data` so when you restart the container (which will remove it due to the `--rm` flag), it will have the already saved data.
+This will persist your test data in a docker volume, so you can always stop the container and restart it later. To clean the data, run `docker volume rm data` after stopping the container.
 
-Once the backend is running, you can start the development server for the frontend. Run
+Once the backend is running, you can start the development server for the frontend.
+
+If you do not already have a `.env` file, create it in the repository root and add the following line:
 
 ```sh
-REACT_APP_API_ENDPOINT=http://localhost:8080/v1 npm run start
+REACT_APP_API_ENDPOINT="http://localhost:8080/v1"
 ```
 
-If you used another port for the backend above, you’ll need to change it in the `REACT_APP_API_ENDPOINT` variable, too.
+Then, run `npm run start`.
 
-You can also save the environment variable to `.env` file as `REACT_APP_API_ENDPOINT="http://localhost:8080/v1"`. With this, you can just run `npm run start`.
+## Tests
+
+Please write tests when you add features and add regression tests for bug fixes. We use [cypress](https://docs.cypress.io) for end-to-end testing of the frontend, see the [cypress/e2e](cypress/e2e/) directory for all tests.
+
+You can run the tests as follows:
+
+```sh
+# Open a terminal
+npm run backend:update && npm run backend
+
+# Open another terminal
+npm run start
+
+# Open a third terminal
+npm run test
+
+# If you want to see your browser go wrooom and inspect the tests in detail, instead of npm run test, use
+npm run test:watch
+```
 
 ## Commit messages
 
