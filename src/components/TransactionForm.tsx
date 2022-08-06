@@ -299,18 +299,23 @@ const TransactionForm = ({
             <Autocomplete<Envelope>
               groups={groupedEnvelopes}
               allowNewCreation={false}
+              includeEmpty={true}
               value={
-                groupedEnvelopes
+                (groupedEnvelopes
                   .flatMap(group => group.items)
                   .find(
                     envelope => envelope.id === transaction.envelopeId
-                  ) as Envelope
+                  ) as Envelope) || null
               }
               label={t('transactions.envelopeId')}
               itemLabel={envelope => safeName(envelope, 'envelope')}
               itemId={envelope => envelope.id || safeName(envelope, 'envelope')}
               onChange={envelope => {
-                updateValue('envelopeId', envelope.id)
+                if (envelope === null) {
+                  updateValue('envelopeId', null)
+                } else {
+                  updateValue('envelopeId', envelope.id)
+                }
               }}
             />
           </FormFields>
