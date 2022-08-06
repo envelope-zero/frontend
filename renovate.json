@@ -1,6 +1,7 @@
 {
   "extends": ["group:monorepos", "group:recommended"],
   "dependencyDashboard": true,
+  "platformAutomerge": true,
   "pre-commit": {
     "enabled": true
   },
@@ -13,6 +14,21 @@
       "matchManagers": ["npm", "github-actions", "pre-commit"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["ghcr.io/envelope-zero/backend"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    }
+  ],
+  "regexManagers": [
+    {
+      "description": "Upgrade node version in a GitHub workflow",
+      "fileMatch": ["(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$"],
+      "matchStrings": ["node-version:\\s*'(?<currentValue>.*)'"],
+      "datasourceTemplate": "node",
+      "depNameTemplate": "node"
     }
   ]
 }

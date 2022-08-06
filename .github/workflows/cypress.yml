@@ -1,0 +1,35 @@
+name: Cypress
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - '**'
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    # Current backend version as service container
+    services:
+      backend:
+        image: ghcr.io/envelope-zero/backend:v0.36.1
+        env:
+          CORS_ALLOW_ORIGINS: http://localhost:3000
+          API_URL: http://localhost:8080
+        ports:
+          - 8080:8080
+
+    steps:
+      - uses: actions/checkout@v3.0.2
+      - uses: cypress-io/github-action@v4.2.0
+        env:
+          REACT_APP_API_ENDPOINT: http://backend:8080/v1
+        with:
+          start: npm start
+          # Frontend runs on :3000, API on :8080
+          wait-on: 'http://localhost:3000, http://localhost:8080'

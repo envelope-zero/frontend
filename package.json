@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "autoprefixer": "10.4.8",
+    "cypress": "^10.4.0",
     "eslint-config-prettier": "8.5.0",
     "postcss": "8.4.16",
     "prettier": "2.7.1",
@@ -41,11 +42,13 @@
   "scripts": {
     "backend:update": "docker pull ghcr.io/envelope-zero/backend:latest",
     "backend": "docker run --rm -e CORS_ALLOW_ORIGINS=http://localhost:3000 -e API_URL=http://localhost:8080 -p 8080:8080 -v data:/data ghcr.io/envelope-zero/backend:latest",
-    "start": "react-scripts start",
+    "start": "REACT_APP_API_ENDPOINT=http://localhost:8080/v1 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [
