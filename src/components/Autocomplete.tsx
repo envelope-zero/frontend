@@ -15,6 +15,7 @@ type Props<T> = {
   value: T
   disabled?: boolean
   allowNewCreation?: boolean
+  includeEmpty?: boolean
   onChange: (selectedItem: T) => void
   itemLabel: (item: T) => string
   itemId: (item: T) => UUID
@@ -29,6 +30,7 @@ const Autocomplete = <T,>({
   itemId,
   disabled,
   allowNewCreation,
+  includeEmpty,
 }: Props<T>) => {
   const { t }: Translation = useTranslation()
   const [query, setQuery] = useState('')
@@ -44,8 +46,16 @@ const Autocomplete = <T,>({
         }))
   ).filter(group => group.items.length)
 
+  const emptyLabel = t('select')
+
   return (
-    <Combobox as="div" value={value} onChange={onChange} disabled={disabled}>
+    <Combobox
+      as="div"
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+      nullable={includeEmpty}
+    >
       <div className="form-field--wrapper">
         <Combobox.Label className="form-field--label">{label}</Combobox.Label>
         <div className="input--outer">
@@ -54,6 +64,7 @@ const Autocomplete = <T,>({
               className="input"
               onChange={event => setQuery(event.target.value)}
               displayValue={(item: T) => (item ? itemLabel(item) : '')}
+              placeholder={emptyLabel}
               autoComplete="off"
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
@@ -65,6 +76,44 @@ const Autocomplete = <T,>({
           </div>
 
           <Combobox.Options className="absolute z-10 mt-1 max-h-60 max-w-lg w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            {includeEmpty ? (
+              <Combobox.Option
+                value={null}
+                className={({ active }) =>
+                  classNames(
+                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                    active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                  )
+                }
+              >
+                {({ active, selected }) => (
+                  <>
+                    <div className="flex items-center">
+                      <span
+                        className={classNames(
+                          'ml-3 truncate italic',
+                          selected && 'font-semibold'
+                        )}
+                      >
+                        {emptyLabel}
+                      </span>
+                    </div>
+
+                    {selected && (
+                      <span
+                        className={classNames(
+                          'absolute inset-y-0 right-0 flex items-center pr-4',
+                          active ? 'text-white' : 'text-indigo-600'
+                        )}
+                      >
+                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                    )}
+                  </>
+                )}
+              </Combobox.Option>
+            ) : null}
+
             {filteredGroups.map((group, i) => (
               <div key={i}>
                 {filteredGroups.length > 1 ? (
