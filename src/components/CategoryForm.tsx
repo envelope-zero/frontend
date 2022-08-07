@@ -28,13 +28,13 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
     }
 
     categoryApi
-      .get(categoryId, budget)
+      .get(categoryId)
       .then(data => {
         setCategory(data)
         setError('')
       })
       .catch(err => setError(err.message))
-  }, [budget, categoryId, navigate])
+  }, [categoryId, navigate])
 
   const confirmDiscardingUnsavedChanges = (e: any) => {
     if (hasUnsavedChanges && !window.confirm(t('discardUnsavedChanges'))) {

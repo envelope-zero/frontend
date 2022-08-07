@@ -18,8 +18,8 @@ const get = async (url: string) => {
 const api = (linkKey: string) => {
   return {
     getAll: (parent: ApiObject) => get(parent.links[linkKey]),
-    get: (id: UUID, parent: ApiObject) => {
-      const url = new URL(parent.links[linkKey])
+    get: (id: UUID) => {
+      const url = new URL(linkKey)
       url.pathname += `/${id}`
       return get(url.href)
     },

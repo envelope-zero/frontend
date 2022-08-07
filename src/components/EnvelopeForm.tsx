@@ -44,7 +44,7 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
     const promises = [categoryApi.getAll(budget).then(setCategories)]
 
     if (isPersisted) {
-      promises.push(envelopeApi.get(envelopeId, budget).then(setEnvelope))
+      promises.push(envelopeApi.get(envelopeId).then(setEnvelope))
     }
 
     Promise.all(promises)

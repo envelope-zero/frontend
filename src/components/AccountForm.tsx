@@ -38,7 +38,7 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
   useEffect(() => {
     if (isPersisted) {
       accountApi
-        .get(accountId, budget)
+        .get(accountId)
         .then(data => {
           setAccount(data)
           setError('')
@@ -47,7 +47,7 @@ const AccountForm = ({ budget, type, accounts }: Props) => {
           setError(err.message)
         })
     }
-  }, [accountId, budget, isPersisted])
+  }, [accountId, isPersisted])
 
   const updateValue = (key: keyof Account, value: any) => {
     setHasUnsavedChanges(true)

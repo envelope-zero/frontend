@@ -71,9 +71,7 @@ const TransactionForm = ({
     ]
 
     if (isPersisted) {
-      promises.push(
-        transactionApi.get(transactionId, budget).then(setTransaction)
-      )
+      promises.push(transactionApi.get(transactionId).then(setTransaction))
     }
 
     Promise.all(promises)
