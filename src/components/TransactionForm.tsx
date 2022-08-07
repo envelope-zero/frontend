@@ -28,16 +28,9 @@ const categoryApi = api('categories')
 type Props = {
   budget: Budget
   accounts: Account[]
-  transactions: Transaction[]
-  setTransactions: (transactions: Transaction[]) => void
 }
 
-const TransactionForm = ({
-  budget,
-  accounts,
-  transactions,
-  setTransactions,
-}: Props) => {
+const TransactionForm = ({ budget, accounts }: Props) => {
   const { t }: Translation = useTranslation()
   const { transactionId } = useParams()
   const navigate = useNavigate()
@@ -150,22 +143,14 @@ const TransactionForm = ({
 
             let result
             if (isPersisted) {
-              result = transactionApi
-                .update(transactionWithNewResources as Transaction)
-                .then(updatedTransaction => {
-                  setTransactions([
-                    updatedTransaction,
-                    ...transactions.filter(
-                      transaction => transaction.id !== updatedTransaction.id
-                    ),
-                  ])
-                })
+              result = transactionApi.update(
+                transactionWithNewResources as Transaction
+              )
             } else {
-              result = transactionApi
-                .create(transactionWithNewResources, budget)
-                .then(newTransaction => {
-                  setTransactions([newTransaction, ...transactions])
-                })
+              result = transactionApi.create(
+                transactionWithNewResources,
+                budget
+              )
             }
 
             return result.then(() => navigate(-1))
@@ -329,13 +314,6 @@ const TransactionForm = ({
                     transactionApi
                       .delete(transaction as Transaction)
                       .then(() => {
-                        setTransactions(
-                          transactions.filter(
-                            oldTransaction =>
-                              oldTransaction.id !==
-                              (transaction as Transaction).id
-                          )
-                        )
                         navigate(-1)
                       })
                       .catch(err => {

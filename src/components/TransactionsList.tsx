@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { PlusIcon } from '@heroicons/react/outline'
 import {
   // FilterIcon,
@@ -10,25 +11,33 @@ import { Budget, Translation, Transaction, Account } from '../types'
 import { formatDate, formatMoney } from '../lib/format'
 import { groupBy } from '../lib/array'
 import { getConfiguration } from '../lib/transaction-helper'
+import { api } from '../lib/api/base'
+
+const transactionApi = api('transactions')
 
 type Props = {
   budget: Budget
   accounts: Account[]
-  transactions: Transaction[]
 }
 type GroupedTransactions = {
   [key: string]: Transaction[]
 }
 
-const TransactionsList = ({ budget, accounts, transactions }: Props) => {
+const TransactionsList = ({ budget, accounts }: Props) => {
   const { t }: Translation = useTranslation()
 
-  const groupedTransactions: GroupedTransactions = groupBy(
-    transactions,
-    ({ date }: Transaction) => formatDate(date)
-  )
+  const [groupedTransactions, setGroupedTransactions] =
+    useState<GroupedTransactions>({})
 
-  const anyReconciled = Object.values(transactions)
+  useEffect(() => {
+    transactionApi.getAll(budget).then(transactions => {
+      setGroupedTransactions(
+        groupBy(transactions, ({ date }: Transaction) => formatDate(date))
+      )
+    })
+  }, [budget])
+
+  const anyReconciled = Object.values(groupedTransactions)
     .flat()
     .some(transaction => transaction.reconciled)
 

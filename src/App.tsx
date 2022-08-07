@@ -21,18 +21,16 @@ import CategoryForm from './components/CategoryForm'
 import cookie from './lib/cookie'
 import connectBudgetApi from './lib/api/budgets'
 import './i18n'
-import { Account, Budget, Transaction } from './types'
+import { Account, Budget } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
 import Error from './components/Error'
 import { api } from './lib/api/base'
 
-const transactionApi = api('transactions')
 const accountApi = api('accounts')
 
 const App = () => {
   const [budget, setBudget] = useState<Budget>()
   const [accounts, setAccounts] = useState<Account[]>([])
-  const [transactions, setTransactions] = useState<Transaction[]>([])
   const [error, setError] = useState('')
   const budgetId = cookie.get('budgetId')
 
@@ -44,7 +42,6 @@ const App = () => {
           .then(data => {
             setBudget(data)
             getBudgetAccounts(data)
-            getBudgetTransactions(data)
             setError('')
           })
           .catch(err => {
@@ -57,9 +54,6 @@ const App = () => {
 
   const getBudgetAccounts = (budget: Budget) => {
     accountApi.getAll(budget).then(setAccounts)
-  }
-  const getBudgetTransactions = (budget: Budget) => {
-    transactionApi.getAll(budget).then(setTransactions)
   }
 
   const selectBudget = (selectedBudget?: Budget) => {
@@ -128,22 +122,13 @@ const App = () => {
                   <Route
                     path="transactions"
                     element={
-                      <TransactionsList
-                        budget={budget}
-                        accounts={accounts}
-                        transactions={transactions}
-                      />
+                      <TransactionsList budget={budget} accounts={accounts} />
                     }
                   />
                   <Route
                     path="transactions/:transactionId"
                     element={
-                      <TransactionForm
-                        budget={budget}
-                        accounts={accounts}
-                        transactions={transactions}
-                        setTransactions={setTransactions}
-                      />
+                      <TransactionForm budget={budget} accounts={accounts} />
                     }
                   />
                   <Route
