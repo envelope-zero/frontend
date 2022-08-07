@@ -28,9 +28,10 @@ const categoryApi = api('categories')
 type Props = {
   budget: Budget
   accounts: Account[]
+  reloadAccounts: () => void
 }
 
-const TransactionForm = ({ budget, accounts }: Props) => {
+const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
   const { t }: Translation = useTranslation()
   const { transactionId } = useParams()
   const navigate = useNavigate()
@@ -104,10 +105,12 @@ const TransactionForm = ({ budget, accounts }: Props) => {
       )
     }
 
-    return Promise.all(promises).then(() => ({
-      sourceAccountId,
-      destinationAccountId,
-    }))
+    return Promise.all(promises)
+      .then(reloadAccounts)
+      .then(() => ({
+        sourceAccountId,
+        destinationAccountId,
+      }))
   }
 
   const accountGroups = [
