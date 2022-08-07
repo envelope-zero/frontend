@@ -93,3 +93,5 @@ export type Envelope = UnpersistetEnvelope &
     note: string
     categoryId: UUID
   }
+
+export type FilterOptions = { account?: string; envelope?: string }
