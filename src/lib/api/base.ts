@@ -1,4 +1,4 @@
-import { ApiObject, UUID, Budget } from '../../types'
+import { ApiObject, UUID, Budget, FilterOptions } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 
 const endpoint =
@@ -17,7 +17,15 @@ const get = async (url: string) => {
 
 const api = (linkKey: string) => {
   return {
-    getAll: (parent: ApiObject) => get(parent.links[linkKey]),
+    getAll: (parent: ApiObject, filterOptions: FilterOptions = {}) => {
+      const url = new URL(parent.links[linkKey])
+      Object.entries(filterOptions).forEach(([key, value]) => {
+        if (typeof value !== 'undefined') {
+          url.searchParams.set(key, value)
+        }
+      })
+      return get(url.href)
+    },
     get: (id: UUID, parent: ApiObject) => {
       const url = new URL(parent.links[linkKey])
       url.pathname += `/${id}`

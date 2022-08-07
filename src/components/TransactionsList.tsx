@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { useSearchParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { PlusIcon } from '@heroicons/react/outline'
 import {
@@ -7,7 +7,13 @@ import {
   ChevronRightIcon,
   LockClosedIcon,
 } from '@heroicons/react/solid'
-import { Budget, Translation, Transaction, Account } from '../types'
+import {
+  Budget,
+  Translation,
+  Transaction,
+  Account,
+  FilterOptions,
+} from '../types'
 import { formatDate, formatMoney } from '../lib/format'
 import { groupBy } from '../lib/array'
 import { getConfiguration } from '../lib/transaction-helper'
@@ -25,17 +31,23 @@ type GroupedTransactions = {
 
 const TransactionsList = ({ budget, accounts }: Props) => {
   const { t }: Translation = useTranslation()
+  const [searchParams] = useSearchParams()
 
   const [groupedTransactions, setGroupedTransactions] =
     useState<GroupedTransactions>({})
 
   useEffect(() => {
-    transactionApi.getAll(budget).then(transactions => {
+    const filterOptions: FilterOptions = {
+      account: searchParams.get('account') || undefined,
+      envelope: searchParams.get('envelope') || undefined,
+    }
+
+    transactionApi.getAll(budget, filterOptions).then(transactions => {
       setGroupedTransactions(
         groupBy(transactions, ({ date }: Transaction) => formatDate(date))
       )
     })
-  }, [budget])
+  }, [budget, searchParams])
 
   const anyReconciled = Object.values(groupedTransactions)
     .flat()
