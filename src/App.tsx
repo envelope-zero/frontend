@@ -41,7 +41,7 @@ const App = () => {
           .getBudget(budgetId)
           .then(data => {
             setBudget(data)
-            getBudgetAccounts(data)
+            loadAccounts(data)
             setError('')
           })
           .catch(err => {
@@ -52,7 +52,7 @@ const App = () => {
     }
   }, [budgetId])
 
-  const getBudgetAccounts = (budget: Budget) => {
+  const loadAccounts = (budget: Budget) => {
     accountApi.getAll(budget).then(setAccounts)
   }
 
@@ -102,6 +102,7 @@ const App = () => {
                         budget={budget}
                         type="internal"
                         accounts={accounts}
+                        reloadAccounts={() => loadAccounts(budget)}
                       />
                     }
                   />
@@ -116,6 +117,7 @@ const App = () => {
                         budget={budget}
                         type="external"
                         accounts={accounts}
+                        reloadAccounts={() => loadAccounts(budget)}
                       />
                     }
                   />
@@ -128,7 +130,11 @@ const App = () => {
                   <Route
                     path="transactions/:transactionId"
                     element={
-                      <TransactionForm budget={budget} accounts={accounts} />
+                      <TransactionForm
+                        budget={budget}
+                        accounts={accounts}
+                        reloadAccounts={() => loadAccounts(budget)}
+                      />
                     }
                   />
                   <Route
