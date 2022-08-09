@@ -249,6 +249,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               onChange={account => {
                 if (!account.id) {
                   setSourceAccountToCreate(account)
+                  updateValue('sourceAccountId', undefined)
                 } else {
                   setSourceAccountToCreate(undefined)
                   updateValue('sourceAccountId', account.id)
@@ -271,6 +272,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               onChange={account => {
                 if (!account.id) {
                   setDestinationAccountToCreate(account)
+                  updateValue('destinationAccountId', undefined)
                 } else {
                   setDestinationAccountToCreate(undefined)
                   updateValue('destinationAccountId', account.id)
