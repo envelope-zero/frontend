@@ -39,7 +39,8 @@
     "tailwindcss": "3.1.8"
   },
   "scripts": {
-    "backend": "docker pull ghcr.io/envelope-zero/backend:latest && docker run --rm -e CORS_ALLOW_ORIGINS=http://localhost:3000 -e API_URL=http://localhost:8080 -p 8080:8080 -v data:/data ghcr.io/envelope-zero/backend:latest",
+    "backend:update": "docker pull ghcr.io/envelope-zero/backend:latest",
+    "backend": "docker run --rm -e CORS_ALLOW_ORIGINS=http://localhost:3000 -e API_URL=http://localhost:8080 -p 8080:8080 -v data:/data ghcr.io/envelope-zero/backend:latest",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
