@@ -44,7 +44,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
         <Link
           to="/budgets/new"
           className="header--action"
-          title={t('accounts.create')}
+          title={t('budgets.create')}
         >
           <PlusIcon className="icon" />
         </Link>
