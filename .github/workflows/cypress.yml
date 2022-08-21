@@ -27,6 +27,7 @@ jobs:
           start: npm start
           # Frontend runs on :3000, API on :8080
           wait-on: 'http://localhost:3000, http://localhost:8080'
+          browser: chrome
 
       - uses: actions/upload-artifact@v3.1.0
         if: failure()
