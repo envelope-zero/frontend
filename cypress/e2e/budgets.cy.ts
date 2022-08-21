@@ -19,7 +19,7 @@ describe('Budget: Overview', () => {
 
     cy.contains('Save').click()
 
-    cy.get('h1').contains('Shared Household Budget')
+    cy.get('h1').contains('Shared Household Budget', { timeout: 10000 })
     cy.contains('Switch Budget')
 
     cy.getCookie('budgetId').should('exist')
@@ -28,23 +28,20 @@ describe('Budget: Overview', () => {
 
 describe('Budget: Switch', () => {
   it('can switch between budgets', () => {
-    cy.visit('/')
-    cy.getByTitle('Create Budget').first().click()
+    cy.visit('/budgets/new')
     cy.getInputFor('Name').type('First Budget')
     cy.contains('Save').click()
 
-    cy.contains('Switch Budget').click()
-
-    cy.getByTitle('Create Budget').first().click()
+    cy.visit('/budgets/new')
     cy.getInputFor('Name').type('Second Budget')
     cy.contains('Save').click()
 
     cy.contains('Switch Budget').click()
-    cy.contains('First Budget').click()
+    cy.get('h3').contains('First Budget').click()
     cy.get('h1').contains('First Budget')
 
     cy.contains('Switch Budget').click()
-    cy.contains('Second Budget').click()
+    cy.get('h3').contains('Second Budget').click()
     cy.get('h1').contains('Second Budget')
   })
 })
