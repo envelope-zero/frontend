@@ -30,7 +30,7 @@ jobs:
     # Current backend version as service container
     services:
       backend:
-        image: ghcr.io/envelope-zero/backend:v0.44.1
+        image: ghcr.io/envelope-zero/backend:v0.46.3
         env:
           CORS_ALLOW_ORIGINS: http://localhost:3000
           API_URL: http://localhost:8080
