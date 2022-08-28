@@ -17,9 +17,9 @@ describe('Budget: Overview', () => {
     cy.getInputFor('Currency').type('€')
     cy.getInputFor('Note').type("We're all in this together!")
 
-    cy.contains('Save').click()
+    cy.clickAndWait('Save')
 
-    cy.get('h1').contains('Shared Household Budget', { timeout: 10000 })
+    cy.get('h1').contains('Shared Household Budget')
     cy.contains('Switch Budget')
 
     cy.getCookie('budgetId').should('exist')
