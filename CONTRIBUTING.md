@@ -14,23 +14,13 @@ Once those are installed, run `make setup` to perform the repository setup.
 
 :information_source: If you need any help with those steps, please [open a blank issue](https://github.com/envelope-zero/frontend/issues/new). We’re happy to help!
 
-To run a development server, you will need to run a backend instance. You can launch one as OCI image, for example with docker, run:
+To simplify development, we provide docker-compose files that run the backend and frontend together. With this, you can run
 
 ```sh
-npm run backend
+npm run server:dev
 ```
 
-This will persist your test data in a docker volume, so you can always stop the container and restart it later. To clean the data, run `docker volume rm data` after stopping the container.
-
-Once the backend is running, you can start the development server for the frontend.
-
-If you do not already have a `.env` file, create it in the repository root and add the following line:
-
-```sh
-REACT_APP_API_ENDPOINT="http://localhost:8080/v1"
-```
-
-Then, run `npm run start`.
+and wait for ~1 minute (if you know why `react-scripts start` takes this long in a container, we're happy about pointers). Then, open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Tests
 
@@ -40,12 +30,9 @@ You can run the tests as follows:
 
 ```sh
 # Open a terminal
-npm run backend:update && npm run backend
+npm run server:test
 
-# Open another terminal
-npm run start
-
-# Open a third terminal
+# Wait for ~1 minute (if you know why `react-scripts start` takes this long in a container, we're happy about pointers)
 npm run test
 
 # If you want to see your browser go wrooom and inspect the tests in detail, instead of npm run test, use
