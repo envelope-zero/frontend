@@ -26,7 +26,7 @@ h3 {
 }
 
 .header .header--action {
-  @apply fixed right-6 md:right-0 text-red-800 flex gap-x-2;
+  @apply fixed right-6 text-red-800 flex gap-x-2;
 }
 
 .header .header--action .header--action__secondary {
