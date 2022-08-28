@@ -1,0 +1,27 @@
+version: '3'
+
+volumes:
+  ez-dev-data:
+
+services:
+  backend:
+    image: ghcr.io/envelope-zero/backend:v1.0.0
+    volumes:
+      - ez-dev-data:/data
+    ports:
+      - '8080:8080'
+    environment:
+      API_URL: http://localhost:8080
+      CORS_ALLOW_ORIGINS: http://localhost:3000
+
+  frontend:
+    image: node:18.8.0-alpine
+    working_dir: /app
+    command: ['npm', 'run', 'start']
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/app
+    environment:
+      REACT_APP_API_ENDPOINT: http://localhost:8080
+      BROWSER: none # Don't open a browser
