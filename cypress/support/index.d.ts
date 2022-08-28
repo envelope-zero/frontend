@@ -9,6 +9,7 @@ declare namespace Cypress {
      */
     getByTitle(title: string): Chainable<any>
     getInputFor(label: string): Chainable<any>
+    clickAndWait(element: string): Chainable<any>
     resetDb(): void
   }
 }
