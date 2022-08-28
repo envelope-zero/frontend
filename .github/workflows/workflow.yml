@@ -33,21 +33,21 @@ jobs:
         image: ghcr.io/envelope-zero/backend:v1.0.1
         env:
           CORS_ALLOW_ORIGINS: http://localhost:3001
-          API_URL: http://localhost:8080
+          API_URL: http://localhost:8081
         ports:
-          - 8080:8080
+          - 8081:8080
 
     steps:
       - uses: actions/checkout@v3.0.2
 
       - uses: cypress-io/github-action@v4.2.0
         env:
-          REACT_APP_API_ENDPOINT: http://localhost:8080
+          REACT_APP_API_ENDPOINT: http://localhost:8081
           PORT: 3001
         with:
           start: npm start
-          # Frontend runs on :3001, API on :8080
-          wait-on: 'http://localhost:3001, http://localhost:8080'
+          # Frontend runs on :3001, API on :8081
+          wait-on: 'http://localhost:3001, http://localhost:8081'
           browser: chrome
 
       - uses: actions/upload-artifact@v3.1.0

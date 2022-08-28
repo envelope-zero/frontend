@@ -16,5 +16,6 @@ Cypress.Commands.add('clickAndWait', element => {
 })
 
 Cypress.Commands.add('resetDb', () => {
-  // TODO
+  // Delete all resources
+  cy.request('DELETE', 'http://localhost:8081/v1')
 })
