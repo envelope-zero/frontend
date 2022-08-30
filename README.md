@@ -16,7 +16,7 @@ The frontend currently has two requirements:
 
 This project is under heavy development. Therefore, only the latest release is supported.
 
-Please check the [releases page](https://github.com/envelope-zero/frondend/releases) for the latest release.
+Please check the [releases page](https://github.com/envelope-zero/frontend/releases) for the latest release.
 
 Check the table below for the minimal required frontend version for specific [backend](https://github.com/envelope-zero/backend) versions.
 
