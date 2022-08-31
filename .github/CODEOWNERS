@@ -1,0 +1,6 @@
+* @envelope-zero/frontend-maintainers
+
+# Morre can also review tests, renovate config and GitHub config
+renovate.json @envelope-zero/frontend-maintainers @morremeyer
+cypress/ @envelope-zero/frontend-maintainers @morremeyer
+.github/ @envelope-zero/frontend-maintainers @morremeyer
