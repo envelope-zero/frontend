@@ -11,7 +11,13 @@
   "semanticCommits": "enabled",
   "packageRules": [
     {
-      "matchManagers": ["npm", "github-actions", "pre-commit"],
+      "matchManagers": [
+        "npm",
+        "github-actions",
+        "pre-commit",
+        "docker-compose",
+        "dockerfile"
+      ],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     },
