@@ -42,10 +42,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "server:dev": "docker-compose --project-name frontend-dev --file docker-compose-dev.yml up --detach",
-    "server:dev:stop": "docker-compose --project-name frontend-dev --file docker-compose-dev.yml down",
-    "server:dev:restart": "docker-compose --project-name frontend-dev --file docker-compose-dev.yml restart",
-    "server:dev:logs": "docker-compose --project-name frontend-dev --file docker-compose-dev.yml logs --follow",
+    "server:dev": "docker-compose --project-name frontend-dev --file docker-compose-dev.yml up",
     "server:test": "docker-compose --project-name frontend-test --file docker-compose-test.yml up --detach",
     "server:test:stop": "docker-compose --project-name frontend-test --file docker-compose-test.yml down",
     "server:test:restart": "docker-compose --project-name frontend-test --file docker-compose-test.yml restart",
