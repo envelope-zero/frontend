@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import {
   EnvelopeIcon,
   BanknotesIcon,
-  CogIcon,
+  Cog8ToothIcon,
   ArrowsRightLeftIcon,
   HomeIcon,
   Bars3Icon,
@@ -43,7 +43,7 @@ const Layout = ({ budget }: LayoutProps) => {
       icon: BanknotesIcon,
     },
     { name: t('navigation.envelopes'), href: 'envelopes', icon: EnvelopeIcon },
-    { name: t('navigation.settings'), href: 'settings', icon: CogIcon },
+    { name: t('navigation.settings'), href: 'settings', icon: Cog8ToothIcon },
   ]
 
   return (
