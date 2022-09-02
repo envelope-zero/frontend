@@ -1,4 +1,4 @@
-import { ExclamationIcon } from '@heroicons/react/outline'
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
 type Props = { error: string }
 
@@ -9,7 +9,7 @@ const Error = ({ error }: Props) => {
 
   return (
     <div className="error mb-3">
-      <ExclamationIcon className="icon inline mr-1" /> {error}
+      <ExclamationTriangleIcon className="icon inline mr-1" /> {error}
     </div>
   )
 }

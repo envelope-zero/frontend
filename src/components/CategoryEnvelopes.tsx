@@ -8,7 +8,7 @@ import {
   ChevronRightIcon,
   ChevronUpIcon,
   PencilIcon,
-} from '@heroicons/react/solid'
+} from '@heroicons/react/20/solid'
 
 const CategoryEnvelopes = ({ category }: { category: Category }) => {
   const { t }: Translation = useTranslation()
