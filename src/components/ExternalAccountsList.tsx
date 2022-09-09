@@ -8,7 +8,7 @@ import AccountListSwitch from './AccountListSwitch'
 import Error from './Error'
 import { getExternalAccounts } from '../lib/api/accounts'
 import { safeName } from '../lib/name-helper'
-import { PencilIcon } from '@heroicons/react/20/solid'
+import { PencilIcon } from '@heroicons/react/24/solid'
 
 const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
   const { t }: Translation = useTranslation()
