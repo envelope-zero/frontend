@@ -37,6 +37,9 @@ npm run test
 
 # If you want to see your browser go wrooom and inspect the tests in detail, instead of npm run test, use
 npm run test:watch
+
+# To run only a specific test, use
+npm run test -- -s $PATH_TO_SPEC
 ```
 
 ## Commit messages
