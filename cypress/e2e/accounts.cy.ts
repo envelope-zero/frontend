@@ -3,7 +3,7 @@ import { createBudget } from '../support/setup'
 describe('Account: Creation', () => {
   beforeEach(() => {
     // prepare & select a budget
-    cy.then(() => createBudget({ name: 'Account Test' })).then(() => {
+    cy.wrap(createBudget({ name: 'Account Test' })).then(() => {
       cy.visit('/').get('h3').contains('Account Test').click()
     })
   })
