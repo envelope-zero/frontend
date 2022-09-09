@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { PlusIcon } from '@heroicons/react/outline'
+import { PlusIcon } from '@heroicons/react/24/outline'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Translation, Category, Budget } from '../types'

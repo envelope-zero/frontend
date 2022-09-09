@@ -1,4 +1,4 @@
-import { ChevronRightIcon, LockClosedIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon, LockClosedIcon } from '@heroicons/react/20/solid'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'

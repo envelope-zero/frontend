@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { LockClosedIcon } from '@heroicons/react/solid'
+import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { api } from '../lib/api/base'
 import { dateFromIsoString, dateToIsoString } from '../lib/dates'
 import { safeName } from '../lib/name-helper'

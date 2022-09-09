@@ -8,7 +8,7 @@ import LoadingSpinner from './LoadingSpinner'
 import FormFields from './FormFields'
 import FormField from './FormField'
 import { safeName } from '../lib/name-helper'
-import { ChevronRightIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon } from '@heroicons/react/20/solid'
 
 const categoryApi = api('categories')
 

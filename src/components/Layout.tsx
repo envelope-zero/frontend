@@ -2,18 +2,18 @@ import { Outlet, NavLink, Link } from 'react-router-dom'
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
-  MailIcon,
-  CashIcon,
-  CogIcon,
-  SwitchHorizontalIcon,
+  EnvelopeIcon,
+  BanknotesIcon,
+  Cog8ToothIcon,
+  ArrowsRightLeftIcon,
   HomeIcon,
-  MenuIcon,
-  XIcon,
+  Bars3Icon,
+  XMarkIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  ExclamationIcon,
-  LightningBoltIcon,
-} from '@heroicons/react/outline'
+  ExclamationTriangleIcon,
+  BoltIcon,
+} from '@heroicons/react/24/outline'
 import { useTranslation } from 'react-i18next'
 import { Budget, Translation } from '../types'
 import { safeName } from '../lib/name-helper'
@@ -35,11 +35,15 @@ const Layout = ({ budget }: LayoutProps) => {
     {
       name: t('navigation.transactions'),
       href: 'transactions',
-      icon: SwitchHorizontalIcon,
+      icon: ArrowsRightLeftIcon,
     },
-    { name: t('navigation.accounts'), href: 'own-accounts', icon: CashIcon },
-    { name: t('navigation.envelopes'), href: 'envelopes', icon: MailIcon },
-    { name: t('navigation.settings'), href: 'settings', icon: CogIcon },
+    {
+      name: t('navigation.accounts'),
+      href: 'own-accounts',
+      icon: BanknotesIcon,
+    },
+    { name: t('navigation.envelopes'), href: 'envelopes', icon: EnvelopeIcon },
+    { name: t('navigation.settings'), href: 'settings', icon: Cog8ToothIcon },
   ]
 
   return (
@@ -92,7 +96,7 @@ const Layout = ({ budget }: LayoutProps) => {
                         <span className="sr-only">
                           {t('navigation.closeSidebar')}
                         </span>
-                        <XIcon className="icon" aria-hidden="true" />
+                        <XMarkIcon className="icon" aria-hidden="true" />
                       </button>
                     </div>
                   </Transition.Child>
@@ -117,7 +121,7 @@ const Layout = ({ budget }: LayoutProps) => {
                         onClick={() => setSidebarOpen(false)}
                         className="my-4 border-y text-sky-600 group flex items-center p-4 text-base font-medium"
                       >
-                        <LightningBoltIcon className="inline mr-4 flex-shrink-0 h-6 w-6" />
+                        <BoltIcon className="inline mr-4 flex-shrink-0 h-6 w-6" />
                         {t('transactions.add')}
                       </Link>
                       <nav className="space-y-1">
@@ -167,7 +171,7 @@ const Layout = ({ budget }: LayoutProps) => {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <ExclamationIcon className="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" />{' '}
+                        <ExclamationTriangleIcon className="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" />{' '}
                         {t('navigation.bugReport')}
                       </a>
                       <div className="text-gray-400 flex items-center px-4 text-sm font-medium justify-end">
@@ -208,7 +212,7 @@ const Layout = ({ budget }: LayoutProps) => {
                     className="my-4 border-y text-sky-600 hover:text-sky-700 hover:bg-gray-50 group flex items-center p-4 text-sm font-medium"
                     onClick={() => setSidebarOpen(false)}
                   >
-                    <LightningBoltIcon className="mr-3 flex-shrink-0 h-6 w-6" />
+                    <BoltIcon className="mr-3 flex-shrink-0 h-6 w-6" />
                     {t('transactions.add')}
                   </Link>
                   <nav className="mt-5 flex-1 bg-white space-y-1">
@@ -250,7 +254,7 @@ const Layout = ({ budget }: LayoutProps) => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <ExclamationIcon className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" />{' '}
+                    <ExclamationTriangleIcon className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" />{' '}
                     {t('navigation.bugReport')}
                   </a>
                   <div className="text-gray-400 flex items-center px-4 text-sm font-medium">
@@ -275,7 +279,7 @@ const Layout = ({ budget }: LayoutProps) => {
             }}
           >
             <span className="sr-only">{t('navigation.openSidebar')}</span>
-            <MenuIcon className="icon" aria-hidden="true" />
+            <Bars3Icon className="icon" aria-hidden="true" />
           </button>
         </div>
         <main className="flex-1">

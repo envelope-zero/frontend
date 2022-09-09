@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { useSearchParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { PlusIcon } from '@heroicons/react/outline'
+import { PlusIcon } from '@heroicons/react/24/outline'
 import {
   // FilterIcon,
   ChevronRightIcon,
   LockClosedIcon,
-} from '@heroicons/react/solid'
+} from '@heroicons/react/20/solid'
 import {
   Budget,
   Translation,

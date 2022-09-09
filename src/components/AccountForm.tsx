@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { ChevronRightIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { Translation, Account, UnpersistedAccount, Budget } from '../types'
 import { api } from '../lib/api/base'
 import LoadingSpinner from './LoadingSpinner'

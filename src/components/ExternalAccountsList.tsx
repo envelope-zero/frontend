@@ -2,13 +2,13 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Budget, Translation, Account } from '../types'
-import { PlusIcon } from '@heroicons/react/outline'
+import { PlusIcon } from '@heroicons/react/24/outline'
 import LoadingSpinner from './LoadingSpinner'
 import AccountListSwitch from './AccountListSwitch'
 import Error from './Error'
 import { getExternalAccounts } from '../lib/api/accounts'
 import { safeName } from '../lib/name-helper'
-import { PencilIcon } from '@heroicons/react/solid'
+import { PencilIcon } from '@heroicons/react/24/solid'
 
 const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
   const { t }: Translation = useTranslation()
