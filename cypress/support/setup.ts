@@ -3,7 +3,7 @@ import {
   UnpersistedAccount,
   UnpersistedBudget,
   UnpersistedCategory,
-  UnpersistetEnvelope,
+  UnpersistedEnvelope,
 } from '../../src/types'
 import connectBudgetApi from '../../src/lib/api/budgets'
 import { api } from '../../src/lib/api/base'
@@ -25,7 +25,7 @@ export const createCategory = async (
 ) => api('categories').create(category, budget)
 
 export const createEnvelope = async (
-  envelope: UnpersistetEnvelope,
+  envelope: UnpersistedEnvelope,
   budget: Budget
 ) => {
   const envelopeApi = api('envelopes')

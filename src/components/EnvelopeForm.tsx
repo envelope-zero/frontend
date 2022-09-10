@@ -8,7 +8,7 @@ import {
   Account,
   Budget,
   Envelope,
-  UnpersistetEnvelope,
+  UnpersistedEnvelope,
   Translation,
   UnpersistedCategory,
   Category,
@@ -33,7 +33,7 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
 
   const [error, setError] = useState('')
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
-  const [envelope, setEnvelope] = useState<UnpersistetEnvelope | Envelope>({})
+  const [envelope, setEnvelope] = useState<UnpersistedEnvelope | Envelope>({})
   const [categories, setCategories] = useState<Category[]>([])
   const [categoryToCreate, setCategoryToCreate] =
     useState<UnpersistedCategory>()
