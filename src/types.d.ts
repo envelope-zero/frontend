@@ -81,13 +81,13 @@ export type Category = ApiObject & {
   envelopes: Envelope[]
 }
 
-export type UnpersistetEnvelope = {
+export type UnpersistedEnvelope = {
   name?: string
   note?: string
   categoryId?: UUID
 }
 
-export type Envelope = UnpersistetEnvelope &
+export type Envelope = UnpersistedEnvelope &
   ApiObject & {
     name: string
     note: string
