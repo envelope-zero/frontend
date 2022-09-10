@@ -49,13 +49,7 @@ const Autocomplete = <T,>({
   const emptyLabel = t('select')
 
   return (
-    <Combobox
-      as="div"
-      value={value}
-      onChange={onChange}
-      disabled={disabled}
-      nullable={includeEmpty}
-    >
+    <Combobox as="div" value={value} onChange={onChange} disabled={disabled}>
       <div className="form-field--wrapper">
         <Combobox.Label className="form-field--label">{label}</Combobox.Label>
         <div className="input--outer">
