@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
+import { TrashIcon } from '@heroicons/react/24/outline'
 import { api } from '../lib/api/base'
 import { dateFromIsoString, dateToIsoString } from '../lib/dates'
 import { safeName } from '../lib/name-helper'
@@ -328,6 +329,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                 }}
                 className="btn-secondary"
               >
+                <TrashIcon className="icon icon-sm inline mr-1 relative bottom-0.5" />
                 {t('transactions.delete')}
               </button>
             </div>

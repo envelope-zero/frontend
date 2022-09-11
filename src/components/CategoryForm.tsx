@@ -9,6 +9,7 @@ import FormFields from './FormFields'
 import FormField from './FormField'
 import { safeName } from '../lib/name-helper'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import { TrashIcon } from '@heroicons/react/24/outline'
 
 const categoryApi = api('categories')
 
@@ -119,6 +120,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
               }}
               className="btn-secondary"
             >
+              <TrashIcon className="icon icon-sm inline mr-1 relative bottom-0.5" />
               {t('categories.delete')}
             </button>
           </div>

@@ -10,6 +10,7 @@ import FormFields from './FormFields'
 import FormField from './FormField'
 import LatestTransactions from './LatestTransactions'
 import RemainingHeightContainer from './RemainingHeightContainer'
+import { TrashIcon } from '@heroicons/react/24/outline'
 
 const accountApi = api('accounts')
 
@@ -179,6 +180,7 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
                 }}
                 className="btn-secondary"
               >
+                <TrashIcon className="icon icon-sm inline mr-1 relative bottom-0.5" />
                 {t('accounts.delete')}
               </button>
               {/* TODO: reconcile */}

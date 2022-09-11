@@ -1,4 +1,5 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import { TrashIcon } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, Link, useNavigate } from 'react-router-dom'
@@ -186,6 +187,7 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
                 }}
                 className="btn-secondary"
               >
+                <TrashIcon className="icon icon-sm inline mr-1 relative bottom-0.5" />
                 {t('envelopes.delete')}
               </button>
             </div>
