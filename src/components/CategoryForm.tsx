@@ -84,6 +84,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
               label={t('categories.name')}
               value={category.name || ''}
               onChange={e => updateValue('name', e.target.value)}
+              options={{ autoFocus: true }}
             />
 
             <div className="form-field--wrapper">

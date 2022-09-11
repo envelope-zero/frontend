@@ -225,7 +225,10 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               label={t('transactions.note')}
               value={transaction.note || ''}
               onChange={e => updateValue('note', e.target.value)}
-              options={{ disabled: transaction.reconciled || false }}
+              options={{
+                disabled: transaction.reconciled || false,
+                autoFocus: true,
+              }}
             />
 
             <FormField

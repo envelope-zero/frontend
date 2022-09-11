@@ -108,6 +108,7 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
               label={t('accounts.name')}
               value={account.name || ''}
               onChange={e => updateValue('name', e.target.value)}
+              options={{ autoFocus: true }}
             />
 
             {type === 'internal' ? (
