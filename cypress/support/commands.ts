@@ -13,6 +13,11 @@ Cypress.Commands.add('getInputFor', label =>
 Cypress.Commands.add('clickAndWait', element => {
   cy.contains(element).click()
   cy.contains(element).should('not.exist')
+  cy.awaitLoading()
+})
+
+Cypress.Commands.add('awaitLoading', () => {
+  cy.get('#loading').should('not.exist')
 })
 
 Cypress.Commands.add('resetDb', () => {
