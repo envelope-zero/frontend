@@ -41,6 +41,10 @@ h3 {
   @apply text-red-800 h-6 w-6 flex-shrink-0;
 }
 
+.icon-sm {
+  @apply h-5 w-5;
+}
+
 .icon-lg {
   @apply h-10 w-10;
 }
