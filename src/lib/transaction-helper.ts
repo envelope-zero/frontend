@@ -14,7 +14,11 @@ const counterpartiesString = (
     'account'
   )}`
 
-const getConfiguration = (transaction: Transaction, accounts: Account[]) => {
+const getConfiguration = (
+  transaction: Transaction,
+  accounts: Account[],
+  povAccount?: Account
+) => {
   const sourceAccount = accounts.find(
     account => account.id === transaction.sourceAccountId
   )
@@ -22,11 +26,24 @@ const getConfiguration = (transaction: Transaction, accounts: Account[]) => {
     account => account.id === transaction.destinationAccountId
   )
 
-  const { sign, color } = sourceAccount?.external
-    ? incoming
-    : destinationAccount?.external
-    ? outgoing
-    : transfer
+  let numberFormat
+
+  if (typeof povAccount !== 'undefined' && !povAccount.external) {
+    numberFormat =
+      povAccount.id === transaction.sourceAccountId
+        ? outgoing
+        : povAccount.id === transaction.destinationAccountId
+        ? incoming
+        : transfer
+  } else {
+    numberFormat = sourceAccount?.external
+      ? incoming
+      : destinationAccount?.external
+      ? outgoing
+      : transfer
+  }
+
+  const { sign, color } = numberFormat
 
   return {
     sign,
