@@ -122,6 +122,7 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
               label={t('envelopes.name')}
               value={envelope.name || ''}
               onChange={e => updateValue('name', e.target.value)}
+              options={{ autoFocus: true }}
             />
 
             <Autocomplete<Category>

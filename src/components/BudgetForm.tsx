@@ -106,6 +106,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
           label={t('budgets.name')}
           value={budget?.name || ''}
           onChange={e => updateValue('name', e.target.value)}
+          options={{ autoFocus: true }}
         />
 
         <FormField
