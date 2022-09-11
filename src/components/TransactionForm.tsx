@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
-import { TrashIcon } from '@heroicons/react/24/outline'
+import { DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { api } from '../lib/api/base'
 import { dateFromIsoString, dateToIsoString } from '../lib/dates'
 import { safeName } from '../lib/name-helper'
@@ -36,6 +36,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
   const { t }: Translation = useTranslation()
   const { transactionId } = useParams()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
   const [error, setError] = useState('')
 
@@ -53,6 +54,8 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
   const isPersisted =
     typeof transactionId !== 'undefined' && transactionId !== 'new'
 
+  const templateId = searchParams.get('duplicateFrom')
+
   useEffect(() => {
     const promises = [
       categoryApi.getAll(budget).then((data: Category[]) =>
@@ -69,6 +72,16 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
       promises.push(
         transactionApi.get(transactionId, budget).then(setTransaction)
       )
+    } else if (transactionId === 'new' && templateId) {
+      promises.push(
+        transactionApi.get(templateId, budget).then(template => {
+          setTransaction({
+            ...template,
+            id: undefined,
+            date: new Date().toISOString(),
+          })
+        })
+      )
     }
 
     Promise.all(promises)
@@ -76,7 +89,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
       .catch(err => {
         setError(err.message)
       })
-  }, [budget, isPersisted, transactionId, t])
+  }, [budget, isPersisted, transactionId, t, templateId])
 
   const updateValue = (key: keyof Transaction, value: any) => {
     setTransaction({ ...transaction, [key]: value })
@@ -157,7 +170,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               )
             }
 
-            return result.then(() => navigate(-1))
+            return result.then(() => navigate('/transactions'))
           })
           .catch(err => setError(err.message))
       }}
@@ -312,7 +325,13 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
           </FormFields>
 
           {isPersisted ? (
-            <div className="pt-5">
+            <div className="pt-6 space-y-3">
+              <div className="btn-secondary link-blue text-center">
+                <Link to={`/transactions/new?duplicateFrom=${transactionId}`}>
+                  <DocumentDuplicateIcon className="icon-sm inline mr-1 relative bottom-0.5" />
+                  {t('transactions.repeat')}
+                </Link>
+              </div>
               <button
                 type="button"
                 onClick={() => {
