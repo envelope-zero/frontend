@@ -12,7 +12,7 @@ describe('Envelope: Creation', () => {
     cy.contains('Envelopes').click()
 
     // Grocery Envelope (category Daily Spending)
-    cy.getByTitle('Create Envelope').click()
+    cy.getByTitle('Create Envelope').first().click()
     cy.getInputFor('Name').type('Grocery Envelope')
     cy.getInputFor('Category').type('Daily Spending')
     cy.contains('Create "Daily Spending"').click()
@@ -22,14 +22,14 @@ describe('Envelope: Creation', () => {
     cy.clickAndWait('Save')
 
     // Restaurant Envelope (category Daily Spending)
-    cy.getByTitle('Create Envelope').click()
+    cy.getByTitle('Create Envelope').first().click()
     cy.getInputFor('Name').type('Restaurants')
     cy.getInputFor('Category').type('Dail')
     cy.contains('Daily Spending').click()
     cy.clickAndWait('Save')
 
     // Rent Envelope (category Running Costs)
-    cy.getByTitle('Create Envelope').click()
+    cy.getByTitle('Create Envelope').first().click()
     cy.getInputFor('Name').type('Rent')
     cy.getInputFor('Category').type('Running Costs')
     cy.contains('Create "Running Costs"').click()
