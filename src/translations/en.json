@@ -71,6 +71,7 @@
     "envelopes": "Envelopes",
     "envelope": "Envelope",
     "new": "New Envelope",
+    "create": "Create Envelope",
     "name": "Name",
     "category": "Category",
     "delete": "Delete envelope",
