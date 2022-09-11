@@ -41,7 +41,7 @@ const CategoryEnvelopes = ({ category }: { category: Category }) => {
           ) : null}
         </div>
 
-        <Link to={`/categories/${category.id}`}>
+        <Link to={`/categories/${category.id}`} title={t('categories.edit')}>
           <PencilIcon className="icon mr-2" />
         </Link>
       </div>

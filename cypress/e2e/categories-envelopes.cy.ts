@@ -49,5 +49,10 @@ describe('Envelope: Creation', () => {
 
     // envelopes from other categories are still visible
     cy.contains('Rent')
+
+    cy.getByTitle('Edit category').first().click()
+    cy.contains('Grocery Envelope')
+    cy.contains('Restaurants')
+    cy.contains('Rent').should('not.exist')
   })
 })
