@@ -165,11 +165,6 @@ const App = () => {
               )}
             </>
           )}
-          {/*
-            This path does nothing, which leads to requests being passed
-            to the server, which is exactly what we want for /api
-          */}
-          <Route path="api" />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
