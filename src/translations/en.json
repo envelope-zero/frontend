@@ -74,7 +74,8 @@
     "name": "Name",
     "category": "Category",
     "delete": "Delete envelope",
-    "confirmDelete": "Are you sure you want to delete this envelope?"
+    "confirmDelete": "Are you sure you want to delete this envelope?",
+    "emptyList": "No envelopes found. Create a new one now!"
   },
   "categories": {
     "new": "New Category",
