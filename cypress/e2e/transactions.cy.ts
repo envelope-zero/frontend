@@ -163,8 +163,7 @@ describe('Transaction: Creation', () => {
     cy.getInputFor('Date').type('2012-12-21')
     cy.getInputFor('Source').type('Cas{enter}') // {enter} selects the first result in the dropdown
     cy.getInputFor('Destination').type('Best fri{enter}') // {enter} selects the first result in the dropdown
-    cy.getInputFor('Envelope').type('Onl')
-    cy.contains('Only one').click() // TODO: should be able to do this with '{enter}', see #322
+    cy.getInputFor('Envelope').type('Onl{enter}')
 
     cy.clickAndWait('Save')
     cy.contains('Burgers').click()

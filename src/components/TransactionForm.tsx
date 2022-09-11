@@ -306,7 +306,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
             <Autocomplete<Envelope>
               groups={groupedEnvelopes}
               allowNewCreation={false}
-              includeEmpty={true}
+              emptyOption={t('envelopes.none')}
               value={
                 (groupedEnvelopes
                   .flatMap(group => group.items)
