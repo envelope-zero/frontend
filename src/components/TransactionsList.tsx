@@ -18,6 +18,7 @@ import { formatDate, formatMoney } from '../lib/format'
 import { groupBy } from '../lib/array'
 import { getConfiguration } from '../lib/transaction-helper'
 import { api } from '../lib/api/base'
+import LoadingSpinner from './LoadingSpinner'
 
 const transactionApi = api('transactions')
 
@@ -33,6 +34,7 @@ const TransactionsList = ({ budget, accounts }: Props) => {
   const { t }: Translation = useTranslation()
   const [searchParams] = useSearchParams()
 
+  const [isLoading, setIsLoading] = useState(true)
   const [groupedTransactions, setGroupedTransactions] =
     useState<GroupedTransactions>({})
 
@@ -46,6 +48,7 @@ const TransactionsList = ({ budget, accounts }: Props) => {
       setGroupedTransactions(
         groupBy(transactions, ({ date }: Transaction) => formatDate(date))
       )
+      setIsLoading(false)
     })
   }, [budget, searchParams])
 
@@ -67,7 +70,9 @@ const TransactionsList = ({ budget, accounts }: Props) => {
 
       {/* TODO: search bar */}
 
-      {Object.keys(groupedTransactions).length ? (
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : Object.keys(groupedTransactions).length ? (
         <div className="bg-white sm:shadow overflow-hidden sm:rounded-md">
           <ul>
             {Object.keys(groupedTransactions).map(date => (
