@@ -42,6 +42,8 @@ describe('Transaction: Creation', () => {
     cy.contains('Birthday Present (Bank account → Best Friend)')
     cy.contains('-42.00')
 
+    // "Latest Transactions" per Account
+
     cy.contains('Accounts').click()
     cy.contains('Bank account').click()
     cy.get('h2').contains('Transactions')
@@ -51,6 +53,14 @@ describe('Transaction: Creation', () => {
     cy.contains('Accounts').click()
     cy.contains('External Accounts').click()
     cy.contains('Best Friend').click()
+    cy.get('h2').contains('Transactions')
+    cy.contains('Birthday Present (Bank account → Best Friend)')
+    cy.contains('-42.00')
+
+    // "Latest Transactions" per Envelope
+
+    cy.contains('Envelopes').click()
+    cy.contains('Only one').click()
     cy.get('h2').contains('Transactions')
     cy.contains('Birthday Present (Bank account → Best Friend)')
     cy.contains('-42.00')
