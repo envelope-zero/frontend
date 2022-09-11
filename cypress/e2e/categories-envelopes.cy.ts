@@ -15,9 +15,8 @@ describe('Envelope: Creation', () => {
 
     cy.getInputFor('Name').type('Grocery Envelope')
 
-    // Pressing enter at the end selects „Create Daily Spending“ in the
-    // dropdown
-    cy.getInputFor('Category').type('Daily Spending{enter}')
+    cy.getInputFor('Category').type('Daily Spending')
+    cy.contains('Create "Daily Spending"').click()
     cy.getInputFor('Note').type(
       'Groceries.{enter}{enter}Usually bought at a supermarket.'
     )
