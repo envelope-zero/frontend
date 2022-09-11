@@ -201,6 +201,7 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
                   accounts={accounts}
                   parent={account}
                   budget={budget}
+                  povFromAccount={true}
                 />
               </RemainingHeightContainer>
             </div>

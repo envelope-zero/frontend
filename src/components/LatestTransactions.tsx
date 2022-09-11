@@ -10,9 +10,19 @@ import { getConfiguration } from '../lib/transaction-helper'
 
 const transactionApi = api('transactions')
 
-type Props = { parent: ApiObject; budget: Budget; accounts: Account[] }
+type Props = {
+  parent: ApiObject
+  budget: Budget
+  accounts: Account[]
+  povFromAccount?: boolean
+}
 
-const LatestTransactions = ({ parent, budget, accounts }: Props) => {
+const LatestTransactions = ({
+  parent,
+  budget,
+  accounts,
+  povFromAccount,
+}: Props) => {
   const { t }: Translation = useTranslation()
 
   const [error, setError] = useState('')
@@ -40,7 +50,8 @@ const LatestTransactions = ({ parent, budget, accounts }: Props) => {
           {transactions.map(transaction => {
             const { sign, color, counterparties } = getConfiguration(
               transaction,
-              accounts
+              accounts,
+              povFromAccount ? (parent as Account) : undefined
             )
 
             return (
