@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { PlusIcon } from '@heroicons/react/24/outline'
+import { PlusIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Translation, Category, Budget } from '../types'
@@ -42,11 +42,18 @@ const EnvelopesList = ({ budget }: Props) => {
 
       <Error error={error} />
 
-      <div className="space-y-4">
-        {categories.map(category => (
-          <CategoryEnvelopes category={category} key={category.id} />
-        ))}
-      </div>
+      {categories.length ? (
+        <div className="space-y-4">
+          {categories.map(category => (
+            <CategoryEnvelopes category={category} key={category.id} />
+          ))}
+        </div>
+      ) : (
+        <div>{t('envelopes.emptyList')}</div>
+      )}
+      <Link to="new" title={t('envelopes.create')}>
+        <PlusCircleIcon className="icon icon-lg mx-auto mt-4" />
+      </Link>
     </>
   )
 }
