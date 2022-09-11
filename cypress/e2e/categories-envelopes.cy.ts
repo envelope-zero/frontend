@@ -11,10 +11,7 @@ describe('Envelope: Creation', () => {
   it('can create a category for a budget', () => {
     cy.contains('Envelopes').click()
 
-    // Replace with .getByTitle('Create Envelope') when
-    // working on
-    // https://github.com/envelope-zero/frontend/issues/345
-    cy.get('a[href="/envelopes/new"]').first().click()
+    cy.getByTitle('Create Envelope').click()
 
     cy.getInputFor('Name').type('Grocery Envelope')
 
