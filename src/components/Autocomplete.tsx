@@ -15,7 +15,7 @@ type Props<T> = {
   value: T
   disabled?: boolean
   allowNewCreation?: boolean
-  includeEmpty?: boolean
+  emptyOption?: string
   onChange: (selectedItem: T) => void
   itemLabel: (item: T) => string
   itemId: (item: T) => UUID
@@ -30,7 +30,7 @@ const Autocomplete = <T,>({
   itemId,
   disabled,
   allowNewCreation,
-  includeEmpty,
+  emptyOption,
 }: Props<T>) => {
   const { t }: Translation = useTranslation()
   const [query, setQuery] = useState('')
@@ -46,8 +46,6 @@ const Autocomplete = <T,>({
         }))
   ).filter(group => group.items.length)
 
-  const emptyLabel = t('select')
-
   return (
     <Combobox as="div" value={value} onChange={onChange} disabled={disabled}>
       <div className="form-field--wrapper">
@@ -58,7 +56,7 @@ const Autocomplete = <T,>({
               className="input"
               onChange={event => setQuery(event.target.value)}
               displayValue={(item: T) => (item ? itemLabel(item) : '')}
-              placeholder={emptyLabel}
+              placeholder={t('select')}
               autoComplete="off"
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
@@ -70,7 +68,7 @@ const Autocomplete = <T,>({
           </div>
 
           <Combobox.Options className="absolute z-10 mt-1 max-h-60 max-w-lg w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {includeEmpty ? (
+            {emptyOption && query.length === 0 ? (
               <Combobox.Option
                 value={null}
                 className={({ active }) =>
@@ -81,7 +79,7 @@ const Autocomplete = <T,>({
                 }
               >
                 <div className="flex items-center">
-                  <span className="ml-3 truncate italic">{emptyLabel}</span>
+                  <span className="ml-3 truncate italic">{emptyOption}</span>
                 </div>
               </Combobox.Option>
             ) : null}
@@ -156,7 +154,9 @@ const Autocomplete = <T,>({
               </Combobox.Option>
             ) : null}
 
-            {filteredGroups.length === 0 && !allowNewCreation ? (
+            {filteredGroups.length === 0 &&
+            !allowNewCreation &&
+            !emptyOption ? (
               <Combobox.Option value={undefined} disabled>
                 <div className="flex items-center">
                   <span className="ml-3 truncate italic">
