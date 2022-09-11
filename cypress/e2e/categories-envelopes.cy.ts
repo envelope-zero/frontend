@@ -1,6 +1,6 @@
 import { createBudget } from '../support/setup'
 
-describe('Account: Creation', () => {
+describe('Envelope: Creation', () => {
   beforeEach(() => {
     // prepare & select a budget
     cy.wrap(createBudget({ name: 'Category Test' })).then(() => {
