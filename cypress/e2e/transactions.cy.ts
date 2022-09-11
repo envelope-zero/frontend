@@ -1,5 +1,6 @@
 import { createBudget, createAccount, createEnvelope } from '../support/setup'
 import { Budget } from '../../src/types'
+import { dateFromIsoString } from '../../src/lib/dates'
 
 describe('Transaction: Creation', () => {
   beforeEach(() => {
@@ -151,5 +152,40 @@ describe('Transaction: Creation', () => {
     cy.get('h2').contains('Transactions')
     cy.contains('Bank account → New Best Friend')
     cy.contains('-13.00')
+  })
+
+  it('can duplicate an existing transaction', () => {
+    cy.get('nav').contains('Transactions').click()
+    cy.getByTitle('Create Transaction').click()
+
+    cy.getInputFor('Note').type('Burgers')
+    cy.getInputFor('Amount').type('5')
+    cy.getInputFor('Date').type('2012-12-21')
+    cy.getInputFor('Source').type('Cas{enter}') // {enter} selects the first result in the dropdown
+    cy.getInputFor('Destination').type('Best fri{enter}') // {enter} selects the first result in the dropdown
+    cy.getInputFor('Envelope').type('Onl')
+    cy.contains('Only one').click() // TODO: should be able to do this with '{enter}', see #322
+
+    cy.clickAndWait('Save')
+    cy.contains('Burgers').click()
+    cy.contains('Repeat Transaction').click()
+
+    cy.getInputFor('Note').should('have.value', 'Burgers')
+    cy.getInputFor('Amount').should('have.value', '5')
+    cy.getInputFor('Date').should(
+      'have.value',
+      dateFromIsoString(new Date().toISOString())
+    )
+    cy.getInputFor('Source').should('have.value', 'Cash')
+    cy.getInputFor('Destination').should('have.value', 'Best Friend')
+    cy.getInputFor('Envelope').should('have.value', 'Only one')
+
+    cy.getInputFor('Amount').clear().type('5.5')
+
+    cy.clickAndWait('Save')
+
+    cy.get('p:contains(Burgers)').should('have.length', 2)
+    cy.contains('-5.00')
+    cy.contains('-5.50')
   })
 })
