@@ -1,3 +1,5 @@
+import { createBudget } from '../support/setup'
+
 describe('Budget: Overview', () => {
   it('successfully loads', () => {
     cy.visit('/')
@@ -43,5 +45,16 @@ describe('Budget: Switch', () => {
     cy.contains('Switch Budget').click()
     cy.get('h3').contains('Second Budget').click()
     cy.get('h1').contains('Second Budget')
+  })
+
+  it('is shown if the selected budget was deleted in the background', () => {
+    cy.wrap(createBudget({ name: 'Might delete later' }))
+    cy.visit('/')
+    cy.contains('Might delete later').click()
+    cy.resetDb()
+    cy.visit('/')
+    cy.awaitLoading() // loading the selected budget -> fail
+    cy.awaitLoading() // loading all existing budgets (for budget switch)
+    cy.contains('No budgets have been created yet. Create a new one below!')
   })
 })

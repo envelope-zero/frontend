@@ -32,10 +32,12 @@ const App = () => {
   const [budget, setBudget] = useState<Budget>()
   const [accounts, setAccounts] = useState<Account[]>([])
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const budgetId = cookie.get('budgetId')
 
   useEffect(() => {
     if (typeof budgetId !== 'undefined') {
+      setIsLoading(true)
       connectBudgetApi().then(api => {
         api
           .getBudget(budgetId)
@@ -43,10 +45,12 @@ const App = () => {
             setBudget(data)
             loadAccounts(data)
             setError('')
+            setIsLoading(false)
           })
           .catch(err => {
             selectBudget()
             setError(err.message)
+            setIsLoading(false)
           })
       })
     }
@@ -81,12 +85,13 @@ const App = () => {
                 path="budgets/:budgetId"
                 element={<BudgetForm selectBudget={selectBudget} />}
               />
-              {typeof budgetId === 'undefined' ? (
+              {typeof budgetId === 'undefined' ||
+              typeof budget === 'undefined' ? (
                 <Route
                   path="/"
                   element={<BudgetSwitch selectBudget={selectBudget} />}
                 />
-              ) : typeof budget === 'undefined' ? (
+              ) : isLoading ? (
                 <Route path="*" element={<LoadingSpinner />} />
               ) : (
                 <>
