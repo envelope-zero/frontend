@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "autoprefixer": "10.4.10",
-    "cypress": "10.7.0",
+    "cypress": "10.8.0",
     "eslint-config-prettier": "8.5.0",
     "postcss": "8.4.16",
     "prettier": "2.7.1",
