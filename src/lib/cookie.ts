@@ -13,7 +13,7 @@ const set = (key: string, value: string) => {
 }
 
 const erase = (key: string) => {
-  document.cookie = key + '=; Max-Age=-99999999;'
+  document.cookie = key + '=; Max-Age=-99999999; SameSite=Strict'
 }
 
 const cookie = {
