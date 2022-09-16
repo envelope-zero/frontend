@@ -17,14 +17,15 @@ import {
 import { useTranslation } from 'react-i18next'
 import { Budget, Translation } from '../types'
 import { safeName } from '../lib/name-helper'
+import Error from './Error'
 
-type LayoutProps = { budget?: Budget }
+type LayoutProps = { budget?: Budget; error: string }
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Layout = ({ budget }: LayoutProps) => {
+const Layout = ({ budget, error }: LayoutProps) => {
   const { t }: Translation = useTranslation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -285,6 +286,7 @@ const Layout = ({ budget }: LayoutProps) => {
         <main className="flex-1">
           <div className="py-4 md:py-6">
             <div className="max-w-7xl mx-auto px-6 md:px-8">
+              <Error error={error} />
               <Outlet />
             </div>
           </div>
