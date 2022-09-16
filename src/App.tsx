@@ -32,12 +32,11 @@ const App = () => {
   const [budget, setBudget] = useState<Budget>()
   const [accounts, setAccounts] = useState<Account[]>([])
   const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const budgetId = cookie.get('budgetId')
 
   useEffect(() => {
     if (typeof budgetId !== 'undefined') {
-      setIsLoading(true)
       connectBudgetApi().then(api => {
         api
           .getBudget(budgetId)
@@ -45,7 +44,6 @@ const App = () => {
             setBudget(data)
             loadAccounts(data)
             setError('')
-            setIsLoading(false)
           })
           .catch(err => {
             selectBudget()
@@ -53,11 +51,18 @@ const App = () => {
             setIsLoading(false)
           })
       })
+    } else {
+      setIsLoading(false)
     }
   }, [budgetId])
 
   const loadAccounts = (budget: Budget) => {
-    accountApi.getAll(budget).then(setAccounts)
+    accountApi
+      .getAll(budget)
+      .then(setAccounts)
+      .then(() => {
+        setIsLoading(false)
+      })
   }
 
   const selectBudget = (selectedBudget?: Budget) => {
