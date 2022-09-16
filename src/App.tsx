@@ -23,7 +23,6 @@ import connectBudgetApi from './lib/api/budgets'
 import './i18n'
 import { Account, Budget } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
-import Error from './components/Error'
 import { api } from './lib/api/base'
 
 const accountApi = api('accounts')
@@ -77,102 +76,94 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout budget={budget} />}>
-          {error ? (
-            <Route path="*" element={<Error error={error} />} />
+        <Route path="/" element={<Layout budget={budget} error={error} />}>
+          <Route
+            path="budgets"
+            element={<BudgetSwitch selectBudget={selectBudget} />}
+          />
+          <Route
+            path="budgets/:budgetId"
+            element={<BudgetForm selectBudget={selectBudget} />}
+          />
+          {isLoading ? (
+            <Route path="/" element={<LoadingSpinner />} />
+          ) : typeof budgetId === 'undefined' ||
+            typeof budget === 'undefined' ? (
+            <Route
+              path="/"
+              element={<BudgetSwitch selectBudget={selectBudget} />}
+            />
           ) : (
             <>
+              <Route index element={<Dashboard budget={budget} />} />
               <Route
-                path="budgets"
-                element={<BudgetSwitch selectBudget={selectBudget} />}
+                path="own-accounts"
+                element={<OwnAccountsList budget={budget} />}
               />
               <Route
-                path="budgets/:budgetId"
-                element={<BudgetForm selectBudget={selectBudget} />}
+                path="own-accounts/:accountId"
+                element={
+                  <AccountForm
+                    budget={budget}
+                    type="internal"
+                    accounts={accounts}
+                    reloadAccounts={() => loadAccounts(budget)}
+                  />
+                }
               />
-              {typeof budgetId === 'undefined' ||
-              typeof budget === 'undefined' ? (
-                <Route
-                  path="/"
-                  element={<BudgetSwitch selectBudget={selectBudget} />}
-                />
-              ) : isLoading ? (
-                <Route path="*" element={<LoadingSpinner />} />
-              ) : (
-                <>
-                  <Route index element={<Dashboard budget={budget} />} />
-                  <Route
-                    path="own-accounts"
-                    element={<OwnAccountsList budget={budget} />}
+              <Route
+                path="external-accounts"
+                element={<ExternalAccountsList budget={budget} />}
+              />
+              <Route
+                path="external-accounts/:accountId"
+                element={
+                  <AccountForm
+                    budget={budget}
+                    type="external"
+                    accounts={accounts}
+                    reloadAccounts={() => loadAccounts(budget)}
                   />
-                  <Route
-                    path="own-accounts/:accountId"
-                    element={
-                      <AccountForm
-                        budget={budget}
-                        type="internal"
-                        accounts={accounts}
-                        reloadAccounts={() => loadAccounts(budget)}
-                      />
-                    }
+                }
+              />
+              <Route
+                path="transactions"
+                element={
+                  <TransactionsList budget={budget} accounts={accounts} />
+                }
+              />
+              <Route
+                path="transactions/:transactionId"
+                element={
+                  <TransactionForm
+                    budget={budget}
+                    accounts={accounts}
+                    reloadAccounts={() => loadAccounts(budget)}
                   />
-                  <Route
-                    path="external-accounts"
-                    element={<ExternalAccountsList budget={budget} />}
+                }
+              />
+              <Route
+                path="envelopes"
+                element={<EnvelopesList budget={budget} />}
+              />
+              <Route
+                path="envelopes/:envelopeId"
+                element={<EnvelopeForm budget={budget} accounts={accounts} />}
+              />
+              <Route
+                path="categories/:categoryId"
+                element={<CategoryForm budget={budget} />}
+              />
+
+              <Route
+                path="/settings"
+                element={
+                  <BudgetForm
+                    selectBudget={selectBudget}
+                    selectedBudget={budget}
                   />
-                  <Route
-                    path="external-accounts/:accountId"
-                    element={
-                      <AccountForm
-                        budget={budget}
-                        type="external"
-                        accounts={accounts}
-                        reloadAccounts={() => loadAccounts(budget)}
-                      />
-                    }
-                  />
-                  <Route
-                    path="transactions"
-                    element={
-                      <TransactionsList budget={budget} accounts={accounts} />
-                    }
-                  />
-                  <Route
-                    path="transactions/:transactionId"
-                    element={
-                      <TransactionForm
-                        budget={budget}
-                        accounts={accounts}
-                        reloadAccounts={() => loadAccounts(budget)}
-                      />
-                    }
-                  />
-                  <Route
-                    path="envelopes"
-                    element={<EnvelopesList budget={budget} />}
-                  />
-                  <Route
-                    path="envelopes/:envelopeId"
-                    element={
-                      <EnvelopeForm budget={budget} accounts={accounts} />
-                    }
-                  />
-                  <Route
-                    path="categories/:categoryId"
-                    element={<CategoryForm budget={budget} />}
-                  />
-                  {/* TODO: more routes here */}
-                  <Route
-                    path="/settings"
-                    element={
-                      <BudgetForm
-                        selectBudget={selectBudget}
-                        selectedBudget={budget}
-                      />
-                    }
-                  />
-                </>
-              )}
+                }
+              />
             </>
           )}
           <Route path="*" element={<Navigate to="/" replace />} />

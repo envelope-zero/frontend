@@ -53,8 +53,7 @@ describe('Budget: Switch', () => {
     cy.contains('Might delete later').click()
     cy.resetDb()
     cy.visit('/')
-    cy.awaitLoading() // loading the selected budget -> fail
-    cy.awaitLoading() // loading all existing budgets (for budget switch)
+    cy.awaitLoading()
     cy.contains('No budgets have been created yet. Create a new one below!')
   })
 })
