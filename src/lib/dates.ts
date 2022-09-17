@@ -5,5 +5,10 @@ const dateToIsoString = (date?: string) => {
   }
   return new Date(date).toISOString()
 }
+const dateToMonthString = (date: Date) => {
+  return `${date.toLocaleString('default', {
+    year: 'numeric',
+  })}-${date.toLocaleString('default', { month: '2-digit' })}`
+}
 
-export { dateFromIsoString, dateToIsoString }
+export { dateFromIsoString, dateToIsoString, dateToMonthString }

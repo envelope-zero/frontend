@@ -94,6 +94,15 @@ export type Envelope = UnpersistedEnvelope &
     categoryId: UUID
   }
 
+export type BudgetMonth = ApiObject & {
+  name: string
+  month: string // e.g. '2022-09-01T00:00:00Z' for the whole month of September 2022
+  budgeted: number
+  income: number
+  available: number
+  envelopes: Envelope[]
+}
+
 export type FilterOptions = {
   account?: string
   envelope?: string

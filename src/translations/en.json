@@ -89,5 +89,8 @@
     "delete": "Delete category",
     "edit": "Edit category",
     "confirmDelete": "Are you sure you want to delete this category?"
+  },
+  "allocations": {
+    "available": "Available to budget"
   }
 }

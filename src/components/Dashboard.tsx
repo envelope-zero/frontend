@@ -1,7 +1,13 @@
-import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react'
 import { safeName } from '../lib/name-helper'
-import { Budget } from '../types'
+import { Budget, BudgetMonth, Translation } from '../types'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
+import { getBudgetMonth } from '../lib/api/budgets'
+import { formatMoney } from '../lib/format'
+import LoadingSpinner from './LoadingSpinner'
+import Error from './Error'
+import { dateToMonthString } from '../lib/dates'
 
 type DashboardProps = { budget: Budget }
 
@@ -13,7 +19,24 @@ const activeDateFormat = new Intl.DateTimeFormat(locale, {
 const shortMonthFormat = new Intl.DateTimeFormat(locale, { month: 'short' })
 
 const Dashboard = ({ budget }: DashboardProps) => {
+  const { t }: Translation = useTranslation()
+
   const [activeDate, setActiveDate] = useState(new Date())
+  const [budgetMonth, setBudgetMonth] = useState<BudgetMonth>()
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    getBudgetMonth(budget, dateToMonthString(activeDate))
+      .then(data => {
+        setBudgetMonth(data)
+        if (error) {
+          setError('')
+        }
+      })
+      .catch(err => {
+        setError(err)
+      })
+  }, [budget, activeDate])
 
   const previousMonth = () => {
     const activeYear = activeDate.getFullYear()
@@ -63,6 +86,25 @@ const Dashboard = ({ budget }: DashboardProps) => {
           <ChevronRightIcon className="inline h-6" />
         </button>
       </div>
+      {!budgetMonth ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <Error error={error} />
+          <div className="box w-full mt-4 mb-2 py-2 text-center">
+            <div
+              className={`${
+                budgetMonth.available >= 0 ? 'text-lime-700' : 'text-red-600'
+              } text-xl font-bold`}
+            >
+              {formatMoney(budgetMonth.available, budget.currency)}
+            </div>
+            <div className="text-gray-500 font-medium">
+              {t('allocations.available')}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
