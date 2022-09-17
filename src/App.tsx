@@ -86,7 +86,7 @@ const App = () => {
             element={<BudgetForm selectBudget={selectBudget} />}
           />
           {isLoading ? (
-            <Route path="/" element={<LoadingSpinner />} />
+            <Route path="*" element={<LoadingSpinner />} />
           ) : typeof budgetId === 'undefined' ||
             typeof budget === 'undefined' ? (
             <Route
