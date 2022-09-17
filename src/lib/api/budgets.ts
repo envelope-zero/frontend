@@ -18,6 +18,13 @@ const deleteBudget = (budget: Budget) => {
   return fetch(budget.links.self, { method: 'DELETE' }).then(checkStatus)
 }
 
+const getBudgetMonth = async (budget: Budget, month: string) => {
+  return fetch(`${budget.links.self}/${month}`)
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(data => data.data)
+}
+
 export default async function budgets() {
   const endpoint = await getApiInfo().then(data => data.links.budgets)
 
@@ -52,4 +59,4 @@ export default async function budgets() {
   }
 }
 
-export { updateBudget, deleteBudget }
+export { updateBudget, deleteBudget, getBudgetMonth }
