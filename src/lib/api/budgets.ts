@@ -1,11 +1,12 @@
 import { Budget, UnpersistedBudget, UUID } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
+import trimWhitespace from '../trim-whitespace'
 import { getApiInfo } from './base'
 
 const updateBudget = async (budget: Budget) => {
   return fetch(budget.links.self, {
     method: 'PATCH',
-    body: JSON.stringify(budget),
+    body: JSON.stringify(trimWhitespace(budget)),
     headers: { 'Content-Type': 'application/json' },
   })
     .then(checkStatus)
@@ -38,7 +39,7 @@ export default async function budgets() {
     createBudget: async (data: UnpersistedBudget) => {
       return fetch(endpoint, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(trimWhitespace(data)),
         headers: { 'Content-Type': 'application/json' },
       })
         .then(checkStatus)

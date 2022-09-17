@@ -1,5 +1,6 @@
 import { ApiObject, UUID, Budget, FilterOptions } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
+import trimWhitespace from '../trim-whitespace'
 
 const endpoint = window.location.origin + '/api/v1'
 
@@ -33,7 +34,7 @@ const api = (linkKey: string) => {
     update: (object: any) => {
       return fetch(object.links.self, {
         method: 'PATCH',
-        body: JSON.stringify(object),
+        body: JSON.stringify(trimWhitespace(object)),
         headers: { 'Content-Type': 'application/json' },
       })
         .then(checkStatus)
@@ -43,7 +44,9 @@ const api = (linkKey: string) => {
     create: (object: any, budget: Budget) => {
       return fetch(budget.links[linkKey], {
         method: 'POST',
-        body: JSON.stringify({ ...object, budgetId: budget.id }),
+        body: JSON.stringify(
+          trimWhitespace({ ...object, budgetId: budget.id })
+        ),
         headers: { 'Content-Type': 'application/json' },
       })
         .then(checkStatus)

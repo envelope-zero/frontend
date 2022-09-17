@@ -26,6 +26,18 @@ describe('Budget: Overview', () => {
 
     cy.getCookie('budgetId').should('exist')
   })
+
+  it('trims whitespace from all inputs', () => {
+    cy.getByTitle('Create Budget').first().click()
+
+    cy.getInputFor('Name').type(' Test Budget ')
+    cy.getInputFor('Note').type(' Even this will be trimmed ! ')
+    cy.clickAndWait('Save')
+
+    cy.contains('Settings').click()
+    cy.getInputFor('Name').should('have.value', 'Test Budget')
+    cy.getInputFor('Note').should('have.value', 'Even this will be trimmed !')
+  })
 })
 
 describe('Budget: Switch', () => {
