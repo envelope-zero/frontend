@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Translation, Budget, Account } from '../types'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import { PlusCircleIcon, PlusIcon } from '@heroicons/react/24/outline'
-import { getInternalAccounts } from '../lib/api/accounts'
+import { api } from '../lib/api/base'
 import { formatMoney } from '../lib/format'
 import { safeName } from '../lib/name-helper'
 import LoadingSpinner from './LoadingSpinner'
@@ -15,6 +15,8 @@ type Props = {
   budget: Budget
 }
 
+const accountApi = api('accounts')
+
 const OwnAccountsList = ({ budget }: Props) => {
   const { t }: Translation = useTranslation()
   const [isLoading, setIsLoading] = useState(true)
@@ -22,7 +24,8 @@ const OwnAccountsList = ({ budget }: Props) => {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    getInternalAccounts(budget)
+    accountApi
+      .getAll(budget, { external: false })
       .then(data => {
         setAccounts(data)
         setIsLoading(false)
