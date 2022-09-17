@@ -5,7 +5,7 @@ import {
   Navigate,
 } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import './App.css'
+import './App.scss'
 import Layout from './components/Layout'
 import Dashboard from './components/Dashboard'
 import BudgetSwitch from './components/BudgetSwitch'

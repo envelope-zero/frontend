@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .link {
+    @apply text-red-800;
+  }
+
+  h1 {
+    @apply text-xl leading-6 font-black text-gray-900 tracking-wide;
+  }
+
+  h2 {
+    @apply text-lg leading-6 font-bold text-gray-900;
+  }
+
+  h3 {
+    @apply text-lg leading-6 font-medium text-gray-900;
+  }
+
+  .header {
+    @apply fixed top-[1.625rem] left-0 right-0 m-auto text-center md:relative md:top-0 z-10 flex justify-center;
+    width: calc(100% - 9rem);
+
+    .header--action {
+      @apply fixed right-6 text-red-800 flex gap-x-2;
+
+      .header--action__secondary {
+        @apply text-gray-600;
+
+        + * {
+          @apply font-bold;
+        }
+      }
+    }
+  }
+
+  .icon {
+    @apply text-red-800 h-6 w-6 flex-shrink-0;
+  }
+
+  .icon-sm {
+    @apply h-5 w-5;
+  }
+
+  .icon-lg {
+    @apply h-10 w-10;
+  }
+
+  .box {
+    @apply shadow-sm rounded-md bg-gray-100;
+  }
+
+  .error {
+    @apply bg-red-100 p-2 rounded-md;
+  }
+
+  .btn-secondary {
+    @apply box w-full text-red-800 py-2 px-4 text-sm font-medium hover:bg-gray-200;
+  }
+
+  .link-blue {
+    @apply text-blue-600 hover:text-blue-800;
+  }
+
+  input,
+  textarea {
+    @apply border border-gray-300 rounded-md p-2 focus:ring-red-800 focus:border-red-800;
+  }
+
+  .form-field--wrapper {
+    @apply sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5;
+  }
+
+  .form-field--label {
+    @apply block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2;
+  }
+
+  .input--outer {
+    @apply mt-1 sm:mt-0 sm:col-span-2 relative;
+  }
+
+  .input--inner {
+    @apply max-w-lg flex rounded-md shadow-sm relative;
+  }
+
+  .input {
+    @apply flex-1 block w-full min-w-0 sm:text-sm;
+  }
+}
