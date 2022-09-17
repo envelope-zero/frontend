@@ -88,4 +88,23 @@
   .input {
     @apply flex-1 block w-full min-w-0 sm:text-sm;
   }
+
+  .dashboard {
+    .month-slider {
+      @apply grid grid-cols-12;
+
+      button {
+        @apply text-gray-400 text-sm font-medium col-span-3 text-center flex justify-center items-center;
+      }
+
+      > div {
+        @apply col-span-6;
+      }
+
+      > div,
+      button {
+        @apply pb-1 border-b-2;
+      }
+    }
+  }
 }
