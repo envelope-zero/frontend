@@ -6,9 +6,11 @@ import { PlusIcon } from '@heroicons/react/24/outline'
 import LoadingSpinner from './LoadingSpinner'
 import AccountListSwitch from './AccountListSwitch'
 import Error from './Error'
-import { getExternalAccounts } from '../lib/api/accounts'
+import { api } from '../lib/api/base'
 import { safeName } from '../lib/name-helper'
 import { PencilIcon } from '@heroicons/react/24/solid'
+
+const accountApi = api('accounts')
 
 const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
   const { t }: Translation = useTranslation()
@@ -17,7 +19,8 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    getExternalAccounts(budget)
+    accountApi
+      .getAll(budget, { external: true })
       .then(data => {
         const groupedAccounts = data.reduce(
           (object: { [letter: string]: Account[] }, account: Account) => {

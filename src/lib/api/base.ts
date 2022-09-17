@@ -21,7 +21,7 @@ const api = (linkKey: string) => {
       const url = new URL(parent.links[linkKey])
       Object.entries(filterOptions).forEach(([key, value]) => {
         if (typeof value !== 'undefined') {
-          url.searchParams.set(key, value)
+          url.searchParams.set(key, value.toString())
         }
       })
       return get(url.href)

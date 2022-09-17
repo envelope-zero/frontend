@@ -94,4 +94,8 @@ export type Envelope = UnpersistedEnvelope &
     categoryId: UUID
   }
 
-export type FilterOptions = { account?: string; envelope?: string }
+export type FilterOptions = {
+  account?: string
+  envelope?: string
+  external?: boolean
+}
