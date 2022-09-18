@@ -91,7 +91,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                     ) : null}
                     <div
                       className={`${
-                        budget.balance >= 0 ? 'text-lime-600' : 'text-red-600'
+                        budget.balance >= 0 ? 'positive' : 'negative'
                       } mt-2 text-lg`}
                     >
                       <strong>
