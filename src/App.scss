@@ -107,4 +107,12 @@
       }
     }
   }
+
+  .positive {
+    @apply text-lime-700;
+  }
+
+  .negative {
+    @apply text-red-600;
+  }
 }

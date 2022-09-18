@@ -1,8 +1,8 @@
 import { Account, Transaction } from '../types'
 import { safeName } from './name-helper'
 
-const incoming = { color: 'text-lime-700', sign: '+' }
-const outgoing = { color: 'text-red-600', sign: '-' }
+const incoming = { color: 'positive', sign: '+' }
+const outgoing = { color: 'negative', sign: '-' }
 const transfer = { color: 'text-sky-600', sign: '±' }
 
 const counterpartiesString = (

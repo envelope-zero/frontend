@@ -94,7 +94,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
           <div className="box w-full mt-4 mb-2 py-2 text-center">
             <div
               className={`${
-                budgetMonth.available >= 0 ? 'text-lime-700' : 'text-red-600'
+                budgetMonth.available >= 0 ? 'positive' : 'negative'
               } text-xl font-bold`}
             >
               {formatMoney(budgetMonth.available, budget.currency)}
