@@ -90,7 +90,9 @@
     "edit": "Edit category",
     "confirmDelete": "Are you sure you want to delete this category?"
   },
-  "allocations": {
-    "available": "Available to budget"
+  "dashboard": {
+    "available": "Available to budget",
+    "allocation": "Allocation",
+    "balance": "Balance"
   }
 }
