@@ -58,4 +58,4 @@ const api = (linkKey: string) => {
   }
 }
 
-export { getApiInfo, api }
+export { getApiInfo, api, get }

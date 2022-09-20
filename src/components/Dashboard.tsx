@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react'
 import { safeName } from '../lib/name-helper'
 import { Budget, BudgetMonth, Translation } from '../types'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
-import { getBudgetMonth } from '../lib/api/budgets'
+import { get } from '../lib/api/base'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
-import { dateToMonthString } from '../lib/dates'
 
 type DashboardProps = { budget: Budget }
 
@@ -26,7 +25,10 @@ const Dashboard = ({ budget }: DashboardProps) => {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    getBudgetMonth(budget, dateToMonthString(activeDate))
+    const year = activeDate.toLocaleString('default', { year: 'numeric' })
+    const month = activeDate.toLocaleString('default', { month: '2-digit' })
+
+    get(budget.links.groupedMonth.replace('YYYY', year).replace('MM', month))
       .then(data => {
         setBudgetMonth(data)
         if (error) {
