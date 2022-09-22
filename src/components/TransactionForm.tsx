@@ -209,7 +209,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                   }
                 }}
               >
-                <LockClosedIcon className="icon inline mr-1" />
+                <LockClosedIcon className="icon-red inline mr-1" />
                 {t('transactions.unlock')}
               </button>
               <small className="text-xs md:text-sm">
@@ -351,7 +351,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                 }}
                 className="btn-secondary"
               >
-                <TrashIcon className="icon icon-sm inline mr-1 relative bottom-0.5" />
+                <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
                 {t('transactions.delete')}
               </button>
             </div>

@@ -35,7 +35,7 @@ const EnvelopesList = ({ budget }: Props) => {
         <h1>{t('envelopes.envelopes')}</h1>
         <div className="header--action">
           <Link to="new" title={t('envelopes.create')}>
-            <PlusIcon className="icon" />
+            <PlusIcon className="icon-red" />
           </Link>
         </div>
       </div>
@@ -52,7 +52,7 @@ const EnvelopesList = ({ budget }: Props) => {
         <div>{t('envelopes.emptyList')}</div>
       )}
       <Link to="new" title={t('envelopes.create')}>
-        <PlusCircleIcon className="icon icon-lg mx-auto mt-4" />
+        <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
       </Link>
     </>
   )

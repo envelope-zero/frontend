@@ -47,7 +47,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
           className="header--action"
           title={t('budgets.create')}
         >
-          <PlusIcon className="icon" />
+          <PlusIcon className="icon-red" />
         </Link>
       </div>
       <Error error={error} />
@@ -68,7 +68,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                     title={t('edit')}
                     className="absolute right-4"
                   >
-                    <PencilIcon className="icon" />
+                    <PencilIcon className="icon-red" />
                   </Link>
                   <Link
                     to="/"
@@ -116,7 +116,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
             <div>{t('budgets.emptyList')}</div>
           )}
           <Link to="/budgets/new" title={t('budgets.create')}>
-            <PlusCircleIcon className="icon icon-lg mx-auto mt-4" />
+            <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
           </Link>
         </div>
       )}

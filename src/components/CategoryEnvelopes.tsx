@@ -24,9 +24,9 @@ const CategoryEnvelopes = ({ category }: { category: Category }) => {
         }}
       >
         {showEnvelopes ? (
-          <ChevronUpIcon className="h-6" />
+          <ChevronUpIcon className="icon" />
         ) : (
-          <ChevronDownIcon className="h-6" />
+          <ChevronDownIcon className="icon" />
         )}
 
         <div className="grow">
@@ -42,7 +42,7 @@ const CategoryEnvelopes = ({ category }: { category: Category }) => {
         </div>
 
         <Link to={`/categories/${category.id}`} title={t('categories.edit')}>
-          <PencilIcon className="icon mr-2" />
+          <PencilIcon className="icon-red icon-sm mr-2" />
         </Link>
       </div>
 
