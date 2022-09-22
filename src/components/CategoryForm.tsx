@@ -121,7 +121,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
               }}
               className="btn-secondary"
             >
-              <TrashIcon className="icon icon-sm inline mr-1 relative bottom-0.5" />
+              <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
               {t('categories.delete')}
             </button>
           </div>

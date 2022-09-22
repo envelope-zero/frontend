@@ -108,7 +108,7 @@ const Layout = ({ budget, error }: LayoutProps) => {
                         <span className="sr-only">
                           {t('navigation.closeSidebar')}
                         </span>
-                        <XMarkIcon className="icon" aria-hidden="true" />
+                        <XMarkIcon className="icon-red" aria-hidden="true" />
                       </button>
                     </div>
                   </Transition.Child>
@@ -167,9 +167,9 @@ const Layout = ({ budget, error }: LayoutProps) => {
                                   {item.name}
                                 </div>
                                 {isActive ? (
-                                  <ChevronLeftIcon className="icon" />
+                                  <ChevronLeftIcon className="icon-red" />
                                 ) : (
-                                  <ChevronRightIcon className="text-gray-400 group-hover:text-gray-500 h-6 w-6" />
+                                  <ChevronRightIcon className="text-gray-400 group-hover:text-gray-500 icon" />
                                 )}
                               </div>
                             )}
@@ -296,7 +296,7 @@ const Layout = ({ budget, error }: LayoutProps) => {
             }}
           >
             <span className="sr-only">{t('navigation.openSidebar')}</span>
-            <Bars3Icon className="icon" aria-hidden="true" />
+            <Bars3Icon className="icon-red" aria-hidden="true" />
           </button>
         </div>
         <main className="flex-1">

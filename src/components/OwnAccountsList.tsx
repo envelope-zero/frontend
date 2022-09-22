@@ -46,7 +46,7 @@ const OwnAccountsList = ({ budget }: Props) => {
           className="header--action"
           title={t('accounts.create')}
         >
-          <PlusIcon className="icon" />
+          <PlusIcon className="icon-red" />
         </Link>
       </div>
 
@@ -66,7 +66,7 @@ const OwnAccountsList = ({ budget }: Props) => {
                 >
                   <Link to={`${account.id}`} className="w-full text-center">
                     <div title={t('edit')} className="absolute right-4">
-                      <PencilIcon className="icon" />
+                      <PencilIcon className="icon-red" />
                     </div>
                     <h3
                       className={
@@ -102,7 +102,7 @@ const OwnAccountsList = ({ budget }: Props) => {
             <div>{t('accounts.emptyList')}</div>
           )}
           <Link to="/own-accounts/new" title={t('accounts.create')}>
-            <PlusCircleIcon className="icon icon-lg mx-auto mt-4" />
+            <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
           </Link>
         </div>
       )}

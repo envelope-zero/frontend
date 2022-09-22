@@ -54,7 +54,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
           className="header--action"
           title={t('accounts.create')}
         >
-          <PlusIcon className="icon" />
+          <PlusIcon className="icon-red" />
         </Link>
       </div>
 
@@ -93,7 +93,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                                     } text-sm font-medium text-gray-900 flex justify-between`}
                                   >
                                     {safeName(account, 'account')}
-                                    <PencilIcon className="icon" />
+                                    <PencilIcon className="icon-red" />
                                   </div>
                                   <p className="text-sm text-gray-500 truncate">
                                     {account.note}

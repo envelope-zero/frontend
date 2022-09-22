@@ -61,9 +61,9 @@ const TransactionsList = ({ budget, accounts }: Props) => {
       <div className="header">
         <h1>{t('transactions.transactions')}</h1>
         <div className="header--action">
-          {/* TODO: <FilterIcon className="icon" /> */}
+          {/* TODO: <FilterIcon className="icon-red" /> */}
           <Link to="/transactions/new" title={t('transactions.create')}>
-            <PlusIcon className="icon" />
+            <PlusIcon className="icon-red" />
           </Link>
         </div>
       </div>

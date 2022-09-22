@@ -181,7 +181,7 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
                 }}
                 className="btn-secondary"
               >
-                <TrashIcon className="icon icon-sm inline mr-1 relative bottom-0.5" />
+                <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
                 {t('accounts.delete')}
               </button>
               {/* TODO: reconcile */}
