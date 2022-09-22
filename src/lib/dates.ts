@@ -6,4 +6,17 @@ const dateToIsoString = (date?: string) => {
   return new Date(date).toISOString()
 }
 
-export { dateFromIsoString, dateToIsoString }
+const monthYearFromDate = (date: Date) =>
+  date.toLocaleDateString('default', { year: 'numeric', month: '2-digit' })
+
+const dateFromMonthYear = (date: string) => {
+  const [month, year] = date.split('/')
+  return new Date(`${month}/01/${year}`)
+}
+
+export {
+  dateFromIsoString,
+  dateToIsoString,
+  monthYearFromDate,
+  dateFromMonthYear,
+}
