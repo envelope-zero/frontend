@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState, Fragment } from 'react'
+import { useSearchParams, Link } from 'react-router-dom'
 import { safeName } from '../lib/name-helper'
 import { Budget, BudgetMonth, Translation } from '../types'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
@@ -7,6 +8,7 @@ import { get } from '../lib/api/base'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
+import { dateFromMonthYear, monthYearFromDate } from '../lib/dates'
 
 type DashboardProps = { budget: Budget }
 
@@ -17,16 +19,37 @@ const activeDateFormat = new Intl.DateTimeFormat(locale, {
 })
 const shortMonthFormat = new Intl.DateTimeFormat(locale, { month: 'short' })
 
+const previousMonth = (yearMonth: string) => {
+  const [month, year] = yearMonth.split('/')
+
+  if (month === '01') {
+    return new Date(parseInt(year) - 1, 11, 1)
+  } else {
+    return new Date(parseInt(year), parseInt(month) - 2, 1)
+  }
+}
+
+const nextMonth = (yearMonth: string) => {
+  const [month, year] = yearMonth.split('/')
+
+  if (month === '12') {
+    return new Date(parseInt(year) + 1, 0, 1)
+  } else {
+    return new Date(parseInt(year), parseInt(month), 1)
+  }
+}
+
 const Dashboard = ({ budget }: DashboardProps) => {
   const { t }: Translation = useTranslation()
 
-  const [activeDate, setActiveDate] = useState(new Date())
+  const [searchParams] = useSearchParams()
+  const activeMonth = searchParams.get('month') || monthYearFromDate(new Date())
+
   const [budgetMonth, setBudgetMonth] = useState<BudgetMonth>()
   const [error, setError] = useState('')
 
   useEffect(() => {
-    const year = activeDate.toLocaleString('default', { year: 'numeric' })
-    const month = activeDate.toLocaleString('default', { month: '2-digit' })
+    const [month, year] = activeMonth.split('/')
 
     get(budget.links.groupedMonth.replace('YYYY', year).replace('MM', month))
       .then(data => {
@@ -38,55 +61,29 @@ const Dashboard = ({ budget }: DashboardProps) => {
       .catch(err => {
         setError(err)
       })
-  }, [budget, activeDate])
-
-  const previousMonth = () => {
-    const activeYear = activeDate.getFullYear()
-    const activeMonth = activeDate.getMonth()
-
-    if (activeMonth === 0) {
-      return new Date(activeYear - 1, 11, 1)
-    } else {
-      return new Date(activeYear, activeMonth - 1, 1)
-    }
-  }
-
-  const nextMonth = () => {
-    const activeYear = activeDate.getFullYear()
-    const activeMonth = activeDate.getMonth()
-
-    if (activeMonth === 11) {
-      return new Date(activeYear + 1, 0, 1)
-    } else {
-      return new Date(activeYear, activeMonth + 1, 1)
-    }
-  }
+  }, [budget, activeMonth])
 
   return (
     <div className="dashboard">
       <h1 className="header">{safeName(budget, 'budget')}</h1>
       <div className="month-slider">
-        <button
-          onClick={() => {
-            setActiveDate(previousMonth())
-          }}
-          title={activeDateFormat.format(previousMonth())}
+        <Link
+          to={`/?month=${monthYearFromDate(previousMonth(activeMonth))}`}
+          title={activeDateFormat.format(previousMonth(activeMonth))}
         >
           <ChevronLeftIcon className="inline h-6" />
-          {shortMonthFormat.format(previousMonth())}
-        </button>
+          {shortMonthFormat.format(previousMonth(activeMonth))}
+        </Link>
         <div className="border-red-800 text-center">
-          {activeDateFormat.format(activeDate)}
+          {activeDateFormat.format(dateFromMonthYear(activeMonth))}
         </div>
-        <button
-          onClick={() => {
-            setActiveDate(nextMonth())
-          }}
-          title={activeDateFormat.format(nextMonth())}
+        <Link
+          to={`/?month=${monthYearFromDate(nextMonth(activeMonth))}`}
+          title={activeDateFormat.format(nextMonth(activeMonth))}
         >
-          {shortMonthFormat.format(nextMonth())}
+          {shortMonthFormat.format(nextMonth(activeMonth))}
           <ChevronRightIcon className="inline h-6" />
-        </button>
+        </Link>
       </div>
       {!budgetMonth ? (
         <LoadingSpinner />

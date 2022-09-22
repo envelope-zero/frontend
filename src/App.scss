@@ -93,7 +93,7 @@
     .month-slider {
       @apply grid grid-cols-12;
 
-      button {
+      a {
         @apply text-gray-400 text-sm font-medium col-span-3 text-center flex justify-center items-center;
       }
 
@@ -102,7 +102,7 @@
       }
 
       > div,
-      button {
+      a {
         @apply pb-1 border-b-2;
       }
     }
