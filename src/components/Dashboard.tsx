@@ -9,6 +9,7 @@ import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
 import { dateFromMonthYear, monthYearFromDate } from '../lib/dates'
+import CategoryMonth from './CategoryMonth'
 
 type DashboardProps = { budget: Budget }
 
@@ -160,55 +161,11 @@ const Dashboard = ({ budget }: DashboardProps) => {
                           </td>
                         </tr>
                         {budgetMonth.categories.map(category => (
-                          <Fragment key={category.id}>
-                            <tr className="border-t border-gray-200">
-                              <th
-                                colSpan={3}
-                                scope="colgroup"
-                                className="bg-gray-50 px-4 py-2 text-left text-sm font-bold text-gray-900 sm:px-6"
-                              >
-                                {category.name}
-                              </th>
-                            </tr>
-                            {category.envelopes.map((envelope, i) => (
-                              <tr
-                                key={envelope.id}
-                                className={`border-t border-gray-${
-                                  i === 0 ? '300' : '200'
-                                }`}
-                              >
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                  {envelope.name}
-                                </td>
-                                <td
-                                  className={`whitespace-nowrap px-3 py-4 text-sm text-right ${
-                                    envelope.allocation < 0
-                                      ? 'negative'
-                                      : 'text-gray-500'
-                                  }`}
-                                >
-                                  {formatMoney(
-                                    envelope.allocation,
-                                    budget.currency,
-                                    'auto'
-                                  )}
-                                </td>
-                                <td
-                                  className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 py-4 text-sm text-right ${
-                                    envelope.balance < 0
-                                      ? 'negative'
-                                      : 'text-gray-500'
-                                  }`}
-                                >
-                                  {formatMoney(
-                                    envelope.balance,
-                                    budget.currency,
-                                    'auto'
-                                  )}
-                                </td>
-                              </tr>
-                            ))}
-                          </Fragment>
+                          <CategoryMonth
+                            key={category.id}
+                            category={category}
+                            budget={budget}
+                          />
                         ))}
                       </tbody>
                     </table>
