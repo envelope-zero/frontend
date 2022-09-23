@@ -6,7 +6,7 @@ type props = { envelope: EnvelopeMonthType; i: number; budget: Budget }
 const EnvelopeMonth = ({ envelope, i, budget }: props) => {
   return (
     <tr className={`border-t border-gray-${i === 0 ? '300' : '200'}`}>
-      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 text-ellipsis">
+      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis">
         {envelope.name}
       </td>
       <td

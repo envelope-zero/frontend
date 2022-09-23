@@ -114,6 +114,12 @@
         @apply pb-1 border-b-2;
       }
     }
+
+    tr {
+      td:first-child {
+        max-width: 40vw;
+      }
+    }
   }
 
   .positive {

@@ -108,68 +108,66 @@ const Dashboard = ({ budget }: DashboardProps) => {
             <div className="mt-4 flex flex-col py-2">
               <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 md:shadow md:ring-1 ring-black ring-opacity-5 md:rounded-lg">
                 <div className="inline-block min-w-full align-middle">
-                  <div className="overflow-hidden">
-                    <table className="min-w-full">
-                      <thead className="bg-white">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                          ></th>
-                          <th
-                            scope="col"
-                            className="px-3 pt-3.5 text-right text-sm font-semibold text-gray-900"
-                          >
-                            {t('dashboard.allocation')}
-                          </th>
-                          <th
-                            scope="col"
-                            className="pl-3 pr-4 sm:pr-6 pt-3.5 text-right text-sm font-semibold text-gray-900"
-                          >
-                            {t('dashboard.balance')}
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white">
-                        <tr>
-                          <td></td>
-                          <td
-                            className={`whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
-                              budgetMonth.budgeted < 0
-                                ? 'negative'
-                                : 'text-gray-500'
-                            }`}
-                          >
-                            {formatMoney(
-                              budgetMonth.budgeted,
-                              budget.currency,
-                              'auto'
-                            )}
-                          </td>
-                          <td
-                            className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 pb-3 text-sm font-semibold text-right ${
-                              budgetMonth.balance < 0
-                                ? 'negative'
-                                : 'text-gray-500'
-                            }`}
-                          >
-                            {formatMoney(
-                              budgetMonth.balance,
-                              budget.currency,
-                              'auto'
-                            )}
-                          </td>
-                        </tr>
-                        {budgetMonth.categories.map(category => (
-                          <CategoryMonth
-                            key={category.id}
-                            category={category}
-                            budget={budget}
-                          />
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                  <table className="min-w-full">
+                    <thead className="bg-white">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                        ></th>
+                        <th
+                          scope="col"
+                          className="px-3 pt-3.5 text-right text-sm font-semibold text-gray-900"
+                        >
+                          {t('dashboard.allocation')}
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-3 pr-4 sm:pr-6 pt-3.5 text-right text-sm font-semibold text-gray-900"
+                        >
+                          {t('dashboard.balance')}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white">
+                      <tr>
+                        <td></td>
+                        <td
+                          className={`whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
+                            budgetMonth.budgeted < 0
+                              ? 'negative'
+                              : 'text-gray-500'
+                          }`}
+                        >
+                          {formatMoney(
+                            budgetMonth.budgeted,
+                            budget.currency,
+                            'auto'
+                          )}
+                        </td>
+                        <td
+                          className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 pb-3 text-sm font-semibold text-right ${
+                            budgetMonth.balance < 0
+                              ? 'negative'
+                              : 'text-gray-500'
+                          }`}
+                        >
+                          {formatMoney(
+                            budgetMonth.balance,
+                            budget.currency,
+                            'auto'
+                          )}
+                        </td>
+                      </tr>
+                      {budgetMonth.categories.map(category => (
+                        <CategoryMonth
+                          key={category.id}
+                          category={category}
+                          budget={budget}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
