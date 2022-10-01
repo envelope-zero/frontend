@@ -93,6 +93,7 @@
   "dashboard": {
     "available": "Available to budget",
     "allocation": "Allocation",
+    "allocationForEnvelopeMonth": "Allocation for {{envelope}} {{month}}",
     "balance": "Balance"
   }
 }

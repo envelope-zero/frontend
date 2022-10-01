@@ -102,6 +102,7 @@ export type EnvelopeMonth = Envelope & {
   allocation: number
   balance: number
   spent: number
+  month: string
 }
 
 export type BudgetMonth = ApiObject & {

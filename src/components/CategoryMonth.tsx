@@ -1,9 +1,23 @@
-import { CategoryMonth as CategoryMonthType, Budget } from '../types'
+import { CategoryMonth as CategoryMonthType, Budget, UUID } from '../types'
 import EnvelopeMonth from './EnvelopeMonth'
 
-type props = { category: CategoryMonthType; budget: Budget }
+type props = {
+  category: CategoryMonthType
+  budget: Budget
+  editingEnvelope?: UUID
+  editEnvelope: (id?: UUID) => void
+  reloadBudgetMonth: () => void
+  setError: (message: string) => void
+}
 
-const CategoryMonth = ({ budget, category }: props) => {
+const CategoryMonth = ({
+  budget,
+  category,
+  editingEnvelope,
+  editEnvelope,
+  reloadBudgetMonth,
+  setError,
+}: props) => {
   return (
     <>
       <tr className="border-t border-gray-200">
@@ -21,6 +35,10 @@ const CategoryMonth = ({ budget, category }: props) => {
           envelope={envelope}
           i={i}
           budget={budget}
+          editingEnvelope={editingEnvelope}
+          editEnvelope={editEnvelope}
+          reloadBudgetMonth={reloadBudgetMonth}
+          setError={setError}
         ></EnvelopeMonth>
       ))}
     </>
