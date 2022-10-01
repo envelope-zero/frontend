@@ -31,8 +31,8 @@ const api = (linkKey: string) => {
       url.pathname += `/${id}`
       return get(url.href)
     },
-    update: (object: any) => {
-      return fetch(object.links.self, {
+    update: (object: any, url?: string) => {
+      return fetch(url || object.links.self, {
         method: 'PATCH',
         body: JSON.stringify(trimWhitespace(object)),
         headers: { 'Content-Type': 'application/json' },
@@ -41,8 +41,8 @@ const api = (linkKey: string) => {
         .then(parseJSON)
         .then(data => data.data)
     },
-    create: (object: any, budget: Budget) => {
-      return fetch(budget.links[linkKey], {
+    create: (object: any, budget: Budget, url?: string) => {
+      return fetch(url || budget.links[linkKey], {
         method: 'POST',
         body: JSON.stringify(
           trimWhitespace({ ...object, budgetId: budget.id })

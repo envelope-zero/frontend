@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { useEffect, useState, Fragment } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { safeName } from '../lib/name-helper'
-import { Budget, BudgetMonth, Translation } from '../types'
+import { Budget, BudgetMonth, Translation, UUID } from '../types'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { get } from '../lib/api/base'
 import { formatMoney } from '../lib/format'
@@ -48,8 +48,9 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
   const [budgetMonth, setBudgetMonth] = useState<BudgetMonth>()
   const [error, setError] = useState('')
+  const [editingEnvelope, setEditingEnvelope] = useState<UUID>()
 
-  useEffect(() => {
+  const loadBudgetMonth = useCallback(() => {
     const [month, year] = activeMonth.split('/')
 
     get(budget.links.groupedMonth.replace('YYYY', year).replace('MM', month))
@@ -63,6 +64,10 @@ const Dashboard = ({ budget }: DashboardProps) => {
         setError(err)
       })
   }, [budget, activeMonth])
+
+  useEffect(() => {
+    loadBudgetMonth()
+  }, [loadBudgetMonth, budget, activeMonth])
 
   return (
     <div className="dashboard">
@@ -97,7 +102,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                 budgetMonth.available >= 0 ? 'positive' : 'negative'
               } text-xl font-bold`}
             >
-              {formatMoney(budgetMonth.available, budget.currency)}
+              {formatMoney(budgetMonth.available, budget.currency, 'auto')}
             </div>
             <div className="text-gray-500 font-medium">
               {t('dashboard.available')}
@@ -152,11 +157,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                               : 'text-gray-500'
                           }`}
                         >
-                          {formatMoney(
-                            budgetMonth.balance,
-                            budget.currency,
-                            'auto'
-                          )}
+                          {formatMoney(budgetMonth.balance, budget.currency)}
                         </td>
                       </tr>
                       {budgetMonth.categories.map(category => (
@@ -164,6 +165,10 @@ const Dashboard = ({ budget }: DashboardProps) => {
                           key={category.id}
                           category={category}
                           budget={budget}
+                          editingEnvelope={editingEnvelope}
+                          editEnvelope={setEditingEnvelope}
+                          reloadBudgetMonth={loadBudgetMonth}
+                          setError={setError}
                         />
                       ))}
                     </tbody>

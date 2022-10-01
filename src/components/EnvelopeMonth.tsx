@@ -1,9 +1,65 @@
+import { CheckIcon, XMarkIcon } from '@heroicons/react/20/solid'
+import { PencilIcon } from '@heroicons/react/24/solid'
+import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
+import { api } from '../lib/api/base'
 import { formatMoney } from '../lib/format'
-import { Budget, EnvelopeMonth as EnvelopeMonthType } from '../types'
+import {
+  Budget,
+  EnvelopeMonth as EnvelopeMonthType,
+  UUID,
+  Translation,
+} from '../types'
+import FormField from './FormField'
+import { monthYearFromDate } from '../lib/dates'
 
-type props = { envelope: EnvelopeMonthType; i: number; budget: Budget }
+type props = {
+  envelope: EnvelopeMonthType
+  i: number
+  budget: Budget
+  editingEnvelope?: UUID
+  editEnvelope: (id?: UUID) => void
+  reloadBudgetMonth: () => void
+  setError: (message: string) => void
+}
 
-const EnvelopeMonth = ({ envelope, i, budget }: props) => {
+const allocationApi = api('allocation')
+
+const EnvelopeMonth = ({
+  envelope,
+  i,
+  budget,
+  editingEnvelope,
+  editEnvelope,
+  reloadBudgetMonth,
+  setError,
+}: props) => {
+  const { t }: Translation = useTranslation()
+  const [allocatedAmount, setAllocatedAmount] = useState(envelope.allocation)
+
+  const closeInput = () => {
+    editEnvelope(undefined)
+  }
+
+  const updateAllocation = async () => {
+    return allocationApi.update(
+      { amount: allocatedAmount },
+      envelope.links.allocation
+    )
+  }
+
+  const createAllocation = async () => {
+    return allocationApi.create(
+      {
+        amount: allocatedAmount,
+        envelopeId: envelope.id,
+        month: envelope.month,
+      },
+      budget,
+      'http://localhost:3000/api/v1/allocations' // TODO: get this link from the API somehow
+    )
+  }
+
   return (
     <tr className={`border-t border-gray-${i === 0 ? '300' : '200'}`}>
       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis">
@@ -11,17 +67,76 @@ const EnvelopeMonth = ({ envelope, i, budget }: props) => {
       </td>
       <td
         className={`whitespace-nowrap px-3 py-4 text-sm text-right ${
-          envelope.allocation < 0 ? 'negative' : 'text-gray-500'
+          allocatedAmount < 0 ? 'negative' : 'text-gray-500'
         }`}
       >
-        {formatMoney(envelope.allocation, budget.currency, 'auto')}
+        {editingEnvelope === envelope.id ? (
+          <div>
+            <form
+              onSubmit={e => {
+                e.preventDefault()
+                const response = envelope.links.allocation
+                  ? updateAllocation()
+                  : createAllocation()
+
+                response
+                  .then(closeInput)
+                  .then(reloadBudgetMonth)
+                  .catch(setError)
+              }}
+              onReset={e => {
+                e.preventDefault()
+                setAllocatedAmount(envelope.allocation)
+                closeInput()
+              }}
+            >
+              <FormField
+                type="number"
+                value={Number(allocatedAmount) === 0 ? '' : allocatedAmount}
+                label={t('dashboard.allocationForEnvelopeMonth', {
+                  envelope: envelope.name,
+                  month: monthYearFromDate(new Date(envelope.month)),
+                })}
+                name={`${envelope.id}-${envelope.month}`}
+                onChange={e => setAllocatedAmount(Number(e.target.value))}
+                options={{ autoFocus: true }}
+              />
+              <div className="flex">
+                <button
+                  type="submit"
+                  aria-label={t('save')}
+                  className="w-6/12 flex justify-center"
+                >
+                  <CheckIcon className="icon-sm text-gray-500" />
+                </button>
+
+                <button
+                  type="reset"
+                  aria-label={t('cancel')}
+                  className="w-6/12 flex justify-center"
+                >
+                  <XMarkIcon className="icon-sm text-gray-500" />
+                </button>
+              </div>
+            </form>
+          </div>
+        ) : (
+          <div onClick={() => editEnvelope(envelope.id)}>
+            <span className="pr-1">
+              {formatMoney(envelope.allocation, budget.currency, 'auto')}
+            </span>
+            <button aria-label={t('edit')}>
+              <PencilIcon className="inline icon-xs text-gray-400" />
+            </button>
+          </div>
+        )}
       </td>
       <td
         className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 py-4 text-sm text-right ${
           envelope.balance < 0 ? 'negative' : 'text-gray-500'
         }`}
       >
-        {formatMoney(envelope.balance, budget.currency, 'auto')}
+        {formatMoney(envelope.balance, budget.currency)}
       </td>
     </tr>
   )
