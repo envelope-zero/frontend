@@ -130,6 +130,7 @@ const Layout = ({ budget, error }: LayoutProps) => {
                           <NavLink
                             key={item.name}
                             to={item.href}
+                            end
                             onClick={() => setSidebarOpen(false)}
                             className={({ isActive }) =>
                               classNames(
@@ -221,6 +222,7 @@ const Layout = ({ budget, error }: LayoutProps) => {
                       <NavLink
                         key={item.name}
                         to={item.href}
+                        end
                         className={({ isActive }) =>
                           classNames(
                             isActive
