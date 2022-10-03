@@ -1,5 +1,6 @@
 {
   "edit": "Edit",
+  "editObject": "Edit {{object}}",
   "save": "Save",
   "cancel": "Cancel",
   "select": "Select...",
