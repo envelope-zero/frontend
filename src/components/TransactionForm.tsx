@@ -45,7 +45,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
   >([])
   const [transaction, setTransaction] = useState<
     UnpersistedTransaction | Transaction
-  >({})
+  >({ date: new Date().toISOString() })
   const [sourceAccountToCreate, setSourceAccountToCreate] =
     useState<UnpersistedAccount>()
   const [destinationAccountToCreate, setDestinationAccountToCreate] =
