@@ -100,8 +100,10 @@ const EnvelopeMonth = ({
                 name={`${envelope.id}-${envelope.month}`}
                 onChange={e => setAllocatedAmount(Number(e.target.value))}
                 options={{ autoFocus: true }}
+                hideLabel
+                compact
               />
-              <div className="flex">
+              <div className="flex pt-1 sm:pt-2">
                 <button
                   type="submit"
                   aria-label={t('save')}

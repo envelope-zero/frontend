@@ -6,6 +6,8 @@ type Props = {
   options?: { [option: string]: string | boolean }
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   children?: React.ReactNode
+  hideLabel?: boolean
+  compact?: boolean
 }
 
 const FormField = ({
@@ -16,13 +18,22 @@ const FormField = ({
   options,
   onChange,
   children,
+  hideLabel,
+  compact,
 }: Props) => (
-  <div className="form-field--wrapper">
-    <label htmlFor={name} className="form-field--label">
+  <div className={`form-field--wrapper ${compact ? 'border-0' : ''}`}>
+    <label
+      htmlFor={name}
+      className={`form-field--label ${hideLabel ? 'sr-only' : ''}`}
+    >
       {label}
     </label>
 
-    <div className="input--outer">
+    <div
+      className={`input--outer ${
+        hideLabel ? 'sm:col-span-3' : 'sm:col-span-2'
+      }`}
+    >
       <div className="input--inner">
         <input
           className="input"
