@@ -60,6 +60,8 @@ const EnvelopeMonth = ({
     )
   }
 
+  const month = monthYearFromDate(new Date(envelope.month))
+
   return (
     <tr className={`border-t border-gray-${i === 0 ? '300' : '200'}`}>
       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis">
@@ -95,7 +97,7 @@ const EnvelopeMonth = ({
                 value={Number(allocatedAmount) === 0 ? '' : allocatedAmount}
                 label={t('dashboard.allocationForEnvelopeMonth', {
                   envelope: envelope.name,
-                  month: monthYearFromDate(new Date(envelope.month)),
+                  month: month,
                 })}
                 name={`${envelope.id}-${envelope.month}`}
                 onChange={e => setAllocatedAmount(Number(e.target.value))}
@@ -127,7 +129,14 @@ const EnvelopeMonth = ({
             <span className="pr-1">
               {formatMoney(envelope.allocation, budget.currency, 'auto')}
             </span>
-            <button aria-label={t('edit')}>
+            <button
+              aria-label={t('editObject', {
+                object: t('dashboard.allocationForEnvelopeMonth', {
+                  envelope: envelope.name,
+                  month: month,
+                }),
+              })}
+            >
               <PencilIcon className="inline icon-xs text-gray-400" />
             </button>
           </div>
