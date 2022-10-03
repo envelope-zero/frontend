@@ -1,5 +1,5 @@
 import { Outlet, NavLink, Link } from 'react-router-dom'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
   EnvelopeIcon,
@@ -28,6 +28,17 @@ function classNames(...classes: string[]) {
 const Layout = ({ budget, error }: LayoutProps) => {
   const { t }: Translation = useTranslation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const headerRef = useRef<HTMLElement>()
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY === 0) {
+        headerRef.current?.classList.remove('shadow-lg')
+      } else {
+        headerRef.current?.classList.add('shadow-lg')
+      }
+    })
+  }, [])
 
   const hideNav = typeof budget === 'undefined'
 
@@ -271,7 +282,10 @@ const Layout = ({ budget, error }: LayoutProps) => {
       )}
 
       <div className={`${hideNav ? '' : 'md:pl-64'} flex flex-col flex-1`}>
-        <div className="sticky top-0 z-10 md:hidden px-6 pt-4 bg-white">
+        <div
+          className="sticky top-0 z-10 md:hidden px-6 pt-4 bg-white"
+          ref={headerRef as React.RefObject<HTMLDivElement>}
+        >
           <button
             type="button"
             className={`-ml-0.5 -mt-0.5 h-12 inline-flex items-center rounded-md text-gray-500 hover:text-gray-900 ${
