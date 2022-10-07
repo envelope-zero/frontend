@@ -8,21 +8,24 @@ import {
 import connectBudgetApi from '../../src/lib/api/budgets'
 import { api } from '../../src/lib/api/base'
 
+const randomName = () =>
+  (Math.random() * Math.pow(10, 10)).toFixed(0).toString()
+
 export const createBudget = async (budget: UnpersistedBudget) => {
   return connectBudgetApi().then(api => {
-    return api.createBudget(budget)
+    return api.createBudget({ name: randomName(), ...budget })
   })
 }
 
 export const createAccount = async (
   account: UnpersistedAccount,
   budget: Budget
-) => api('accounts').create(account, budget)
+) => api('accounts').create({ name: randomName(), ...account }, budget)
 
 export const createCategory = async (
   category: UnpersistedCategory,
   budget: Budget
-) => api('categories').create(category, budget)
+) => api('categories').create({ name: randomName(), ...category }, budget)
 
 export const createEnvelope = async (
   envelope: UnpersistedEnvelope,
@@ -31,10 +34,13 @@ export const createEnvelope = async (
   const envelopeApi = api('envelopes')
 
   if (typeof envelope.categoryId !== 'undefined') {
-    return envelopeApi.create(envelope, budget)
+    return envelopeApi.create({ name: randomName(), ...envelope }, budget)
   }
 
   return createCategory({}, budget).then(category =>
-    envelopeApi.create({ ...envelope, categoryId: category.id }, budget)
+    envelopeApi.create(
+      { name: randomName(), ...envelope, categoryId: category.id },
+      budget
+    )
   )
 }
