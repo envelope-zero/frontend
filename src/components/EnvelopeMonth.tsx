@@ -64,11 +64,11 @@ const EnvelopeMonth = ({
 
   return (
     <tr className={`border-t border-gray-${i === 0 ? '300' : '200'}`}>
-      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis">
+      <td className="whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis">
         {envelope.name}
       </td>
       <td
-        className={`whitespace-nowrap px-3 py-4 text-sm text-right ${
+        className={`whitespace-nowrap px-1 py-4 text-sm text-right ${
           allocatedAmount < 0 ? 'negative' : 'text-gray-500'
         }`}
       >
@@ -144,7 +144,7 @@ const EnvelopeMonth = ({
         )}
       </td>
       <td
-        className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 py-4 text-sm text-right ${
+        className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 py-4 text-sm text-right ${
           envelope.balance < 0 ? 'negative' : 'text-gray-500'
         }`}
       >
