@@ -56,7 +56,7 @@ const EnvelopeMonth = ({
         month: envelope.month,
       },
       budget,
-      'http://localhost:3000/api/v1/allocations' // TODO: get this link from the API somehow
+      envelope.links.allocation
     )
   }
 
@@ -77,9 +77,10 @@ const EnvelopeMonth = ({
             <form
               onSubmit={e => {
                 e.preventDefault()
-                const response = envelope.links.allocation
-                  ? updateAllocation()
-                  : createAllocation()
+                const response =
+                  Number(envelope.allocation) === 0
+                    ? createAllocation()
+                    : updateAllocation()
 
                 response
                   .then(closeInput)
