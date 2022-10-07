@@ -48,12 +48,15 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
   const [budgetMonth, setBudgetMonth] = useState<BudgetMonth>()
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
   const [editingEnvelope, setEditingEnvelope] = useState<UUID>()
 
-  const loadBudgetMonth = useCallback(() => {
+  const loadBudgetMonth = useCallback(async () => {
     const [month, year] = activeMonth.split('/')
 
-    get(budget.links.groupedMonth.replace('YYYY', year).replace('MM', month))
+    return get(
+      budget.links.groupedMonth.replace('YYYY', year).replace('MM', month)
+    )
       .then(data => {
         setBudgetMonth(data)
         if (error) {
@@ -66,7 +69,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
   }, [budget, activeMonth])
 
   useEffect(() => {
-    loadBudgetMonth()
+    loadBudgetMonth().then(() => setIsLoading(false))
   }, [loadBudgetMonth, budget, activeMonth])
 
   return (
@@ -91,7 +94,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
           <ChevronRightIcon className="inline h-6" />
         </Link>
       </div>
-      {!budgetMonth ? (
+      {isLoading || !budgetMonth ? (
         <LoadingSpinner />
       ) : (
         <>
@@ -167,7 +170,10 @@ const Dashboard = ({ budget }: DashboardProps) => {
                           budget={budget}
                           editingEnvelope={editingEnvelope}
                           editEnvelope={setEditingEnvelope}
-                          reloadBudgetMonth={loadBudgetMonth}
+                          reloadBudgetMonth={() => {
+                            setIsLoading(true)
+                            loadBudgetMonth().then(() => setIsLoading(false))
+                          }}
                           setError={setError}
                         />
                       ))}

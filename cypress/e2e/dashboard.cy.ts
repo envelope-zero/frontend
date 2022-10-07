@@ -26,6 +26,7 @@ describe('Dashboard', () => {
     cy.contains(currentMonth)
 
     cy.visit('#', { qs: { month: '02/2020' } })
+    cy.awaitLoading()
     cy.contains('February 2020')
     cy.contains('Mar')
 
