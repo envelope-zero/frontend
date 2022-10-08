@@ -53,8 +53,15 @@ const api = (linkKey: string) => {
         .then(parseJSON)
         .then(data => data.data)
     },
-    delete: (object: ApiObject) =>
-      fetch(object.links.self, { method: 'DELETE' }).then(checkStatus),
+    delete: (object: ApiObject | undefined, options: { url?: string } = {}) => {
+      if (typeof object === 'undefined' && !options.url) {
+        throw new Error('no url specified')
+      }
+
+      return fetch(options.url || (object as ApiObject).links.self, {
+        method: 'DELETE',
+      }).then(checkStatus)
+    },
   }
 }
 
