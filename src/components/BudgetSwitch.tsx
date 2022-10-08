@@ -98,14 +98,16 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                         {formatMoney(budget.balance, budget.currency)}
                       </strong>
                     </div>
-                  </Link>
-                  <Link
-                    to="/transactions/new"
-                    onClick={() => props.selectBudget(budget)}
-                    className="text-sky-600 hover:text-sky-700 flex justify-end"
-                  >
-                    {t('transactions.add')}
-                    <ChevronRightIcon className="inline h-6" />
+                    <div className="flex justify-end">
+                      <Link
+                        to="/transactions/new"
+                        onClick={() => props.selectBudget(budget)}
+                        className="text-sky-600 hover:text-sky-700"
+                      >
+                        {t('transactions.add')}
+                        <ChevronRightIcon className="inline h-6" />
+                      </Link>
+                    </div>
                   </Link>
                 </li>
               ))}
