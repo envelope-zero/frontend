@@ -42,10 +42,14 @@ const EnvelopeMonth = ({
   }
 
   const updateAllocation = async () => {
-    return allocationApi.update(
-      { amount: allocatedAmount },
-      envelope.links.allocation
-    )
+    if (Number(allocatedAmount) === 0) {
+      return allocationApi.delete(undefined, { url: envelope.links.allocation })
+    } else {
+      return allocationApi.update(
+        { amount: allocatedAmount },
+        envelope.links.allocation
+      )
+    }
   }
 
   const createAllocation = async () => {
