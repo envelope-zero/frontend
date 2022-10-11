@@ -8,35 +8,33 @@ import { get } from '../lib/api/base'
 import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
-import { dateFromMonthYear, monthYearFromDate } from '../lib/dates'
+import {
+  dateFromMonthYear,
+  monthYearFromDate,
+  translatedMonthFormat,
+  shortTranslatedMonthFormat,
+} from '../lib/dates'
 import CategoryMonth from './CategoryMonth'
 
 type DashboardProps = { budget: Budget }
 
-const locale = 'en' // TODO: dynamic
-const activeDateFormat = new Intl.DateTimeFormat(locale, {
-  month: 'long',
-  year: 'numeric',
-})
-const shortMonthFormat = new Intl.DateTimeFormat(locale, { month: 'short' })
-
 const previousMonth = (yearMonth: string) => {
-  const [month, year] = yearMonth.split('/')
+  const [year, month] = yearMonth.split('-')
 
   if (month === '01') {
-    return new Date(parseInt(year) - 1, 11, 1)
+    return new Date(parseInt(year) - 1, 11, 15)
   } else {
-    return new Date(parseInt(year), parseInt(month) - 2, 1)
+    return new Date(parseInt(year), parseInt(month) - 2, 15)
   }
 }
 
 const nextMonth = (yearMonth: string) => {
-  const [month, year] = yearMonth.split('/')
+  const [year, month] = yearMonth.split('-')
 
   if (month === '12') {
-    return new Date(parseInt(year) + 1, 0, 1)
+    return new Date(parseInt(year) + 1, 0, 15)
   } else {
-    return new Date(parseInt(year), parseInt(month), 1)
+    return new Date(parseInt(year), parseInt(month), 15)
   }
 }
 
@@ -52,7 +50,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
   const [editingEnvelope, setEditingEnvelope] = useState<UUID>()
 
   const loadBudgetMonth = useCallback(async () => {
-    const [month, year] = activeMonth.split('/')
+    const [year, month] = activeMonth.split('-')
 
     return get(
       budget.links.groupedMonth.replace('YYYY', year).replace('MM', month)
@@ -78,19 +76,19 @@ const Dashboard = ({ budget }: DashboardProps) => {
       <div className="month-slider">
         <Link
           to={`/?month=${monthYearFromDate(previousMonth(activeMonth))}`}
-          title={activeDateFormat.format(previousMonth(activeMonth))}
+          title={translatedMonthFormat.format(previousMonth(activeMonth))}
         >
           <ChevronLeftIcon className="inline h-6" />
-          {shortMonthFormat.format(previousMonth(activeMonth))}
+          {shortTranslatedMonthFormat.format(previousMonth(activeMonth))}
         </Link>
         <div className="border-red-800 text-center">
-          {activeDateFormat.format(dateFromMonthYear(activeMonth))}
+          {translatedMonthFormat.format(dateFromMonthYear(activeMonth))}
         </div>
         <Link
           to={`/?month=${monthYearFromDate(nextMonth(activeMonth))}`}
-          title={activeDateFormat.format(nextMonth(activeMonth))}
+          title={translatedMonthFormat.format(nextMonth(activeMonth))}
         >
-          {shortMonthFormat.format(nextMonth(activeMonth))}
+          {shortTranslatedMonthFormat.format(nextMonth(activeMonth))}
           <ChevronRightIcon className="inline h-6" />
         </Link>
       </div>

@@ -25,7 +25,7 @@ describe('Dashboard', () => {
 
     cy.contains(currentMonth)
 
-    cy.visit('#', { qs: { month: '02/2020' } })
+    cy.visit('#', { qs: { month: '2020-02' } })
     cy.awaitLoading()
     cy.contains('February 2020')
     cy.contains('Mar')
@@ -34,7 +34,7 @@ describe('Dashboard', () => {
     cy.contains('Dec').click()
 
     cy.contains('December 2019')
-    cy.url().should('include', '?month=12/2019')
+    cy.url().should('include', '?month=2019-12')
   })
 
   it('can edit allocations', () => {

@@ -1,3 +1,13 @@
+const locale = 'en' // TODO: dynamic
+
+const translatedMonthFormat = new Intl.DateTimeFormat(locale, {
+  month: 'long',
+  year: 'numeric',
+})
+const shortTranslatedMonthFormat = new Intl.DateTimeFormat(locale, {
+  month: 'short',
+})
+
 const dateFromIsoString = (date: string) => date.slice(0, 10)
 const dateToIsoString = (date?: string) => {
   if (!date) {
@@ -6,12 +16,11 @@ const dateToIsoString = (date?: string) => {
   return new Date(date).toISOString()
 }
 
-const monthYearFromDate = (date: Date) =>
-  date.toLocaleDateString('default', { year: 'numeric', month: '2-digit' })
+const monthYearFromDate = (date: Date) => date.toISOString().slice(0, 7)
 
 const dateFromMonthYear = (date: string) => {
-  const [month, year] = date.split('/')
-  return new Date(`${month}/01/${year}`)
+  const [year, month] = date.split('-')
+  return new Date(`${month}/15/${year}`)
 }
 
 export {
@@ -19,4 +28,6 @@ export {
   dateToIsoString,
   monthYearFromDate,
   dateFromMonthYear,
+  translatedMonthFormat,
+  shortTranslatedMonthFormat,
 }

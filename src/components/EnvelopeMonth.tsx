@@ -11,7 +11,7 @@ import {
   Translation,
 } from '../types'
 import FormField from './FormField'
-import { monthYearFromDate } from '../lib/dates'
+import { monthYearFromDate, translatedMonthFormat } from '../lib/dates'
 
 type props = {
   envelope: EnvelopeMonthType
@@ -64,7 +64,7 @@ const EnvelopeMonth = ({
     )
   }
 
-  const month = monthYearFromDate(new Date(envelope.month))
+  const month = translatedMonthFormat.format(new Date(envelope.month))
 
   return (
     <tr className={`border-t border-gray-${i === 0 ? '300' : '200'}`}>
