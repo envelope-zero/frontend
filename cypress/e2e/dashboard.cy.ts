@@ -13,6 +13,7 @@ describe('Dashboard', () => {
       ).then(() => {
         cy.visit('/').get('h3').contains('Dashboard Test').click()
         cy.getCookie('budgetId').should('exist')
+        cy.awaitLoading()
       })
     })
   })
