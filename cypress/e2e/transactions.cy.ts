@@ -167,7 +167,7 @@ describe('Transaction: Creation', () => {
 
     cy.clickAndWait('Save')
     cy.contains('Burgers').click()
-    cy.contains('Repeat Transaction').click()
+    cy.clickAndWait('Repeat Transaction')
 
     cy.getInputFor('Note').should('have.value', 'Burgers')
     cy.getInputFor('Amount').should('have.value', '5')
