@@ -28,7 +28,7 @@ describe('Transaction: Creation', () => {
     cy.getByTitle('Create Transaction').click()
 
     cy.getInputFor('Note').type('Birthday Present')
-    cy.getInputFor('Amount').type('42')
+    cy.getInputFor('Amount').type('42.7')
 
     cy.getInputFor('Source').type('Bank ac')
     cy.contains('Bank account').click()
@@ -41,7 +41,7 @@ describe('Transaction: Creation', () => {
 
     cy.clickAndWait('Save')
     cy.contains('Birthday Present (Bank account → Best Friend)')
-    cy.contains('-42.00')
+    cy.contains('-42.70')
 
     // "Latest Transactions" per Account
 
@@ -49,14 +49,14 @@ describe('Transaction: Creation', () => {
     cy.contains('Bank account').click()
     cy.get('h2').contains('Transactions')
     cy.contains('Birthday Present (Bank account → Best Friend)')
-    cy.contains('-42.00')
+    cy.contains('-42.70')
 
     cy.contains('Accounts').click()
     cy.contains('External Accounts').click()
     cy.contains('Best Friend').click()
     cy.get('h2').contains('Transactions')
     cy.contains('Birthday Present (Bank account → Best Friend)')
-    cy.contains('-42.00')
+    cy.contains('-42.70')
 
     // "Latest Transactions" per Envelope
 
@@ -64,7 +64,7 @@ describe('Transaction: Creation', () => {
     cy.contains('Only one').click()
     cy.get('h2').contains('Transactions')
     cy.contains('Birthday Present (Bank account → Best Friend)')
-    cy.contains('-42.00')
+    cy.contains('-42.70')
   })
 
   it('can create a new incoming transaction', () => {

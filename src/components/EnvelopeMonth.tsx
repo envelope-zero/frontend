@@ -106,7 +106,7 @@ const EnvelopeMonth = ({
                 })}
                 name={`${envelope.id}-${envelope.month}`}
                 onChange={e => setAllocatedAmount(Number(e.target.value))}
-                options={{ autoFocus: true }}
+                options={{ autoFocus: true, step: 'any' }}
                 hideLabel
                 compact
               />
