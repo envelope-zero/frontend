@@ -237,7 +237,10 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               label={t('transactions.amount')}
               value={transaction.amount || ''}
               onChange={e => updateValue('amount', Number(e.target.value))}
-              options={{ disabled: transaction.reconciled || false }}
+              options={{
+                disabled: transaction.reconciled || false,
+                step: 'any',
+              }}
             >
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span className="text-gray-500 sm:text-sm">
