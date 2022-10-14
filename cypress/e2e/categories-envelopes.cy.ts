@@ -55,4 +55,11 @@ describe('Envelope: Creation', () => {
     cy.contains('Restaurants')
     cy.contains('Rent').should('not.exist')
   })
+
+  it('shows an error when trying to save invalid data', () => {
+    cy.contains('Envelopes').click()
+    cy.getByTitle('Create Envelope').first().click()
+    cy.contains('Save').click()
+    cy.contains('No category ID specified')
+  })
 })
