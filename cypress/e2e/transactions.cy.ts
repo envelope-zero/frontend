@@ -26,6 +26,7 @@ describe('Transaction: Creation', () => {
   it('can create a new outgoing transaction', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
+    cy.awaitLoading()
 
     cy.getInputFor('Note').type('Birthday Present')
     cy.getInputFor('Amount').type('42.7')
@@ -70,6 +71,7 @@ describe('Transaction: Creation', () => {
   it('can create a new incoming transaction', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
+    cy.awaitLoading()
 
     cy.getInputFor('Amount').type('13.37')
 
@@ -90,6 +92,7 @@ describe('Transaction: Creation', () => {
   it('can create a new transfer between internal accounts', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
+    cy.awaitLoading()
 
     cy.getInputFor('Amount').type('100')
 
@@ -119,6 +122,7 @@ describe('Transaction: Creation', () => {
   it('can create a new account', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
+    cy.awaitLoading()
 
     cy.getInputFor('Amount').type('13')
 
@@ -157,6 +161,7 @@ describe('Transaction: Creation', () => {
   it('can duplicate an existing transaction', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
+    cy.awaitLoading()
 
     cy.getInputFor('Note').type('Burgers')
     cy.getInputFor('Amount').type('5')
@@ -186,5 +191,29 @@ describe('Transaction: Creation', () => {
     cy.get('p:contains(Burgers)').should('have.length', 2)
     cy.contains('-5.00')
     cy.contains('-5.50')
+  })
+
+  it('clears the inputs when switching to a new transaction', () => {
+    cy.get('nav').contains('Transactions').click()
+    cy.getByTitle('Create Transaction').click()
+    cy.awaitLoading()
+
+    cy.getInputFor('Note').type("I shouldn't be buying this")
+    cy.getInputFor('Amount').type('1000000')
+    cy.getInputFor('Source').type('Bank ac{enter}')
+    cy.getInputFor('Destination').type('Best fri{enter}')
+    cy.getInputFor('Envelope').type('Onl{enter}')
+
+    cy.clickAndWait('Save')
+    cy.contains("I shouldn't be buying this").click()
+
+    cy.getInputFor('Note').should('have.value', "I shouldn't be buying this")
+    cy.getInputFor('Amount').should('have.value', '1000000')
+
+    cy.contains('Add transaction').click()
+    cy.awaitLoading()
+
+    cy.getInputFor('Note').should('have.value', '')
+    cy.getInputFor('Amount').should('have.value', '')
   })
 })
