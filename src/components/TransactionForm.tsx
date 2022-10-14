@@ -46,7 +46,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
   >([])
   const [transaction, setTransaction] = useState<
     UnpersistedTransaction | Transaction
-  >({ date: new Date().toISOString() })
+  >({})
   const [sourceAccountToCreate, setSourceAccountToCreate] =
     useState<UnpersistedAccount>()
   const [destinationAccountToCreate, setDestinationAccountToCreate] =
@@ -87,6 +87,8 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
           })
         })
       )
+    } else if (transactionId === 'new') {
+      promises.push(new Promise(resolve => resolve(setTransaction({}))))
     }
 
     Promise.all(promises)
@@ -95,7 +97,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
         setError(err.message)
       })
       .then(() => setIsLoading(false))
-  }, [budget, isPersisted, transactionId, t, templateId])
+  }, [budget, transactionId, templateId])
 
   const updateValue = (key: keyof Transaction, value: any) => {
     setTransaction({ ...transaction, [key]: value })
@@ -143,6 +145,10 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
       items: accounts.filter(account => account.external),
     },
   ]
+
+  if (isLoading) {
+    return <LoadingSpinner />
+  }
 
   return (
     <form
@@ -259,7 +265,9 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               type="date"
               name="date"
               label={t('transactions.date')}
-              value={dateFromIsoString(transaction.date || '')}
+              value={dateFromIsoString(
+                transaction.date || new Date().toISOString()
+              )}
               onChange={e =>
                 updateValue('date', dateToIsoString(e.target.value))
               }
