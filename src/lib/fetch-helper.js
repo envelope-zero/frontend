@@ -15,7 +15,7 @@ const checkStatus = async response => {
     }
 
     // Throw the message of the parsed error object
-    throw error
+    throw new Error(error)
   }
 }
 const parseJSON = response => response.json()
