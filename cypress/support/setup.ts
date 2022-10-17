@@ -4,6 +4,7 @@ import {
   UnpersistedBudget,
   UnpersistedCategory,
   UnpersistedEnvelope,
+  UnpersistedTransaction,
 } from '../../src/types'
 import connectBudgetApi from '../../src/lib/api/budgets'
 import { api } from '../../src/lib/api/base'
@@ -44,3 +45,8 @@ export const createEnvelope = async (
     )
   )
 }
+
+export const createTransaction = async (
+  transaction: UnpersistedTransaction,
+  budget: Budget
+) => api('transactions').create(transaction, budget)
