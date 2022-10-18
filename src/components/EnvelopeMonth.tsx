@@ -1,4 +1,5 @@
 import { CheckIcon, XMarkIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
@@ -67,10 +68,20 @@ const EnvelopeMonth = ({
   const month = translatedMonthFormat.format(new Date(envelope.month))
 
   return (
-    <tr className={`border-t border-gray-${i === 0 ? '300' : '200'}`}>
-      <td className="whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis">
-        {envelope.name}
-      </td>
+    <tr
+      className={`hover:bg-gray-50 border-t border-gray-${
+        i === 0 ? '300' : '200'
+      }`}
+    >
+      <Link
+        to={`/transactions?envelope=${envelope.id}`}
+        className="h-full block"
+      >
+        <td className="whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis ">
+          {envelope.name}
+        </td>
+      </Link>
+
       <td
         className={`whitespace-nowrap px-1 py-4 text-sm text-right ${
           allocatedAmount < 0 ? 'negative' : 'text-gray-500'
