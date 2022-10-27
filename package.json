@@ -34,7 +34,7 @@
     "workbox-streams": "6.5.4"
   },
   "devDependencies": {
-    "autoprefixer": "10.4.12",
+    "autoprefixer": "10.4.13",
     "cypress": "10.11.0",
     "cypress-repeat": "2.3.3",
     "eslint-config-prettier": "8.5.0",
