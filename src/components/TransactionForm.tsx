@@ -39,6 +39,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
   const [searchParams] = useSearchParams()
 
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   const [groupedEnvelopes, setGroupedEnvelopes] = useState<
     { title?: string; items: Envelope[] }[]
@@ -57,6 +58,10 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
   const templateId = searchParams.get('duplicateFrom')
 
   useEffect(() => {
+    if (!isLoading) {
+      setIsLoading(true)
+    }
+
     const promises = [
       categoryApi.getAll(budget).then((data: Category[]) =>
         setGroupedEnvelopes(
@@ -89,6 +94,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
       .catch(err => {
         setError(err.message)
       })
+      .then(() => setIsLoading(false))
   }, [budget, isPersisted, transactionId, t, templateId])
 
   const updateValue = (key: keyof Transaction, value: any) => {
@@ -187,7 +193,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
 
       <Error error={error} />
 
-      {isPersisted && typeof transaction === 'undefined' ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <>
