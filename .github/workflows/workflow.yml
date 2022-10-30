@@ -50,7 +50,6 @@ jobs:
           # The URL that the react-scripts dev server proxies /api to
           API_URL: http://localhost:8080
         with:
-          command: npm run test:ci
           start: npm start
           # Frontend runs on :3001, API on :8080
           wait-on: 'http://localhost:3001, http://localhost:8080'
