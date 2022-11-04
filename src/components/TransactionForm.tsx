@@ -268,9 +268,12 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               value={dateFromIsoString(
                 transaction.date || new Date().toISOString()
               )}
-              onChange={e =>
-                updateValue('date', dateToIsoString(e.target.value))
-              }
+              onChange={e => {
+                // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
+                if (e.target.value) {
+                  updateValue('date', dateToIsoString(e.target.value))
+                }
+              }}
               options={{ disabled: transaction.reconciled || false }}
             />
 
