@@ -12,7 +12,7 @@ import {
   Translation,
 } from '../types'
 import FormField from './FormField'
-import { monthYearFromDate, translatedMonthFormat } from '../lib/dates'
+import { translatedMonthFormat } from '../lib/dates'
 
 type props = {
   envelope: EnvelopeMonthType
