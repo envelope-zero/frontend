@@ -36,7 +36,6 @@ describe('Dashboard', () => {
     cy.contains(currentMonth)
 
     cy.visit('#', { qs: { month: '2020-02' } })
-    cy.awaitLoading()
     cy.contains('February 2020')
     cy.contains('Mar')
 
@@ -45,6 +44,14 @@ describe('Dashboard', () => {
 
     cy.contains('December 2019')
     cy.url().should('include', '?month=2019-12')
+
+    cy.getByTitle('Select Month').click()
+    cy.get('input#month').type('2022-03-01')
+    cy.getByTitle('March 2022').click()
+    cy.awaitLoading()
+    cy.contains('March 2022')
+    cy.contains('Feb')
+    cy.contains('Apr')
   })
 
   it('can edit allocations', () => {
