@@ -1,4 +1,3 @@
-import { first } from 'cypress/types/lodash'
 import { Budget, Envelope } from '../../src/types'
 import {
   createBudget,
