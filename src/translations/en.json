@@ -4,6 +4,7 @@
   "save": "Save",
   "cancel": "Cancel",
   "select": "Select...",
+  "close": "Close",
   "untitled": "Untitled",
   "version": "Version",
   "seeAll": "See All",
@@ -95,6 +96,8 @@
     "available": "Available to budget",
     "allocation": "Allocation",
     "allocationForEnvelopeMonth": "Allocation for {{envelope}} ({{month}})",
-    "balance": "Balance"
+    "balance": "Balance",
+    "selectMonth": "Select Month",
+    "goToCurrentMonth": "Go to current month"
   }
 }
