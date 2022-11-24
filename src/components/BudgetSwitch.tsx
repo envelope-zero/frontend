@@ -113,11 +113,13 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
               ))}
             </ul>
           ) : (
-            <div>{t('budgets.emptyList')}</div>
+            <>
+              <div>{t('budgets.emptyList')}</div>
+              <Link to="/budgets/new" title={t('budgets.create')}>
+                <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
+              </Link>
+            </>
           )}
-          <Link to="/budgets/new" title={t('budgets.create')}>
-            <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
-          </Link>
         </div>
       )}
     </>

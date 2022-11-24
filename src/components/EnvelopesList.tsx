@@ -49,11 +49,13 @@ const EnvelopesList = ({ budget }: Props) => {
           ))}
         </div>
       ) : (
-        <div>{t('envelopes.emptyList')}</div>
+        <>
+          <div>{t('envelopes.emptyList')}</div>
+          <Link to="new" title={t('envelopes.create')}>
+            <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
+          </Link>
+        </>
       )}
-      <Link to="new" title={t('envelopes.create')}>
-        <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
-      </Link>
     </>
   )
 }
