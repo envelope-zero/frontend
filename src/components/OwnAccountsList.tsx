@@ -99,11 +99,13 @@ const OwnAccountsList = ({ budget }: Props) => {
               ))}
             </ul>
           ) : (
-            <div>{t('accounts.emptyList')}</div>
+            <>
+              <div>{t('accounts.emptyList')}</div>
+              <Link to="/own-accounts/new" title={t('accounts.create')}>
+                <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
+              </Link>
+            </>
           )}
-          <Link to="/own-accounts/new" title={t('accounts.create')}>
-            <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
-          </Link>
         </div>
       )}
     </>
