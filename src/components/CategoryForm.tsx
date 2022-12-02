@@ -10,6 +10,7 @@ import FormField from './FormField'
 import { safeName } from '../lib/name-helper'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { TrashIcon } from '@heroicons/react/24/outline'
+import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 
 const categoryApi = api('categories')
 
@@ -50,6 +51,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
 
   return (
     <form
+      onKeyDown={submitOnMetaEnter}
       onSubmit={e => {
         e.preventDefault()
 

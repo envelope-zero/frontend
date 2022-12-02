@@ -48,7 +48,10 @@ describe('Budget: Switch', () => {
 
     cy.visit('/budgets/new')
     cy.getInputFor('Name').type('Second Budget')
-    cy.clickAndWait('Save')
+    cy.getInputFor('Note').type(
+      'I can be saved by pressing CMD+Enter! {meta}{enter}'
+    )
+    cy.awaitLoading()
 
     cy.contains('Switch Budget').click()
     cy.get('h3').contains('First Budget').click()

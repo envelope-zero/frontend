@@ -14,6 +14,7 @@ import connectBudgetApi, {
 import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
+import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 
 type BudgetFormProps = {
   selectBudget: (budget?: Budget) => void
@@ -64,6 +65,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
 
   return (
     <form
+      onKeyDown={submitOnMetaEnter}
       onSubmit={e => {
         e.preventDefault()
 
