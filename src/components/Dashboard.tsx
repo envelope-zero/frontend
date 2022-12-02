@@ -166,8 +166,8 @@ const Dashboard = ({ budget }: DashboardProps) => {
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="mt-4 flex flex-col py-2">
               <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 md:shadow md:ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <div className="inline-block min-w-full align-middle">
-                  <table className="min-w-full">
+                <div className="inline-block w-full align-middle">
+                  <table className="w-full">
                     <thead className="bg-white">
                       <tr>
                         <th
@@ -176,13 +176,19 @@ const Dashboard = ({ budget }: DashboardProps) => {
                         ></th>
                         <th
                           scope="col"
-                          className="px-3 pt-3.5 text-right text-sm font-semibold text-gray-900"
+                          className="px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 w-1/6"
                         >
                           {t('dashboard.allocation')}
                         </th>
                         <th
                           scope="col"
-                          className="pl-3 pr-4 sm:pr-6 pt-3.5 text-right text-sm font-semibold text-gray-900"
+                          className="hidden md:table-cell px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 w-1/6"
+                        >
+                          {t('dashboard.spent')}
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-3 pr-4 sm:pr-6 pt-3.5 text-right text-sm font-semibold text-gray-900 w-1/6"
                         >
                           {t('dashboard.balance')}
                         </th>
@@ -204,6 +210,13 @@ const Dashboard = ({ budget }: DashboardProps) => {
                             'auto'
                           )}
                         </td>
+                        <td
+                          className={`hidden md:table-cell whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
+                            budgetMonth.budgeted < 0
+                              ? 'negative'
+                              : 'text-gray-500'
+                          }`}
+                        ></td>
                         <td
                           className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 pb-3 text-sm font-semibold text-right ${
                             budgetMonth.balance < 0

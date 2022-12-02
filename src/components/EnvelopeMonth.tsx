@@ -77,7 +77,7 @@ const EnvelopeMonth = ({
         to={`/transactions?envelope=${envelope.id}`}
         className="h-full block"
       >
-        <td className="whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis ">
+        <td className="whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis">
           {envelope.name}
         </td>
       </Link>
@@ -157,6 +157,13 @@ const EnvelopeMonth = ({
             </button>
           </div>
         )}
+      </td>
+      <td
+        className={`hidden md:table-cell whitespace-nowrap px-1 py-4 text-sm text-right ${
+          envelope.spent < 0 ? 'positive' : 'text-gray-500'
+        }`}
+      >
+        {formatMoney(envelope.spent, budget.currency, 'auto')}
       </td>
       <td
         className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 py-4 text-sm text-right ${
