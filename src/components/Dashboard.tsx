@@ -147,11 +147,12 @@ const Dashboard = ({ budget }: DashboardProps) => {
         />
       )}
 
-      {isLoading || !budgetMonth ? (
+      <Error error={error} />
+
+      {isLoading ? (
         <LoadingSpinner />
-      ) : (
+      ) : typeof budgetMonth === 'undefined' ? null : (
         <>
-          <Error error={error} />
           <div className="box w-full mt-4 mb-2 py-2 text-center">
             <div
               className={`${
