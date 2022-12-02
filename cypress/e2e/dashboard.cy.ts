@@ -4,6 +4,7 @@ import {
   createAccount,
   createEnvelope,
   createTransaction,
+  createCategory,
 } from '../support/setup'
 
 describe('Dashboard', () => {
@@ -13,9 +14,24 @@ describe('Dashboard', () => {
       cy.wrap(budget).as('budget')
       cy.wrap(
         Cypress.Promise.all([
-          createEnvelope({ name: 'First Envelope' }, budget),
-          createEnvelope({ name: 'Second Envelope' }, budget),
-        ])
+          createCategory({ name: 'First Category' }, budget),
+          createCategory({ name: 'Second Category' }, budget),
+        ]).then(([firstCategory, secondCategory]) =>
+          Cypress.Promise.all([
+            createEnvelope(
+              { name: 'First Envelope', categoryId: firstCategory.id },
+              budget
+            ),
+            createEnvelope(
+              { name: 'Second Envelope', categoryId: firstCategory.id },
+              budget
+            ),
+            createEnvelope(
+              { name: 'Third Envelope', categoryId: secondCategory.id },
+              budget
+            ),
+          ])
+        )
       ).then(([firstEnvelope, secondEnvelope]: Envelope[]) => {
         cy.wrap(firstEnvelope).as('firstEnvelope')
         cy.wrap(secondEnvelope).as('secondEnvelope')
@@ -79,6 +95,23 @@ describe('Dashboard', () => {
     cy.get('input').should('not.exist')
     cy.contains('42.00').should('not.exist')
     cy.contains('12.00')
+
+    // set allocation for second envelope
+    cy.get('[aria-label*="Edit Allocation for Second Envelope"]').click()
+    cy.getInputFor('Allocation for Second Envelope').clear().type('-22.00')
+    cy.get('[aria-label="Save"]').click()
+
+    // set allocation for third envelope
+    cy.get('[aria-label*="Edit Allocation for Third Envelope"]').click()
+    cy.getInputFor('Allocation for Third Envelope').type('30.00')
+    cy.get('[aria-label="Save"]').click()
+    cy.contains('+30.00')
+    cy.contains('-20.00 Available to budget')
+
+    // collapse category
+    cy.contains('First Category').click()
+    cy.contains('2 Envelopes')
+    cy.contains('-10.00')
   })
 
   // This needs to be a declared function to have a binding for 'this'

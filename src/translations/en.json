@@ -73,6 +73,8 @@
   "envelopes": {
     "envelopes": "Envelopes",
     "envelope": "Envelope",
+    "envelopesWithCount_one": "{{count}} Envelope",
+    "envelopesWithCount_other": "{{count}} Envelopes",
     "new": "New Envelope",
     "create": "Create Envelope",
     "name": "Name",
