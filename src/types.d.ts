@@ -4,7 +4,7 @@ type ApiLinks = { [key: string]: string }
 type UUID = string
 
 export type Translation = {
-  t: (key: string, params?: { [key: string]: string }) => string
+  t: (key: string, params?: { [key: string]: string | number }) => string
 }
 
 export type UnpersistedBudget = {
