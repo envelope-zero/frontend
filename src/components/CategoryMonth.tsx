@@ -31,15 +31,20 @@ const CategoryMonth = ({
   const { t }: Translation = useTranslation()
   const [showEnvelopes, setShowEnvelopes] = useState(true)
 
-  const { allocation, balance } = category.envelopes.reduce(
-    (acc: { allocation: number; balance: number }, curr: EnvelopeMonthType) => {
+  const { allocation, balance, spent } = category.envelopes.reduce(
+    (
+      acc: { allocation: number; balance: number; spent: number },
+      curr: EnvelopeMonthType
+    ) => {
       acc.allocation += Number(curr.allocation)
       acc.balance += Number(curr.balance)
+      acc.spent += Number(curr.spent)
       return acc
     },
     {
       allocation: 0,
       balance: 0,
+      spent: 0,
     }
   )
 
@@ -58,7 +63,7 @@ const CategoryMonth = ({
         }}
       >
         <th
-          colSpan={3}
+          colSpan={4}
           scope="colgroup"
           className="px-4 py-2 text-left text-sm font-bold text-gray-900 sm:px-6 text-ellipsis"
         >
@@ -89,7 +94,7 @@ const CategoryMonth = ({
         ))
       ) : (
         <tr className="bg-gray-50 cursor-pointer">
-          <td className="whitespace-nowrap pb-2 pl-8 pr-1 text-sm font-medium text-gray-500 sm:pl-12 overflow-hidden text-ellipsis italic">
+          <td className="whitespace-nowrap pb-2 pl-10 pr-1 text-sm font-medium text-gray-500 sm:pl-12 overflow-hidden text-ellipsis italic">
             {t('envelopes.envelopesWithCount', {
               count: category.envelopes.length,
             })}
@@ -100,6 +105,13 @@ const CategoryMonth = ({
             }`}
           >
             {formatMoney(allocation, budget.currency, 'auto')}
+          </td>
+          <td
+            className={`hidden md:table-cell whitespace-nowrap px-1 pb-2 text-sm text-right ${
+              spent < 0 ? 'positive' : 'text-gray-500'
+            }`}
+          >
+            {formatMoney(spent, budget.currency, 'auto')}
           </td>
           <td
             className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 pb-2 text-sm text-right ${

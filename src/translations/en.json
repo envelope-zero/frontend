@@ -99,6 +99,7 @@
     "allocation": "Allocation",
     "allocationForEnvelopeMonth": "Allocation for {{envelope}} ({{month}})",
     "balance": "Balance",
+    "spent": "Spent",
     "selectMonth": "Select Month",
     "goToCurrentMonth": "Go to current month"
   }
