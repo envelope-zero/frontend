@@ -88,6 +88,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
         <Link
           to={linkToMonth(monthYearFromDate(previousMonth(activeMonth)))}
           title={translatedMonthFormat.format(previousMonth(activeMonth))}
+          onClick={() => setIsLoading(true)}
         >
           <ChevronLeftIcon className="inline h-6" />
           {shortTranslatedMonthFormat.format(previousMonth(activeMonth))}
@@ -129,6 +130,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
         <Link
           to={linkToMonth(monthYearFromDate(nextMonth(activeMonth)))}
           title={translatedMonthFormat.format(nextMonth(activeMonth))}
+          onClick={() => setIsLoading(true)}
         >
           {shortTranslatedMonthFormat.format(nextMonth(activeMonth))}
           <ChevronRightIcon className="inline h-6" />
