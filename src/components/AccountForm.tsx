@@ -11,6 +11,7 @@ import FormField from './FormField'
 import LatestTransactions from './LatestTransactions'
 import RemainingHeightContainer from './RemainingHeightContainer'
 import { TrashIcon } from '@heroicons/react/24/outline'
+import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 
 const accountApi = api('accounts')
 
@@ -64,6 +65,7 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
 
   return (
     <form
+      onKeyDown={submitOnMetaEnter}
       onSubmit={e => {
         e.preventDefault()
         if ('id' in account) {

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { api } from '../lib/api/base'
 import { safeName } from '../lib/name-helper'
+import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 import {
   Account,
   Budget,
@@ -75,6 +76,7 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
 
   return (
     <form
+      onKeyDown={submitOnMetaEnter}
       onSubmit={e => {
         e.preventDefault()
 
