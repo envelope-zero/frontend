@@ -32,7 +32,7 @@
   }
 
   .header {
-    @apply fixed top-[1.625rem] left-0 right-0 m-auto text-center md:relative md:top-0 z-10 flex justify-center items-center sm:h-12;
+    @apply fixed top-[1.625rem] left-0 right-0 m-auto text-center md:relative md:top-0 z-10 flex justify-center items-center md:h-12;
     width: calc(100% - 9rem);
 
     .header--action {
@@ -124,12 +124,6 @@
       > div,
       a {
         @apply pb-1 border-b-2;
-      }
-    }
-
-    tr {
-      td:first-child {
-        max-width: 40vw;
       }
     }
   }

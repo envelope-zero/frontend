@@ -73,14 +73,14 @@ const EnvelopeMonth = ({
         i === 0 ? '300' : '200'
       }`}
     >
-      <Link
-        to={`/transactions?envelope=${envelope.id}`}
-        className="h-full block"
-      >
-        <td className="whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis">
+      <td>
+        <Link
+          to={`/transactions?envelope=${envelope.id}`}
+          className="h-full block whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis"
+        >
           {envelope.name}
-        </td>
-      </Link>
+        </Link>
+      </td>
 
       <td
         className={`whitespace-nowrap px-1 py-4 text-sm text-right ${
