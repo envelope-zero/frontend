@@ -31,8 +31,19 @@
     "note": "Note",
     "delete": "Delete Budget",
     "create": "Create Budget",
+    "createNew": "Create new Budget",
     "confirmDelete": "Are you sure you want to delete this budget?",
-    "emptyList": "No budgets have been created yet. Create a new one below!"
+    "emptyList": "No budgets have been created yet. Create a new one below!",
+    "import": {
+      "import": "Import",
+      "importBudget": "Import Budget",
+      "importInstead": "Import an existing budget from YNAB 4 instead",
+      "shortDescription": "Import an existing budget from YNAB 4",
+      "description": "You can import your YNAB 4 budget here. This will create a new EZ budget with all your transactions, categories, and accounts from YNAB so that you can continue right where you left off.\nSee <a class='link-blue' href='https://github.com/envelope-zero/backend/blob/main/docs/import.md#how-to-import'>here</a> for instructions on where to find your YNAB data file.",
+      "importedBudget": "Imported Budget",
+      "budgetName": "Budget Name",
+      "file": "File"
+    }
   },
   "accounts": {
     "accounts": "Accounts",

@@ -2,9 +2,9 @@ type Props = {
   type: string
   name: string
   label: string
-  value: string | number
+  value?: string | number
   options?: { [option: string]: string | boolean }
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   children?: React.ReactNode
   hideLabel?: boolean
   compact?: boolean
