@@ -24,6 +24,7 @@ import './i18n'
 import { Account, Budget } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
 import { api } from './lib/api/base'
+import BudgetImport from './components/BudgetImport'
 
 const accountApi = api('accounts')
 
@@ -84,6 +85,10 @@ const App = () => {
           <Route
             path="budgets/:budgetId"
             element={<BudgetForm selectBudget={selectBudget} />}
+          />
+          <Route
+            path="budget-import"
+            element={<BudgetImport selectBudget={selectBudget} />}
           />
           {isLoading ? (
             <Route path="*" element={<LoadingSpinner />} />

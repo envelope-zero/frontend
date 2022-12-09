@@ -72,3 +72,35 @@ describe('Budget: Switch', () => {
     cy.contains('No budgets have been created yet. Create a new one below!')
   })
 })
+
+describe('Budget: ynab4 import', () => {
+  it('can import a budget from ynab4', () => {
+    cy.visit('/budget-import')
+    cy.getInputFor('Budget Name').clear().type('Imported Budget')
+    cy.getInputFor('File').selectFile('cypress/fixtures/ynab4-budget.yfull')
+    cy.contains('Save').click()
+
+    cy.awaitLoading()
+    cy.get('h1').contains('Imported Budget')
+    cy.contains('2,558.00 US$')
+  })
+
+  it('shows potential errors', () => {
+    cy.visit('/budget-import')
+    cy.getInputFor('Budget Name').clear().type('Imported Budget')
+
+    cy.getInputFor('File').selectFile('cypress/fixtures/ynab4-budget.json')
+    cy.contains('Save').click()
+    cy.awaitLoading()
+    cy.contains(
+      'Import currently only supports YNAB 4 budgets. If you tried to upload a YNAB 4 budget, make sure its file name ends with .yfull'
+    )
+
+    cy.getInputFor('File').selectFile('cypress/fixtures/empty.yfull')
+    cy.contains('Save').click()
+    cy.awaitLoading()
+    cy.contains(
+      'not a valid YNAB4 Budget.yfull file: unexpected end of JSON input'
+    )
+  })
+})

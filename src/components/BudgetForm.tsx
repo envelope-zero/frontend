@@ -15,6 +15,7 @@ import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
 import submitOnMetaEnter from '../lib/submit-on-meta-enter'
+import { DocumentArrowUpIcon } from '@heroicons/react/24/outline'
 
 type BudgetFormProps = {
   selectBudget: (budget?: Budget) => void
@@ -100,6 +101,19 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
       </div>
 
       <Error error={error} />
+
+      {isPersisted ? null : (
+        <>
+          <h2>{t('budgets.createNew')}</h2>
+          <Link
+            to="/budget-import"
+            className="text-sm link-blue flex align-center"
+          >
+            <DocumentArrowUpIcon className="icon-sm mr-1" />
+            {t('budgets.import.importInstead')}
+          </Link>
+        </>
+      )}
 
       <FormFields>
         <FormField

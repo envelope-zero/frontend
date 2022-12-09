@@ -10,6 +10,7 @@ import { formatMoney } from '../lib/format'
 import LoadingSpinner from './LoadingSpinner'
 import { safeName } from '../lib/name-helper'
 import Error from './Error'
+import FlyoutMenu from './FlyoutMenu'
 
 type BudgetSwitchProps = {
   selectBudget: (budget?: Budget) => void
@@ -42,13 +43,22 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
     <>
       <div className="header">
         <h1>{t('budgets.budgets')}</h1>
-        <Link
-          to="/budgets/new"
-          className="header--action"
-          title={t('budgets.create')}
-        >
-          <PlusIcon className="icon-red" />
-        </Link>
+        <div className="header--action">
+          <div>
+            <FlyoutMenu
+              items={[
+                {
+                  name: t('budgets.import.importBudget'),
+                  href: '/budget-import',
+                  description: t('budgets.import.shortDescription'),
+                },
+              ]}
+            />
+          </div>
+          <Link to="/budgets/new" title={t('budgets.create')}>
+            <PlusIcon className="icon-red" />
+          </Link>
+        </div>
       </div>
       <Error error={error} />
 
