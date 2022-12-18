@@ -156,7 +156,9 @@ const Dashboard = ({ budget }: DashboardProps) => {
                 budgetMonth.available >= 0 ? 'positive' : 'negative'
               } text-xl font-bold`}
             >
-              {formatMoney(budgetMonth.available, budget.currency, 'auto')}
+              {formatMoney(budgetMonth.available, budget.currency, {
+                signDisplay: 'auto',
+              })}
             </div>
             <div className="text-gray-500 font-medium">
               {t('dashboard.available')}
@@ -204,22 +206,18 @@ const Dashboard = ({ budget }: DashboardProps) => {
                               : 'text-gray-500'
                           }`}
                         >
-                          {formatMoney(
-                            budgetMonth.budgeted,
-                            budget.currency,
-                            'auto'
-                          )}
+                          {formatMoney(budgetMonth.budgeted, budget.currency, {
+                            signDisplay: 'auto',
+                          })}
                         </td>
                         <td
                           className={`hidden md:table-cell whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
                             budgetMonth.spent < 0 ? 'positive' : 'text-gray-500'
                           }`}
                         >
-                          {formatMoney(
-                            budgetMonth.spent,
-                            budget.currency,
-                            'auto'
-                          )}
+                          {formatMoney(budgetMonth.spent, budget.currency, {
+                            signDisplay: 'auto',
+                          })}
                         </td>
                         <td
                           className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 pb-3 text-sm font-semibold text-right ${

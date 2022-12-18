@@ -77,11 +77,9 @@ const LatestTransactions = ({
                             className={`px-2 inline-flex text-xs leading-5 font-bold rounded-full ${color}`}
                           >
                             {sign}
-                            {formatMoney(
-                              transaction.amount,
-                              budget.currency,
-                              'never'
-                            )}
+                            {formatMoney(transaction.amount, budget.currency, {
+                              signDisplay: 'never',
+                            })}
                           </p>
                         </div>
                         <div

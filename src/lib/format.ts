@@ -3,10 +3,17 @@ const locale = 'en-US' // TODO: user preference
 const formatMoney = (
   amount: number,
   currency: string = '',
-  signDisplay: Intl.NumberFormatOptions['signDisplay'] = 'exceptZero'
+  options: {
+    signDisplay?: Intl.NumberFormatOptions['signDisplay']
+    hideZero?: boolean
+  } = {}
 ) => {
+  if (options.hideZero && amount == 0) {
+    return
+  }
+
   return `${new Intl.NumberFormat(locale, {
-    signDisplay: signDisplay,
+    signDisplay: options.signDisplay || 'exceptZero',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount)} ${currency}`
