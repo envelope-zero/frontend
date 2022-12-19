@@ -143,7 +143,9 @@ const EnvelopeMonth = ({
         ) : (
           <div onClick={() => editEnvelope(envelope.id)}>
             <span className="pr-1">
-              {formatMoney(envelope.allocation, budget.currency, 'auto')}
+              {formatMoney(envelope.allocation, budget.currency, {
+                signDisplay: 'auto',
+              })}
             </span>
             <button
               aria-label={t('editObject', {
@@ -163,14 +165,17 @@ const EnvelopeMonth = ({
           envelope.spent < 0 ? 'positive' : 'text-gray-500'
         }`}
       >
-        {formatMoney(envelope.spent, budget.currency, 'auto')}
+        {formatMoney(envelope.spent, budget.currency, {
+          signDisplay: 'auto',
+          hideZero: true,
+        })}
       </td>
       <td
         className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 py-4 text-sm text-right ${
           envelope.balance < 0 ? 'negative' : 'text-gray-500'
         }`}
       >
-        {formatMoney(envelope.balance, budget.currency)}
+        {formatMoney(envelope.balance, budget.currency, { hideZero: true })}
       </td>
     </tr>
   )

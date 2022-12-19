@@ -109,7 +109,7 @@ const TransactionsList = ({ budget, accounts }: Props) => {
                                     {formatMoney(
                                       transaction.amount,
                                       budget.currency,
-                                      'never'
+                                      { signDisplay: 'never' }
                                     )}
                                   </p>
                                 </div>
