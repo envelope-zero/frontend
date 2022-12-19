@@ -8,7 +8,7 @@ const formatMoney = (
     hideZero?: boolean
   } = {}
 ) => {
-  if (options.hideZero && amount == 0) {
+  if (options.hideZero && amount === 0) {
     return
   }
 
