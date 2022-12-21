@@ -201,14 +201,18 @@ const Dashboard = ({ budget }: DashboardProps) => {
                         <td></td>
                         <td
                           className={`whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
-                            budgetMonth.budgeted < 0
+                            budgetMonth.allocation < 0
                               ? 'negative'
                               : 'text-gray-500'
                           }`}
                         >
-                          {formatMoney(budgetMonth.budgeted, budget.currency, {
-                            signDisplay: 'auto',
-                          })}
+                          {formatMoney(
+                            budgetMonth.allocation,
+                            budget.currency,
+                            {
+                              signDisplay: 'auto',
+                            }
+                          )}
                         </td>
                         <td
                           className={`hidden md:table-cell whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
