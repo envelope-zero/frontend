@@ -31,22 +31,7 @@ const CategoryMonth = ({
   const { t }: Translation = useTranslation()
   const [showEnvelopes, setShowEnvelopes] = useState(true)
 
-  const { allocation, balance, spent } = category.envelopes.reduce(
-    (
-      acc: { allocation: number; balance: number; spent: number },
-      curr: EnvelopeMonthType
-    ) => {
-      acc.allocation += Number(curr.allocation)
-      acc.balance += Number(curr.balance)
-      acc.spent += Number(curr.spent)
-      return acc
-    },
-    {
-      allocation: 0,
-      balance: 0,
-      spent: 0,
-    }
-  )
+  const { spent, allocation, balance } = category
 
   return (
     <>
@@ -104,14 +89,18 @@ const CategoryMonth = ({
               allocation < 0 ? 'negative' : 'text-gray-500'
             }`}
           >
-            {formatMoney(allocation, budget.currency, { signDisplay: 'auto' })}
+            {formatMoney(allocation, budget.currency, {
+              signDisplay: 'auto',
+            })}
           </td>
           <td
             className={`hidden md:table-cell whitespace-nowrap px-1 pb-2 text-sm text-right ${
               spent < 0 ? 'positive' : 'text-gray-500'
             }`}
           >
-            {formatMoney(spent, budget.currency, { signDisplay: 'auto' })}
+            {formatMoney(spent, budget.currency, {
+              signDisplay: 'auto',
+            })}
           </td>
           <td
             className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 pb-2 text-sm text-right ${

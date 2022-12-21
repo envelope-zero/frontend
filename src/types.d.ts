@@ -83,6 +83,9 @@ export type Category = ApiObject & {
 
 export type CategoryMonth = Omit<Category, 'envelopes'> & {
   envelopes: EnvelopeMonth[]
+  spent: number
+  allocation: number
+  balance: number
 }
 
 export type UnpersistedEnvelope = {
@@ -108,7 +111,7 @@ export type EnvelopeMonth = Envelope & {
 export type BudgetMonth = ApiObject & {
   name: string
   month: string // e.g. '2022-09-01T00:00:00Z' for the whole month of September 2022
-  budgeted: number
+  allocation: number
   spent: number
   income: number
   available: number
