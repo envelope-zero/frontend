@@ -52,6 +52,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
     useState<UnpersistedAccount>()
   const [destinationAccountToCreate, setDestinationAccountToCreate] =
     useState<UnpersistedAccount>()
+  const [recentEnvelopes, setRecentEnvelopes] = useState([] as Envelope[])
 
   const isPersisted =
     typeof transactionId !== 'undefined' && transactionId !== 'new'
@@ -286,13 +287,26 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                   updateValue('sourceAccountId', undefined)
                 } else {
                   setSourceAccountToCreate(undefined)
-                  updateValue('sourceAccountId', account.id)
+                  let valuesToUpdate: UnpersistedTransaction = {
+                    sourceAccountId: account.id,
+                  }
+                  if (
+                    account.external &&
+                    !transaction.envelopeId &&
+                    account.recentEnvelopes.length
+                  ) {
+                    setRecentEnvelopes(account.recentEnvelopes)
+                    valuesToUpdate.envelopeId = account.recentEnvelopes[0].id
+                  }
+                  setTransaction({ ...transaction, ...valuesToUpdate })
                 }
               }}
               value={
                 (accounts.find(
                   account => account.id === transaction.sourceAccountId
-                ) as Account) || sourceAccountToCreate
+                ) as Account) ||
+                sourceAccountToCreate ||
+                ''
               }
               disabled={transaction.reconciled}
             />
@@ -309,19 +323,38 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                   updateValue('destinationAccountId', undefined)
                 } else {
                   setDestinationAccountToCreate(undefined)
-                  updateValue('destinationAccountId', account.id)
+                  let valuesToUpdate: UnpersistedTransaction = {
+                    destinationAccountId: account.id,
+                  }
+                  if (
+                    account.external &&
+                    !transaction.envelopeId &&
+                    account.recentEnvelopes.length
+                  ) {
+                    setRecentEnvelopes(account.recentEnvelopes)
+                    valuesToUpdate.envelopeId = account.recentEnvelopes[0].id
+                  }
+                  setTransaction({ ...transaction, ...valuesToUpdate })
                 }
               }}
               value={
                 (accounts.find(
                   account => account.id === transaction.destinationAccountId
-                ) as Account) || destinationAccountToCreate
+                ) as Account) ||
+                destinationAccountToCreate ||
+                ''
               }
               disabled={transaction.reconciled}
             />
 
             <Autocomplete<Envelope>
-              groups={groupedEnvelopes}
+              groups={[
+                {
+                  title: t('transactions.recentEnvelopes'),
+                  items: recentEnvelopes,
+                },
+                ...groupedEnvelopes,
+              ]}
               allowNewCreation={false}
               emptyOption={t('envelopes.none')}
               value={

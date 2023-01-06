@@ -1,25 +1,40 @@
-import { createBudget, createAccount, createEnvelope } from '../support/setup'
-import { Budget } from '../../src/types'
+import {
+  createBudget,
+  createAccount,
+  createEnvelope,
+  createTransaction,
+} from '../support/setup'
+import { Budget, Account, Envelope } from '../../src/types'
 import { dateFromIsoString } from '../../src/lib/dates'
 
 describe('Transaction: Creation', () => {
   beforeEach(() => {
     // prepare a budget with two internal & one external accounts
     cy.wrap(createBudget({ name: 'Transactions Test' })).then(
-      (budget: Budget) =>
-        cy
-          .wrap(
-            Cypress.Promise.all([
-              createAccount({ name: 'Bank account', external: false }, budget),
-              createAccount({ name: 'Cash', external: false }, budget),
-              createAccount({ name: 'Best Friend', external: true }, budget),
-              createEnvelope({ name: 'Only one' }, budget),
-            ])
-          )
-          .then(() =>
+      (budget: Budget) => {
+        cy.wrap(budget).as('budget')
+
+        cy.wrap(
+          Cypress.Promise.all([
+            createAccount({ name: 'Bank account', external: false }, budget),
+            createAccount({ name: 'Cash', external: false }, budget),
+            createAccount({ name: 'Best Friend', external: true }, budget),
+            createEnvelope({ name: 'Only one' }, budget),
+          ])
+        ).then(
+          ([bankAccount, cashAccount, externalAccount, envelope]: (
+            | Account
+            | Envelope
+          )[]) => {
+            cy.wrap(bankAccount).as('bankAccount')
+            cy.wrap(externalAccount).as('externalAccount')
+            cy.wrap(envelope).as('envelope')
+
             // select budget
             cy.visit('/').get('h3').contains('Transactions Test').click()
-          )
+          }
+        )
+      }
     )
   })
 
@@ -215,5 +230,29 @@ describe('Transaction: Creation', () => {
 
     cy.getInputFor('Note').should('have.value', '')
     cy.getInputFor('Amount').should('have.value', '')
+  })
+
+  // This needs to be a declared function to have a binding for 'this'
+  it('suggests an envelope when selecting an account', function () {
+    cy.wrap(
+      createTransaction(
+        {
+          sourceAccountId: this.bankAccount.id,
+          destinationAccountId: this.externalAccount.id,
+          envelopeId: this.envelope.id,
+          amount: '7',
+        },
+        this.budget
+      )
+    )
+
+    cy.visit('/transactions/new')
+
+    cy.getInputFor('Envelope').should('have.value', '')
+
+    cy.getInputFor('Destination').type('Best fri')
+    cy.contains('Best Friend').click()
+
+    cy.getInputFor('Envelope').should('have.value', 'Only one')
   })
 })
