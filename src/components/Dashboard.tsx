@@ -232,7 +232,9 @@ const Dashboard = ({ budget }: DashboardProps) => {
                               : 'text-gray-500'
                           }`}
                         >
-                          {formatMoney(budgetMonth.balance, budget.currency)}
+                          {formatMoney(budgetMonth.balance, budget.currency, {
+                            signDisplay: 'auto',
+                          })}
                         </td>
                       </tr>
                       {budgetMonth.categories.map(category => (

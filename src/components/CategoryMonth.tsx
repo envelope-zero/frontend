@@ -107,7 +107,7 @@ const CategoryMonth = ({
               Number(balance) < 0 ? 'negative' : 'text-gray-500'
             }`}
           >
-            {formatMoney(balance, budget.currency)}
+            {formatMoney(balance, budget.currency, { signDisplay: 'auto' })}
           </td>
         </tr>
       )}

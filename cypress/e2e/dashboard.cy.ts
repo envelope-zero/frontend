@@ -77,7 +77,7 @@ describe('Dashboard', () => {
     cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
     cy.getInputFor('Allocation for First Envelope').type('12.00')
     cy.get('[aria-label="Save"]').click()
-    cy.contains('+12.00')
+    cy.contains('12.00')
     cy.contains('-12.00 Available to budget')
 
     // close input without saving
@@ -105,7 +105,7 @@ describe('Dashboard', () => {
     cy.get('[aria-label*="Edit Allocation for Third Envelope"]').click()
     cy.getInputFor('Allocation for Third Envelope').type('30.00')
     cy.get('[aria-label="Save"]').click()
-    cy.contains('+30.00')
+    cy.contains('30.00')
     cy.contains('-20.00 Available to budget')
 
     // collapse category

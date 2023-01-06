@@ -175,7 +175,10 @@ const EnvelopeMonth = ({
           Number(envelope.balance) < 0 ? 'negative' : 'text-gray-500'
         }`}
       >
-        {formatMoney(envelope.balance, budget.currency, { hideZero: true })}
+        {formatMoney(envelope.balance, budget.currency, {
+          hideZero: true,
+          signDisplay: 'auto',
+        })}
       </td>
     </tr>
   )
