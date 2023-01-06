@@ -84,7 +84,7 @@ const EnvelopeMonth = ({
 
       <td
         className={`whitespace-nowrap px-1 py-4 text-sm text-right ${
-          allocatedAmount < 0 ? 'negative' : 'text-gray-500'
+          Number(allocatedAmount) < 0 ? 'negative' : 'text-gray-500'
         }`}
       >
         {editingEnvelope === envelope.id ? (
@@ -116,7 +116,7 @@ const EnvelopeMonth = ({
                   month: month,
                 })}
                 name={`${envelope.id}-${envelope.month}`}
-                onChange={e => setAllocatedAmount(Number(e.target.value))}
+                onChange={e => setAllocatedAmount(e.target.value)}
                 options={{ autoFocus: true, step: 'any' }}
                 hideLabel
                 compact
@@ -162,7 +162,7 @@ const EnvelopeMonth = ({
       </td>
       <td
         className={`hidden md:table-cell whitespace-nowrap px-1 py-4 text-sm text-right ${
-          envelope.spent < 0 ? 'positive' : 'text-gray-500'
+          Number(envelope.spent) < 0 ? 'positive' : 'text-gray-500'
         }`}
       >
         {formatMoney(envelope.spent, budget.currency, {
@@ -172,7 +172,7 @@ const EnvelopeMonth = ({
       </td>
       <td
         className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 py-4 text-sm text-right ${
-          envelope.balance < 0 ? 'negative' : 'text-gray-500'
+          Number(envelope.balance) < 0 ? 'negative' : 'text-gray-500'
         }`}
       >
         {formatMoney(envelope.balance, budget.currency, { hideZero: true })}
