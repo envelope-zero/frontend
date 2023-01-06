@@ -74,40 +74,33 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                   className="box col-span-1 relative hover:bg-gray-200 p-4 md:hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
                   <Link
-                    to={`/budgets/${budget.id}`}
-                    title={t('edit')}
-                    className="absolute right-4"
-                  >
-                    <PencilIcon className="icon-red" />
-                  </Link>
-                  <Link
                     to="/"
                     className="w-full text-center"
                     onClick={() => {
                       props.selectBudget(budget)
                     }}
                   >
-                    <h3
-                      className={
-                        typeof budget.name === 'undefined' ? 'italic' : ''
-                      }
-                    >
-                      {safeName(budget, 'budget')}
-                    </h3>
+                    <div className="flex justify-center">
+                      <h3
+                        className={
+                          typeof budget.name === 'undefined' ? 'italic' : ''
+                        }
+                      >
+                        {safeName(budget, 'budget')}
+                      </h3>
+                      <Link
+                        to={`/budgets/${budget.id}`}
+                        title={t('edit')}
+                        className="pl-2"
+                      >
+                        <PencilIcon className="icon-red" />
+                      </Link>
+                    </div>
                     {budget.note ? (
                       <p className="text-sm text-gray-500 whitespace-pre-line">
                         {budget.note}
                       </p>
                     ) : null}
-                    <div
-                      className={`${
-                        budget.balance >= 0 ? 'positive' : 'negative'
-                      } mt-2 text-lg`}
-                    >
-                      <strong>
-                        {formatMoney(budget.balance, budget.currency)}
-                      </strong>
-                    </div>
                     <div className="flex justify-end">
                       <Link
                         to="/transactions/new"
