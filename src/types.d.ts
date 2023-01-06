@@ -15,7 +15,7 @@ export type UnpersistedBudget = {
 
 export type Budget = UnpersistedBudget &
   ApiObject & {
-    balance: number
+    balance: string
   }
 
 export type UnpersistedAccount = {
@@ -23,7 +23,7 @@ export type UnpersistedAccount = {
   name?: string
   note?: string
   onBudget?: boolean
-  initialBalance?: number
+  initialBalance?: string
   initialBalanceDate?: string
 }
 
@@ -37,8 +37,8 @@ export type BudgetApiConnection = {
 
 export type Account = UnpersistedAccount &
   ApiObject & {
-    balance: number
-    reconciledBalance: number
+    balance: string
+    reconciledBalance: string
     budgetId: UUID
   }
 
@@ -53,7 +53,7 @@ export type ApiObject = {
 }
 
 export type UnpersistedTransaction = {
-  amount?: number
+  amount?: string
   date?: string
   reconciled?: boolean
   note?: string
@@ -64,7 +64,7 @@ export type UnpersistedTransaction = {
 
 export type Transaction = UnpersistedTransaction &
   ApiObject & {
-    amount: number
+    amount: string
     date: string
     destinationAccountId: UUID
     sourceAccountId: UUID
@@ -85,9 +85,9 @@ export type Category = ApiObject & {
 
 export type CategoryMonth = Omit<Category, 'envelopes'> & {
   envelopes: EnvelopeMonth[]
-  spent: number
-  allocation: number
-  balance: number
+  spent: string
+  allocation: string
+  balance: string
 }
 
 export type UnpersistedEnvelope = {
@@ -104,20 +104,20 @@ export type Envelope = UnpersistedEnvelope &
   }
 
 export type EnvelopeMonth = Envelope & {
-  allocation: number
-  balance: number
-  spent: number
+  allocation: string
+  balance: string
+  spent: string
   month: string
 }
 
 export type BudgetMonth = ApiObject & {
   name: string
   month: string // e.g. '2022-09-01T00:00:00Z' for the whole month of September 2022
-  allocation: number
-  spent: number
-  income: number
-  available: number
-  balance: number
+  allocation: string
+  spent: string
+  income: string
+  available: string
+  balance: string
   categories: CategoryMonth[]
 }
 

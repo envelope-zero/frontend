@@ -87,7 +87,9 @@ const OwnAccountsList = ({ budget }: Props) => {
                     ) : null}
                     <div
                       className={`${
-                        account.balance >= 0 ? 'text-lime-600' : 'text-red-600'
+                        Number(account.balance) >= 0
+                          ? 'text-lime-600'
+                          : 'text-red-600'
                       } mt-2 text-lg`}
                     >
                       <strong>

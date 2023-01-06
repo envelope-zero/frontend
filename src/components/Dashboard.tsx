@@ -153,7 +153,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
           <div className="box w-full mt-4 mb-2 py-2 text-center">
             <div
               className={`${
-                budgetMonth.available >= 0 ? 'positive' : 'negative'
+                Number(budgetMonth.available) >= 0 ? 'positive' : 'negative'
               } text-xl font-bold`}
             >
               {formatMoney(budgetMonth.available, budget.currency, {
@@ -201,7 +201,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                         <td></td>
                         <td
                           className={`whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
-                            budgetMonth.allocation < 0
+                            Number(budgetMonth.allocation) < 0
                               ? 'negative'
                               : 'text-gray-500'
                           }`}
@@ -216,7 +216,9 @@ const Dashboard = ({ budget }: DashboardProps) => {
                         </td>
                         <td
                           className={`hidden md:table-cell whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
-                            budgetMonth.spent < 0 ? 'positive' : 'text-gray-500'
+                            Number(budgetMonth.spent) < 0
+                              ? 'positive'
+                              : 'text-gray-500'
                           }`}
                         >
                           {formatMoney(budgetMonth.spent, budget.currency, {
@@ -225,7 +227,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                         </td>
                         <td
                           className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 pb-3 text-sm font-semibold text-right ${
-                            budgetMonth.balance < 0
+                            Number(budgetMonth.balance) < 0
                               ? 'negative'
                               : 'text-gray-500'
                           }`}

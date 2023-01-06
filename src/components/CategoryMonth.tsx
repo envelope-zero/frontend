@@ -86,7 +86,7 @@ const CategoryMonth = ({
           </td>
           <td
             className={`whitespace-nowrap px-1 pb-2 text-sm text-right ${
-              allocation < 0 ? 'negative' : 'text-gray-500'
+              Number(allocation) < 0 ? 'negative' : 'text-gray-500'
             }`}
           >
             {formatMoney(allocation, budget.currency, {
@@ -95,7 +95,7 @@ const CategoryMonth = ({
           </td>
           <td
             className={`hidden md:table-cell whitespace-nowrap px-1 pb-2 text-sm text-right ${
-              spent < 0 ? 'positive' : 'text-gray-500'
+              Number(spent) < 0 ? 'positive' : 'text-gray-500'
             }`}
           >
             {formatMoney(spent, budget.currency, {
@@ -104,7 +104,7 @@ const CategoryMonth = ({
           </td>
           <td
             className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 pb-2 text-sm text-right ${
-              balance < 0 ? 'negative' : 'text-gray-500'
+              Number(balance) < 0 ? 'negative' : 'text-gray-500'
             }`}
           >
             {formatMoney(balance, budget.currency)}
