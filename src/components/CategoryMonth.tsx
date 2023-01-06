@@ -95,12 +95,10 @@ const CategoryMonth = ({
           </td>
           <td
             className={`hidden md:table-cell whitespace-nowrap px-1 pb-2 text-sm text-right ${
-              Number(spent) < 0 ? 'positive' : 'text-gray-500'
+              Number(spent) > 0 ? 'positive' : 'text-gray-500'
             }`}
           >
-            {formatMoney(spent, budget.currency, {
-              signDisplay: 'auto',
-            })}
+            {formatMoney(spent, budget.currency)}
           </td>
           <td
             className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 pb-2 text-sm text-right ${

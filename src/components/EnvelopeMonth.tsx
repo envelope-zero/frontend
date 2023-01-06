@@ -162,11 +162,10 @@ const EnvelopeMonth = ({
       </td>
       <td
         className={`hidden md:table-cell whitespace-nowrap px-1 py-4 text-sm text-right ${
-          Number(envelope.spent) < 0 ? 'positive' : 'text-gray-500'
+          Number(envelope.spent) > 0 ? 'positive' : 'text-gray-500'
         }`}
       >
         {formatMoney(envelope.spent, budget.currency, {
-          signDisplay: 'auto',
           hideZero: true,
         })}
       </td>

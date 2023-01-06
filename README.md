@@ -25,6 +25,7 @@ Please note that below version 1.0.0, any new minor version for the backend migh
 | Backend version | Minimal frontend version |
 | --------------- | ------------------------ |
 | v0.22.0+        | 0.9.0                    |
+| v2.0.0+         | 1.9.0                    |
 
 ## Contributing
 
