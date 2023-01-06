@@ -40,6 +40,7 @@ export type Account = UnpersistedAccount &
     balance: string
     reconciledBalance: string
     budgetId: UUID
+    recentEnvelopes: Envelope[]
   }
 
 export type ApiResponse<T> = {

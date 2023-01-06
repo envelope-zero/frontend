@@ -81,7 +81,8 @@
     "destinationAccountId": "Destination",
     "sourceAccountId": "Source",
     "envelopeId": "Envelope",
-    "createResource": "Create \"{{name}}\""
+    "createResource": "Create \"{{name}}\"",
+    "recentEnvelopes": "Recent Envelopes"
   },
   "envelopes": {
     "envelopes": "Envelopes",
