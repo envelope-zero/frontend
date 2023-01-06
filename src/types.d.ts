@@ -23,6 +23,8 @@ export type UnpersistedAccount = {
   name?: string
   note?: string
   onBudget?: boolean
+  initialBalance?: number
+  initialBalanceDate?: string
 }
 
 export type BudgetApiConnection = {

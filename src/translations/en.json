@@ -57,7 +57,9 @@
     "offBudget": "Off Budget",
     "onBudget": "On Budget",
     "name": "Name",
-    "note": "Note"
+    "note": "Note",
+    "initialBalance": "Initial Balance",
+    "initialBalanceDate": "Date of Initial Balance"
   },
   "transactions": {
     "transactions": "Transactions",
