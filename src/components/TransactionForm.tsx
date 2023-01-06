@@ -21,6 +21,7 @@ import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
 import Autocomplete from './Autocomplete'
+import InputCurrency from './InputCurrency'
 
 const transactionApi = api('transactions')
 const accountApi = api('accounts')
@@ -254,11 +255,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                 step: 'any',
               }}
             >
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                <span className="text-gray-500 sm:text-sm">
-                  {budget.currency}
-                </span>
-              </div>
+              <InputCurrency currency={budget.currency} />
             </FormField>
 
             <FormField

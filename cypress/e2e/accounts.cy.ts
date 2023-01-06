@@ -14,6 +14,8 @@ describe('Account: Creation', () => {
 
     cy.getInputFor('Name').type('Cash Test Account')
     cy.getInputFor('On Budget').click({ force: true })
+    cy.getInputFor('Initial Balance').type('250.75')
+    cy.getInputFor('Date of Initial Balance').type('2023-03-17')
     cy.getInputFor('Note').type('Are we testing the wallet now?')
 
     cy.clickAndWait('Save')

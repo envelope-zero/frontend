@@ -12,6 +12,8 @@ import LatestTransactions from './LatestTransactions'
 import RemainingHeightContainer from './RemainingHeightContainer'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import submitOnMetaEnter from '../lib/submit-on-meta-enter'
+import InputCurrency from './InputCurrency'
+import { dateFromIsoString, dateToIsoString } from '../lib/dates'
 
 const accountApi = api('accounts')
 
@@ -114,37 +116,67 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
             />
 
             {type === 'internal' ? (
-              <div className="grid grid-cols-3 gap-4 items-center sm:border-t sm:border-gray-200 sm:pt-5">
-                <label htmlFor="onbudget">{t('accounts.onBudget')}</label>
-                <div
-                  className="mt-px pt-2 pr-2 col-span-2 flex sm:block justify-end"
-                  onClick={e => {
-                    e.preventDefault()
-                    updateValue('onBudget', !account.onBudget)
-                  }}
-                >
+              <>
+                <div className="grid grid-cols-3 gap-4 items-center sm:border-t sm:border-gray-200 sm:pt-5">
+                  <label htmlFor="onbudget">{t('accounts.onBudget')}</label>
                   <div
-                    className={`max-w-lg ${
-                      account.onBudget ? 'bg-lime-600' : 'bg-gray-200'
-                    } relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500`}
+                    className="mt-px pt-2 pr-2 col-span-2 flex sm:block justify-end"
+                    onClick={e => {
+                      e.preventDefault()
+                      updateValue('onBudget', !account.onBudget)
+                    }}
                   >
-                    <span
-                      aria-hidden="true"
-                      className={`${
-                        account?.onBudget ? 'translate-x-5' : 'translate-x-0'
-                      } inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 pointer-events-none`}
-                    ></span>
-                    <input
-                      type="checkbox"
-                      id="onBudget"
-                      name="onBudget"
-                      className="absolute inset-0 sr-only"
-                      defaultChecked={account?.onBudget}
-                      onChange={e => updateValue('onBudget', e.target.checked)}
-                    />
+                    <div
+                      className={`max-w-lg ${
+                        account.onBudget ? 'bg-lime-600' : 'bg-gray-200'
+                      } relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500`}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={`${
+                          account?.onBudget ? 'translate-x-5' : 'translate-x-0'
+                        } inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 pointer-events-none`}
+                      ></span>
+                      <input
+                        type="checkbox"
+                        id="onBudget"
+                        name="onBudget"
+                        className="absolute inset-0 sr-only"
+                        defaultChecked={account?.onBudget}
+                        onChange={e =>
+                          updateValue('onBudget', e.target.checked)
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+                <FormField
+                  type="number"
+                  name="initialBalance"
+                  label={t('accounts.initialBalance')}
+                  value={account.initialBalance || ''}
+                  onChange={e => updateValue('initialBalance', e.target.value)}
+                >
+                  <InputCurrency currency={budget.currency} />
+                </FormField>
+                <FormField
+                  type="date"
+                  name="initialBalanceDate"
+                  label={t('accounts.initialBalanceDate')}
+                  value={dateFromIsoString(
+                    account.initialBalanceDate || new Date().toISOString()
+                  )}
+                  onChange={e => {
+                    // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
+                    if (e.target.value) {
+                      updateValue(
+                        'initialBalanceDate',
+                        dateToIsoString(e.target.value)
+                      )
+                    }
+                  }}
+                />
+              </>
             ) : null}
 
             <div className="form-field--wrapper">
