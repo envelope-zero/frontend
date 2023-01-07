@@ -75,36 +75,40 @@ describe('Dashboard', () => {
 
     // set allocation
     cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
-    cy.getInputFor('Allocation for First Envelope').type('12.00')
-    cy.get('[aria-label="Save"]').click()
+    cy.getInputFor('Set to amount').type('12.00')
+    cy.get('button[type="submit"]').click()
+    cy.awaitLoading()
     cy.contains('12.00')
     cy.contains('-12.00 Available to budget')
 
     // close input without saving
     cy.get('[aria-label*="Edit Allocation for Second Envelope"]').click()
-    cy.getInputFor('Allocation for Second Envelope').type('7.00')
-    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
-    cy.get('label')
-      .contains('Allocation for Second Envelope')
-      .should('not.exist')
+    cy.getInputFor('Set to amount').type('7.00')
+    cy.get('body').click(0, 0) // click outside of the modal to close it without saving or explicitly canceling
+    cy.get('input').should('not.exist')
     cy.contains('7.00').should('not.exist')
 
     // reset input
-    cy.getInputFor('Allocation for First Envelope').type('42.00')
-    cy.get('[aria-label="Cancel"]').click()
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
+    cy.getInputFor('Add / Subtract amount').type('-42')
+    cy.getInputFor('Set to amount').should('have.value', '-30')
+    cy.get('button[type="reset"]').click()
     cy.get('input').should('not.exist')
-    cy.contains('42.00').should('not.exist')
+    cy.contains('-30.00').should('not.exist')
     cy.contains('12.00')
 
     // set allocation for second envelope
     cy.get('[aria-label*="Edit Allocation for Second Envelope"]').click()
-    cy.getInputFor('Allocation for Second Envelope').clear().type('-22.00')
-    cy.get('[aria-label="Save"]').click()
+    cy.getInputFor('Set to amount').clear().type('-22.00')
+    cy.get('button[type="submit"]').click()
+    cy.awaitLoading()
+    cy.get('input').should('not.exist')
 
     // set allocation for third envelope
     cy.get('[aria-label*="Edit Allocation for Third Envelope"]').click()
-    cy.getInputFor('Allocation for Third Envelope').type('30.00')
-    cy.get('[aria-label="Save"]').click()
+    cy.getInputFor('Set to amount').type('30.00')
+    cy.get('button[type="submit"]').click()
+    cy.awaitLoading()
     cy.contains('30.00')
     cy.contains('-20.00 Available to budget')
 
