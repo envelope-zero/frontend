@@ -3,6 +3,8 @@ import FormField from './FormField'
 import FormFields from './FormFields'
 import { Budget, Translation } from '../types'
 import InputCurrency from './InputCurrency'
+import bigDecimal from 'js-big-decimal'
+import { useState } from 'react'
 
 type Props = {
   budget: Budget
@@ -18,7 +20,9 @@ const AllocationInputs = ({
   updateNewAllocation,
 }: Props) => {
   const { t }: Translation = useTranslation()
-  const relativeAllocation = Number(newAllocation) - Number(savedAllocation)
+  const [relativeAllocation, setRelativeAllocation] = useState(
+    bigDecimal.subtract(newAllocation, savedAllocation)
+  )
 
   return (
     <FormFields>
@@ -29,6 +33,9 @@ const AllocationInputs = ({
         value={newAllocation || ''}
         onChange={e => {
           updateNewAllocation(e.target.value)
+          setRelativeAllocation(
+            bigDecimal.subtract(e.target.value, savedAllocation)
+          )
         }}
         compact
       >
@@ -39,11 +46,12 @@ const AllocationInputs = ({
         type="number"
         name="relativeAllocation"
         label={t('envelopeMonth.relativeAllocation')}
-        value={(relativeAllocation || '').toString()}
+        value={Number(relativeAllocation) ? relativeAllocation : ''}
         onChange={e => {
           updateNewAllocation(
-            `${Number(savedAllocation) + Number(e.target.value)}`
+            `${bigDecimal.add(savedAllocation, e.target.value)}`
           )
+          setRelativeAllocation(e.target.value)
         }}
         compact
       >
