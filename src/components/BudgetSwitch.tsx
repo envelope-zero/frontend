@@ -93,7 +93,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                         title={t('edit')}
                         className="pl-2"
                       >
-                        <PencilIcon className="icon-red" />
+                        <PencilIcon className="icon-red icon-sm" />
                       </Link>
                     </div>
                     {budget.note ? (
