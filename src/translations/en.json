@@ -8,6 +8,7 @@
   "untitled": "Untitled",
   "version": "Version",
   "seeAll": "See All",
+  "or": "or",
   "discardUnsavedChanges": "Discard unsaved changes?",
   "autocomplete": {
     "empty": "No results"
@@ -111,10 +112,15 @@
   "dashboard": {
     "available": "Available to budget",
     "allocation": "Allocation",
+    "allocationForEnvelope": "Allocation for {{envelope}}",
     "allocationForEnvelopeMonth": "Allocation for {{envelope}} ({{month}})",
     "balance": "Balance",
     "spent": "Spent",
     "selectMonth": "Select Month",
     "goToCurrentMonth": "Go to current month"
+  },
+  "envelopeMonth": {
+    "absoluteAllocation": "Set to amount",
+    "relativeAllocation": "Add / Subtract amount"
   }
 }
