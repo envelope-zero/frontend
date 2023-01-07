@@ -72,6 +72,10 @@ export type Transaction = UnpersistedTransaction &
     budgetId: UUID
   }
 
+export type GroupedTransactions = {
+  [key: string]: Transaction[]
+}
+
 export type UnpersistedCategory = {
   name?: string
   note?: string
