@@ -99,7 +99,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
         setError(err.message)
       })
       .then(() => setIsLoading(false))
-  }, [budget, transactionId, templateId])
+  }, [budget, transactionId, templateId]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateValue = (key: keyof Transaction, value: any) => {
     setTransaction({ ...transaction, [key]: value })

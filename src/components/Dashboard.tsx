@@ -74,7 +74,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
       .catch(err => {
         setError(err)
       })
-  }, [budget, activeMonth])
+  }, [budget, activeMonth]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadBudgetMonth().then(() => setIsLoading(false))
