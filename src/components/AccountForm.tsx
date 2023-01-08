@@ -14,6 +14,8 @@ import { TrashIcon } from '@heroicons/react/24/outline'
 import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 import InputCurrency from './InputCurrency'
 import { dateFromIsoString, dateToIsoString } from '../lib/dates'
+import ArchiveButton from './ArchiveButton'
+import Notification from './Notification'
 
 const accountApi = api('accounts')
 
@@ -100,6 +102,14 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
       </div>
 
       <Error error={error} />
+
+      {account.hidden ? (
+        <Notification
+          text={t('archivedObjectInformation', {
+            object: t('accounts.account'),
+          })}
+        />
+      ) : null}
 
       {isPersisted && typeof account === 'undefined' ? (
         <LoadingSpinner />
@@ -197,7 +207,19 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
           </FormFields>
 
           {isPersisted ? (
-            <div className="pt-5">
+            <div className="pt-5 space-y-3">
+              <ArchiveButton
+                resource={account as Account}
+                resourceTypeTranslation={t('accounts.account')}
+                apiConnection={accountApi}
+                onSuccess={data => {
+                  setAccount(data)
+                  if (error) {
+                    setError('')
+                  }
+                }}
+                onError={setError}
+              />
               <button
                 type="button"
                 onClick={() => {

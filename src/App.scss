@@ -48,6 +48,10 @@
     }
   }
 
+  .full-centered {
+    @apply flex items-center justify-center;
+  }
+
   .icon {
     @apply h-6 w-6 flex-shrink-0;
   }

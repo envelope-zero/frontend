@@ -25,6 +25,18 @@ export type UnpersistedAccount = {
   onBudget?: boolean
   initialBalance?: string
   initialBalanceDate?: string
+  hidden?: boolean
+}
+
+export type ApiConnection<T> = {
+  getAll: (parent: ApiObject, filterOptions: FilterOptions) => Promise<T>
+  get: (id: UUID, parent: ApiObject) => Promise<T>
+  update: (object: T, url?: string) => Promise<T>
+  create: (object: T, budget: Budget, url?: string) => Promise<T>
+  delete: (
+    object: ApiObject | undefined,
+    options: { url?: string }
+  ) => Promise<T>
 }
 
 export type BudgetApiConnection = {
@@ -130,4 +142,5 @@ export type FilterOptions = {
   account?: string
   envelope?: string
   external?: boolean
+  hidden?: boolean
 }

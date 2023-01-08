@@ -1,26 +1,34 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Budget, Translation, Account } from '../types'
-import { PlusIcon } from '@heroicons/react/24/outline'
+import { ArchiveBoxIcon, PlusIcon } from '@heroicons/react/24/outline'
 import LoadingSpinner from './LoadingSpinner'
 import AccountListSwitch from './AccountListSwitch'
 import Error from './Error'
 import { api } from '../lib/api/base'
 import { safeName } from '../lib/name-helper'
 import { PencilIcon } from '@heroicons/react/24/solid'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
 const accountApi = api('accounts')
 
 const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
   const { t }: Translation = useTranslation()
+  const [searchParams] = useSearchParams()
+  const hidden = searchParams.get('hidden') === 'true'
+
   const [isLoading, setIsLoading] = useState(true)
   const [accounts, setAccounts] = useState<{ [key: string]: Account[] }>({})
   const [error, setError] = useState('')
 
   useEffect(() => {
+    if (!isLoading) {
+      setIsLoading(true)
+    }
+
     accountApi
-      .getAll(budget, { external: true })
+      .getAll(budget, { external: true, hidden: Boolean(hidden) })
       .then(data => {
         const groupedAccounts = data.reduce(
           (object: { [letter: string]: Account[] }, account: Account) => {
@@ -43,7 +51,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
         setError(err.message)
         setIsLoading(false)
       })
-  }, [budget])
+  }, [budget, hidden]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -66,6 +74,21 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
         <LoadingSpinner />
       ) : (
         <>
+          {hidden ? (
+            <div className="flex align-center justify-start link-blue pb-2">
+              <Link to="/external-accounts?hidden=false">
+                <ChevronLeftIcon className="icon inline relative bottom-0.5" />
+                {t('back')}
+              </Link>
+            </div>
+          ) : (
+            <div className="flex align-center justify-end link-blue pb-2">
+              <Link to="/external-accounts?hidden=true">
+                {t('showArchived')}
+                <ChevronRightIcon className="icon inline relative bottom-0.5" />
+              </Link>
+            </div>
+          )}
           {Object.keys(accounts).length ? (
             <nav className="h-full overflow-y-auto" aria-label="Directory">
               {Object.keys(accounts)
@@ -92,7 +115,15 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                                         : ''
                                     } text-sm font-medium text-gray-900 flex justify-between`}
                                   >
-                                    {safeName(account, 'account')}
+                                    <span className="full-centered">
+                                      {account.hidden ? (
+                                        <ArchiveBoxIcon
+                                          className="icon-sm inline link-blue mr-2 stroke-2"
+                                          title={t('archived')}
+                                        />
+                                      ) : null}
+                                      {safeName(account, 'account')}
+                                    </span>
                                     <PencilIcon className="icon-red" />
                                   </div>
                                   <p className="text-sm text-gray-500 truncate">
