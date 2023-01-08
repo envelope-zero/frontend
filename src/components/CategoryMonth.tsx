@@ -5,7 +5,6 @@ import {
   Budget,
   UUID,
   Translation,
-  EnvelopeMonth as EnvelopeMonthType,
 } from '../types'
 import EnvelopeMonth from './EnvelopeMonth'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
