@@ -34,6 +34,7 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
   const newAccount = { onBudget: true }
 
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
   const [account, setAccount] = useState<UnpersistedAccount | Account>({
     ...newAccount,
@@ -44,17 +45,22 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
 
   useEffect(() => {
     if (isPersisted) {
+      if (!isLoading) {
+        setIsLoading(true)
+      }
       accountApi
         .get(accountId, budget)
         .then(data => {
           setAccount(data)
           setError('')
+          setIsLoading(false)
         })
         .catch(err => {
           setError(err.message)
+          setIsLoading(false)
         })
     }
-  }, [accountId, budget, isPersisted])
+  }, [accountId, budget, isPersisted]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateValue = (key: keyof Account, value: any) => {
     setHasUnsavedChanges(true)
@@ -111,7 +117,7 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
         />
       ) : null}
 
-      {isPersisted && typeof account === 'undefined' ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <>
