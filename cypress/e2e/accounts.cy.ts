@@ -1,9 +1,10 @@
-import { createBudget } from '../support/setup'
+import { createAccount, createBudget } from '../support/setup'
 
 describe('Account: Creation', () => {
   beforeEach(() => {
     // prepare & select a budget
-    cy.wrap(createBudget({ name: 'Account Test' })).then(() => {
+    cy.wrap(createBudget({ name: 'Account Test' })).then(budget => {
+      cy.wrap(budget).as('budget')
       cy.visit('/').get('h3').contains('Account Test').click()
     })
   })
@@ -39,5 +40,31 @@ describe('Account: Creation', () => {
 
     cy.contains('Own Accounts').click()
     cy.contains('Cash Test Account').should('not.exist')
+  })
+
+  it('can archive an account', function () {
+    cy.wrap(
+      Cypress.Promise.all([
+        createAccount({ name: 'New account', external: false }, this.budget),
+        createAccount({ name: 'Old account', external: false }, this.budget),
+      ])
+    )
+
+    cy.contains('Accounts').click()
+    cy.awaitLoading()
+    cy.contains('Old account').click()
+    cy.awaitLoading()
+    cy.contains('Archive Account').click()
+    cy.contains('This Account is archived')
+
+    cy.go('back')
+    cy.awaitLoading()
+    cy.contains('New account')
+    cy.contains('Old account').should('not.exist')
+
+    cy.contains('Show Archived').click()
+    cy.awaitLoading()
+    cy.contains('New account').should('not.exist')
+    cy.contains('Old account')
   })
 })
