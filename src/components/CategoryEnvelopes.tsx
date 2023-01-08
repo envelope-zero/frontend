@@ -9,8 +9,15 @@ import {
   ChevronUpIcon,
 } from '@heroicons/react/20/solid'
 import { PencilIcon } from '@heroicons/react/24/solid'
+import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
 
-const CategoryEnvelopes = ({ category }: { category: Category }) => {
+const CategoryEnvelopes = ({
+  category,
+  hidden,
+}: {
+  category: Category
+  hidden: Boolean
+}) => {
   const { t }: Translation = useTranslation()
 
   const [showEnvelopes, setShowEnvelopes] = useState(true)
@@ -32,6 +39,12 @@ const CategoryEnvelopes = ({ category }: { category: Category }) => {
         <div className="grow">
           <span className={!category.name ? 'italic' : ''}>
             {safeName(category, 'category', t('categories.category'))}
+            {category.hidden ? (
+              <ArchiveBoxIcon
+                className="icon-sm inline link-blue ml-2 stroke-2"
+                title={t('archived')}
+              />
+            ) : null}
           </span>
 
           {showEnvelopes && category.note ? (
@@ -48,18 +61,29 @@ const CategoryEnvelopes = ({ category }: { category: Category }) => {
 
       {showEnvelopes ? (
         <div className="divide-y space-y-2 ml-4">
-          {category.envelopes.map(envelope => (
-            <Link
-              to={envelope.id}
-              key={envelope.id}
-              className="flex justify-between pt-2 first:pt-0"
-            >
-              <span className={!envelope.name ? 'italic' : ''}>
-                {safeName(envelope, 'envelope')}
-              </span>
-              <ChevronRightIcon className="h-6 mr-3" />
-            </Link>
-          ))}
+          {category.envelopes
+            .filter(
+              envelope =>
+                (hidden && category.hidden) || envelope.hidden === hidden
+            )
+            .map(envelope => (
+              <Link
+                to={envelope.id}
+                key={envelope.id}
+                className="flex justify-between pt-2 first:pt-0"
+              >
+                <span className={!envelope.name ? 'italic' : ''}>
+                  {safeName(envelope, 'envelope')}
+                  {envelope.hidden ? (
+                    <ArchiveBoxIcon
+                      className="icon-sm inline link-blue ml-2 stroke-2"
+                      title={t('archived')}
+                    />
+                  ) : null}
+                </span>
+                <ChevronRightIcon className="h-6 mr-3" />
+              </Link>
+            ))}
         </div>
       ) : null}
     </>

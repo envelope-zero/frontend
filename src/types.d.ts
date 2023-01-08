@@ -91,14 +91,16 @@ export type GroupedTransactions = {
 export type UnpersistedCategory = {
   name?: string
   note?: string
+  hidden?: boolean
 }
 
-export type Category = ApiObject & {
-  budgetId: UUID
-  name: string
-  note: string
-  envelopes: Envelope[]
-}
+export type Category = UnpersistedCategory &
+  ApiObject & {
+    budgetId: UUID
+    name: string
+    note: string
+    envelopes: Envelope[]
+  }
 
 export type CategoryMonth = Omit<Category, 'envelopes'> & {
   envelopes: EnvelopeMonth[]
@@ -111,6 +113,7 @@ export type UnpersistedEnvelope = {
   name?: string
   note?: string
   categoryId?: UUID
+  hidden?: boolean
 }
 
 export type Envelope = UnpersistedEnvelope &
