@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { PlusIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import { Translation, Category, Budget } from '../types'
+import { Link, useSearchParams } from 'react-router-dom'
+import { Translation, Category, Budget, FilterOptions } from '../types'
 import { api } from '../lib/api/base'
 import Error from './Error'
 import CategoryEnvelopes from './CategoryEnvelopes'
@@ -13,13 +14,20 @@ type Props = { budget: Budget }
 
 const EnvelopesList = ({ budget }: Props) => {
   const { t }: Translation = useTranslation()
+  const [searchParams] = useSearchParams()
+  const hidden = searchParams.get('hidden') === 'true'
 
   const [error, setError] = useState('')
   const [categories, setCategories] = useState<Category[]>([])
 
   useEffect(() => {
+    const filter: FilterOptions = {}
+    if (!hidden) {
+      filter.hidden = false
+    }
+
     categoryApi
-      .getAll(budget)
+      .getAll(budget, filter)
       .then(data => {
         setCategories(data)
         setError('')
@@ -27,7 +35,7 @@ const EnvelopesList = ({ budget }: Props) => {
       .catch(err => {
         setError(err.message)
       })
-  }, [budget])
+  }, [budget, hidden])
 
   return (
     <>
@@ -42,11 +50,37 @@ const EnvelopesList = ({ budget }: Props) => {
 
       <Error error={error} />
 
+      {hidden ? (
+        <div className="flex align-center justify-start link-blue pb-2">
+          <Link to="/envelopes?hidden=false">
+            <ChevronLeftIcon className="icon inline relative bottom-0.5" />
+            {t('back')}
+          </Link>
+        </div>
+      ) : (
+        <div className="flex align-center justify-end link-blue pb-2">
+          <Link to="/envelopes?hidden=true">
+            {t('showArchived')}
+            <ChevronRightIcon className="icon inline relative bottom-0.5" />
+          </Link>
+        </div>
+      )}
+
       {categories.length ? (
         <div className="space-y-4">
-          {categories.map(category => (
-            <CategoryEnvelopes category={category} key={category.id} />
-          ))}
+          {categories
+            .filter(
+              category =>
+                category.hidden === hidden ||
+                category.envelopes.some(envelope => envelope.hidden === hidden)
+            )
+            .map(category => (
+              <CategoryEnvelopes
+                category={category}
+                key={category.id}
+                hidden={hidden}
+              />
+            ))}
         </div>
       ) : (
         <>

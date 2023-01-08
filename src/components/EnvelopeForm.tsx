@@ -22,6 +22,8 @@ import FormFields from './FormFields'
 import LatestTransactions from './LatestTransactions'
 import LoadingSpinner from './LoadingSpinner'
 import RemainingHeightContainer from './RemainingHeightContainer'
+import ArchiveButton from './ArchiveButton'
+import Notification from './Notification'
 
 const envelopeApi = api('envelopes')
 const categoryApi = api('categories')
@@ -117,6 +119,13 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
         <LoadingSpinner />
       ) : (
         <>
+          {envelope.hidden ? (
+            <Notification
+              text={t('archivedObjectInformation', {
+                object: t('envelopes.envelope'),
+              })}
+            />
+          ) : null}
           <FormFields>
             <FormField
               type="text"
@@ -173,7 +182,19 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
           {/* TODO: balance per month */}
 
           {isPersisted ? (
-            <div className="pt-5">
+            <div className="pt-5 space-y-3">
+              <ArchiveButton
+                resource={envelope as Envelope}
+                resourceTypeTranslation={t('envelopes.envelope')}
+                apiConnection={envelopeApi}
+                onSuccess={data => {
+                  setEnvelope(data)
+                  if (error) {
+                    setError('')
+                  }
+                }}
+                onError={setError}
+              />
               <button
                 type="button"
                 onClick={() => {

@@ -7,6 +7,8 @@ import Error from './Error'
 import LoadingSpinner from './LoadingSpinner'
 import FormFields from './FormFields'
 import FormField from './FormField'
+import ArchiveButton from './ArchiveButton'
+import Notification from './Notification'
 import { safeName } from '../lib/name-helper'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { TrashIcon } from '@heroicons/react/24/outline'
@@ -79,6 +81,13 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
         <LoadingSpinner />
       ) : (
         <>
+          {category.hidden ? (
+            <Notification
+              text={t('archivedObjectInformation', {
+                object: t('categories.category'),
+              })}
+            />
+          ) : null}
           <FormFields>
             <FormField
               type="text"
@@ -106,7 +115,19 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
             </div>
           </FormFields>
 
-          <div className="pt-5">
+          <div className="pt-5 space-y-3">
+            <ArchiveButton
+              resource={category as Category}
+              resourceTypeTranslation={t('categories.category')}
+              apiConnection={categoryApi}
+              onSuccess={data => {
+                setCategory(data)
+                if (error) {
+                  setError('')
+                }
+              }}
+              onError={setError}
+            />
             <button
               type="button"
               onClick={() => {
