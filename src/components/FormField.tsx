@@ -20,34 +20,40 @@ const FormField = ({
   children,
   hideLabel,
   compact,
-}: Props) => (
-  <div className={`form-field--wrapper ${compact ? 'border-0' : ''}`}>
-    <label
-      htmlFor={name}
-      className={`form-field--label ${hideLabel ? 'sr-only' : ''}`}
-    >
-      {label}
-    </label>
+}: Props) => {
+  if (type === 'number' && typeof options?.step === 'undefined') {
+    options = { ...options, step: 'any' }
+  }
 
-    <div
-      className={`input--outer ${
-        hideLabel ? 'sm:col-span-3' : 'sm:col-span-2'
-      }`}
-    >
-      <div className="input--inner">
-        <input
-          className="input"
-          type={type}
-          name={name}
-          id={name}
-          value={value}
-          onChange={onChange}
-          {...options}
-        />
-        {children}
+  return (
+    <div className={`form-field--wrapper ${compact ? 'border-0' : ''}`}>
+      <label
+        htmlFor={name}
+        className={`form-field--label ${hideLabel ? 'sr-only' : ''}`}
+      >
+        {label}
+      </label>
+
+      <div
+        className={`input--outer ${
+          hideLabel ? 'sm:col-span-3' : 'sm:col-span-2'
+        }`}
+      >
+        <div className="input--inner">
+          <input
+            className="input"
+            type={type}
+            name={name}
+            id={name}
+            value={value}
+            onChange={onChange}
+            {...options}
+          />
+          {children}
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default FormField
