@@ -2,8 +2,9 @@ import { UUID } from '../types'
 import { useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
-import { Translation } from '../types'
+import { Translation, ArchivableResource } from '../types'
 import { useTranslation } from 'react-i18next'
+import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
 
 function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ')
@@ -21,7 +22,7 @@ type Props<T> = {
   itemId: (item: T) => UUID
 }
 
-const Autocomplete = <T,>({
+const Autocomplete = <T extends ArchivableResource>({
   groups,
   label,
   value,
@@ -35,13 +36,24 @@ const Autocomplete = <T,>({
   const { t }: Translation = useTranslation()
   const [query, setQuery] = useState('')
 
+  const isArchived = (item: T) => {
+    return item.hidden
+  }
+
   const filteredGroups = (
     query === ''
-      ? groups
+      ? groups.map(group => ({
+          ...group,
+          items: group.items.filter(item => !isArchived(item)),
+        }))
       : groups.map(group => ({
           title: group.title,
           items: group.items.filter(item => {
-            return itemLabel(item).toLowerCase().includes(query.toLowerCase())
+            if (isArchived(item)) {
+              return itemLabel(item).toLowerCase() === query.toLowerCase()
+            } else {
+              return itemLabel(item).toLowerCase().includes(query.toLowerCase())
+            }
           }),
         }))
   ).filter(group => group.items.length)
@@ -112,6 +124,12 @@ const Autocomplete = <T,>({
                               selected && 'font-semibold'
                             )}
                           >
+                            {isArchived(item) ? (
+                              <ArchiveBoxIcon
+                                className="icon-sm inline link-blue mr-2 stroke-2"
+                                title={t('archived')}
+                              />
+                            ) : null}
                             {itemLabel(item)}
                           </span>
                         </div>

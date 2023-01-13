@@ -1,14 +1,6 @@
 import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
 import { useTranslation } from 'react-i18next'
-import {
-  Account,
-  ApiConnection,
-  Translation,
-  Category,
-  Envelope,
-} from '../types'
-
-type ArchivableResource = Account | Category | Envelope
+import { ArchivableResource, ApiConnection, Translation } from '../types'
 
 type Props = {
   resource: ArchivableResource
