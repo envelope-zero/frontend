@@ -64,18 +64,20 @@ const CategoryMonth = ({
         </th>
       </tr>
       {showEnvelopes ? (
-        category.envelopes.map((envelope, i) => (
-          <EnvelopeMonth
-            key={envelope.id}
-            envelope={envelope}
-            i={i}
-            budget={budget}
-            editingEnvelope={editingEnvelope}
-            editEnvelope={editEnvelope}
-            reloadBudgetMonth={reloadBudgetMonth}
-            setError={setError}
-          ></EnvelopeMonth>
-        ))
+        category.envelopes
+          .filter(envelope => !envelope.hidden)
+          .map((envelope, i) => (
+            <EnvelopeMonth
+              key={envelope.id}
+              envelope={envelope}
+              i={i}
+              budget={budget}
+              editingEnvelope={editingEnvelope}
+              editEnvelope={editEnvelope}
+              reloadBudgetMonth={reloadBudgetMonth}
+              setError={setError}
+            ></EnvelopeMonth>
+          ))
       ) : (
         <tr className="bg-gray-50 cursor-pointer">
           <td className="whitespace-nowrap pb-2 pl-10 pr-1 text-sm font-medium text-gray-500 sm:pl-12 overflow-hidden text-ellipsis italic">
