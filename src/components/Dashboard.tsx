@@ -235,20 +235,28 @@ const Dashboard = ({ budget }: DashboardProps) => {
                           })}
                         </td>
                       </tr>
-                      {budgetMonth.categories.map(category => (
-                        <CategoryMonth
-                          key={category.id}
-                          category={category}
-                          budget={budget}
-                          editingEnvelope={editingEnvelope}
-                          editEnvelope={setEditingEnvelope}
-                          reloadBudgetMonth={() => {
-                            setIsLoading(true)
-                            loadBudgetMonth().then(() => setIsLoading(false))
-                          }}
-                          setError={setError}
-                        />
-                      ))}
+                      {budgetMonth.categories
+                        .filter(
+                          category =>
+                            !category.hidden ||
+                            category.envelopes.some(
+                              envelope => !envelope.hidden
+                            )
+                        )
+                        .map(category => (
+                          <CategoryMonth
+                            key={category.id}
+                            category={category}
+                            budget={budget}
+                            editingEnvelope={editingEnvelope}
+                            editEnvelope={setEditingEnvelope}
+                            reloadBudgetMonth={() => {
+                              setIsLoading(true)
+                              loadBudgetMonth().then(() => setIsLoading(false))
+                            }}
+                            setError={setError}
+                          />
+                        ))}
                     </tbody>
                   </table>
                 </div>
