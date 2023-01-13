@@ -19,13 +19,20 @@ describe('Transaction: Creation', () => {
             createAccount({ name: 'Bank account', external: false }, budget),
             createAccount({ name: 'Cash', external: false }, budget),
             createAccount({ name: 'Best Friend', external: true }, budget),
+            createAccount(
+              { name: 'Archived Account', external: true, hidden: true },
+              budget
+            ),
             createEnvelope({ name: 'Only one' }, budget),
           ])
         ).then(
-          ([bankAccount, cashAccount, externalAccount, envelope]: (
-            | Account
-            | Envelope
-          )[]) => {
+          ([
+            bankAccount,
+            cashAccount,
+            externalAccount,
+            archivedAccount,
+            envelope,
+          ]: (Account | Envelope)[]) => {
             cy.wrap(bankAccount).as('bankAccount')
             cy.wrap(externalAccount).as('externalAccount')
             cy.wrap(envelope).as('envelope')
@@ -171,6 +178,17 @@ describe('Transaction: Creation', () => {
     cy.get('h2').contains('Transactions')
     cy.contains('Bank account → New Best Friend')
     cy.contains('-13.00')
+  })
+
+  it('can select an archived account by entering its full name', () => {
+    cy.get('nav').contains('Transactions').click()
+    cy.getByTitle('Create Transaction').click()
+    cy.awaitLoading()
+
+    cy.getInputFor('Destination').type('Archived Acc')
+    cy.contains('Archived Account').should('not.exist')
+    cy.getInputFor('Destination').clear().type('Archived Account')
+    cy.contains('Archived Account')
   })
 
   it('can duplicate an existing transaction', () => {

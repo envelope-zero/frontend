@@ -141,6 +141,8 @@ export type BudgetMonth = ApiObject & {
   categories: CategoryMonth[]
 }
 
+export type ArchivableResource = Account | Category | Envelope
+
 export type FilterOptions = {
   account?: string
   envelope?: string
