@@ -15,6 +15,7 @@ import { groupBy } from '../lib/array'
 import { api } from '../lib/api/base'
 import LoadingSpinner from './LoadingSpinner'
 import GroupedTransactions from './GroupedTransactions'
+import SearchBar from './SearchBar'
 
 const transactionApi = api('transactions')
 
@@ -25,7 +26,7 @@ type Props = {
 
 const TransactionsList = ({ budget, accounts }: Props) => {
   const { t }: Translation = useTranslation()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [isLoading, setIsLoading] = useState(true)
   const [groupedTransactions, setGroupedTransactions] =
@@ -35,6 +36,11 @@ const TransactionsList = ({ budget, accounts }: Props) => {
     const filterOptions: FilterOptions = {
       account: searchParams.get('account') || undefined,
       envelope: searchParams.get('envelope') || undefined,
+      note: searchParams.get('search') || undefined,
+    }
+
+    if (!isLoading) {
+      setIsLoading(true)
     }
 
     transactionApi.getAll(budget, filterOptions).then(transactions => {
@@ -43,7 +49,7 @@ const TransactionsList = ({ budget, accounts }: Props) => {
       )
       setIsLoading(false)
     })
-  }, [budget, searchParams])
+  }, [budget, searchParams]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -57,18 +63,26 @@ const TransactionsList = ({ budget, accounts }: Props) => {
         </div>
       </div>
 
-      {/* TODO: search bar */}
-
       {isLoading ? (
         <LoadingSpinner />
       ) : Object.keys(groupedTransactions).length ? (
-        <div className="bg-white sm:shadow overflow-hidden sm:rounded-md">
-          <GroupedTransactions
-            budget={budget}
-            accounts={accounts}
-            transactions={groupedTransactions}
+        <>
+          <SearchBar
+            resourceLabel={t('transactions.transactions')}
+            value={searchParams.get('search')}
+            onSubmit={search => {
+              searchParams.set('search', search)
+              setSearchParams(searchParams)
+            }}
           />
-        </div>
+          <div className="bg-white sm:shadow overflow-hidden sm:rounded-md">
+            <GroupedTransactions
+              budget={budget}
+              accounts={accounts}
+              transactions={groupedTransactions}
+            />
+          </div>
+        </>
       ) : (
         t('transactions.emptyList')
       )}
