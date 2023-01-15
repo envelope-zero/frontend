@@ -7,7 +7,7 @@ import {
 import { Budget, Account, Envelope } from '../../src/types'
 import { dateFromIsoString } from '../../src/lib/dates'
 
-describe('Transaction: Creation', () => {
+describe('Transactions', () => {
   beforeEach(() => {
     // prepare a budget with two internal & one external accounts
     cy.wrap(createBudget({ name: 'Transactions Test' })).then(
@@ -272,5 +272,35 @@ describe('Transaction: Creation', () => {
     cy.contains('Best Friend').click()
 
     cy.getInputFor('Envelope').should('have.value', 'Only one')
+  })
+
+  it('can search for transactions by their note', function () {
+    const transactionData = {
+      sourceAccountId: this.bankAccount.id,
+      destinationAccountId: this.externalAccount.id,
+      envelopeId: this.envelope.id,
+      amount: '7',
+    }
+
+    cy.wrap(
+      Cypress.Promise.all([
+        createTransaction({ ...transactionData, note: 'food' }, this.budget),
+        createTransaction({ ...transactionData, note: 'foo' }, this.budget),
+        createTransaction({ ...transactionData, note: 'other' }, this.budget),
+      ])
+    )
+
+    cy.visit('/transactions')
+    cy.awaitLoading()
+
+    cy.contains('food')
+    cy.contains('foo')
+    cy.contains('other')
+
+    cy.getInputFor('Search Transactions').type('foo{enter}')
+
+    cy.contains('food')
+    cy.contains('foo')
+    cy.contains('other').should('not.exist')
   })
 })

@@ -148,4 +148,5 @@ export type FilterOptions = {
   envelope?: string
   external?: boolean
   hidden?: boolean
+  note?: string
 }

@@ -16,6 +16,7 @@
   "unarchiveObject": "Unarchive {{object}}",
   "archivedObjectInformation": "This {{object}} is archived",
   "showArchived": "Show Archived",
+  "searchResource": "Search {{resource}}",
   "autocomplete": {
     "empty": "No results"
   },
