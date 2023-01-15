@@ -15,6 +15,7 @@ import {
   UnpersistedAccount,
   Envelope,
   Category,
+  GroupedEnvelopes,
 } from '../types'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
@@ -42,9 +43,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
 
-  const [groupedEnvelopes, setGroupedEnvelopes] = useState<
-    { title?: string; items: Envelope[] }[]
-  >([])
+  const [groupedEnvelopes, setGroupedEnvelopes] = useState<GroupedEnvelopes>([])
   const [transaction, setTransaction] = useState<
     UnpersistedTransaction | Transaction
   >({})

@@ -20,6 +20,16 @@ type Props<T> = {
   onChange: (selectedItem: T) => void
   itemLabel: (item: T) => string
   itemId: (item: T) => UUID
+  wrapperClass?: string
+  labelClass?: string
+  inputWrapperClass?: string
+}
+
+const valueOrDefault = (customValue: any, defaultValue: any) => {
+  if (typeof customValue === 'undefined') {
+    return defaultValue
+  }
+  return customValue
 }
 
 const Autocomplete = <T extends ArchivableResource>({
@@ -32,6 +42,9 @@ const Autocomplete = <T extends ArchivableResource>({
   disabled,
   allowNewCreation,
   emptyOption,
+  wrapperClass,
+  labelClass,
+  inputWrapperClass,
 }: Props<T>) => {
   const { t }: Translation = useTranslation()
   const [query, setQuery] = useState('')
@@ -60,9 +73,13 @@ const Autocomplete = <T extends ArchivableResource>({
 
   return (
     <Combobox as="div" value={value} onChange={onChange} disabled={disabled}>
-      <div className="form-field--wrapper">
-        <Combobox.Label className="form-field--label">{label}</Combobox.Label>
-        <div className="input--outer">
+      <div className={valueOrDefault(wrapperClass, 'form-field--wrapper')}>
+        <Combobox.Label
+          className={valueOrDefault(labelClass, 'form-field--label')}
+        >
+          {label}
+        </Combobox.Label>
+        <div className={valueOrDefault(inputWrapperClass, 'input--outer')}>
           <div className="input--inner">
             <Combobox.Input
               className="input"
