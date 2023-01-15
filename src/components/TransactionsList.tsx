@@ -63,26 +63,25 @@ const TransactionsList = ({ budget, accounts }: Props) => {
         </div>
       </div>
 
+      <SearchBar
+        resourceLabel={t('transactions.transactions')}
+        value={searchParams.get('search')}
+        onSubmit={search => {
+          searchParams.set('search', search)
+          setSearchParams(searchParams)
+        }}
+      />
+
       {isLoading ? (
         <LoadingSpinner />
       ) : Object.keys(groupedTransactions).length ? (
-        <>
-          <SearchBar
-            resourceLabel={t('transactions.transactions')}
-            value={searchParams.get('search')}
-            onSubmit={search => {
-              searchParams.set('search', search)
-              setSearchParams(searchParams)
-            }}
+        <div className="bg-white sm:shadow overflow-hidden sm:rounded-md">
+          <GroupedTransactions
+            budget={budget}
+            accounts={accounts}
+            transactions={groupedTransactions}
           />
-          <div className="bg-white sm:shadow overflow-hidden sm:rounded-md">
-            <GroupedTransactions
-              budget={budget}
-              accounts={accounts}
-              transactions={groupedTransactions}
-            />
-          </div>
-        </>
+        </div>
       ) : (
         t('transactions.emptyList')
       )}
