@@ -79,7 +79,12 @@ const Autocomplete = <T extends ArchivableResource>({
         >
           {label}
         </Combobox.Label>
-        <div className={valueOrDefault(inputWrapperClass, 'input--outer')}>
+        <div
+          className={`${valueOrDefault(
+            inputWrapperClass,
+            'input--outer'
+          )}  max-w-lg`}
+        >
           <div className="input--inner">
             <Combobox.Input
               className="input"
@@ -96,7 +101,7 @@ const Autocomplete = <T extends ArchivableResource>({
             </Combobox.Button>
           </div>
 
-          <Combobox.Options className="absolute z-10 mt-1 max-h-60 max-w-lg w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {emptyOption && query.length === 0 ? (
               <Combobox.Option
                 value={null}
