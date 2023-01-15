@@ -34,6 +34,7 @@ describe('Transactions', () => {
             envelope,
           ]: (Account | Envelope)[]) => {
             cy.wrap(bankAccount).as('bankAccount')
+            cy.wrap(cashAccount).as('cashAccount')
             cy.wrap(externalAccount).as('externalAccount')
             cy.wrap(envelope).as('envelope')
 
@@ -302,5 +303,85 @@ describe('Transactions', () => {
     cy.contains('food')
     cy.contains('foo')
     cy.contains('other').should('not.exist')
+  })
+
+  it('can filter transactions', function () {
+    const transactionData = {
+      sourceAccountId: this.bankAccount.id,
+      destinationAccountId: this.externalAccount.id,
+      envelopeId: this.envelope.id,
+      amount: '21',
+      date: new Date('2022-12-26').toISOString(),
+    }
+
+    cy.wrap(
+      Cypress.Promise.all([
+        createTransaction(
+          { ...transactionData, note: 'Everything Correct' },
+          this.budget
+        ),
+        createTransaction(
+          {
+            ...transactionData,
+            note: 'Wrong Account',
+            sourceAccountId: this.cashAccount.id,
+          },
+          this.budget
+        ),
+        createTransaction(
+          { ...transactionData, note: 'Amount too large', amount: '200' },
+          this.budget
+        ),
+        createTransaction(
+          { ...transactionData, note: 'Amount too small', amount: '4' },
+          this.budget
+        ),
+        createTransaction(
+          {
+            ...transactionData,
+            note: 'Date too early',
+            date: new Date('2022-12-21').toISOString(),
+          },
+          this.budget
+        ),
+        createTransaction(
+          {
+            ...transactionData,
+            note: 'Date too late',
+            date: new Date('2023-01-01').toISOString(),
+          },
+          this.budget
+        ),
+      ])
+    )
+
+    cy.visit('/transactions')
+    cy.awaitLoading()
+
+    cy.getByTitle('Filter Transactions').click()
+
+    cy.getInputFor('Account').type('Bank Acc{enter}')
+    cy.getInputFor('Amount (Min)').type('12')
+    cy.getInputFor('Amount (Max)').type('100')
+    cy.getInputFor('Envelope').type('Only on{enter}')
+    cy.getInputFor('From').type('2022-12-24')
+    cy.getInputFor('Until').type('2022-12-31')
+
+    cy.contains('Submit').click()
+    cy.awaitLoading()
+
+    cy.contains('Bank account')
+    cy.contains('≥ 12.00')
+    cy.contains('≤ 100.00')
+    cy.contains('Only one')
+    cy.contains('From 12/24/2022')
+    cy.contains('Until 12/31/2022')
+
+    cy.contains('Everything Correct')
+    cy.contains('Wrong Account').should('not.exist')
+    cy.contains('Amount too large').should('not.exist')
+    cy.contains('Amount too small').should('not.exist')
+    cy.contains('Date too early').should('not.exist')
+    cy.contains('Date too late').should('not.exist')
   })
 })

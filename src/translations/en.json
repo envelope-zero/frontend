@@ -3,6 +3,7 @@
   "edit": "Edit",
   "editObject": "Edit {{object}}",
   "save": "Save",
+  "submit": "Submit",
   "cancel": "Cancel",
   "select": "Select...",
   "close": "Close",
@@ -17,6 +18,11 @@
   "archivedObjectInformation": "This {{object}} is archived",
   "showArchived": "Show Archived",
   "searchResource": "Search {{resource}}",
+  "filterResource": "Filter {{resource}}",
+  "activeFilters": "Active Filters",
+  "showAll": "Show All",
+  "from": "From",
+  "until": "Until",
   "autocomplete": {
     "empty": "No results"
   },
@@ -90,7 +96,15 @@
     "sourceAccountId": "Source",
     "envelopeId": "Envelope",
     "createResource": "Create \"{{name}}\"",
-    "recentEnvelopes": "Recent Envelopes"
+    "recentEnvelopes": "Recent Envelopes",
+    "filters": {
+      "amountMoreOrEqual": "Amount (Min)",
+      "amountLessOrEqual": "Amount (Max)",
+      "account": "Account",
+      "envelope": "Envelope",
+      "fromDate": "From",
+      "untilDate": "Until"
+    }
   },
   "envelopes": {
     "envelopes": "Envelopes",

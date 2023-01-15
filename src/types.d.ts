@@ -88,6 +88,8 @@ export type GroupedTransactions = {
   [key: string]: Transaction[]
 }
 
+export type GroupedEnvelopes = { title?: string; items: Envelope[] }[]
+
 export type UnpersistedCategory = {
   name?: string
   note?: string
@@ -149,4 +151,8 @@ export type FilterOptions = {
   external?: boolean
   hidden?: boolean
   note?: string
+  amountMoreOrEqual?: string
+  amountLessOrEqual?: string
+  fromDate?: string
+  untilDate?: string
 }
