@@ -139,4 +139,31 @@
   .negative {
     @apply text-red-600;
   }
+
+  .trans {
+    font-size: 0;
+    & > span {
+      @apply text-xl /* h1 */;
+    }
+  }
+
+  .trans:hover > span {
+    @apply text-2xl;
+
+    &:first-child,
+    &:last-child {
+      @apply text-sky-500;
+    }
+
+    &:nth-child(2),
+    &:nth-child(4) {
+      @apply text-pink-500;
+    }
+
+    &:nth-child(3) {
+      color: #fff;
+      -webkit-text-stroke-color: #000;
+      -webkit-text-stroke-width: 1px;
+    }
+  }
 }
