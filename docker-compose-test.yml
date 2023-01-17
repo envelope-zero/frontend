@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    image: ghcr.io/envelope-zero/backend:v2.2.0
+    image: ghcr.io/envelope-zero/backend:v2.4.0
     environment:
       API_URL: http://localhost:3001/api
       CORS_ALLOW_ORIGINS: http://localhost:3001
