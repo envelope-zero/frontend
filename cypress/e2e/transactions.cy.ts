@@ -305,7 +305,7 @@ describe('Transactions', () => {
     cy.contains('other').should('not.exist')
   })
 
-  it('can filter transactions', function () {
+  it.only('can filter transactions', function () {
     const transactionData = {
       sourceAccountId: this.bankAccount.id,
       destinationAccountId: this.externalAccount.id,
@@ -383,5 +383,9 @@ describe('Transactions', () => {
     cy.contains('Amount too small').should('not.exist')
     cy.contains('Date too early').should('not.exist')
     cy.contains('Date too late').should('not.exist')
+
+    cy.getByTitle('Remove Account Filter').click()
+    cy.awaitLoading()
+    cy.contains('Wrong Account')
   })
 })

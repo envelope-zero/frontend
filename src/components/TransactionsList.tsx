@@ -25,6 +25,7 @@ import SearchBar from './SearchBar'
 import { FunnelIcon } from '@heroicons/react/24/solid'
 import TransactionFilters from './TransactionFilters'
 import { safeName } from '../lib/name-helper'
+import { XMarkIcon } from '@heroicons/react/20/solid'
 
 const transactionApi = api('transactions')
 const categoryApi = api('categories')
@@ -101,13 +102,13 @@ const TransactionsList = ({ budget, accounts }: Props) => {
         })}`
       case 'account':
         return (
-          <span className="full-centered">
+          <>
             <BanknotesIcon className="icon-red icon-sm inline mr-1" />
             {safeName(
               accounts.find(account => account.id === value),
               'account'
             )}
-          </span>
+          </>
         )
       case 'envelope':
         const envelopes = groupedEnvelopes.reduce(
@@ -116,13 +117,13 @@ const TransactionsList = ({ budget, accounts }: Props) => {
         )
 
         return (
-          <span className="full-centered">
+          <>
             <EnvelopeIcon className="icon-red icon-sm inline mr-1" />
             {safeName(
               envelopes.find(envelope => envelope.id === value),
               'envelope'
             )}
-          </span>
+          </>
         )
       case 'fromDate':
         return `${t('from')} ${formatDate(value as string)}`
@@ -198,13 +199,25 @@ const TransactionsList = ({ budget, accounts }: Props) => {
             if (filter === 'note' || typeof value === 'undefined') {
               return null
             }
+
+            const label = displayValue(filter as keyof FilterOptions, value)
+
             return (
-              <div
+              <button
                 key={filter}
-                className="rounded-full border border-red-800 bg-white px-2.5 py-1.5 text-sm font-medium text-red-800 max-w-full truncate"
+                className="rounded-full full-centered border border-red-800 bg-white px-2.5 py-1.5 text-sm font-medium text-red-800 hover:text-red-900 max-w-full truncate group"
+                type="button"
+                onClick={() => {
+                  searchParams.delete(filter)
+                  setSearchParams(searchParams)
+                }}
+                title={t('filters.removeFilter', {
+                  filter: t(`transactions.filters.${filter}`),
+                })}
               >
-                {displayValue(filter as keyof FilterOptions, value)}
-              </div>
+                {label}
+                <XMarkIcon className="icon-sm ml-1 inline" />
+              </button>
             )
           })}
         </div>
