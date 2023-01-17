@@ -26,6 +26,9 @@
   "autocomplete": {
     "empty": "No results"
   },
+  "filters": {
+    "removeFilter": "Remove {{filter}} Filter"
+  },
   "navigation": {
     "closeSidebar": "Close Sidebar",
     "openSidebar": "Open Sidebar",
