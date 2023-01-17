@@ -13,7 +13,6 @@ import {
   Account,
   FilterOptions,
   GroupedTransactions as GroupedTransactionsType,
-  Envelope,
   GroupedEnvelopes,
   Category,
 } from '../types'
@@ -34,6 +33,16 @@ type Props = {
   budget: Budget
   accounts: Account[]
 }
+
+const egg = `
+  <span class="trans">
+    <span>T</span>
+    <span>r</span>
+    <span>a</span>
+    <span>n</span>
+    <span>s</span>
+  </span>
+`
 
 const TransactionsList = ({ budget, accounts }: Props) => {
   const { t }: Translation = useTranslation()
@@ -124,10 +133,22 @@ const TransactionsList = ({ budget, accounts }: Props) => {
     }
   }
 
+  const heading = t('transactions.transactions')
+
   return (
     <>
       <div className="header">
-        <h1>{t('transactions.transactions')}</h1>
+        <h1>
+          {heading.includes('Trans') ? (
+            <span
+              dangerouslySetInnerHTML={{
+                __html: heading.replace('Trans', egg),
+              }}
+            ></span>
+          ) : (
+            heading
+          )}
+        </h1>
         <div className="header--action full-centered">
           <button
             type="button"
