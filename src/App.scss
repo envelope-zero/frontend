@@ -148,8 +148,6 @@
   }
 
   .trans:hover > span {
-    @apply text-2xl;
-
     &:first-child,
     &:last-child {
       @apply text-sky-500;
