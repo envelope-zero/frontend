@@ -176,8 +176,15 @@ const TransactionsList = ({ budget, accounts }: Props) => {
             hideFilters={() => {
               setShowFilters(false)
             }}
-            onSubmit={searchParams => {
-              setSearchParams(searchParams)
+            onSubmit={updatedSearchParams => {
+              // prevent filters from updating search
+              const search = searchParams.get('search')
+              if (search) {
+                updatedSearchParams.set('search', search)
+              } else {
+                updatedSearchParams.delete('search')
+              }
+              setSearchParams(updatedSearchParams)
             }}
           ></TransactionFilters>
         </div>
@@ -187,8 +194,13 @@ const TransactionsList = ({ budget, accounts }: Props) => {
         resourceLabel={t('transactions.transactions')}
         value={searchParams.get('search')}
         onSubmit={search => {
-          searchParams.set('search', search)
-          setSearchParams(searchParams)
+          if (search) {
+            searchParams.set('search', search)
+            setSearchParams(searchParams)
+          } else {
+            searchParams.delete('search')
+            setSearchParams(searchParams)
+          }
         }}
       />
 
