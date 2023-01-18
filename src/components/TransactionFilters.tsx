@@ -63,25 +63,6 @@ const TransactionFilters = ({
     >
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         <div className="col-span-1">
-          <Autocomplete<Account>
-            emptyOption={t('showAll')}
-            groups={accountGroups}
-            itemLabel={account => safeName(account, 'account')}
-            itemId={account => account.id}
-            label={t('transactions.filters.account')}
-            onChange={account => updateValue('account', account?.id)}
-            value={
-              (accounts.find(
-                account => account.id === filters.account
-              ) as Account) || null
-            }
-            wrapperClass=""
-            labelClass="form-field--label sm:mt-0 sm:pt-0"
-            inputWrapperClass="mt-1 input--outer"
-          />
-        </div>
-
-        <div className="col-span-1">
           <label
             htmlFor="amountMoreOrEqual"
             className="form-field--label sm:mt-0 sm:pt-0"
@@ -119,6 +100,25 @@ const TransactionFilters = ({
             />
             <InputCurrency currency={budget.currency} />
           </div>
+        </div>
+
+        <div className="col-span-1">
+          <Autocomplete<Account>
+            emptyOption={t('showAll')}
+            groups={accountGroups}
+            itemLabel={account => safeName(account, 'account')}
+            itemId={account => account.id}
+            label={t('transactions.filters.account')}
+            onChange={account => updateValue('account', account?.id)}
+            value={
+              (accounts.find(
+                account => account.id === filters.account
+              ) as Account) || null
+            }
+            wrapperClass=""
+            labelClass="form-field--label sm:mt-0 sm:pt-0"
+            inputWrapperClass="mt-1 input--outer"
+          />
         </div>
 
         <div className="col-span-1">
