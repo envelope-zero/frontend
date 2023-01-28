@@ -82,7 +82,9 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
   return (
     <div className="dashboard">
-      <h1 className="header">{safeName(budget, 'budget')}</h1>
+      <div className="header">
+        <h1>{safeName(budget, 'budget')}</h1>
+      </div>
 
       <div className="month-slider">
         <Link
