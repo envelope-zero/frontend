@@ -35,6 +35,11 @@
     @apply fixed top-[1.625rem] left-0 right-0 m-auto text-center md:relative md:top-0 z-10 flex justify-center items-center md:h-12;
     width: calc(100% - 9rem);
 
+    h1 {
+      @apply whitespace-nowrap overflow-hidden text-ellipsis max-w-full;
+      max-width: calc(100% - 1.5rem);
+    }
+
     .header--action {
       @apply fixed right-6 text-red-800 flex gap-x-2;
 
