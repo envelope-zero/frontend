@@ -19,13 +19,13 @@ import { Budget, Translation } from '../types'
 import { safeName } from '../lib/name-helper'
 import Error from './Error'
 
-type LayoutProps = { budget?: Budget; error: string }
+type LayoutProps = { budget?: Budget; error: string; darkMode: boolean }
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Layout = ({ budget, error }: LayoutProps) => {
+const Layout = ({ budget, error, darkMode }: LayoutProps) => {
   const { t }: Translation = useTranslation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const headerRef = useRef<HTMLElement>()
@@ -59,7 +59,7 @@ const Layout = ({ budget, error }: LayoutProps) => {
   ]
 
   return (
-    <div>
+    <div className={darkMode ? 'dark' : ''}>
       {hideNav ? null : (
         <>
           <Transition.Root show={sidebarOpen} as={Fragment}>

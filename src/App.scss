@@ -95,7 +95,7 @@
 
   input,
   textarea {
-    @apply border border-gray-300 rounded-md p-2 focus:ring-red-800 focus:border-red-800;
+    @apply border border-gray-300 rounded-md p-2;
   }
 
   .form-field--wrapper {
@@ -115,7 +115,7 @@
   }
 
   .input {
-    @apply flex-1 block w-full min-w-0 sm:text-sm;
+    @apply flex-1 block w-full min-w-0 sm:text-sm border-gray-300 rounded-md;
   }
 
   .dashboard {

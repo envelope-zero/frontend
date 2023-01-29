@@ -25,14 +25,24 @@ import { Account, Budget } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
 import { api } from './lib/api/base'
 import BudgetImport from './components/BudgetImport'
+import Settings from './components/Settings'
 
 const accountApi = api('accounts')
+
+const darkModeDefault = () => {
+  return (
+    localStorage.theme === 'dark' ||
+    (!('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  )
+}
 
 const App = () => {
   const [budget, setBudget] = useState<Budget>()
   const [accounts, setAccounts] = useState<Account[]>([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [darkMode, setDarkMode] = useState(darkModeDefault())
   const budgetId = cookie.get('budgetId')
 
   useEffect(() => {
@@ -65,6 +75,16 @@ const App = () => {
       })
   }
 
+  const updateDarkMode = (setting: 'dark' | 'light' | 'default') => {
+    if (['dark', 'light'].includes(setting)) {
+      setDarkMode(setting === 'dark')
+      localStorage.theme = setting
+    } else {
+      setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches)
+      localStorage.removeItem('theme')
+    }
+  }
+
   const selectBudget = (selectedBudget?: Budget) => {
     if (typeof selectedBudget === 'undefined') {
       cookie.erase('budgetId')
@@ -77,7 +97,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout budget={budget} error={error} />}>
+        <Route
+          path="/"
+          element={<Layout budget={budget} error={error} darkMode={darkMode} />}
+        >
           <Route
             path="budgets"
             element={<BudgetSwitch selectBudget={selectBudget} />}
@@ -162,12 +185,7 @@ const App = () => {
 
               <Route
                 path="/settings"
-                element={
-                  <BudgetForm
-                    selectBudget={selectBudget}
-                    selectedBudget={budget}
-                  />
-                }
+                element={<Settings budget={budget} setBudget={selectBudget} />}
               />
             </>
           )}
