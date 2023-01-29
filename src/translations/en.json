@@ -146,5 +146,10 @@
   "envelopeMonth": {
     "absoluteAllocation": "Set to amount",
     "relativeAllocation": "Add / Subtract amount"
+  },
+  "settings": {
+    "settings": "Settings",
+    "budget": "Budget",
+    "app": "App"
   }
 }

@@ -20,9 +20,14 @@ import { DocumentArrowUpIcon } from '@heroicons/react/24/outline'
 type BudgetFormProps = {
   selectBudget: (budget?: Budget) => void
   selectedBudget?: Budget
+  hideHeading?: boolean
 }
 
-const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
+const BudgetForm = ({
+  selectBudget,
+  selectedBudget,
+  hideHeading,
+}: BudgetFormProps) => {
   const { t }: Translation = useTranslation()
   const params = useParams()
   const navigate = useNavigate()
@@ -69,7 +74,6 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
       onKeyDown={submitOnMetaEnter}
       onSubmit={e => {
         e.preventDefault()
-
         if (typeof budget === 'undefined') {
           return
         }
@@ -91,7 +95,9 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
       }}
     >
       <div className="header">
-        <h1>{t('budgets.budget')}</h1>
+        <h1 className={hideHeading ? 'invisible' : ''}>
+          {t('budgets.budget')}
+        </h1>
         <div className="header--action">
           <Link to={-1 as any} className="header--action__secondary">
             {t('cancel')}
