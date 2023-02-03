@@ -12,6 +12,7 @@
   "seeAll": "See All",
   "or": "or",
   "discardUnsavedChanges": "Discard unsaved changes?",
+  "changesSaved": "Changes saved successfully",
   "archived": "Archived",
   "archiveObject": "Archive {{object}}",
   "unarchiveObject": "Unarchive {{object}}",
@@ -149,7 +150,13 @@
   },
   "settings": {
     "settings": "Settings",
-    "budget": "Budget",
-    "app": "App"
+    "budget": "Budget Settings",
+    "app": "App Settings",
+    "theme": "Theme",
+    "themes": {
+      "dark": "Dark",
+      "light": "Light",
+      "default": "System Default"
+    }
   }
 }

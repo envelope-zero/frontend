@@ -238,7 +238,7 @@ const TransactionsList = ({ budget, accounts }: Props) => {
       {isLoading ? (
         <LoadingSpinner />
       ) : Object.keys(groupedTransactions).length ? (
-        <div className="bg-white sm:shadow overflow-hidden sm:rounded-md">
+        <div className="sm:card">
           <GroupedTransactions
             budget={budget}
             accounts={accounts}

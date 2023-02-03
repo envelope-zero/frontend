@@ -169,7 +169,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="mt-4 flex flex-col py-2">
-              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 md:shadow md:ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 md:card">
                 <div className="inline-block w-full align-middle">
                   <table className="w-full table-fixed">
                     <thead className="bg-white">

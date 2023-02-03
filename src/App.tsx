@@ -21,7 +21,7 @@ import CategoryForm from './components/CategoryForm'
 import cookie from './lib/cookie'
 import connectBudgetApi from './lib/api/budgets'
 import './i18n'
-import { Account, Budget } from './types'
+import { Account, Budget, Theme } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
 import { api } from './lib/api/base'
 import BudgetImport from './components/BudgetImport'
@@ -30,11 +30,10 @@ import Settings from './components/Settings'
 const accountApi = api('accounts')
 
 const darkModeDefault = () => {
-  return (
-    localStorage.theme === 'dark' ||
-    (!('theme' in localStorage) &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches)
-  )
+  if ('theme' in localStorage) {
+    return localStorage.theme
+  }
+  return 'default'
 }
 
 const App = () => {
@@ -42,7 +41,7 @@ const App = () => {
   const [accounts, setAccounts] = useState<Account[]>([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const [darkMode, setDarkMode] = useState(darkModeDefault())
+  const [theme, setTheme] = useState(darkModeDefault())
   const budgetId = cookie.get('budgetId')
 
   useEffect(() => {
@@ -75,14 +74,21 @@ const App = () => {
       })
   }
 
-  const updateDarkMode = (setting: 'dark' | 'light' | 'default') => {
+  const updateTheme = (setting: Theme) => {
+    setTheme(setting)
+
     if (['dark', 'light'].includes(setting)) {
-      setDarkMode(setting === 'dark')
       localStorage.theme = setting
     } else {
-      setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches)
       localStorage.removeItem('theme')
     }
+  }
+
+  const isDark = () => {
+    if (theme === 'default') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
+    return theme === 'dark'
   }
 
   const selectBudget = (selectedBudget?: Budget) => {
@@ -99,7 +105,7 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={<Layout budget={budget} error={error} darkMode={darkMode} />}
+          element={<Layout budget={budget} error={error} darkMode={isDark()} />}
         >
           <Route
             path="budgets"
@@ -185,7 +191,14 @@ const App = () => {
 
               <Route
                 path="/settings"
-                element={<Settings budget={budget} setBudget={selectBudget} />}
+                element={
+                  <Settings
+                    budget={budget}
+                    setBudget={setBudget}
+                    theme={theme}
+                    setTheme={updateTheme}
+                  />
+                }
               />
             </>
           )}
