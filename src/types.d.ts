@@ -156,3 +156,5 @@ export type FilterOptions = {
   fromDate?: string
   untilDate?: string
 }
+
+export type Theme = 'dark' | 'light' | 'default'
