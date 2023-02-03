@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer components {
+  .dark {
+    color-scheme: dark;
+  }
+
+  #root {
+    @apply bg-white dark:bg-slate-800;
+  }
+
   // hide arrows on number inputs
   // Chrome, Safari, Edge, Opera
   input::-webkit-outer-spin-button,
@@ -16,19 +24,19 @@
   }
 
   .link {
-    @apply text-red-800;
+    @apply text-red-800 dark:text-red-600;
   }
 
   h1 {
-    @apply text-xl leading-6 font-black text-gray-900 tracking-wide;
+    @apply text-xl leading-6 font-black text-gray-900 dark:text-gray-100 tracking-wide;
   }
 
   h2 {
-    @apply text-lg leading-6 font-bold text-gray-900;
+    @apply text-lg leading-6 font-bold text-gray-900 dark:text-gray-100;
   }
 
   h3 {
-    @apply text-lg leading-6 font-medium text-gray-900;
+    @apply text-lg leading-6 font-medium text-gray-900 dark:text-gray-100;
   }
 
   .header {
@@ -41,10 +49,10 @@
     }
 
     .header--action {
-      @apply fixed right-6 text-red-800 flex gap-x-2;
+      @apply fixed right-6 text-red-800 dark:text-red-600 flex gap-x-2;
 
       .header--action__secondary {
-        @apply text-gray-600;
+        @apply text-gray-600 dark:text-gray-400;
 
         + * {
           @apply font-bold;
@@ -62,7 +70,7 @@
   }
 
   .icon-red {
-    @apply icon text-red-800;
+    @apply icon text-red-800 dark:text-red-600;
   }
 
   .icon-xs {
@@ -78,15 +86,15 @@
   }
 
   .box {
-    @apply shadow-sm rounded-md bg-gray-100;
+    @apply shadow-sm rounded-md bg-gray-100 dark:bg-slate-700;
   }
 
   .card {
-    @apply bg-white shadow-sm overflow-hidden rounded-md border border-gray-200;
+    @apply bg-white dark:bg-slate-800 shadow-sm overflow-hidden rounded-md border border-gray-200 dark:border-gray-900;
   }
 
   .error {
-    @apply bg-red-100 p-2 rounded-md;
+    @apply bg-red-100 p-2 rounded-md dark:text-red-800;
   }
 
   .alert {
@@ -94,24 +102,24 @@
   }
 
   .btn-secondary {
-    @apply box w-full text-red-800 hover:text-red-900 py-2 px-4 text-sm font-medium hover:bg-gray-200;
+    @apply box w-full text-red-800 hover:text-red-900 dark:text-red-600 dark:hover:text-red-500 py-2 px-4 text-sm font-medium hover:bg-gray-200 dark:hover:bg-slate-600;
   }
 
   .link-blue {
-    @apply text-blue-600 hover:text-blue-800;
+    @apply text-blue-600 hover:text-blue-800 dark:text-sky-400 dark:hover:text-sky-300;
   }
 
   input,
   textarea {
-    @apply border border-gray-300 rounded-md p-2;
+    @apply border border-gray-300 dark:border-gray-900 rounded-md p-2 dark:bg-slate-800 dark:focus:bg-slate-700 dark:text-gray-100;
   }
 
   .form-field--wrapper {
-    @apply sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5;
+    @apply sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 dark:sm:border-gray-900 sm:pt-5;
   }
 
   .form-field--label {
-    @apply block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2;
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 sm:mt-px sm:pt-2;
   }
 
   .input--outer {
@@ -123,7 +131,7 @@
   }
 
   .input {
-    @apply flex-1 block w-full min-w-0 sm:text-sm border-gray-300 rounded-md;
+    @apply flex-1 block w-full min-w-0 sm:text-sm border-gray-300 dark:border-gray-900 rounded-md dark:bg-slate-800 dark:focus:bg-slate-700 dark:text-gray-100;
   }
 
   .settings-input {
@@ -135,7 +143,7 @@
       @apply grid grid-cols-12;
 
       a {
-        @apply text-gray-400 text-sm font-medium col-span-3 text-center flex justify-center items-center;
+        @apply text-gray-400 text-sm font-medium col-span-3 text-center flex justify-center items-center dark:border-gray-500;
       }
 
       > div {
@@ -150,11 +158,11 @@
   }
 
   .positive {
-    @apply text-lime-700;
+    @apply text-lime-700  dark:text-lime-500;
   }
 
   .negative {
-    @apply text-red-600;
+    @apply text-red-600 dark:text-red-500;
   }
 
   .trans {
@@ -177,8 +185,11 @@
 
     &:nth-child(3) {
       color: #fff;
-      -webkit-text-stroke-color: #000;
-      -webkit-text-stroke-width: 1px;
     }
+  }
+
+  html:not(.dark) .trans:hover > span:nth-child(3) {
+    -webkit-text-stroke-color: #000;
+    -webkit-text-stroke-width: 1px;
   }
 }

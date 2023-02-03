@@ -76,7 +76,7 @@ const BudgetImport = (props: Props) => {
           </FormFields>
 
           <p
-            className="pt-4 whitespace-pre-line"
+            className="pt-4 whitespace-pre-line dark:text-gray-400"
             dangerouslySetInnerHTML={{
               __html: t('budgets.import.description'),
             }}

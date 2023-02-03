@@ -34,12 +34,12 @@ const MonthPicker = ({ open, setOpen, activeMonth }: Props) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-6 pb-4 text-left shadow-xl border transition-all sm:max-w-sm sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 px-4 pt-6 pb-4 text-left shadow-xl border transition-all sm:max-w-sm sm:p-6">
                 <div>
                   <button
                     type="button"
                     title={t('close')}
-                    className="absolute top-2 right-2 text-gray-400 hover:text-gray-500"
+                    className="absolute top-2 right-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
                     onClick={e => {
                       e.preventDefault()
                       setOpen(false)
@@ -50,7 +50,7 @@ const MonthPicker = ({ open, setOpen, activeMonth }: Props) => {
                   <div className="text-center">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
+                      className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-300"
                     >
                       <label htmlFor="month" className="sr-only">
                         {t('dashboard.selectMonth')}

@@ -4,7 +4,7 @@ type Props = { text: string }
 
 const Notification = ({ text }: Props) => {
   return (
-    <div className="flex bg-blue-100 text-blue-900 p-2 rounded-md">
+    <div className="flex bg-blue-100/[.75] text-blue-900 p-2 rounded-md">
       <InformationCircleIcon className="icon inline mr-1" />
       {text}
     </div>

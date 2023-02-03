@@ -35,7 +35,7 @@ const CategoryMonth = ({
   return (
     <>
       <tr
-        className="border-t border-gray-200 bg-gray-50 cursor-pointer"
+        className="border-t border-gray-200 dark:border-gray-900 bg-gray-50 dark:bg-slate-700 cursor-pointer"
         onClick={() => {
           if (
             category.envelopes.some(envelope => envelope.id === editingEnvelope)
@@ -49,7 +49,7 @@ const CategoryMonth = ({
         <th
           colSpan={4}
           scope="colgroup"
-          className="px-4 py-2 text-left text-sm font-bold text-gray-900 sm:px-6 text-ellipsis"
+          className="px-4 py-2 text-left text-sm font-bold text-gray-900 dark:text-gray-300 sm:px-6 text-ellipsis"
         >
           <span className="flex items-center">
             <button>
@@ -79,15 +79,17 @@ const CategoryMonth = ({
             ></EnvelopeMonth>
           ))
       ) : (
-        <tr className="bg-gray-50 cursor-pointer">
-          <td className="whitespace-nowrap pb-2 pl-10 pr-1 text-sm font-medium text-gray-500 sm:pl-12 overflow-hidden text-ellipsis italic">
+        <tr className="bg-gray-50 dark:bg-slate-700 cursor-pointer">
+          <td className="whitespace-nowrap pb-2 pl-10 pr-1 text-sm font-medium text-gray-500 dark:text-gray-400 sm:pl-12 overflow-hidden text-ellipsis italic">
             {t('envelopes.envelopesWithCount', {
               count: category.envelopes.length,
             })}
           </td>
           <td
             className={`whitespace-nowrap px-1 pb-2 text-sm text-right ${
-              Number(allocation) < 0 ? 'negative' : 'text-gray-500'
+              Number(allocation) < 0
+                ? 'negative'
+                : 'text-gray-500 dark:text-gray-400'
             }`}
           >
             {formatMoney(allocation, budget.currency, {
@@ -96,14 +98,18 @@ const CategoryMonth = ({
           </td>
           <td
             className={`hidden md:table-cell whitespace-nowrap px-1 pb-2 text-sm text-right ${
-              Number(spent) > 0 ? 'positive' : 'text-gray-500'
+              Number(spent) > 0
+                ? 'positive'
+                : 'text-gray-500 dark:text-gray-400'
             }`}
           >
             {formatMoney(spent, budget.currency)}
           </td>
           <td
             className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 pb-2 text-sm text-right ${
-              Number(balance) < 0 ? 'negative' : 'text-gray-500'
+              Number(balance) < 0
+                ? 'negative'
+                : 'text-gray-500 dark:text-gray-400'
             }`}
           >
             {formatMoney(balance, budget.currency, { signDisplay: 'auto' })}

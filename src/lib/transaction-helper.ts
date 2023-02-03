@@ -3,7 +3,7 @@ import { safeName } from './name-helper'
 
 const incoming = { color: 'positive', sign: '+' }
 const outgoing = { color: 'negative', sign: '-' }
-const transfer = { color: 'text-sky-600', sign: '±' }
+const transfer = { color: 'text-sky-600 dark:text-sky-500', sign: '±' }
 
 const counterpartiesString = (
   sourceAccount?: Account,

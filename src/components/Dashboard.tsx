@@ -95,7 +95,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
           <ChevronLeftIcon className="inline h-6" />
           {shortTranslatedMonthFormat.format(previousMonth(activeMonth))}
         </Link>
-        <div className="border-red-800">
+        <div className="border-red-800 dark:border-red-600">
           {useNativeMonthPicker ? (
             <div className="text-center">
               <label htmlFor="month" className="sr-only">
@@ -162,7 +162,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                 signDisplay: 'auto',
               })}
             </div>
-            <div className="text-gray-500 font-medium">
+            <div className="text-gray-500 dark:text-gray-400 font-medium">
               {t('dashboard.available')}
             </div>
           </div>
@@ -172,40 +172,40 @@ const Dashboard = ({ budget }: DashboardProps) => {
               <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 md:card">
                 <div className="inline-block w-full align-middle">
                   <table className="w-full table-fixed">
-                    <thead className="bg-white">
+                    <thead className="bg-white dark:bg-slate-800">
                       <tr>
                         <th
                           scope="col"
-                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 w-1/2"
+                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-300 sm:pl-6 w-1/2"
                         ></th>
                         <th
                           scope="col"
-                          className="px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 w-1/4 md:w-1/6"
+                          className="px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/4 md:w-1/6"
                         >
                           {t('dashboard.allocation')}
                         </th>
                         <th
                           scope="col"
-                          className="hidden md:table-cell px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 w-1/6"
+                          className="hidden md:table-cell px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/6"
                         >
                           {t('dashboard.spent')}
                         </th>
                         <th
                           scope="col"
-                          className="pl-3 pr-4 sm:pr-6 pt-3.5 text-right text-sm font-semibold text-gray-900 w-1/4 md:w-1/6"
+                          className="pl-3 pr-4 sm:pr-6 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/4 md:w-1/6"
                         >
                           {t('dashboard.balance')}
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white">
+                    <tbody className="bg-white dark:bg-slate-800">
                       <tr>
                         <td></td>
                         <td
                           className={`whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
                             Number(budgetMonth.allocation) < 0
                               ? 'negative'
-                              : 'text-gray-500'
+                              : 'text-gray-500 dark:text-gray-400'
                           }`}
                         >
                           {formatMoney(
@@ -220,7 +220,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                           className={`hidden md:table-cell whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
                             Number(budgetMonth.spent) > 0
                               ? 'positive'
-                              : 'text-gray-500'
+                              : 'text-gray-500 dark:text-gray-400'
                           }`}
                         >
                           {formatMoney(budgetMonth.spent, budget.currency)}
@@ -229,7 +229,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                           className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 pb-3 text-sm font-semibold text-right ${
                             Number(budgetMonth.balance) < 0
                               ? 'negative'
-                              : 'text-gray-500'
+                              : 'text-gray-500 dark:text-gray-400'
                           }`}
                         >
                           {formatMoney(budgetMonth.balance, budget.currency, {

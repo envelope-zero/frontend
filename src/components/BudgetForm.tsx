@@ -167,7 +167,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
                   })
               }
             }}
-            className="box w-full text-red-800 py-2 px-4 text-sm font-medium hover:bg-gray-200"
+            className="box w-full text-red-800 dark:text-red-600 py-2 px-4 text-sm font-medium hover:bg-gray-200 dark:hover:bg-slate-700"
           >
             {t('budgets.delete')}
           </button>
