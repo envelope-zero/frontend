@@ -89,7 +89,7 @@ const OwnAccountsList = ({ budget }: Props) => {
               {accounts.map(account => (
                 <li
                   key={account.id}
-                  className="box col-span-1 relative hover:bg-gray-200 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+                  className="box col-span-1 relative hover:bg-gray-200 dark:hover:bg-slate-600 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
                   <Link to={`${account.id}`} className="w-full text-center">
                     <div title={t('edit')} className="absolute right-4">
@@ -109,12 +109,12 @@ const OwnAccountsList = ({ budget }: Props) => {
                       ) : null}
                     </h3>
                     {account.onBudget ? null : (
-                      <div className="text-gray-700">
+                      <div className="text-gray-700 dark:text-gray-300">
                         {t('accounts.offBudget')}
                       </div>
                     )}
                     {account.note ? (
-                      <p className="text-sm text-gray-500 whitespace-pre-line">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line">
                         {account.note}
                       </p>
                     ) : null}
@@ -135,7 +135,9 @@ const OwnAccountsList = ({ budget }: Props) => {
             </ul>
           ) : (
             <>
-              <div>{t('accounts.emptyList')}</div>
+              <div className="text-gray-700 dark:text-gray-300">
+                {t('accounts.emptyList')}
+              </div>
               <Link to="/own-accounts/new" title={t('accounts.create')}>
                 <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
               </Link>

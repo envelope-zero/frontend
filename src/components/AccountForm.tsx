@@ -133,8 +133,13 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
 
             {type === 'internal' ? (
               <>
-                <div className="grid grid-cols-3 gap-4 items-center sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label htmlFor="onbudget">{t('accounts.onBudget')}</label>
+                <div className="grid grid-cols-3 gap-4 items-center sm:border-t sm:border-gray-200 dark:sm:border-gray-900 sm:pt-5">
+                  <label
+                    className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                    htmlFor="onbudget"
+                  >
+                    {t('accounts.onBudget')}
+                  </label>
                   <div
                     className="mt-px pt-2 pr-2 col-span-2 flex sm:block justify-end"
                     onClick={e => {
@@ -144,8 +149,10 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
                   >
                     <div
                       className={`max-w-lg ${
-                        account.onBudget ? 'bg-lime-600' : 'bg-gray-200'
-                      } relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500`}
+                        account.onBudget
+                          ? 'bg-lime-600 dark:bg-lime-500'
+                          : 'bg-gray-200 dark:bg-slate-700'
+                      } relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2`}
                     >
                       <span
                         aria-hidden="true"

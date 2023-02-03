@@ -69,14 +69,16 @@ const EnvelopeMonth = ({
 
   return (
     <tr
-      className={`hover:bg-gray-50 border-t border-gray-${
-        i === 0 ? '300' : '200'
+      className={`hover:bg-gray-50 dark:hover:bg-slate-700 border-t ${
+        i === 0
+          ? 'border-gray-300 dark:border-black'
+          : 'border-gray-200 dark:border-gray-900'
       }`}
     >
       <td>
         <Link
           to={`/transactions?envelope=${envelope.id}`}
-          className="h-full block whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 sm:pl-6 overflow-hidden text-ellipsis"
+          className="h-full block whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 dark:text-gray-300 sm:pl-6 overflow-hidden text-ellipsis"
         >
           {envelope.name}
         </Link>
@@ -84,7 +86,9 @@ const EnvelopeMonth = ({
 
       <td
         className={`whitespace-nowrap px-1 py-4 text-sm text-right ${
-          Number(allocatedAmount) < 0 ? 'negative' : 'text-gray-500'
+          Number(allocatedAmount) < 0
+            ? 'negative'
+            : 'text-gray-500 dark:text-gray-400'
         }`}
       >
         <Modal
@@ -109,7 +113,7 @@ const EnvelopeMonth = ({
           >
             <div>
               <div className="mt-3 text-center sm:mt-5">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                <h3 className="text-lg font-medium leading-6">
                   {t('editObject', {
                     object: t('dashboard.allocationForEnvelope', {
                       envelope: envelope.name,
@@ -129,13 +133,13 @@ const EnvelopeMonth = ({
             <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
               <button
                 type="submit"
-                className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
+                className="inline-flex w-full justify-center rounded-md border border-transparent bg-sky-500 dark:bg-sky-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-sky-600 dark:hover:bg-sky-500 sm:col-start-2 sm:text-sm"
               >
                 {t('save')}
               </button>
               <button
                 type="reset"
-                className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+                className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-slate-800 px-4 py-2 text-base font-medium text-gray-700 dark:text-gray-400 shadow-sm hover:bg-gray-50 dark:hover:bg-slate-700 sm:col-start-1 sm:mt-0 sm:text-sm"
               >
                 {t('cancel')}
               </button>
@@ -163,7 +167,9 @@ const EnvelopeMonth = ({
       </td>
       <td
         className={`hidden md:table-cell whitespace-nowrap px-1 py-4 text-sm text-right ${
-          Number(envelope.spent) > 0 ? 'positive' : 'text-gray-500'
+          Number(envelope.spent) > 0
+            ? 'positive'
+            : 'text-gray-500 dark:text-gray-400'
         }`}
       >
         {formatMoney(envelope.spent, budget.currency, {
@@ -172,7 +178,9 @@ const EnvelopeMonth = ({
       </td>
       <td
         className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 py-4 text-sm text-right ${
-          Number(envelope.balance) < 0 ? 'negative' : 'text-gray-500'
+          Number(envelope.balance) < 0
+            ? 'negative'
+            : 'text-gray-500 dark:text-gray-400'
         }`}
       >
         {formatMoney(envelope.balance, budget.currency, {

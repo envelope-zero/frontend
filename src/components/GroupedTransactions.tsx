@@ -32,10 +32,10 @@ const GroupedTransactions = ({
     <ul>
       {Object.keys(transactions).map(date => (
         <div key={date}>
-          <h3 className="border-t first:sm:border-t-0 border-b border-gray-200 bg-gray-50 px-3 py-1 text-sm font-medium text-gray-500">
+          <h3 className="border-t first:sm:border-t-0 border-b border-gray-200 dark:border-gray-900 bg-gray-50 dark:bg-slate-700 px-3 py-1 text-sm font-medium text-gray-500">
             {formatDate(date)}
           </h3>
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-gray-200 dark:divide-gray-900">
             {transactions[date].map(transaction => {
               const { sign, color, counterparties } = getConfiguration(
                 transaction,
@@ -47,12 +47,12 @@ const GroupedTransactions = ({
                 <li key={transaction.id}>
                   <Link
                     to={`/transactions/${transaction.id}`}
-                    className="block hover:bg-gray-50"
+                    className="block hover:bg-gray-50 dark:hover:bg-slate-700"
                   >
                     <div className="px-2 py-4 sm:px-6">
                       <div className="flex items-center justify-between">
                         <p
-                          className={`text-sm font-medium truncate ${
+                          className={`text-sm dark:text-gray-300 font-medium truncate ${
                             transaction.note ? '' : 'italic'
                           }`}
                         >
@@ -89,7 +89,7 @@ const GroupedTransactions = ({
                               anyReconciled ? 'ml-1' : ''
                             } flex w-5`}
                           >
-                            <ChevronRightIcon className="text-gray-900" />
+                            <ChevronRightIcon className="text-gray-900 dark:text-gray-300" />
                           </div>
                         </div>
                       </div>

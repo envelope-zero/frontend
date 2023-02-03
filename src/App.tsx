@@ -29,19 +29,14 @@ import Settings from './components/Settings'
 
 const accountApi = api('accounts')
 
-const darkModeDefault = () => {
-  if ('theme' in localStorage) {
-    return localStorage.theme
-  }
-  return 'default'
-}
+const preferredTheme = () => localStorage.theme || 'default'
 
 const App = () => {
   const [budget, setBudget] = useState<Budget>()
   const [accounts, setAccounts] = useState<Account[]>([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const [theme, setTheme] = useState(darkModeDefault())
+  const [theme, setTheme] = useState(preferredTheme())
   const budgetId = cookie.get('budgetId')
 
   useEffect(() => {
@@ -65,6 +60,19 @@ const App = () => {
     }
   }, [budgetId])
 
+  useEffect(() => {
+    const isDark =
+      theme === 'dark' ||
+      (theme === 'default' &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+    if (isDark) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [theme])
+
   const loadAccounts = (budget: Budget) => {
     accountApi
       .getAll(budget)
@@ -84,13 +92,6 @@ const App = () => {
     }
   }
 
-  const isDark = () => {
-    if (theme === 'default') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-    }
-    return theme === 'dark'
-  }
-
   const selectBudget = (selectedBudget?: Budget) => {
     if (typeof selectedBudget === 'undefined') {
       cookie.erase('budgetId')
@@ -103,10 +104,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={<Layout budget={budget} error={error} darkMode={isDark()} />}
-        >
+        <Route path="/" element={<Layout budget={budget} error={error} />}>
           <Route
             path="budgets"
             element={<BudgetSwitch selectBudget={selectBudget} />}

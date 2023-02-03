@@ -95,25 +95,25 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                 .sort()
                 .map(letter => (
                   <div key={letter} className="relative">
-                    <div className="border-t border-b border-gray-200 bg-gray-50 px-6 py-1 text-sm font-medium text-gray-500">
+                    <div className="border-t border-b border-gray-200 dark:border-gray-900 bg-gray-50  dark:bg-gray-700 px-6 py-1 text-sm font-medium text-gray-500">
                       <h3>{letter || t('untitled')}</h3>
                     </div>
-                    <ul className="relative z-0 divide-y divide-gray-200">
+                    <ul className="relative z-0 divide-y divide-gray-200 dark:divide-gray-900">
                       {accounts[letter].map(account => (
-                        <li key={account.id} className="bg-white">
-                          <div className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+                        <li
+                          key={account.id}
+                          className="bg-white dark:bg-slate-800"
+                        >
+                          <div className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700">
                             <div className="flex-1 min-w-0">
-                              <Link
-                                to={`${account.id}`}
-                                className="focus:outline-none"
-                              >
+                              <Link to={`${account.id}`}>
                                 <div>
                                   <div
                                     className={`${
                                       typeof account.name === 'undefined'
                                         ? 'italic'
                                         : ''
-                                    } text-sm font-medium text-gray-900 flex justify-between`}
+                                    } text-sm font-medium text-gray-900 dark:text-gray-100 flex justify-between`}
                                   >
                                     <span className="full-centered">
                                       {account.hidden ? (
@@ -140,7 +140,9 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                 ))}
             </nav>
           ) : (
-            <div>{t('accounts.emptyList')}</div>
+            <div className="text-gray-700 dark:text-gray-300">
+              {t('accounts.emptyList')}
+            </div>
           )}
         </>
       )}

@@ -22,8 +22,8 @@ const FlyoutMenu = ({ items }: Props) => {
         <>
           <Popover.Button
             className={classNames(
-              open ? 'text-gray-900' : 'text-gray-500',
-              'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+              open ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500',
+              'group inline-flex items-center rounded-md bg-white dark:bg-slate-800 text-base font-medium hover:text-gray-900 dark:hover:text-gray-100'
             )}
             title={t('more')}
           >
@@ -41,17 +41,17 @@ const FlyoutMenu = ({ items }: Props) => {
           >
             <Popover.Panel className="absolute -right-10 z-10 mt-3 w-screen max-w-xs transform">
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 text-left">
+                <div className="relative grid gap-6 bg-white dark:bg-slate-800 px-5 py-6 sm:gap-8 text-left">
                   {items.map(item => (
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="-m-3 block rounded-md p-3 transition duration-150 ease-in-out hover:bg-gray-50"
+                      className="-m-3 block rounded-md p-3 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-slate-700"
                     >
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                         {item.name}
                       </p>
-                      <p className="mt-1 text-sm text-gray-500">
+                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         {item.description}
                       </p>
                     </Link>

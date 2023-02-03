@@ -217,7 +217,7 @@ const TransactionsList = ({ budget, accounts }: Props) => {
             return (
               <button
                 key={filter}
-                className="rounded-full full-centered border border-red-800 bg-white px-2.5 py-1.5 text-sm font-medium text-red-800 hover:text-red-900 max-w-full truncate group"
+                className="rounded-full full-centered border border-red-800 dark:border-red-600 bg-white dark:bg-slate-800 px-2.5 py-1.5 text-sm font-medium text-red-800 hover:text-red-900 dark:text-red-600 max-w-full truncate group"
                 type="button"
                 onClick={() => {
                   searchParams.delete(filter)

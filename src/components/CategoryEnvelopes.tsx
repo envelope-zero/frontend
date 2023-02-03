@@ -25,7 +25,7 @@ const CategoryEnvelopes = ({
   return (
     <>
       <div
-        className="box p-2 flex"
+        className="box p-2 flex dark:text-gray-100"
         onClick={() => {
           setShowEnvelopes(!showEnvelopes)
         }}
@@ -36,7 +36,11 @@ const CategoryEnvelopes = ({
           <ChevronDownIcon className="icon" />
         )}
 
-        <div className="grow">
+        <div
+          className={`grow ${
+            showEnvelopes || ' whitespace-nowrap overflow-hidden text-ellipsis'
+          }`}
+        >
           <span className={!category.name ? 'italic' : ''}>
             {safeName(category, 'category', t('categories.category'))}
             {category.hidden ? (
@@ -49,18 +53,20 @@ const CategoryEnvelopes = ({
 
           {showEnvelopes && category.note ? (
             <div>
-              <small className="text-gray-600">{category.note}</small>
+              <small className="text-gray-600 dark:text-gray-400">
+                {category.note}
+              </small>
             </div>
           ) : null}
         </div>
 
         <Link to={`/categories/${category.id}`} title={t('categories.edit')}>
-          <PencilIcon className="icon-red icon-sm mr-2" />
+          <PencilIcon className="icon-red icon-sm mx-2" />
         </Link>
       </div>
 
       {showEnvelopes ? (
-        <div className="divide-y space-y-2 ml-4">
+        <div className="divide-y dark:divide-gray-900 space-y-2 ml-4">
           {category.envelopes
             .filter(
               envelope =>
@@ -70,7 +76,7 @@ const CategoryEnvelopes = ({
               <Link
                 to={envelope.id}
                 key={envelope.id}
-                className="flex justify-between pt-2 first:pt-0"
+                className="flex justify-between pt-2 first:pt-0 dark:text-gray-300"
               >
                 <span className={!envelope.name ? 'italic' : ''}>
                   {safeName(envelope, 'envelope')}
@@ -81,7 +87,7 @@ const CategoryEnvelopes = ({
                     />
                   ) : null}
                 </span>
-                <ChevronRightIcon className="h-6 mr-3" />
+                <ChevronRightIcon className="h-6 mr-3 flex-shrink-0" />
               </Link>
             ))}
         </div>

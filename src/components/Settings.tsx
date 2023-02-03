@@ -44,13 +44,13 @@ const Settings = ({ budget, setBudget, theme, setTheme }: Props) => {
       {changesSaved && <Alert>{t('changesSaved')}</Alert>}
 
       <div>
-        <h2 className="text-base font-medium text-gray-700 pl-4 pb-2">
+        <h2 className="text-base font-medium text-gray-700 dark:text-gray-300 pl-4 pb-2">
           {t('settings.budget')}
         </h2>
         <div className="card pl-4">
-          <dl className="divide-y divide-gray-200">
+          <dl className="divide-y divide-gray-200 dark:divide-gray-900">
             <div className="grid grid-cols-3 gap-4 py-1 pr-4">
-              <dt className="text-sm font-medium text-gray-500 flex items-center">
+              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
                 <label htmlFor="budget-name">{t('budgets.name')}</label>
               </dt>
               <dd className="text-sm text-gray-900 col-span-2 mt-0">
@@ -67,7 +67,7 @@ const Settings = ({ budget, setBudget, theme, setTheme }: Props) => {
               </dd>
             </div>
             <div className="grid grid-cols-3 gap-4 py-1 pr-4">
-              <dt className="text-sm font-medium text-gray-500 flex items-center">
+              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
                 <label htmlFor="budget-currency">{t('budgets.currency')}</label>
               </dt>
               <dd className="text-sm text-gray-900 col-span-2 mt-0">
@@ -84,7 +84,7 @@ const Settings = ({ budget, setBudget, theme, setTheme }: Props) => {
               </dd>
             </div>
             <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 pr-4">
-              <dt className="text-sm font-medium text-gray-500">
+              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
                 <label htmlFor="budget-note">{t('budgets.note')}</label>
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -105,13 +105,13 @@ const Settings = ({ budget, setBudget, theme, setTheme }: Props) => {
       </div>
 
       <div className="mt-6">
-        <h2 className="text-base font-medium text-gray-700 pl-4 pb-2">
+        <h2 className="text-base font-medium text-gray-700 dark:text-gray-300 pl-4 pb-2">
           {t('settings.app')}
         </h2>
         <div className="card pl-4">
           <dl className="divide-y divide-gray-200">
             <div className="grid grid-cols-3 gap-4 py-1 pr-4">
-              <dt className="text-sm font-medium text-gray-500 flex items-center">
+              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
                 <label htmlFor="theme">{t('settings.theme')}</label>
               </dt>
               <dd className="text-sm text-gray-900 col-span-2 mt-0">

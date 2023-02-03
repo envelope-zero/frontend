@@ -151,7 +151,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
 
           <div className="pt-8">
             <h2>{t('categories.envelopes')}</h2>
-            <ul className="divide-y divide-gray-200">
+            <ul className="divide-y divide-gray-200 dark:divide-gray-900">
               {'envelopes' in category ? (
                 category.envelopes.map(envelope => {
                   return (
@@ -159,12 +159,12 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
                       <Link
                         onClick={confirmDiscardingUnsavedChanges}
                         to={`/envelopes/${envelope.id}`}
-                        className="block hover:bg-gray-50"
+                        className="block hover:bg-gray-50 dark:hover:bg-gray-700"
                       >
                         <div className="px-2 py-4 sm:px-6">
                           <div className="flex items-center justify-between">
                             <p
-                              className={`text-sm font-medium truncate ${
+                              className={`text-sm font-medium truncate dark:text-gray-300 ${
                                 envelope.name ? '' : 'italic'
                               }`}
                             >
@@ -172,7 +172,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
                             </p>
 
                             <div className={'flex w-5'}>
-                              <ChevronRightIcon className="text-gray-900" />
+                              <ChevronRightIcon className="text-gray-900 dark:text-gray-300" />
                             </div>
                           </div>
                         </div>

@@ -70,7 +70,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
               {budgets.map(budget => (
                 <li
                   key={budget.id}
-                  className="box col-span-1 relative hover:bg-gray-200 p-4 md:hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+                  className="box col-span-1 relative hover:bg-gray-200 dark:hover:bg-slate-600 p-4 md:hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
                   <Link
                     to="/"
@@ -96,7 +96,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                       </Link>
                     </div>
                     {budget.note ? (
-                      <p className="text-sm text-gray-500 whitespace-pre-line">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line">
                         {budget.note}
                       </p>
                     ) : null}
@@ -104,7 +104,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                       <Link
                         to="/transactions/new"
                         onClick={() => props.selectBudget(budget)}
-                        className="text-sky-600 hover:text-sky-700"
+                        className="text-sky-600 hover:text-sky-700 dark:text-sky-400"
                       >
                         {t('transactions.add')}
                         <ChevronRightIcon className="inline h-6" />
