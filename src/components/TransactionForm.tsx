@@ -378,12 +378,13 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
 
           {isPersisted ? (
             <div className="pt-6 space-y-3">
-              <div className="btn-secondary link-blue text-center">
-                <Link to={`/transactions/new?duplicateFrom=${transactionId}`}>
-                  <DocumentDuplicateIcon className="icon-sm inline mr-1 relative bottom-0.5" />
-                  {t('transactions.repeat')}
-                </Link>
-              </div>
+              <Link
+                to={`/transactions/new?duplicateFrom=${transactionId}`}
+                className="block btn-secondary link-blue text-center"
+              >
+                <DocumentDuplicateIcon className="icon-sm inline mr-1 relative bottom-0.5" />
+                {t('transactions.repeat')}
+              </Link>
               <button
                 type="button"
                 onClick={() => {
