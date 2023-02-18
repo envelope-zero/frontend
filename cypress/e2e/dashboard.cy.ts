@@ -30,6 +30,14 @@ describe('Dashboard', () => {
               { name: 'Third Envelope', categoryId: secondCategory.id },
               budget
             ),
+            createEnvelope(
+              {
+                name: 'Archived Envelope',
+                categoryId: firstCategory.id,
+                hidden: true,
+              },
+              budget
+            ),
           ])
         )
       ).then(([firstEnvelope, secondEnvelope]: Envelope[]) => {
@@ -132,7 +140,7 @@ describe('Dashboard', () => {
               destinationAccountId: externalAccount.id,
               envelopeId: this.firstEnvelope.id,
               note: 'First Transaction',
-              amount: 1,
+              amount: '1',
             },
             this.budget
           ),
@@ -142,7 +150,7 @@ describe('Dashboard', () => {
               destinationAccountId: externalAccount.id,
               envelopeId: this.secondEnvelope.id,
               note: 'Second Transaction',
-              amount: 2,
+              amount: '2',
             },
             this.budget
           ),
