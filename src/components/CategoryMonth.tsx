@@ -32,6 +32,8 @@ const CategoryMonth = ({
 
   const { spent, allocation, balance } = category
 
+  const envelopes = category.envelopes.filter(envelope => !envelope.hidden)
+
   return (
     <>
       <tr
@@ -64,25 +66,23 @@ const CategoryMonth = ({
         </th>
       </tr>
       {showEnvelopes ? (
-        category.envelopes
-          .filter(envelope => !envelope.hidden)
-          .map((envelope, i) => (
-            <EnvelopeMonth
-              key={envelope.id}
-              envelope={envelope}
-              i={i}
-              budget={budget}
-              editingEnvelope={editingEnvelope}
-              editEnvelope={editEnvelope}
-              reloadBudgetMonth={reloadBudgetMonth}
-              setError={setError}
-            ></EnvelopeMonth>
-          ))
+        envelopes.map((envelope, i) => (
+          <EnvelopeMonth
+            key={envelope.id}
+            envelope={envelope}
+            i={i}
+            budget={budget}
+            editingEnvelope={editingEnvelope}
+            editEnvelope={editEnvelope}
+            reloadBudgetMonth={reloadBudgetMonth}
+            setError={setError}
+          ></EnvelopeMonth>
+        ))
       ) : (
         <tr className="bg-gray-50 dark:bg-slate-700 cursor-pointer">
           <td className="whitespace-nowrap pb-2 pl-10 pr-1 text-sm font-medium text-gray-500 dark:text-gray-400 sm:pl-12 overflow-hidden text-ellipsis italic">
             {t('envelopes.envelopesWithCount', {
-              count: category.envelopes.length,
+              count: envelopes.length,
             })}
           </td>
           <td
