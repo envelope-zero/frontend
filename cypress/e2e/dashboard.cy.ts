@@ -160,12 +160,14 @@ describe('Dashboard', () => {
 
     // We need to reload to load everything from the backend, not just the transactions
     cy.reload()
-    cy.clickAndWait('First Envelope')
+    cy.contains('First Envelope').click()
+    cy.awaitLoading()
     cy.contains('First Transaction')
     cy.contains('Second Transaction').should('not.exist')
 
     cy.visit('/')
-    cy.clickAndWait('Second Envelope')
+    cy.contains('Second Envelope').click()
+    cy.awaitLoading()
     cy.contains('Second Transaction')
     cy.contains('First Transaction').should('not.exist')
   })
