@@ -37,7 +37,7 @@
     "workbox-streams": "6.5.4"
   },
   "devDependencies": {
-    "autoprefixer": "10.4.13",
+    "autoprefixer": "10.4.14",
     "cypress": "12.7.0",
     "eslint-config-prettier": "8.7.0",
     "postcss": "8.4.21",
