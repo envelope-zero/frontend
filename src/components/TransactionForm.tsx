@@ -248,7 +248,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               type="number"
               name="amount"
               label={t('transactions.amount')}
-              value={transaction.amount || ''}
+              value={transaction.amount ?? ''}
               onChange={e => updateValue('amount', Number(e.target.value))}
               options={{
                 disabled: transaction.reconciled || false,
