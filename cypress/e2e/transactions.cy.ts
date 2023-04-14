@@ -117,7 +117,7 @@ describe('Transactions', () => {
     cy.getByTitle('Create Transaction').click()
     cy.awaitLoading()
 
-    cy.getInputFor('Amount').type('100')
+    cy.getInputFor('Amount').type('0.04')
 
     cy.getInputFor('Source').type('Bank ac')
     cy.contains('Bank account').click()
@@ -127,19 +127,19 @@ describe('Transactions', () => {
 
     cy.clickAndWait('Save')
     cy.contains('Bank account → Cash')
-    cy.contains('±100.00')
+    cy.contains('±0.04')
 
     cy.contains('Accounts').click()
     cy.contains('Bank account').click()
     cy.get('h2').contains('Transactions')
     cy.contains('Bank account → Cash')
-    cy.contains('-100.00')
+    cy.contains('-0.04')
 
     cy.contains('Accounts').click()
     cy.contains('Cash').click()
     cy.get('h2').contains('Transactions')
     cy.contains('Bank account → Cash')
-    cy.contains('+100.00')
+    cy.contains('+0.04')
   })
 
   it('can create a new account', () => {
