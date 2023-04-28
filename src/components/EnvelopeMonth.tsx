@@ -77,7 +77,7 @@ const EnvelopeMonth = ({
     >
       <td>
         <Link
-          to={`/transactions?envelope=${envelope.id}`}
+          to={`/envelopes/${envelope.id}`}
           className="h-full block whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 dark:text-gray-300 sm:pl-6 overflow-hidden text-ellipsis"
         >
           {envelope.name}
@@ -172,9 +172,11 @@ const EnvelopeMonth = ({
             : 'text-gray-500 dark:text-gray-400'
         }`}
       >
-        {formatMoney(envelope.spent, budget.currency, {
-          hideZero: true,
-        })}
+        <Link to={`/transactions?envelope=${envelope.id}`}>
+          {formatMoney(envelope.spent, budget.currency, {
+            hideZero: true,
+          })}
+        </Link>
       </td>
       <td
         className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 py-4 text-sm text-right ${
@@ -183,10 +185,12 @@ const EnvelopeMonth = ({
             : 'text-gray-500 dark:text-gray-400'
         }`}
       >
-        {formatMoney(envelope.balance, budget.currency, {
-          hideZero: true,
-          signDisplay: 'auto',
-        })}
+        <Link to={`/transactions?envelope=${envelope.id}`}>
+          {formatMoney(envelope.balance, budget.currency, {
+            hideZero: true,
+            signDisplay: 'auto',
+          })}
+        </Link>
       </td>
     </tr>
   )
