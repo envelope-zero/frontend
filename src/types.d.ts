@@ -158,3 +158,7 @@ export type FilterOptions = {
 }
 
 export type Theme = 'dark' | 'light' | 'default'
+
+export type QuickAllocationMode =
+  | 'ALLOCATE_LAST_MONTH_BUDGET'
+  | 'ALLOCATE_LAST_MONTH_SPEND'

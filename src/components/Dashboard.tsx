@@ -18,6 +18,7 @@ import {
 } from '../lib/dates'
 import CategoryMonth from './CategoryMonth'
 import MonthPicker from './MonthPicker'
+import QuickAllocationForm from './QuickAllocationForm'
 
 type DashboardProps = { budget: Budget }
 
@@ -59,12 +60,16 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
   const useNativeMonthPicker = isSupported.inputTypeMonth()
 
-  const loadBudgetMonth = useCallback(async () => {
-    const [year, month] = activeMonth.split('-')
+  const replaceMonthInLinks = useCallback(
+    (link: string) => {
+      const [year, month] = activeMonth.split('-')
+      return link.replace('YYYY', year).replace('MM', month)
+    },
+    [activeMonth]
+  )
 
-    return get(
-      budget.links.groupedMonth.replace('YYYY', year).replace('MM', month)
-    )
+  const loadBudgetMonth = useCallback(async () => {
+    return get(replaceMonthInLinks(budget.links.groupedMonth))
       .then(data => {
         setBudgetMonth(data)
         if (error) {
@@ -79,6 +84,11 @@ const Dashboard = ({ budget }: DashboardProps) => {
   useEffect(() => {
     loadBudgetMonth().then(() => setIsLoading(false))
   }, [loadBudgetMonth, budget, activeMonth])
+
+  const reloadBudgetMonth = () => {
+    setIsLoading(true)
+    loadBudgetMonth().then(() => setIsLoading(false))
+  }
 
   return (
     <div className="dashboard">
@@ -165,6 +175,12 @@ const Dashboard = ({ budget }: DashboardProps) => {
             <div className="text-gray-500 dark:text-gray-400 font-medium">
               {t('dashboard.available')}
             </div>
+          </div>
+          <div className="box text-center py-2 px-4 text-sm font-medium">
+            <QuickAllocationForm
+              link={replaceMonthInLinks(budget.links.monthAllocations)}
+              reloadBudgetMonth={reloadBudgetMonth}
+            />
           </div>
 
           <div className="px-4 sm:px-6 lg:px-8">
@@ -253,8 +269,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                             editingEnvelope={editingEnvelope}
                             editEnvelope={setEditingEnvelope}
                             reloadBudgetMonth={() => {
-                              setIsLoading(true)
-                              loadBudgetMonth().then(() => setIsLoading(false))
+                              reloadBudgetMonth()
                             }}
                             setError={setError}
                           />
