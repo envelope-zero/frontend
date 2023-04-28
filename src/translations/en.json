@@ -136,13 +136,19 @@
   },
   "dashboard": {
     "available": "Available to budget",
+    "quickAllocation": "Quick Allocation",
     "allocation": "Allocation",
     "allocationForEnvelope": "Allocation for {{envelope}}",
     "allocationForEnvelopeMonth": "Allocation for {{envelope}} ({{month}})",
     "balance": "Balance",
     "spent": "Spent",
     "selectMonth": "Select Month",
-    "goToCurrentMonth": "Go to current month"
+    "goToCurrentMonth": "Go to current month",
+    "quickAllocationMode": {
+      "allocateBasedOn": "Allocate based on...",
+      "ALLOCATE_LAST_MONTH_BUDGET": "Last month's allocation",
+      "ALLOCATE_LAST_MONTH_SPEND": "Last month's spending"
+    }
   },
   "envelopeMonth": {
     "absoluteAllocation": "Set to amount",

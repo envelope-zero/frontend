@@ -50,12 +50,12 @@ describe('Dashboard', () => {
     })
   })
 
-  it('can switch between the months', () => {
-    const currentMonth = new Intl.DateTimeFormat('en', {
-      month: 'long',
-      year: 'numeric',
-    }).format(new Date())
+  const currentMonth = new Intl.DateTimeFormat('en', {
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date())
 
+  it('can switch between the months', () => {
     cy.contains(currentMonth)
 
     cy.visit('#', { qs: { month: '2020-02' } })
@@ -170,5 +170,24 @@ describe('Dashboard', () => {
     cy.awaitLoading()
     cy.contains('Second Transaction')
     cy.contains('First Transaction').should('not.exist')
+  })
+
+  it('can quickly allocate funds to all envelopes', () => {
+    cy.contains(currentMonth)
+    cy.visit('#', { qs: { month: '2023-04' } })
+    cy.awaitLoading()
+
+    // set allocation
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
+    cy.getInputFor('Set to amount').type('12.00')
+    cy.get('button[type="submit"]').click()
+    cy.awaitLoading()
+
+    cy.visit('#', { qs: { month: '2023-05' } })
+    cy.awaitLoading()
+    cy.contains('-12.00 Available to budget')
+    cy.get('select').select("Last month's allocation")
+    cy.clickAndWait('Submit')
+    cy.contains('-24.00 Available to budget')
   })
 })
