@@ -148,7 +148,8 @@
       "allocateBasedOn": "Allocate based on...",
       "ALLOCATE_LAST_MONTH_BUDGET": "Last month's allocation",
       "ALLOCATE_LAST_MONTH_SPEND": "Last month's spending"
-    }
+    },
+    "quickAllocationExplanation": "Automatically allocate funds to envelopes that currently don't have an allocation for this month"
   },
   "envelopeMonth": {
     "absoluteAllocation": "Set to amount",
