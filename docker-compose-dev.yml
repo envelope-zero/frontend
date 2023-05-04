@@ -13,7 +13,7 @@ services:
       CORS_ALLOW_ORIGINS: http://localhost:3000
 
   frontend:
-    image: node:20.0.0-alpine
+    image: node:20.1.0-alpine
     working_dir: /app
     command: ['npm', 'run', 'start']
     ports:
