@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3.5.2
 
-      - uses: cypress-io/github-action@v5.7.1
+      - uses: cypress-io/github-action@v5.7.2
         env:
           PORT: 3001
           # The URL that the react-scripts dev server proxies /api to
