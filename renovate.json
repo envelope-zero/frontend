@@ -1,5 +1,11 @@
 {
-  "extends": ["group:monorepos", "group:recommended"],
+  "extends": [
+    "group:monorepos",
+    "group:recommended",
+    "replacements:all",
+    "workarounds:all",
+    ":ignoreModulesAndTests"
+  ],
   "dependencyDashboard": true,
   "platformAutomerge": true,
   "pre-commit": {
@@ -26,6 +32,15 @@
       "matchPackageNames": ["ghcr.io/envelope-zero/backend"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
+    }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": ["FROM node:(?<currentValue>.*?)-alpine"],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "node",
+      "versioningTemplate": "node"
     }
   ]
 }
