@@ -68,6 +68,7 @@ export type ApiObject = {
 export type UnpersistedTransaction = {
   amount?: string
   date?: string
+  availableFrom?: string
   reconciled?: boolean
   note?: string
   destinationAccountId?: UUID
@@ -79,6 +80,7 @@ export type Transaction = UnpersistedTransaction &
   ApiObject & {
     amount: string
     date: string
+    availableFrom: string
     destinationAccountId: UUID
     sourceAccountId: UUID
     budgetId: UUID
