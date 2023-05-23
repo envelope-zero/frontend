@@ -34,6 +34,11 @@ type Props = {
   reloadAccounts: () => void
 }
 
+const setToFirstOfTheMonth = (date: string) => {
+  const [year, month] = date.split('-')
+  return `${year}-${month}-01`
+}
+
 const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
   const { t }: Translation = useTranslation()
   const { transactionId } = useParams()
@@ -269,6 +274,31 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                 // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
                 if (e.target.value) {
                   updateValue('date', dateToIsoString(e.target.value))
+                }
+              }}
+              options={{ disabled: transaction.reconciled || false }}
+            />
+
+            <FormField
+              type="date"
+              name="availableFrom"
+              label={t('transactions.availableFrom')}
+              note={`(${t('transactions.onlyRelevantForIncome')})`}
+              tooltip={t('transactions.availableFromExplanation')}
+              value={setToFirstOfTheMonth(
+                dateFromIsoString(
+                  transaction.availableFrom ||
+                    transaction.date ||
+                    new Date().toISOString()
+                )
+              )}
+              onChange={e => {
+                // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
+                if (e.target.value) {
+                  updateValue(
+                    'availableFrom',
+                    dateToIsoString(setToFirstOfTheMonth(e.target.value))
+                  )
                 }
               }}
               options={{ disabled: transaction.reconciled || false }}
