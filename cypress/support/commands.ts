@@ -1,7 +1,7 @@
 Cypress.Commands.add('getByTitle', title => cy.get(`[title="${title}"]`))
 
 Cypress.Commands.add('getInputFor', label =>
-  cy.get('label').contains(label).siblings().find('input, textarea, select')
+  cy.contains('label', label).siblings().find('input, textarea, select')
 )
 
 // Clicks the element and then tests that it does not exist any more.
