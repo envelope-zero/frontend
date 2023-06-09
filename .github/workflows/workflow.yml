@@ -15,7 +15,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.3
 
       - name: Cache dependencies
         uses: actions/setup-node@v3
@@ -42,7 +42,7 @@ jobs:
           - 8080:8080
 
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.3
 
       - uses: cypress-io/github-action@v5.8.1
         env:
