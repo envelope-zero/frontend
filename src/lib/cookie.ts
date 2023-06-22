@@ -1,6 +1,7 @@
 const get = (key: string) => {
   return document.cookie
-    ?.split(';')
+    ?.replaceAll('; ', ';')
+    .split(';')
     ?.find(row => row.startsWith(`${key}=`))
     ?.split('=')[1]
 }
