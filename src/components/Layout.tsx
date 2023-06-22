@@ -282,9 +282,6 @@ const Layout = ({ budget, error }: LayoutProps) => {
       )}
 
       <div className={`${hideNav ? '' : 'md:pl-64'} flex flex-col flex-1`}>
-        <div id="headlessui-portal-root">
-          <div />
-        </div>
         <div
           className="sticky top-0 z-10 md:hidden px-6 pt-4 bg-white dark:bg-slate-800"
           ref={headerRef as React.RefObject<HTMLDivElement>}
