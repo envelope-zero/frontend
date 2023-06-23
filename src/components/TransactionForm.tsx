@@ -4,7 +4,11 @@ import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { api } from '../lib/api/base'
-import { dateFromIsoString, dateToIsoString } from '../lib/dates'
+import {
+  dateFromIsoString,
+  dateToIsoString,
+  monthYearFromDate,
+} from '../lib/dates'
 import { safeName } from '../lib/name-helper'
 import {
   Budget,
@@ -23,6 +27,7 @@ import FormFields from './FormFields'
 import FormField from './FormField'
 import Autocomplete from './Autocomplete'
 import InputCurrency from './InputCurrency'
+import isSupported from '../lib/is-supported'
 
 const transactionApi = api('transactions')
 const accountApi = api('accounts')
@@ -280,17 +285,18 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
             />
 
             <FormField
-              type="date"
+              type={isSupported.inputTypeMonth() ? 'month' : 'date'}
               name="availableFrom"
               label={t('transactions.availableFrom')}
               note={`(${t('transactions.onlyRelevantForIncome')})`}
               tooltip={t('transactions.availableFromExplanation')}
-              value={setToFirstOfTheMonth(
-                dateFromIsoString(
-                  transaction.availableFrom ||
-                    transaction.date ||
-                    new Date().toISOString()
-                )
+              value={(isSupported.inputTypeMonth()
+                ? (date: string) => monthYearFromDate(new Date(date))
+                : (date: string) =>
+                    setToFirstOfTheMonth(dateFromIsoString(date)))(
+                transaction.availableFrom ||
+                  transaction.date ||
+                  new Date().toISOString()
               )}
               onChange={e => {
                 // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
