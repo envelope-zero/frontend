@@ -146,6 +146,29 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
       }))
   }
 
+  const isExternal = (accountId: string | undefined) => {
+    if (typeof accountId === 'undefined') {
+      return true
+    }
+
+    const account = accounts.find(acc => acc.id === accountId)
+    if (typeof account === 'undefined') {
+      return true
+    }
+
+    return account.external
+  }
+
+  const isIncome = () => {
+    const hasEnvelope = Boolean(transaction.envelopeId)
+
+    return (
+      !hasEnvelope &&
+      isExternal(transaction.sourceAccountId) &&
+      !isExternal(transaction.destinationAccountId)
+    )
+  }
+
   const accountGroups = [
     {
       title: t('accounts.internalAccounts'),
@@ -384,32 +407,33 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               }}
               options={{ disabled: transaction.reconciled || false }}
             />
-
-            <FormField
-              type={isSupported.inputTypeMonth() ? 'month' : 'date'}
-              name="availableFrom"
-              label={t('transactions.availableFrom')}
-              note={`(${t('transactions.onlyRelevantForIncome')})`}
-              tooltip={t('transactions.availableFromExplanation')}
-              value={(isSupported.inputTypeMonth()
-                ? (date: string) => monthYearFromDate(new Date(date))
-                : (date: string) =>
-                    setToFirstOfTheMonth(dateFromIsoString(date)))(
-                transaction.availableFrom ||
-                  transaction.date ||
-                  new Date().toISOString()
-              )}
-              onChange={e => {
-                // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
-                if (e.target.value) {
-                  updateValue(
-                    'availableFrom',
-                    dateToIsoString(setToFirstOfTheMonth(e.target.value))
-                  )
-                }
-              }}
-              options={{ disabled: transaction.reconciled || false }}
-            />
+            {isIncome() ? (
+              <FormField
+                type={isSupported.inputTypeMonth() ? 'month' : 'date'}
+                name="availableFrom"
+                label={t('transactions.availableFrom')}
+                note={`(${t('transactions.onlyRelevantForIncome')})`}
+                tooltip={t('transactions.availableFromExplanation')}
+                value={(isSupported.inputTypeMonth()
+                  ? (date: string) => monthYearFromDate(new Date(date))
+                  : (date: string) =>
+                      setToFirstOfTheMonth(dateFromIsoString(date)))(
+                  transaction.availableFrom ||
+                    transaction.date ||
+                    new Date().toISOString()
+                )}
+                onChange={e => {
+                  // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
+                  if (e.target.value) {
+                    updateValue(
+                      'availableFrom',
+                      dateToIsoString(setToFirstOfTheMonth(e.target.value))
+                    )
+                  }
+                }}
+                options={{ disabled: transaction.reconciled || false }}
+              />
+            ) : null}
           </FormFields>
 
           {isPersisted ? (
