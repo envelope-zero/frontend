@@ -63,6 +63,8 @@ describe('Transactions', () => {
     cy.getInputFor('Envelope').type('Onl')
     cy.contains('Only one').click()
 
+    cy.contains('Available From').should('not.exist')
+
     cy.clickAndWait('Save')
     cy.contains('Birthday Present (Bank account → Best Friend)')
     cy.contains('-42.70')
@@ -104,8 +106,13 @@ describe('Transactions', () => {
     cy.getInputFor('Destination').type('Bank ac')
     cy.contains('Bank account').click()
 
+    cy.getInputFor('Available From').type('2020-03-12')
+    cy.getInputFor('Available From').should('have.value', '2020-03-01')
+
     cy.getInputFor('Envelope').type('Onl')
     cy.contains('Only one').click()
+
+    cy.contains('Available From').should('not.exist')
 
     cy.clickAndWait('Save')
     cy.contains('Best Friend → Bank account')
