@@ -312,7 +312,7 @@ describe('Transactions', () => {
     cy.contains('other').should('not.exist')
   })
 
-  it.only('can filter transactions', function () {
+  it('can filter transactions', function () {
     const transactionData = {
       sourceAccountId: this.bankAccount.id,
       destinationAccountId: this.externalAccount.id,
