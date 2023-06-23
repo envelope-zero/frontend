@@ -268,48 +268,6 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               <InputCurrency currency={budget.currency} />
             </FormField>
 
-            <FormField
-              type="date"
-              name="date"
-              label={t('transactions.date')}
-              value={dateFromIsoString(
-                transaction.date || new Date().toISOString()
-              )}
-              onChange={e => {
-                // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
-                if (e.target.value) {
-                  updateValue('date', dateToIsoString(e.target.value))
-                }
-              }}
-              options={{ disabled: transaction.reconciled || false }}
-            />
-
-            <FormField
-              type={isSupported.inputTypeMonth() ? 'month' : 'date'}
-              name="availableFrom"
-              label={t('transactions.availableFrom')}
-              note={`(${t('transactions.onlyRelevantForIncome')})`}
-              tooltip={t('transactions.availableFromExplanation')}
-              value={(isSupported.inputTypeMonth()
-                ? (date: string) => monthYearFromDate(new Date(date))
-                : (date: string) =>
-                    setToFirstOfTheMonth(dateFromIsoString(date)))(
-                transaction.availableFrom ||
-                  transaction.date ||
-                  new Date().toISOString()
-              )}
-              onChange={e => {
-                // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
-                if (e.target.value) {
-                  updateValue(
-                    'availableFrom',
-                    dateToIsoString(setToFirstOfTheMonth(e.target.value))
-                  )
-                }
-              }}
-              options={{ disabled: transaction.reconciled || false }}
-            />
-
             <Autocomplete<Account>
               groups={accountGroups}
               allowNewCreation={true}
@@ -409,6 +367,48 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                   updateValue('envelopeId', envelope.id)
                 }
               }}
+            />
+
+            <FormField
+              type="date"
+              name="date"
+              label={t('transactions.date')}
+              value={dateFromIsoString(
+                transaction.date || new Date().toISOString()
+              )}
+              onChange={e => {
+                // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
+                if (e.target.value) {
+                  updateValue('date', dateToIsoString(e.target.value))
+                }
+              }}
+              options={{ disabled: transaction.reconciled || false }}
+            />
+
+            <FormField
+              type={isSupported.inputTypeMonth() ? 'month' : 'date'}
+              name="availableFrom"
+              label={t('transactions.availableFrom')}
+              note={`(${t('transactions.onlyRelevantForIncome')})`}
+              tooltip={t('transactions.availableFromExplanation')}
+              value={(isSupported.inputTypeMonth()
+                ? (date: string) => monthYearFromDate(new Date(date))
+                : (date: string) =>
+                    setToFirstOfTheMonth(dateFromIsoString(date)))(
+                transaction.availableFrom ||
+                  transaction.date ||
+                  new Date().toISOString()
+              )}
+              onChange={e => {
+                // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
+                if (e.target.value) {
+                  updateValue(
+                    'availableFrom',
+                    dateToIsoString(setToFirstOfTheMonth(e.target.value))
+                  )
+                }
+              }}
+              options={{ disabled: transaction.reconciled || false }}
             />
           </FormFields>
 
