@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import {
   BanknotesIcon,
+  DocumentArrowUpIcon,
   EnvelopeIcon,
   PlusIcon,
 } from '@heroicons/react/24/outline'
@@ -151,6 +152,12 @@ const TransactionsList = ({ budget, accounts }: Props) => {
           )}
         </h1>
         <div className="header--action full-centered">
+          <Link
+            to="/transaction-import"
+            title={t('transactions.import.importTransactions')}
+          >
+            <DocumentArrowUpIcon className="icon-red" />
+          </Link>
           <Link to="/transactions/new" title={t('transactions.create')}>
             <PlusIcon className="icon-red" />
           </Link>
