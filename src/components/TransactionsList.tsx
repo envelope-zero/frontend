@@ -151,19 +151,63 @@ const TransactionsList = ({ budget, accounts }: Props) => {
           )}
         </h1>
         <div className="header--action full-centered">
-          <button
-            type="button"
-            onClick={() => setShowFilters(!showFilters)}
-            title={t('filterResource', {
-              resource: t('transactions.transactions'),
-            })}
-          >
-            <FunnelIcon className="icon-red icon-sm" />
-          </button>
           <Link to="/transactions/new" title={t('transactions.create')}>
             <PlusIcon className="icon-red" />
           </Link>
         </div>
+      </div>
+
+      <SearchBar
+        resourceLabel={t('transactions.transactions')}
+        value={searchParams.get('search')}
+        onSubmit={search => {
+          if (search) {
+            searchParams.set('search', search)
+            setSearchParams(searchParams)
+          } else {
+            searchParams.delete('search')
+            setSearchParams(searchParams)
+          }
+        }}
+      />
+
+      <div className="mb-2 flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setShowFilters(!showFilters)}
+          title={t('filterResource', {
+            resource: t('transactions.transactions'),
+          })}
+        >
+          <FunnelIcon className="icon-red icon-sm" />
+        </button>
+
+        {Object.keys(activeFilters).map(filter => {
+          const value = activeFilters[filter as keyof FilterOptions]
+          if (filter === 'note' || typeof value === 'undefined') {
+            return null
+          }
+
+          const label = displayValue(filter as keyof FilterOptions, value)
+
+          return (
+            <button
+              key={filter}
+              className="rounded-full full-centered border border-red-800 dark:border-red-600 bg-white dark:bg-slate-800 px-2.5 py-1.5 text-sm font-medium text-red-800 hover:text-red-900 dark:text-red-600 max-w-full truncate group"
+              type="button"
+              onClick={() => {
+                searchParams.delete(filter)
+                setSearchParams(searchParams)
+              }}
+              title={t('filters.removeFilter', {
+                filter: t(`transactions.filters.${filter}`),
+              })}
+            >
+              {label}
+              <XMarkIcon className="icon-sm ml-1 inline" />
+            </button>
+          )
+        })}
       </div>
 
       {showFilters ? (
@@ -187,51 +231,6 @@ const TransactionsList = ({ budget, accounts }: Props) => {
               setSearchParams(updatedSearchParams)
             }}
           ></TransactionFilters>
-        </div>
-      ) : null}
-
-      <SearchBar
-        resourceLabel={t('transactions.transactions')}
-        value={searchParams.get('search')}
-        onSubmit={search => {
-          if (search) {
-            searchParams.set('search', search)
-            setSearchParams(searchParams)
-          } else {
-            searchParams.delete('search')
-            setSearchParams(searchParams)
-          }
-        }}
-      />
-
-      {Object.values(activeFilters).some(value => !!value) ? (
-        <div className="mb-2 flex flex-wrap items-center gap-2">
-          {Object.keys(activeFilters).map(filter => {
-            const value = activeFilters[filter as keyof FilterOptions]
-            if (filter === 'note' || typeof value === 'undefined') {
-              return null
-            }
-
-            const label = displayValue(filter as keyof FilterOptions, value)
-
-            return (
-              <button
-                key={filter}
-                className="rounded-full full-centered border border-red-800 dark:border-red-600 bg-white dark:bg-slate-800 px-2.5 py-1.5 text-sm font-medium text-red-800 hover:text-red-900 dark:text-red-600 max-w-full truncate group"
-                type="button"
-                onClick={() => {
-                  searchParams.delete(filter)
-                  setSearchParams(searchParams)
-                }}
-                title={t('filters.removeFilter', {
-                  filter: t(`transactions.filters.${filter}`),
-                })}
-              >
-                {label}
-                <XMarkIcon className="icon-sm ml-1 inline" />
-              </button>
-            )
-          })}
         </div>
       ) : null}
 
