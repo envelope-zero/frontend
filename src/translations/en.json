@@ -57,7 +57,7 @@
       "importBudget": "Import Budget",
       "importInstead": "Import an existing budget from YNAB 4 instead",
       "shortDescription": "Import an existing budget from YNAB 4",
-      "description": "You can import your YNAB 4 budget here. This will create a new EZ budget with all your transactions, categories, and accounts from YNAB so that you can continue right where you left off.\nSee <a class='link-blue' href='https://github.com/envelope-zero/backend/blob/main/docs/import.md#how-to-import'>here</a> for instructions on where to find your YNAB data file.",
+      "description": "You can import your YNAB 4 budget here. This will create a new EZ budget with all your transactions, categories, and accounts from YNAB so that you can continue right where you left off.\nSee <a class='link-blue' href='https://l.envelope-zero.org/import-ynab4'>here</a> for instructions on where to find your YNAB data file.",
       "importedBudget": "Imported Budget",
       "budgetName": "Budget Name",
       "file": "File"
