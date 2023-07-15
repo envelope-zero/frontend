@@ -1,26 +1,26 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { Account, Translation } from '../types'
-import Error from './Error'
-import FormFields from './FormFields'
-import FormField from './FormField'
-import { checkStatus, parseJSON } from '../lib/fetch-helper'
-import LoadingSpinner from './LoadingSpinner'
-import Autocomplete from './Autocomplete'
-import { safeName } from '../lib/name-helper'
+import { Link } from 'react-router-dom'
+import { Account, TransactionPreview, Translation } from '../../types'
+import { checkStatus, parseJSON } from '../../lib/fetch-helper'
+import Error from '../Error'
+import FormFields from '../FormFields'
+import FormField from '../FormField'
+import Autocomplete from '../Autocomplete'
+import LoadingSpinner from '../LoadingSpinner'
+import { safeName } from '../../lib/name-helper'
 
-type Props = { accounts: Account[] }
+type Props = {
+  accounts: Account[]
+  isLoading: boolean
+  setIsLoading: (isLoading: boolean) => void
+  setResult: (result: TransactionPreview[], targetAccountId: string) => void
+}
 
-const TransactionImport = (props: Props) => {
+const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
   const { t }: Translation = useTranslation()
   const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const [accountId, setAccountId] = useState('')
-
-  const accounts = props.accounts.filter(
-    account => !account.external && !account.hidden
-  )
 
   return (
     <form
@@ -31,6 +31,7 @@ const TransactionImport = (props: Props) => {
         setIsLoading(true)
 
         // TODO: parse through ynap (https://www.npmjs.com/package/ynap-parsers)
+        // note to self: I have a WIP of this stashed
 
         fetch(`/api/v1/import/ynab-import-preview?accountId=${accountId}`, {
           method: 'POST',
@@ -43,8 +44,7 @@ const TransactionImport = (props: Props) => {
             if (error) {
               setError('')
             }
-            console.log(body)
-            // TODO
+            setResult(body.data, accountId)
           })
           .catch(error => {
             setIsLoading(false)
@@ -106,4 +106,4 @@ const TransactionImport = (props: Props) => {
   )
 }
 
-export default TransactionImport
+export default Form

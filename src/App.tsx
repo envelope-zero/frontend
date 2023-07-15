@@ -188,7 +188,9 @@ const App = () => {
               />
               <Route
                 path="transaction-import"
-                element={<TransactionImport accounts={accounts} />}
+                element={
+                  <TransactionImport accounts={accounts} budget={budget} />
+                }
               />
               <Route
                 path="envelopes"

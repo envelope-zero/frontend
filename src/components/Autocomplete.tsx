@@ -1,5 +1,5 @@
 import { UUID } from '../types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { Translation, ArchivableResource } from '../types'
@@ -52,6 +52,12 @@ const Autocomplete = <T extends ArchivableResource>({
   const isArchived = (item: T) => {
     return item.hidden
   }
+
+  useEffect(() => {
+    if (value?.name !== query) {
+      setQuery(value?.name || '')
+    }
+  }, [value]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const filteredGroups = (
     query === ''
