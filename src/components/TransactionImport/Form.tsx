@@ -30,9 +30,6 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
 
         setIsLoading(true)
 
-        // TODO: parse through ynap (https://www.npmjs.com/package/ynap-parsers)
-        // note to self: I have a WIP of this stashed
-
         fetch(`/api/v1/import/ynab-import-preview?accountId=${accountId}`, {
           method: 'POST',
           body: new FormData(event.target as HTMLFormElement),
@@ -70,6 +67,17 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
           <p className="pt-4 whitespace-pre-line dark:text-gray-400">
             {t('transactions.import.description')}
           </p>
+          <h2 className="mt-4">{t('transactions.import.howTo.title')}</h2>
+          <ol className="list-decimal ml-4 pt-4 whitespace-pre-line dark:text-gray-400">
+            {['download', 'parse', 'upload'].map(step => (
+              <li
+                key={step}
+                dangerouslySetInnerHTML={{
+                  __html: t(`transactions.import.howTo.${step}`),
+                }}
+              />
+            ))}
+          </ol>
           <FormFields>
             <Autocomplete<Account>
               groups={[{ items: accounts }]}
@@ -94,12 +102,6 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
               options={{ required: true }}
             ></FormField>
           </FormFields>
-          <p
-            className="pt-4 whitespace-pre-line dark:text-gray-400"
-            dangerouslySetInnerHTML={{
-              __html: t('transactions.import.ynapCredits'),
-            }}
-          ></p>
         </>
       )}
     </form>

@@ -18,6 +18,7 @@ describe('Transaction Import', () => {
           createAccount({ name: 'External Account', external: true }, budget),
         ])
       ).then(([ownAccount, otherOwnAccount, externalAccount]: Account[]) => {
+        cy.wrap(externalAccount).as('externalAccount')
         // select budget
         cy.visit('/').get('h3').contains('My Budget').click()
       })
@@ -50,7 +51,10 @@ describe('Transaction Import', () => {
       .should('have.value', 'My Account')
       .should('be.disabled')
     cy.getInputFor('Destination').should('have.value', 'Non Existing Account')
-    // TODO: and only result in destination drop down is 'Create "Non Existing Account"'
+    // only result in destination drop down is 'Create "Non Existing Account"'
+    cy.getInputFor('Destination').type('{downArrow}')
+    cy.get('ul').find('li').should('have.length', 1)
+    cy.get('li').contains('Create "Non Existing Account"')
     cy.getInputFor('Destination').clear().type('EDITED ACCOUNT{enter}')
     cy.getInputFor('Date').should('have.value', '2023-06-20')
 
@@ -69,16 +73,23 @@ describe('Transaction Import', () => {
 
     // import this transaction
     cy.get('button').contains('Import').click()
+    cy.contains('Successfully imported')
 
-    // account "EDITED ACCOUNT" has been created
-    cy.wrap(listAccounts(this.budget))
-      .then((accounts: Account[]) => Cypress._.map(accounts, 'name'))
+    // account has been created
+    cy.wrap(null)
+      .then(() =>
+        listAccounts(this.budget).then((accounts: Account[]) =>
+          Cypress._.map(accounts, 'name')
+        )
+      )
       .should('include', 'EDITED ACCOUNT')
 
     // transaction has been created
-    cy.wrap(listTransactions(this.budget))
-      .then((transactions: Transaction[]) =>
-        Cypress._.map(transactions, 'note')
+    cy.wrap(null)
+      .then(() =>
+        listTransactions(this.budget).then((transactions: Transaction[]) =>
+          Cypress._.map(transactions, 'note')
+        )
       )
       .should('have.length', 1)
       .and('include', 'MY NOTE')
@@ -87,7 +98,15 @@ describe('Transaction Import', () => {
     cy.contains('2 of 4')
     cy.getByTitle('Previous Transaction').should('be.disabled')
     cy.getInputFor('Source').should('have.value', 'My Other Account')
-    // TODO: dropdown results in source should be "My Other Account" & 'Create "My Other Account"'
+    // dropdown results in source should be "My Other Account" & 'Create "My Other Account"'
+    cy.getInputFor('Source').type('{downArrow}')
+    cy.get('ul').find('li').should('have.length', 2)
+    cy.get('li').contains(/^My Other Account$/) // match "My Other Account" exactly
+    cy.get('li').contains('Create "My Other Account"')
+    // newly created account is available for selection
+    cy.getInputFor('Source').clear().type('EDITE')
+    cy.contains('EDITED ACCOUNT')
+
     cy.getInputFor('Destination')
       .should('have.value', 'My Account')
       .should('be.disabled')
@@ -96,10 +115,8 @@ describe('Transaction Import', () => {
     cy.getByTitle('Next Transaction').click()
 
     // there is still only one transaction
-    cy.wrap(listTransactions(this.budget))
-      .then((transactions: Transaction[]) =>
-        Cypress._.map(transactions, 'note')
-      )
+    cy.wrap(null)
+      .then(() => listTransactions(this.budget))
       .should('have.length', 1)
 
     // third transaction
@@ -108,12 +125,11 @@ describe('Transaction Import', () => {
 
     // delete this transaction
     cy.get('button').contains('Delete').click()
+    cy.contains('Successfully deleted')
 
     // there is still only one transaction
-    cy.wrap(listTransactions(this.budget))
-      .then((transactions: Transaction[]) =>
-        Cypress._.map(transactions, 'note')
-      )
+    cy.wrap(null)
+      .then(() => listTransactions(this.budget))
       .should('have.length', 1)
 
     // deleted transaction is skipped
@@ -129,10 +145,29 @@ describe('Transaction Import', () => {
     cy.getByTitle('Next Transaction').should('be.disabled')
 
     // now there are two transactions
-    cy.wrap(listTransactions(this.budget))
-      .then((transactions: Transaction[]) =>
-        Cypress._.map(transactions, 'note')
-      )
+    cy.wrap(null)
+      .then(() => listTransactions(this.budget))
       .should('have.length', 2)
+
+    // one transaction connected to existing account "External Account"
+    cy.wrap(null)
+      .then(() => listTransactions(this.externalAccount))
+      .should('have.length', 1)
+
+    // import the last remaining transaction
+    cy.get('button').contains('Import').click()
+    cy.contains('Import complete')
+
+    // upload the same file again – duplicate detection
+    cy.getByTitle('Import Transactions').click()
+    cy.awaitLoading()
+
+    cy.getInputFor('Account').type('My account{enter}')
+    cy.getInputFor('File').selectFile(
+      'cypress/fixtures/transactions-parsed.csv'
+    )
+
+    cy.clickAndWait('Submit')
+    cy.contains('This is a duplicate of an existing transaction')
   })
 })
