@@ -189,7 +189,11 @@ const App = () => {
               <Route
                 path="transaction-import"
                 element={
-                  <TransactionImport accounts={accounts} budget={budget} />
+                  <TransactionImport
+                    accounts={accounts}
+                    budget={budget}
+                    setNotification={setNotification}
+                  />
                 }
               />
               <Route

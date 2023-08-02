@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCallback, useEffect, useState } from 'react'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import {
@@ -22,6 +22,7 @@ import { api } from '../../lib/api/base'
 import { safeName } from '../../lib/name-helper'
 import Error from '../Error'
 import Autocomplete from '../Autocomplete'
+import InfoBox from '../InfoBox'
 
 type Props = {
   accounts: Account[]
@@ -29,30 +30,29 @@ type Props = {
   budget: Budget
   isLoading: boolean
   setIsLoading: (isLoading: boolean) => void
+  setNotification: (notification: string) => void
   targetAccountId: string
 }
 
 const categoryApi = api('categories')
+const accountApi = api('accounts')
+const transactionApi = api('transactions')
 
-const Result = ({
-  accounts,
-  transactions,
-  budget,
-  isLoading,
-  setIsLoading,
-  targetAccountId,
-}: Props) => {
+const Result = (props: Props) => {
+  const { budget, isLoading, setIsLoading, targetAccountId } = props
+
   const { t }: Translation = useTranslation()
+  const navigate = useNavigate()
+
+  const [accounts, setAccounts] = useState(props.accounts)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [transactions, setTransactions] = useState([...props.transactions])
   const [groupedEnvelopes, setGroupedEnvelopes] = useState<GroupedEnvelopes>([])
   const [error, setError] = useState('')
   const [sourceAccountToCreate, setSourceAccountToCreate] =
     useState<UnpersistedAccount>()
   const [destinationAccountToCreate, setDestinationAccountToCreate] =
     useState<UnpersistedAccount>()
-
-  const hidePrevButton = currentIndex <= 0
-  const hideNextButton = currentIndex >= transactions.length - 1
 
   useEffect(() => {
     if (!isLoading) {
@@ -113,13 +113,93 @@ const Result = ({
     ]
   }, [accounts]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const previousIndex = useCallback(() => {
+    let prevIndex = currentIndex - 1
+    while (transactions[prevIndex]?.processed) {
+      prevIndex--
+    }
+    return prevIndex
+  }, [currentIndex, transactions])
+
   const currentTransaction = useCallback(() => {
     return transactions[currentIndex].transaction
   }, [currentIndex, transactions])
 
+  const nextIndex = useCallback(() => {
+    let index = currentIndex + 1
+    while (transactions[index]?.processed) {
+      index++
+    }
+    return index
+  }, [currentIndex, transactions])
+
   const updateValue = (name: keyof Transaction, value: any) => {
-    console.log(`let's pretend ${name} is ${value} now`)
+    const tmpTransactions = [...transactions]
+    tmpTransactions[currentIndex].transaction = {
+      ...transactions[currentIndex].transaction,
+      [name]: value,
+    }
+    setTransactions(tmpTransactions)
   }
+
+  const updatePreviewValue = (name: keyof TransactionPreview, value: any) => {
+    const tmpTransactions = [...transactions]
+    tmpTransactions[currentIndex] = {
+      ...tmpTransactions[currentIndex],
+      [name]: value,
+    }
+    setTransactions(tmpTransactions)
+  }
+
+  const createTransaction = async () => {
+    const transaction = currentTransaction()
+    let { sourceAccountId, destinationAccountId } = transaction
+    const accountCreations = []
+    if (sourceAccountToCreate) {
+      accountCreations.push(
+        accountApi
+          .create({ ...sourceAccountToCreate, external: true }, budget)
+          .then(createdAccount => {
+            sourceAccountId = createdAccount.id
+            return createdAccount
+          })
+      )
+    }
+    if (destinationAccountToCreate) {
+      accountCreations.push(
+        accountApi
+          .create({ ...destinationAccountToCreate, external: true }, budget)
+          .then(createdAccount => {
+            destinationAccountId = createdAccount.id
+            return createdAccount
+          })
+      )
+    }
+
+    return Promise.all(accountCreations).then(createdAccounts => {
+      if (createdAccounts.length > 0) {
+        setAccounts([...accounts, ...createdAccounts])
+      }
+      transactionApi.create(
+        { ...transaction, sourceAccountId, destinationAccountId },
+        budget
+      )
+    })
+  }
+
+  const goToNextTransaction = () => {
+    if (nextIndex() <= transactions.length - 1) {
+      setCurrentIndex(nextIndex())
+    } else if (previousIndex() >= 0) {
+      setCurrentIndex(previousIndex())
+    } else {
+      props.setNotification(t('transactions.import.complete'))
+      navigate('/transactions')
+    }
+  }
+
+  const hidePrevButton = previousIndex() < 0
+  const hideNextButton = nextIndex() > transactions.length - 1
 
   return (
     <>
@@ -139,22 +219,24 @@ const Result = ({
           disabled={hidePrevButton}
           className={`icon mr-4 ${hidePrevButton ? 'opacity-20' : ''}`}
           onClick={() => {
-            setCurrentIndex(currentIndex - 1)
+            setCurrentIndex(previousIndex())
           }}
         >
           <ChevronLeftIcon />
         </button>
-        {t('indexOfLength', {
-          index: currentIndex + 1,
-          length: transactions.length,
-        })}
+        <span>
+          {t('indexOfLength', {
+            index: currentIndex + 1,
+            length: transactions.length,
+          })}
+        </span>
         <button
           type="button"
           title={t('transactions.import.next')}
           disabled={hideNextButton}
           className={`icon ml-4 ${hideNextButton ? 'opacity-20' : ''}`}
           onClick={() => {
-            setCurrentIndex(currentIndex + 1)
+            setCurrentIndex(nextIndex())
           }}
         >
           <ChevronRightIcon />
@@ -165,7 +247,9 @@ const Result = ({
         <Error error={error} />
       </div>
 
-      {/* TODO: handle duplicates */}
+      {transactions[currentIndex].duplicateTransactionIds.length > 0 && (
+        <InfoBox text={t('transactions.import.duplicateDetected')} />
+      )}
 
       <FormFields>
         <FormField
@@ -197,6 +281,7 @@ const Result = ({
             if (!account.id) {
               setSourceAccountToCreate(account)
               updateValue('sourceAccountId', undefined)
+              updatePreviewValue('sourceAccountName', account.name || '')
             } else {
               setSourceAccountToCreate(undefined)
               updateValue('sourceAccountId', account.id)
@@ -222,6 +307,7 @@ const Result = ({
             if (!account.id) {
               setDestinationAccountToCreate(account)
               updateValue('destinationAccountId', undefined)
+              updatePreviewValue('destinationAccountName', account.name || '')
             } else {
               setDestinationAccountToCreate(undefined)
               updateValue('destinationAccountId', account.id)
@@ -283,7 +369,9 @@ const Result = ({
         <button
           type="button"
           onClick={() => {
-            // TODO
+            updatePreviewValue('processed', true) // TODO: this might be problematic as soon as we introduce "import all" – we'll need to make sure these transactions are ignored
+            props.setNotification(t('transactions.import.deleteSuccess'))
+            goToNextTransaction()
           }}
           className="btn-secondary col-span-1 full-centered"
         >
@@ -293,10 +381,15 @@ const Result = ({
         <button
           type="button"
           onClick={() => {
-            // TODO
-            // notes:
-            // remember sourceAccountToCreate & destinationAccountToCreate
-            // make sure numbers in header stay the same but this transaction is skipped on navigation
+            createTransaction()
+              .then(() => {
+                updatePreviewValue('processed', true)
+                props.setNotification(t('transactions.import.importSuccess'))
+                goToNextTransaction()
+              })
+              .catch(err => {
+                setError(err.message)
+              })
           }}
           className="btn-secondary link-blue col-span-1 full-centered"
         >

@@ -95,6 +95,7 @@ export type TransactionPreview = {
   sourceAccountName: string
   destinationAccountName: string
   duplicateTransactionIds: string[]
+  processed?: boolean
 }
 
 export type GroupedEnvelopes = { title?: string; items: Envelope[] }[]

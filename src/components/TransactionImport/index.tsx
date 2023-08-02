@@ -3,7 +3,11 @@ import { Account, Budget, TransactionPreview } from '../../types'
 import Form from './Form'
 import Result from './Result'
 
-type Props = { accounts: Account[]; budget: Budget }
+type Props = {
+  accounts: Account[]
+  budget: Budget
+  setNotification: (notification: string) => void
+}
 
 const TransactionImport = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -35,6 +39,7 @@ const TransactionImport = (props: Props) => {
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         targetAccountId={targetAccountId}
+        setNotification={props.setNotification}
       />
     )
   }

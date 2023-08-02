@@ -31,7 +31,7 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
         setIsLoading(true)
 
         // TODO: parse through ynap (https://www.npmjs.com/package/ynap-parsers)
-        // note to self: I have a WIP of this stashed
+        // TODO: I should at least adjust the text to let ppl know they have to parse it themselves
 
         fetch(`/api/v1/import/ynab-import-preview?accountId=${accountId}`, {
           method: 'POST',

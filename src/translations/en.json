@@ -91,7 +91,11 @@
       "description": "Import a list of transactions (for example a downloaded bank statement). \n\nYou will be able to review the parsed transactions before they are saved.",
       "ynapCredits": "Uploads are parsed in your browser, powered by <a class='link-blue' href='https://ynap.leolabs.org/'>YNAP</a>. A list of all currently supported banks can be found <a class='link-blue' href='https://ynap.leolabs.org/supported-formats/'>here</a>.",
       "previous": "Previous Transaction",
-      "next": "Next Transaction"
+      "next": "Next Transaction",
+      "importSuccess": "Successfully imported",
+      "deleteSuccess": "Successfully deleted",
+      "duplicateDetected": "This is a duplicate of an existing transaction",
+      "complete": "Import complete"
     },
     "from": "From",
     "to": "To",
