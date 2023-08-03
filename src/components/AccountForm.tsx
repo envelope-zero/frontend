@@ -15,7 +15,7 @@ import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 import InputCurrency from './InputCurrency'
 import { dateFromIsoString, dateToIsoString } from '../lib/dates'
 import ArchiveButton from './ArchiveButton'
-import Notification from './Notification'
+import InfoBox from './InfoBox'
 
 const accountApi = api('accounts')
 
@@ -110,7 +110,7 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
       <Error error={error} />
 
       {account.hidden ? (
-        <Notification
+        <InfoBox
           text={t('archivedObjectInformation', {
             object: t('accounts.account'),
           })}

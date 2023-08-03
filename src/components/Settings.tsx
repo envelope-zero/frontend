@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Translation, Budget, Theme } from '../types'
 import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 import { useState } from 'react'
-import Alert from './Alert'
+import Notification from './Notification'
 import { updateBudget } from '../lib/api/budgets'
 import Error from './Error'
 
@@ -41,7 +41,7 @@ const Settings = ({ budget, setBudget, theme, setTheme }: Props) => {
       </div>
 
       <Error error={error} />
-      {changesSaved && <Alert>{t('changesSaved')}</Alert>}
+      {changesSaved && <Notification>{t('changesSaved')}</Notification>}
 
       <div>
         <h2 className="text-base font-medium text-gray-700 dark:text-gray-300 pl-4 pb-2">

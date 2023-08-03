@@ -1,14 +1,14 @@
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 
-type Props = { text: string }
+type Props = { children: string }
 
-const Notification = ({ text }: Props) => {
+const Alert = ({ children }: Props) => {
   return (
-    <div className="flex bg-blue-100/[.75] text-blue-900 p-2 rounded-md">
-      <InformationCircleIcon className="icon inline mr-1" />
-      {text}
+    <div className="alert mb-3">
+      <InformationCircleIcon className="icon text-green-800 inline mr-1" />
+      {children}
     </div>
   )
 }
 
-export default Notification
+export default Alert
