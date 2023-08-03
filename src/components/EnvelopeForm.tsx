@@ -23,7 +23,7 @@ import LatestTransactions from './LatestTransactions'
 import LoadingSpinner from './LoadingSpinner'
 import RemainingHeightContainer from './RemainingHeightContainer'
 import ArchiveButton from './ArchiveButton'
-import Notification from './Notification'
+import InfoBox from './InfoBox'
 
 const envelopeApi = api('envelopes')
 const categoryApi = api('categories')
@@ -120,7 +120,7 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
       ) : (
         <>
           {envelope.hidden ? (
-            <Notification
+            <InfoBox
               text={t('archivedObjectInformation', {
                 object: t('envelopes.envelope'),
               })}

@@ -8,7 +8,7 @@ import LoadingSpinner from './LoadingSpinner'
 import FormFields from './FormFields'
 import FormField from './FormField'
 import ArchiveButton from './ArchiveButton'
-import Notification from './Notification'
+import InfoBox from './InfoBox'
 import { safeName } from '../lib/name-helper'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { TrashIcon } from '@heroicons/react/24/outline'
@@ -82,7 +82,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
       ) : (
         <>
           {category.hidden ? (
-            <Notification
+            <InfoBox
               text={t('archivedObjectInformation', {
                 object: t('categories.category'),
               })}
