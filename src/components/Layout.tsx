@@ -18,14 +18,25 @@ import { useTranslation } from 'react-i18next'
 import { Budget, Translation } from '../types'
 import { safeName } from '../lib/name-helper'
 import Error from './Error'
+import Notification from './Notification'
 
-type LayoutProps = { budget?: Budget; error: string }
+type LayoutProps = {
+  budget?: Budget
+  error: string
+  notification: string
+  setNotification: (notification: string) => void
+}
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Layout = ({ budget, error }: LayoutProps) => {
+const Layout = ({
+  budget,
+  error,
+  notification,
+  setNotification,
+}: LayoutProps) => {
   const { t }: Translation = useTranslation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const headerRef = useRef<HTMLElement>()
@@ -308,6 +319,12 @@ const Layout = ({ budget, error }: LayoutProps) => {
           </div>
         </main>
       </div>
+      {notification && (
+        <Notification
+          notification={notification}
+          setNotification={setNotification}
+        />
+      )}
     </div>
   )
 }
