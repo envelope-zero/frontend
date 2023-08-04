@@ -35,6 +35,7 @@ const App = () => {
   const [budget, setBudget] = useState<Budget>()
   const [accounts, setAccounts] = useState<Account[]>([])
   const [error, setError] = useState('')
+  const [notification, setNotification] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [theme, setTheme] = useState(preferredTheme())
   const budgetId = cookie.get('budgetId')
@@ -104,7 +105,17 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout budget={budget} error={error} />}>
+        <Route
+          path="/"
+          element={
+            <Layout
+              budget={budget}
+              error={error}
+              notification={notification}
+              setNotification={setNotification}
+            />
+          }
+        >
           <Route
             path="budgets"
             element={<BudgetSwitch selectBudget={selectBudget} />}
@@ -195,6 +206,7 @@ const App = () => {
                     setBudget={setBudget}
                     theme={theme}
                     setTheme={updateTheme}
+                    setNotification={setNotification}
                   />
                 }
               />

@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next'
 import { Translation, Budget, Theme } from '../types'
 import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 import { useState } from 'react'
-import Notification from './Notification'
 import { updateBudget } from '../lib/api/budgets'
 import Error from './Error'
 
@@ -11,24 +10,29 @@ type Props = {
   setBudget: (budget?: Budget) => void
   theme: string
   setTheme: (theme: Theme) => void
+  setNotification: (notification: string) => void
 }
 
-const Settings = ({ budget, setBudget, theme, setTheme }: Props) => {
+const Settings = ({
+  budget,
+  setBudget,
+  theme,
+  setTheme,
+  setNotification,
+}: Props) => {
   const { t }: Translation = useTranslation()
   const [tmpBudget, setTmpBudget] = useState(budget)
   const [error, setError] = useState('')
-  const [changesSaved, setChangesSaved] = useState(false)
 
   return (
     <form
       onKeyDown={submitOnMetaEnter}
-      onChange={() => setChangesSaved(false)}
       onSubmit={e => {
         e.preventDefault()
         updateBudget(tmpBudget)
           .then(updatedBudget => {
             setBudget(updatedBudget)
-            setChangesSaved(true)
+            setNotification(t('changesSaved'))
           })
           .catch(err => setError(err.message))
       }}
@@ -41,7 +45,6 @@ const Settings = ({ budget, setBudget, theme, setTheme }: Props) => {
       </div>
 
       <Error error={error} />
-      {changesSaved && <Notification>{t('changesSaved')}</Notification>}
 
       <div>
         <h2 className="text-base font-medium text-gray-700 dark:text-gray-300 pl-4 pb-2">
