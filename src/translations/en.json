@@ -5,6 +5,8 @@
   "save": "Save",
   "submit": "Submit",
   "cancel": "Cancel",
+  "delete": "Delete",
+  "import": "Import",
   "select": "Select...",
   "close": "Close",
   "untitled": "Untitled",
@@ -24,6 +26,7 @@
   "showAll": "Show All",
   "from": "From",
   "until": "Until",
+  "indexOfLength": "{{index}} of {{length}}",
   "autocomplete": {
     "empty": "No results"
   },
@@ -82,6 +85,24 @@
   "transactions": {
     "transactions": "Transactions",
     "transaction": "Transaction",
+    "import": {
+      "importTransactions": "Import Transactions",
+      "account": "Account",
+      "description": "Import a list of transactions (for example a downloaded bank statement). \n\nYou will be able to review the parsed transactions before they are saved.",
+      "ynapCredits": "Uploads are parsed in your browser, powered by <a class='link-blue' href='https://ynap.leolabs.org/'>YNAP</a>. A list of all currently supported banks can be found <a class='link-blue' href='https://ynap.leolabs.org/supported-formats/'>here</a>.",
+      "previous": "Previous Transaction",
+      "next": "Next Transaction",
+      "importSuccess": "Successfully imported",
+      "deleteSuccess": "Successfully deleted",
+      "duplicateDetected": "This is a duplicate of an existing transaction",
+      "complete": "Import complete",
+      "howTo": {
+        "title": "How To Import",
+        "download": "Download a .CSV export of your transactions from your bank",
+        "parse": "Parse that file using <a class='link-blue' href='https://ynap.leolabs.org/'>YNAP</a> (A list of all currently supported banks can be found <a class='link-blue' href='https://ynap.leolabs.org/supported-formats/'>here</a>)",
+        "upload": "Upload the parsed file here:"
+      }
+    },
     "from": "From",
     "to": "To",
     "emptyList": "No transactions found. Create a new one now!",

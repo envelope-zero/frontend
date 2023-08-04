@@ -90,6 +90,14 @@ export type GroupedTransactions = {
   [key: string]: Transaction[]
 }
 
+export type TransactionPreview = {
+  transaction: Transaction & { importHash: string }
+  sourceAccountName: string
+  destinationAccountName: string
+  duplicateTransactionIds: string[]
+  processed?: boolean
+}
+
 export type GroupedEnvelopes = { title?: string; items: Envelope[] }[]
 
 export type UnpersistedCategory = {

@@ -26,6 +26,7 @@ import LoadingSpinner from './components/LoadingSpinner'
 import { api } from './lib/api/base'
 import BudgetImport from './components/BudgetImport'
 import Settings from './components/Settings'
+import TransactionImport from './components/TransactionImport'
 
 const accountApi = api('accounts')
 
@@ -182,6 +183,16 @@ const App = () => {
                     budget={budget}
                     accounts={accounts}
                     reloadAccounts={() => loadAccounts(budget)}
+                  />
+                }
+              />
+              <Route
+                path="transaction-import"
+                element={
+                  <TransactionImport
+                    accounts={accounts}
+                    budget={budget}
+                    setNotification={setNotification}
                   />
                 }
               />
