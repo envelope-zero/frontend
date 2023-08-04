@@ -1,6 +1,7 @@
 {
   "name": "envelope-zero-frontend",
   "dependencies": {
+    "@envelope-zero/ynap-parsers": "^1.15.3",
     "@headlessui/react": "1.7.16",
     "@heroicons/react": "2.0.18",
     "@tailwindcss/forms": "0.5.4",
@@ -50,7 +51,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "server:dev": "docker-compose --project-name frontend-dev --file docker-compose-dev.yml up",
-    "server:test": "docker-compose --project-name frontend-test --file docker-compose-test.yml up --detach",
+    "server:test": "docker-compose --project-name frontend-test --file docker-compose-test.yml up",
     "server:test:stop": "docker-compose --project-name frontend-test --file docker-compose-test.yml down",
     "server:test:restart": "docker-compose --project-name frontend-test --file docker-compose-test.yml restart",
     "server:test:logs": "docker-compose --project-name frontend-test --file docker-compose-test.yml logs --follow",

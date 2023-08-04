@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Account, TransactionPreview, Translation } from '../../types'
+import { parseFile } from '@envelope-zero/ynap-parsers'
 import { checkStatus, parseJSON } from '../../lib/fetch-helper'
 import Error from '../Error'
 import FormFields from '../FormFields'
@@ -28,10 +29,17 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
       onSubmit={event => {
         event.preventDefault()
 
-        setIsLoading(true)
-
+        // setIsLoading(true)
         // TODO: parse through ynap (https://www.npmjs.com/package/ynap-parsers)
-        // TODO: I should at least adjust the text to let ppl know they have to parse it themselves
+        const file = (event.target as any).file.files[0] // TODO: without `any`
+
+        parseFile(file)
+          .then(result => {
+            console.log(result)
+          })
+          .catch(error => console.error(error))
+
+        return
 
         fetch(`/api/v1/import/ynab-import-preview?accountId=${accountId}`, {
           method: 'POST',
