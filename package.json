@@ -15,7 +15,7 @@
     "flowbite-react": "0.5.0",
     "http-proxy-middleware": "2.0.6",
     "i18next": "23.4.4",
-    "js-big-decimal": "1.4.1",
+    "js-big-decimal": "2.0.4",
     "react": "18.2.0",
     "react-device-detect": "2.2.3",
     "react-dom": "18.2.0",
