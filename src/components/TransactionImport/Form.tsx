@@ -59,7 +59,8 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
                 setError(error.message)
               })
           })
-          .catch(error => console.error(error))
+          // TODO: If the file is already in the YNAB Import format, we can pass it on directly
+          .catch(error => setError(error))
       }}
     >
       <div className="header">
