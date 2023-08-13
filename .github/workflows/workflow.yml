@@ -14,6 +14,9 @@ env:
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
+
     steps:
       - uses: actions/checkout@v3.5.3
 
@@ -23,6 +26,9 @@ jobs:
           node-version: '16'
           cache: 'npm'
 
+      - name: set npm auth
+        run: echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
+
       - name: install node modules
         run: npm ci
 
@@ -30,6 +36,8 @@ jobs:
 
   cypress:
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
 
     # Current backend version as service container
     services:
@@ -43,6 +51,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.5.3
+
+      - name: set npm auth
+        run: echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
 
       - uses: cypress-io/github-action@v5.8.3
         env:
