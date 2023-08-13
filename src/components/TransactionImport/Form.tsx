@@ -28,36 +28,38 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
       encType="multipart/form-data"
       onSubmit={event => {
         event.preventDefault()
-
-        // setIsLoading(true)
-        // TODO: parse through ynap (https://www.npmjs.com/package/ynap-parsers)
         const file = (event.target as any).file.files[0] // TODO: without `any`
 
         parseFile(file)
           .then(result => {
-            console.log(result)
+            // Get the data and transform it to FormData for the backend
+            const data = new FormData()
+            data.append(
+              'file',
+              new File([new Blob([result[0].data])], 'ynap-transactions.csv', {
+                type: 'text/csv;charset=utf-8;',
+              })
+            )
+
+            fetch(`/api/v1/import/ynab-import-preview?accountId=${accountId}`, {
+              method: 'POST',
+              body: data,
+            })
+              .then(checkStatus)
+              .then(parseJSON)
+              .then(body => {
+                setIsLoading(false)
+                if (error) {
+                  setError('')
+                }
+                setResult(body.data, accountId)
+              })
+              .catch(error => {
+                setIsLoading(false)
+                setError(error.message)
+              })
           })
           .catch(error => console.error(error))
-
-        return
-
-        fetch(`/api/v1/import/ynab-import-preview?accountId=${accountId}`, {
-          method: 'POST',
-          body: new FormData(event.target as HTMLFormElement),
-        })
-          .then(checkStatus)
-          .then(parseJSON)
-          .then(body => {
-            setIsLoading(false)
-            if (error) {
-              setError('')
-            }
-            setResult(body.data, accountId)
-          })
-          .catch(error => {
-            setIsLoading(false)
-            setError(error.message)
-          })
       }}
     >
       <div className="header">
