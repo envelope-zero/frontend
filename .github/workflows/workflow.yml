@@ -114,15 +114,12 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: set npm auth
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v4.1.1
         with:
-          context: .
           push: ${{ steps.push_check.outputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             REACT_APP_VERSION=${{ github.ref_name }}
+            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
