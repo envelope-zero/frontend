@@ -27,7 +27,7 @@ jobs:
           cache: 'npm'
 
       - name: set npm auth
-        run: echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
 
       - name: install node modules
         run: npm ci
@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v3.5.3
 
       - name: set npm auth
-        run: echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
 
       - uses: cypress-io/github-action@v5.8.3
         env:
