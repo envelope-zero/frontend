@@ -35,9 +35,7 @@ describe('Transaction Import', () => {
     cy.contains('My Other Account')
     cy.contains('My Account').click()
 
-    cy.getInputFor('File').selectFile(
-      'cypress/fixtures/transactions-parsed.csv'
-    )
+    cy.getInputFor('File').selectFile('cypress/fixtures/comdirect.csv')
 
     cy.clickAndWait('Submit')
 
@@ -163,11 +161,45 @@ describe('Transaction Import', () => {
     cy.awaitLoading()
 
     cy.getInputFor('Account').type('My account{enter}')
-    cy.getInputFor('File').selectFile(
-      'cypress/fixtures/transactions-parsed.csv'
-    )
+    cy.getInputFor('File').selectFile('cypress/fixtures/comdirect.csv')
 
     cy.clickAndWait('Submit')
     cy.contains('This is a duplicate of an existing transaction')
+  })
+
+  it('errors on already parsed file', function () {
+    cy.get('nav').contains('Transactions').click()
+    cy.getByTitle('Import Transactions').click()
+    cy.awaitLoading()
+
+    cy.getInputFor('Account').type('account')
+    cy.contains('External Account').should('not.exist')
+    cy.contains('My Other Account')
+    cy.contains('My Account').click()
+
+    cy.getInputFor('File').selectFile('cypress/fixtures/comdirect-ynap.csv')
+
+    cy.contains('Submit').click()
+    cy.contains(
+      'This file has already been parsed. Please upload the CSV file from your bank.'
+    )
+  })
+
+  it('errors on an unparseable file', function () {
+    cy.get('nav').contains('Transactions').click()
+    cy.getByTitle('Import Transactions').click()
+    cy.awaitLoading()
+
+    cy.getInputFor('Account').type('account')
+    cy.contains('External Account').should('not.exist')
+    cy.contains('My Other Account')
+    cy.contains('My Account').click()
+
+    cy.getInputFor('File').selectFile(
+      'cypress/fixtures/transactions-no-parser.csv'
+    )
+
+    cy.contains('Submit').click()
+    cy.contains('This file can not be parsed.')
   })
 })

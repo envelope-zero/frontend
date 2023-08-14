@@ -88,20 +88,15 @@
     "import": {
       "importTransactions": "Import Transactions",
       "account": "Account",
-      "description": "Import a list of transactions (for example a downloaded bank statement). \n\nYou will be able to review the parsed transactions before they are saved.",
-      "ynapCredits": "Uploads are parsed in your browser, powered by <a class='link-blue' href='https://ynap.leolabs.org/'>YNAP</a>. A list of all currently supported banks can be found <a class='link-blue' href='https://ynap.leolabs.org/supported-formats/'>here</a>.",
+      "description": "Import a list of transactions, for example a downloaded bank statement.\n\nYou will be able to review the transactions before they are saved.\n\nUploads are parsed in your browser, powered by <a class='link-blue' href='https://l.envelope-zero.org/ynap'>YNAP</a>, and by Envelope Zero. A list of all currently supported banks can be found <a class='link-blue' href='https://l.envelope-zero.org/ynap-formats'>here</a>.",
       "previous": "Previous Transaction",
       "next": "Next Transaction",
       "importSuccess": "Successfully imported",
       "deleteSuccess": "Successfully deleted",
       "duplicateDetected": "This is a duplicate of an existing transaction",
       "complete": "Import complete",
-      "howTo": {
-        "title": "How To Import",
-        "download": "Download a .CSV export of your transactions from your bank",
-        "parse": "Parse that file using <a class='link-blue' href='https://ynap.leolabs.org/'>YNAP</a> (A list of all currently supported banks can be found <a class='link-blue' href='https://ynap.leolabs.org/supported-formats/'>here</a>)",
-        "upload": "Upload the parsed file here:"
-      }
+      "alreadyConverted": "This file has already been parsed. Please upload the CSV file from your bank.",
+      "noParser": "This file can not be parsed. Please check on https://l.envelope-zero.org/ynap-formats if your bank is supported."
     },
     "from": "From",
     "to": "To",

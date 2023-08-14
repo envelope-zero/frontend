@@ -14,14 +14,20 @@ env:
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
+
     steps:
       - uses: actions/checkout@v3.6.0
 
       - name: Cache dependencies
         uses: actions/setup-node@v3.8.1
         with:
-          node-version: '16'
+          node-version: '20'
           cache: 'npm'
+
+      - name: set npm auth
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
 
       - name: install node modules
         run: npm ci
@@ -30,6 +36,8 @@ jobs:
 
   cypress:
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
 
     # Current backend version as service container
     services:
@@ -43,6 +51,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.6.0
+
+      - name: set npm auth
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
 
       - uses: cypress-io/github-action@v6.4.0
         with:
@@ -97,9 +108,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4.1.1
         with:
-          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             VITE_VERSION=${{ github.ref_name }}
+            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}

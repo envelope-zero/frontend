@@ -5,7 +5,11 @@ WORKDIR /app
 # copy package.json first to avoid unnecessary npm install when other files change
 # Unless packages change, this layer will be cached
 COPY package.json package-lock.json /app/
-RUN npm install
+COPY patches /app/patches
+
+ARG GITHUB_TOKEN
+RUN echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> ~/.npmrc && \
+    npm install --production
 
 # Copy app files
 COPY src /app/src

@@ -7,6 +7,11 @@ import eslint from 'vite-plugin-eslint'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), eslint(), viteTsconfigPaths(), svgrPlugin()],
+  resolve: {
+    alias: {
+      stream: 'stream-browserify', // Needed so that charset detection for ynap-parsers works
+    },
+  },
   server: {
     open: false,
     port: 3000,

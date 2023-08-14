@@ -1,0 +1,88 @@
+diff --git a/node_modules/jschardet/src/eucjpprober.js b/node_modules/jschardet/src/eucjpprober.js
+index e978878..a299685 100644
+--- a/node_modules/jschardet/src/eucjpprober.js
++++ b/node_modules/jschardet/src/eucjpprober.js
+@@ -70,7 +70,11 @@ function EUCJPProber() {
+             } else if( codingState == constants.start ) {
+                 var charLen = this._mCodingSM.getCurrentCharLen();
+                 if( i == 0 ) {
+-                    this._mLastChar[1] = aBuf[0];
++                    try {
++                      this._mLastChar[1] = aBuf[0];
++                    } catch(error) {
++                      console.log(`error in jschardet: ${error}`)
++                    }
+                     this._mContextAnalyzer.feed(this._mLastChar, charLen);
+                     this._mDistributionAnalyzer.feed(this._mLastChar, charLen);
+                 } else {
+@@ -80,7 +84,11 @@ function EUCJPProber() {
+             }
+         }
+ 
+-        this._mLastChar[0] = aBuf[aLen - 1];
++        try {
++          this._mLastChar[0] = aBuf[aLen - 1];
++        } catch(error) {
++          console.log(`error in jschardet: ${error}`)
++        }
+ 
+         if( this.getState() == constants.detecting ) {
+             if( this._mContextAnalyzer.gotEnoughData() &&
+diff --git a/node_modules/jschardet/src/mbcharsetprober.js b/node_modules/jschardet/src/mbcharsetprober.js
+index c03719b..5390e06 100644
+--- a/node_modules/jschardet/src/mbcharsetprober.js
++++ b/node_modules/jschardet/src/mbcharsetprober.js
+@@ -72,7 +72,11 @@ var logger = require('./logger');
+             } else if( codingState == constants.start ) {
+                 var charLen = this._mCodingSM.getCurrentCharLen();
+                 if( i == 0 ) {
++                  try {
+                     this._mLastChar[1] = aBuf[0];
++                  } catch(error) {
++                    console.log(`error in jschardet: ${error}`)
++                  }
+                     this._mDistributionAnalyzer.feed(this._mLastChar, charLen);
+                 } else {
+                     this._mDistributionAnalyzer.feed(aBuf.slice(i-1,i+1), charLen);
+@@ -80,7 +84,11 @@ var logger = require('./logger');
+             }
+         }
+ 
+-        this._mLastChar[0] = aBuf[aLen - 1];
++        try {
++          this._mLastChar[0] = aBuf[aLen - 1];
++        } catch(error) {
++          console.log(`error in jschardet: ${error}`)
++        }
+ 
+         if( this.getState() == constants.detecting ) {
+             if( this._mDistributionAnalyzer.gotEnoughData() &&
+diff --git a/node_modules/jschardet/src/sjisprober.js b/node_modules/jschardet/src/sjisprober.js
+index 3160a66..fde54cd 100644
+--- a/node_modules/jschardet/src/sjisprober.js
++++ b/node_modules/jschardet/src/sjisprober.js
+@@ -70,7 +70,11 @@ function SJISProber() {
+             } else if( codingState == constants.start ) {
+                 var charLen = this._mCodingSM.getCurrentCharLen();
+                 if( i == 0 ) {
++                  try {
+                     this._mLastChar[1] = aBuf[0];
++                  } catch(error) {
++                    console.log(`error in jschardet: ${error}`)
++                  }
+                     this._mContextAnalyzer.feed(this._mLastChar.slice(2 - charLen), charLen);
+                     this._mDistributionAnalyzer.feed(this._mLastChar, charLen);
+                 } else {
+@@ -80,7 +84,11 @@ function SJISProber() {
+             }
+         }
+ 
+-        this._mLastChar[0] = aBuf[aLen - 1];
++        try {
++          this._mLastChar[0] = aBuf[aLen - 1];
++        } catch(error) {
++          console.log(`error in jschardet: ${error}`)
++        }
+ 
+         if( this.getState() == constants.detecting ) {
+             if( this._mContextAnalyzer.gotEnoughData() &&
