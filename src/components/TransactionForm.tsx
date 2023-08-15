@@ -303,7 +303,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                   updateValue('sourceAccountId', undefined)
                 } else {
                   setSourceAccountToCreate(undefined)
-                  let valuesToUpdate: UnpersistedTransaction = {
+                  const valuesToUpdate: UnpersistedTransaction = {
                     sourceAccountId: account.id,
                   }
                   if (
@@ -339,7 +339,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                   updateValue('destinationAccountId', undefined)
                 } else {
                   setDestinationAccountToCreate(undefined)
-                  let valuesToUpdate: UnpersistedTransaction = {
+                  const valuesToUpdate: UnpersistedTransaction = {
                     destinationAccountId: account.id,
                   }
                   if (

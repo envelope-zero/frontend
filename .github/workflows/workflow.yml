@@ -46,11 +46,11 @@ jobs:
 
       - uses: cypress-io/github-action@v6.4.0
         env:
-          PORT: 3001
-          # The URL that the react-scripts dev server proxies /api to
-          API_URL: http://localhost:8080
+          # The URL that the vite dev server proxies /api to
+          VITE_API_BASE_URL: http://localhost:8080
+          VITE_RUN_IN_CI: 'true'
         with:
-          start: npm start
+          start: npm run start-ci
           # Frontend runs on :3001, API on :8080
           wait-on: 'http://localhost:3001, http://localhost:8080'
           browser: chrome
@@ -102,4 +102,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            REACT_APP_VERSION=${{ github.ref_name }}
+            VITE_VERSION=${{ github.ref_name }}

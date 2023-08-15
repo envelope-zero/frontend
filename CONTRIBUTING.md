@@ -20,7 +20,17 @@ To simplify development, we provide docker-compose files that run the backend an
 npm run server:dev
 ```
 
-and wait for ~1 minute (if you know why `react-scripts start` takes this long in a container, we're happy about pointers). Then, open [http://localhost:3000](http://localhost:3000) in your browser.
+Then, open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Running against local development backend
+
+If you're debugging or testing against a local backend development version, do the following:
+
+```sh
+# Set the URL for the backend
+export VITE_API_BASE_URL=http://localhost:8080
+npm run start
+```
 
 ## Tests
 

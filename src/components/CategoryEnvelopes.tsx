@@ -16,7 +16,7 @@ const CategoryEnvelopes = ({
   hidden,
 }: {
   category: Category
-  hidden: Boolean
+  hidden: boolean
 }) => {
   const { t }: Translation = useTranslation()
 

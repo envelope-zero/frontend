@@ -199,8 +199,7 @@ const Layout = ({
                         {t('navigation.bugReport')}
                       </a>
                       <div className="text-gray-400 flex items-center px-4 text-sm font-medium justify-end">
-                        {t('version')}{' '}
-                        {process.env.REACT_APP_VERSION || '0.0.0'}
+                        {t('version')} {import.meta.env.VITE_VERSION || '0.0.0'}
                       </div>
                     </div>
                   </div>
@@ -283,7 +282,7 @@ const Layout = ({
                     {t('navigation.bugReport')}
                   </a>
                   <div className="text-gray-400 flex items-center px-4 text-sm font-medium">
-                    {t('version')} {process.env.REACT_APP_VERSION || '0.0.0'}
+                    {t('version')} {import.meta.env.VITE_VERSION || '0.0.0'}
                   </div>
                 </div>
               </div>
