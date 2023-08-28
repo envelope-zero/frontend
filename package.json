@@ -54,7 +54,7 @@
     "server:test:stop": "docker-compose --project-name frontend-test --file docker-compose-test.yml down",
     "server:test:restart": "docker-compose --project-name frontend-test --file docker-compose-test.yml restart",
     "server:test:logs": "docker-compose --project-name frontend-test --file docker-compose-test.yml logs --follow",
-    "test": "cypress run",
+    "test": "cypress run --browser chromium",
     "test:watch": "cypress open",
     "eject": "react-scripts eject",
     "format": "prettier --write ."

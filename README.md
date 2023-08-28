@@ -9,10 +9,7 @@ Check out the documentation at [envelope-zero.org](https://envelope-zero.org)!
 
 ## Deployment
 
-The frontend currently has two requirements:
-
-- The API needs to be available at the same hostname with the prefix `/api`
-- Only `v1` of the API is supported
+The API needs to be available at the same hostname with the prefix `/api`.
 
 ## Supported Versions
 
