@@ -32,10 +32,11 @@ You can run the tests as follows:
 # Open a terminal
 npm run server:test
 
-# Wait for ~1 minute (if you know why `react-scripts start` takes this long in a container, we're happy about pointers)
+# Runs the tests in your terminal
 npm run test
 
-# If you want to see your browser go wrooom and inspect the tests in detail, instead of npm run test, use
+# If you want to see your browser go wrooom and inspect the tests in detail, use this.
+# Note that you'll need to select Chrome or Chromium as browser since neither Electron nor Firefox support Month pickers as of now
 npm run test:watch
 
 # To run only a specific test, use
