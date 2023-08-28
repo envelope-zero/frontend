@@ -50,29 +50,28 @@ describe('Dashboard', () => {
     })
   })
 
-  const currentMonth = new Intl.DateTimeFormat('en', {
-    month: 'long',
-    year: 'numeric',
-  }).format(new Date())
+  const date = new Date()
+  const currentMonth = `${date.getFullYear()}-${
+    date.getMonth() < 9 ? '0' : ''
+  }${date.getMonth() + 1}`
 
   it('can switch between the months', () => {
-    cy.contains(currentMonth)
+    cy.get('#month').should('have.value', currentMonth)
 
     cy.visit('#', { qs: { month: '2020-02' } })
-    cy.contains('February 2020')
+    cy.get('#month').should('have.value', '2020-02')
     cy.contains('Mar')
 
     cy.contains('Jan').click()
     cy.contains('Dec').click()
 
-    cy.contains('December 2019')
+    cy.get('#month').should('have.value', '2019-12')
     cy.url().should('include', '?month=2019-12')
 
-    cy.getByTitle('Select Month').click()
-    cy.get('input#month').type('2022-03-01')
-    cy.getByTitle('March 2022').click()
+    cy.get('#month').click()
+    cy.get('input#month').type('2022-03')
     cy.awaitLoading()
-    cy.contains('March 2022')
+    cy.get('#month').should('have.value', '2022-03')
     cy.contains('Feb')
     cy.contains('Apr')
   })
@@ -93,7 +92,7 @@ describe('Dashboard', () => {
     cy.get('[aria-label*="Edit Allocation for Second Envelope"]').click()
     cy.getInputFor('Set to amount').type('7.00')
     cy.get('body').click(0, 0) // click outside of the modal to close it without saving or explicitly canceling
-    cy.get('input').should('not.exist')
+    cy.get('input[type=number]').should('not.exist')
     cy.contains('7.00').should('not.exist')
 
     // reset input
@@ -101,7 +100,7 @@ describe('Dashboard', () => {
     cy.getInputFor('Add / Subtract amount').type('-42')
     cy.getInputFor('Set to amount').should('have.value', '-30')
     cy.get('button[type="reset"]').click()
-    cy.get('input').should('not.exist')
+    cy.get('input[type=number]').should('not.exist')
     cy.contains('-30.00').should('not.exist')
     cy.contains('12.00')
 
@@ -110,7 +109,7 @@ describe('Dashboard', () => {
     cy.getInputFor('Set to amount').clear().type('-22.00')
     cy.get('button[type="submit"]').click()
     cy.awaitLoading()
-    cy.get('input').should('not.exist')
+    cy.get('input[type=number]').should('not.exist')
 
     // set allocation for third envelope
     cy.get('[aria-label*="Edit Allocation for Third Envelope"]').click()
@@ -173,7 +172,7 @@ describe('Dashboard', () => {
   })
 
   it('can quickly allocate funds to all envelopes', () => {
-    cy.contains(currentMonth)
+    cy.get('#month').should('have.value', currentMonth)
     cy.visit('#', { qs: { month: '2023-04' } })
     cy.awaitLoading()
 

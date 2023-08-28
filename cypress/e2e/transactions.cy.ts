@@ -106,8 +106,8 @@ describe('Transactions', () => {
     cy.getInputFor('Destination').type('Bank ac')
     cy.contains('Bank account').click()
 
-    cy.getInputFor('Available From').type('2020-03-12')
-    cy.getInputFor('Available From').should('have.value', '2020-03-01')
+    cy.getInputFor('Available From').type('2020-03')
+    cy.getInputFor('Available From').should('have.value', '2020-03')
 
     cy.getInputFor('Envelope').type('Onl')
     cy.contains('Only one').click()
