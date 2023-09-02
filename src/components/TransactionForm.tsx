@@ -298,13 +298,12 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.sourceAccountId')}
               onChange={account => {
-                let valuesToUpdate: UnpersistedTransaction
                 if (!account.id) {
                   setSourceAccountToCreate(account)
                   updateValue('sourceAccountId', undefined)
                 } else {
                   setSourceAccountToCreate(undefined)
-                  valuesToUpdate = {
+                  const valuesToUpdate: UnpersistedTransaction = {
                     sourceAccountId: account.id,
                   }
                   if (
@@ -335,13 +334,12 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.destinationAccountId')}
               onChange={account => {
-                let valuesToUpdate: UnpersistedTransaction
                 if (!account.id) {
                   setDestinationAccountToCreate(account)
                   updateValue('destinationAccountId', undefined)
                 } else {
                   setDestinationAccountToCreate(undefined)
-                  valuesToUpdate = {
+                  const valuesToUpdate: UnpersistedTransaction = {
                     destinationAccountId: account.id,
                   }
                   if (
