@@ -2,20 +2,8 @@ version: '3'
 services:
   backend:
     image: ghcr.io/envelope-zero/backend:v3.1.1
-    environment:
-      API_URL: http://localhost:3001/api
-      CORS_ALLOW_ORIGINS: http://localhost:3001
-
-  frontend:
-    image: node:20.5.1-alpine
-    working_dir: /app
-    command: ['npm', 'run', 'start']
     ports:
-      - '3001:3000'
-    volumes:
-      - ./:/app
+      - 8081:8080
     environment:
-      # Set the web socket port to 0 to use the port the browser uses
-      WDS_SOCKET_PORT: 0
-      # Don't open a browser, we're in a container
-      BROWSER: none
+      API_URL: http://localhost:3000/api
+      CORS_ALLOW_ORIGINS: http://localhost:3000

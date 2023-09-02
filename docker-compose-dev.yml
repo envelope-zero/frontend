@@ -8,18 +8,8 @@ services:
     image: ghcr.io/envelope-zero/backend:v3.1.1
     volumes:
       - ez-dev-data:/data
+    ports:
+      - 8080:8080
     environment:
       API_URL: http://localhost:3000/api
       CORS_ALLOW_ORIGINS: http://localhost:3000
-
-  frontend:
-    image: node:20.5.1-alpine
-    working_dir: /app
-    command: ['npm', 'run', 'start']
-    ports:
-      - '3000:3000'
-    volumes:
-      - ./:/app
-    environment:
-      # Don't open a browser, we're in a container
-      BROWSER: none
