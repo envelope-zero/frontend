@@ -56,7 +56,8 @@
     "workbox-streams": "7.0.0"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --open",
+    "start:test": "VITE_API_BASE_URL='http://localhost:8081' vite",
     "start-ci": "vite --host",
     "build": "tsc && vite build",
     "serve": "vite preview",
