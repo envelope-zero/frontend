@@ -1,0 +1,21 @@
+version: '3'
+services:
+  backend:
+    image: ghcr.io/envelope-zero/backend:v3.1.1
+    environment:
+      API_URL: http://localhost:3001/api
+      CORS_ALLOW_ORIGINS: http://localhost:3001
+
+  frontend:
+    image: ez-frontend
+    build:
+      context: .
+      args:
+        GITHUB_TOKEN: '${GITHUB_TOKEN}'
+
+  proxy:
+    image: nginx:1.25.2-alpine
+    volumes:
+      - $PWD/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - '3001:80'
