@@ -63,6 +63,7 @@
     "serve": "vite preview",
     "server:dev": "docker-compose --project-name frontend-dev --file docker-compose-dev.yml up",
     "server:test": "docker-compose --project-name frontend-test --file docker-compose-test.yml up",
+    "server:production": "docker-compose --project-name frontend-production --file docker-compose-production.yml up --build",
     "test": "cypress run --browser chromium",
     "test:watch": "cypress open",
     "format": "prettier --write ."

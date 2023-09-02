@@ -50,6 +50,19 @@ npm run test:watch
 npm run test -- -s $PATH_TO_SPEC
 ```
 
+## Verifying the production build
+
+If you need to verify the production build, do the following:
+
+```sh
+# This needs to be a GitHub PAT with the packages:read permission
+export GITHUB_TOKEN="CHANGE_ME"
+npm run server:production
+```
+
+This will start the backend and the frontend together in production configuration.
+Open [http://localhost:3001](http://localhost:3001) in your browser to verify.
+
 ## Commit messages
 
 This project uses [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)

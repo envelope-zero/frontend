@@ -2,14 +2,15 @@ FROM node:20.5.1-alpine AS builder
 ENV NODE_ENV production
 WORKDIR /app
 
-# copy package.json first to avoid unnecessary npm install
+# copy package.json first to avoid unnecessary npm install when other files change
+# Unless packages change, this layer will be cached
 COPY package.json package-lock.json /app/
 RUN npm install
 
 # Copy app files
 COPY src /app/src
 COPY public /app/public
-COPY tsconfig.json tailwind.config.js index.html /app/
+COPY vite.config.ts tsconfig.json tailwind.config.js index.html .eslintrc.js postcss.config.js /app/
 
 ARG VITE_VERSION=0.0.0
 
