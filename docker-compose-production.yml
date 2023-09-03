@@ -1,7 +1,13 @@
 version: '3'
+
+volumes:
+  ez-production-data:
+
 services:
   backend:
     image: ghcr.io/envelope-zero/backend:v3.1.1
+    volumes:
+      - ez-production-data:/data
     environment:
       API_URL: http://localhost:3001/api
       CORS_ALLOW_ORIGINS: http://localhost:3001

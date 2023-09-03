@@ -1,0 +1,11 @@
+;
+"Umsätze Verrechnungskonto ";"Zeitraum: 30 Tage";
+"Neuer Kontostand";"16,94 EUR";
+
+"Buchungstag";"Wertstellung (Valuta)";"Vorgang";"Buchungstext";"Umsatz in EUR";
+"20.06.2023";"20.06.2023";"Irrevevant";"Empfänger: Non Existing Account Buchungstext: Text Ref. 000000000/0 ";"-84,76";
+"19.06.2023";"19.06.2023";"Irrevevant";"Auftraggeber: My Other Account Buchungstext: Transfer from my other account Ref. 0000000000000/0 ";"5,00";
+"16.06.2023";"16.06.2023";"Irrevevant";"Empfänger: New Account Buchungstext: REDACTED Ref. 000000000/0 ";"-784,94";
+"15.06.2023";"15.06.2023";"Irrevevant";"Auftraggeber: External Account Buchungstext: Text Ref. 000000000/0 ";"-52,03";
+
+"Alter Kontostand";"16,89 EUR";

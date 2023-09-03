@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Account, TransactionPreview, Translation } from '../../types'
+import { parseFile } from '@envelope-zero/ynap-parsers'
 import { checkStatus, parseJSON } from '../../lib/fetch-helper'
 import Error from '../Error'
 import FormFields from '../FormFields'
@@ -29,23 +30,53 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
         event.preventDefault()
 
         setIsLoading(true)
+        const file = (event.target as any).file.files[0] // TODO: without `any`
 
-        fetch(`/api/v1/import/ynab-import-preview?accountId=${accountId}`, {
-          method: 'POST',
-          body: new FormData(event.target as HTMLFormElement),
-        })
-          .then(checkStatus)
-          .then(parseJSON)
-          .then(body => {
-            setIsLoading(false)
-            if (error) {
-              setError('')
-            }
-            setResult(body.data, accountId)
+        parseFile(file)
+          .then(result => {
+            // Get the data and transform it to FormData for the backend
+            const data = new FormData()
+            data.append(
+              'file',
+              new File([new Blob([result[0]?.data])], 'ynap-transactions.csv', {
+                type: 'text/csv;charset=utf-8;',
+              })
+            )
+
+            // Send the parsed file to the backend for processing
+            fetch(`/api/v1/import/ynab-import-preview?accountId=${accountId}`, {
+              method: 'POST',
+              body: data,
+            })
+              .then(checkStatus)
+              .then(parseJSON)
+              .then(body => {
+                setIsLoading(false)
+                if (error) {
+                  setError('')
+                }
+                setResult(body.data, accountId)
+              })
+              .catch(error => {
+                setIsLoading(false)
+                setError(error.message)
+              })
           })
           .catch(error => {
             setIsLoading(false)
-            setError(error.message)
+
+            // Set the appropriate error message
+            if (
+              error.message === 'This file has already been converted by YNAP.'
+            ) {
+              setError(t('transactions.import.alreadyConverted'))
+            } else if (
+              error.message === 'No parser is available for this file.'
+            ) {
+              setError(t('transactions.import.noParser'))
+            } else {
+              setError(error.message)
+            }
           })
       }}
     >
@@ -64,20 +95,12 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
       ) : (
         <>
           <Error error={error} />
-          <p className="pt-4 whitespace-pre-line dark:text-gray-400">
-            {t('transactions.import.description')}
-          </p>
-          <h2 className="mt-4">{t('transactions.import.howTo.title')}</h2>
-          <ol className="list-decimal ml-4 pt-4 whitespace-pre-line dark:text-gray-400">
-            {['download', 'parse', 'upload'].map(step => (
-              <li
-                key={step}
-                dangerouslySetInnerHTML={{
-                  __html: t(`transactions.import.howTo.${step}`),
-                }}
-              />
-            ))}
-          </ol>
+          <p
+            className="pt-4 whitespace-pre-line dark:text-gray-400"
+            dangerouslySetInnerHTML={{
+              __html: t('transactions.import.description'),
+            }}
+          ></p>
           <FormFields>
             <Autocomplete<Account>
               groups={[{ items: accounts }]}
