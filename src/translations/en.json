@@ -96,7 +96,7 @@
       "duplicateDetected": "This is a duplicate of an existing transaction",
       "complete": "Import complete",
       "alreadyConverted": "This file has already been parsed. Please upload the CSV file from your bank.",
-      "noParser": "This file can not be parsed. Please check on https://l.envelope-zero.org/ynap-formats if your bank is supported."
+      "noParser": "This file can not be parsed. Please check if your bank is on the list of supported formats linked below."
     },
     "from": "From",
     "to": "To",
