@@ -38,7 +38,7 @@ const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
             const data = new FormData()
             data.append(
               'file',
-              new File([new Blob([result[0].data])], 'ynap-transactions.csv', {
+              new File([new Blob([result[0]?.data])], 'ynap-transactions.csv', {
                 type: 'text/csv;charset=utf-8;',
               })
             )
