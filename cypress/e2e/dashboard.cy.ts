@@ -189,4 +189,65 @@ describe('Dashboard', () => {
     cy.clickAndWait('Submit')
     cy.contains('-24.00 Available to budget')
   })
+
+  // This needs to be a declared function to have a binding for 'this'
+  it.only('links to the filtered transaction list', function () {
+    cy.wrap(
+      Cypress.Promise.all([
+        createAccount({ name: 'Internal' }, this.budget),
+        createAccount({ name: 'External', external: true }, this.budget),
+      ]).then(([internalAccount, externalAccount]) =>
+        Cypress.Promise.all([
+          createTransaction(
+            {
+              sourceAccountId: internalAccount.id,
+              destinationAccountId: externalAccount.id,
+              envelopeId: this.firstEnvelope.id,
+              note: 'August Transaction',
+              amount: '3',
+              date: new Date('2023-08-15').toISOString(),
+            },
+            this.budget
+          ),
+          createTransaction(
+            {
+              sourceAccountId: internalAccount.id,
+              destinationAccountId: externalAccount.id,
+              envelopeId: this.firstEnvelope.id,
+              note: 'September Transaction',
+              amount: '1',
+              date: new Date('2023-09-15').toISOString(),
+            },
+            this.budget
+          ),
+          createTransaction(
+            {
+              sourceAccountId: internalAccount.id,
+              destinationAccountId: externalAccount.id,
+              envelopeId: this.firstEnvelope.id,
+              note: 'October Transaction',
+              amount: '2',
+              date: new Date('2023-10-15').toISOString(),
+            },
+            this.budget
+          ),
+        ])
+      )
+    )
+
+    // We need to reload to load everything from the backend, not just the transactions
+    cy.reload()
+
+    // We created transactions for August, September and October 2023, visit September to verify
+    cy.visit('#', { qs: { month: '2023-09' } })
+    cy.contains('First Envelope').closest('tr').contains('4.00').click()
+    cy.awaitLoading()
+
+    cy.contains('August Transaction').should('not.exist')
+    cy.contains('September Transaction').should('exist')
+    cy.contains('October Transaction').should('not.exist')
+
+    cy.contains('From 9/1/2023').should('exist')
+    cy.contains('Until 9/30/2023').should('exist')
+  })
 })
