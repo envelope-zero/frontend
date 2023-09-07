@@ -62,13 +62,13 @@ jobs:
           wait-on: 'http://localhost:3000, http://localhost:8080'
           browser: chrome
 
-      - uses: actions/upload-artifact@v3.1.2
+      - uses: actions/upload-artifact@v3.1.3
         if: failure()
         with:
           name: cypress-screenshots
           path: cypress/screenshots
 
-      - uses: actions/upload-artifact@v3.1.2
+      - uses: actions/upload-artifact@v3.1.3
         if: failure()
         with:
           name: cypress-videos
