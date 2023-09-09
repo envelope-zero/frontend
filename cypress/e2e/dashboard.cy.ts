@@ -247,7 +247,7 @@ describe('Dashboard', () => {
     cy.contains('September Transaction').should('exist')
     cy.contains('October Transaction').should('not.exist')
 
-    cy.contains('From 9/1/2023').should('exist')
-    cy.contains('Until 9/30/2023').should('exist')
+    cy.contains('From 9/1/2023')
+    cy.contains('Until 9/30/2023')
   })
 })
