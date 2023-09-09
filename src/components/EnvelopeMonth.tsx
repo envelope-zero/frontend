@@ -65,7 +65,13 @@ const EnvelopeMonth = ({
     )
   }
 
-  const month = translatedMonthFormat.format(new Date(envelope.month))
+  const month = new Date(envelope.month)
+  const localMonth = translatedMonthFormat.format(month)
+  const lastDay = new Date(
+    month.getFullYear(),
+    month.getMonth() + 1,
+    0
+  ).toISOString()
 
   return (
     <tr
@@ -157,7 +163,7 @@ const EnvelopeMonth = ({
             aria-label={t('editObject', {
               object: t('dashboard.allocationForEnvelopeMonth', {
                 envelope: envelope.name,
-                month: month,
+                month: localMonth,
               }),
             })}
           >
@@ -172,7 +178,9 @@ const EnvelopeMonth = ({
             : 'text-gray-500 dark:text-gray-400'
         }`}
       >
-        <Link to={`/transactions?envelope=${envelope.id}`}>
+        <Link
+          to={`/transactions?envelope=${envelope.id}&fromDate=${envelope.month}&untilDate=${lastDay}`}
+        >
           {formatMoney(envelope.spent, budget.currency, {
             hideZero: true,
           })}
@@ -185,7 +193,9 @@ const EnvelopeMonth = ({
             : 'text-gray-500 dark:text-gray-400'
         }`}
       >
-        <Link to={`/transactions?envelope=${envelope.id}`}>
+        <Link
+          to={`/transactions?envelope=${envelope.id}&fromDate=${envelope.month}&untilDate=${lastDay}`}
+        >
           {formatMoney(envelope.balance, budget.currency, {
             hideZero: true,
             signDisplay: 'auto',
