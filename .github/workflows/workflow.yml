@@ -18,7 +18,7 @@ jobs:
       packages: read
 
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.0.0
 
       - name: Cache dependencies
         uses: actions/setup-node@v3.8.1
@@ -50,7 +50,7 @@ jobs:
           - 8080:8080
 
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.0.0
 
       - name: set npm auth
         run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
@@ -86,7 +86,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2.2.0
