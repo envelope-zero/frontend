@@ -69,9 +69,9 @@ describe('Dashboard', () => {
     cy.url().should('include', '?month=2019-12')
 
     cy.get('#month').click()
-    cy.get('input#month').type('2022-03')
+    cy.get('input#month').type('2022-03-01')
     cy.awaitLoading()
-    cy.get('#month').should('have.value', '2022-03')
+    cy.get('#month').should('have.value', '2022-03-01')
     cy.contains('Feb')
     cy.contains('Apr')
   })
