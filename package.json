@@ -43,7 +43,7 @@
     "typescript": "5.2.2",
     "vite": "4.4.9",
     "vite-plugin-eslint": "1.8.1",
-    "vite-plugin-svgr": "3.3.0",
+    "vite-plugin-svgr": "4.0.0",
     "vite-tsconfig-paths": "4.2.1",
     "web-vitals": "3.4.0",
     "workbox-background-sync": "7.0.0",
