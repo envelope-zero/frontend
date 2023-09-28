@@ -44,7 +44,7 @@
     "vite": "4.4.9",
     "vite-plugin-eslint": "1.8.1",
     "vite-tsconfig-paths": "4.2.1",
-    "web-vitals": "3.4.0",
+    "web-vitals": "3.5.0",
     "workbox-background-sync": "7.0.0",
     "workbox-broadcast-update": "7.0.0",
     "workbox-cacheable-response": "7.0.0",
