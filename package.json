@@ -30,7 +30,7 @@
     "i18next": "23.5.1",
     "js-big-decimal": "2.0.4",
     "patch-package": "8.0.0",
-    "postcss": "8.4.30",
+    "postcss": "8.4.31",
     "prettier": "3.0.3",
     "react": "18.2.0",
     "react-device-detect": "2.2.3",
