@@ -198,6 +198,12 @@ const Result = (props: Props) => {
     }
   }
 
+  const clearError = () => {
+    if (error) {
+      setError('')
+    }
+  }
+
   const hidePrevButton = previousIndex() < 0
   const hideNextButton = nextIndex() > transactions.length - 1
 
@@ -219,6 +225,7 @@ const Result = (props: Props) => {
           disabled={hidePrevButton}
           className={`icon mr-4 ${hidePrevButton ? 'opacity-20' : ''}`}
           onClick={() => {
+            clearError()
             setCurrentIndex(previousIndex())
           }}
         >
@@ -236,6 +243,7 @@ const Result = (props: Props) => {
           disabled={hideNextButton}
           className={`icon ml-4 ${hideNextButton ? 'opacity-20' : ''}`}
           onClick={() => {
+            clearError()
             setCurrentIndex(nextIndex())
           }}
         >
@@ -371,6 +379,7 @@ const Result = (props: Props) => {
           onClick={() => {
             updatePreviewValue('processed', true) // TODO: this might be problematic as soon as we introduce "import all" – we'll need to make sure these transactions are ignored
             props.setNotification(t('transactions.import.deleteSuccess'))
+            clearError()
             goToNextTransaction()
           }}
           className="btn-secondary col-span-1 full-centered"
@@ -385,6 +394,7 @@ const Result = (props: Props) => {
               .then(() => {
                 updatePreviewValue('processed', true)
                 props.setNotification(t('transactions.import.importSuccess'))
+                clearError()
                 goToNextTransaction()
               })
               .catch(err => {
