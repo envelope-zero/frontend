@@ -55,6 +55,7 @@ describe('Transaction Import', () => {
     cy.get('li').contains('Create "Non Existing Account"')
     cy.getInputFor('Destination').clear().type('EDITED ACCOUNT{enter}')
     cy.getInputFor('Date').should('have.value', '2023-06-20')
+    cy.getInputFor('Available From') //.should("have.value", "2023-06-01") // TODO: this needs to be fixed in the backend
 
     // move back and forth - edits should be persisted
     cy.getByTitle('Next Transaction').click()
@@ -104,6 +105,7 @@ describe('Transaction Import', () => {
     // newly created account is available for selection
     cy.getInputFor('Source').clear().type('EDITE')
     cy.contains('EDITED ACCOUNT')
+    cy.contains('Available From').should('not.exist')
 
     cy.getInputFor('Destination')
       .should('have.value', 'My Account')
@@ -120,6 +122,7 @@ describe('Transaction Import', () => {
     // third transaction
     cy.contains('3 of 4')
     cy.getByTitle('Previous Transaction').should('not.be.disabled')
+    cy.contains('Available From').should('not.exist')
 
     // delete this transaction
     cy.get('button').contains('Delete').click()

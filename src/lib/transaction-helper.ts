@@ -1,4 +1,5 @@
-import { Account, Transaction } from '../types'
+import { Account, Transaction, UnpersistedTransaction } from '../types'
+import { isExternal } from './account-helper'
 import { safeName } from './name-helper'
 
 const incoming = { color: 'positive', sign: '+' }
@@ -52,4 +53,17 @@ const getConfiguration = (
   }
 }
 
-export { getConfiguration }
+const isIncome = (
+  transaction: UnpersistedTransaction | Transaction,
+  accounts: Account[]
+) => {
+  const hasEnvelope = Boolean(transaction.envelopeId)
+
+  return (
+    !hasEnvelope &&
+    isExternal(transaction.sourceAccountId, accounts) &&
+    !isExternal(transaction.destinationAccountId, accounts)
+  )
+}
+
+export { getConfiguration, isIncome }

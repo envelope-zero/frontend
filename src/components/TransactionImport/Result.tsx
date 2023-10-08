@@ -17,12 +17,19 @@ import { CheckCircleIcon, TrashIcon } from '@heroicons/react/24/outline'
 import FormFields from '../FormFields'
 import FormField from '../FormField'
 import InputCurrency from '../InputCurrency'
-import { dateFromIsoString, dateToIsoString } from '../../lib/dates'
+import {
+  dateFromIsoString,
+  dateToIsoString,
+  monthYearFromDate,
+  setToFirstOfTheMonth,
+} from '../../lib/dates'
 import { api } from '../../lib/api/base'
 import { safeName } from '../../lib/name-helper'
 import Error from '../Error'
 import Autocomplete from '../Autocomplete'
 import InfoBox from '../InfoBox'
+import { isIncome } from '../../lib/transaction-helper'
+import isSupported from '../../lib/is-supported'
 
 type Props = {
   accounts: Account[]
@@ -371,6 +378,33 @@ const Result = (props: Props) => {
             }
           }}
         />
+
+        {isIncome(currentTransaction(), accounts) ? (
+          <FormField
+            type={isSupported.inputTypeMonth() ? 'month' : 'date'}
+            name="availableFrom"
+            label={t('transactions.availableFrom')}
+            note={`(${t('transactions.onlyRelevantForIncome')})`}
+            tooltip={t('transactions.availableFromExplanation')}
+            value={(isSupported.inputTypeMonth()
+              ? (date: string) => monthYearFromDate(new Date(date))
+              : (date: string) =>
+                  setToFirstOfTheMonth(dateFromIsoString(date)))(
+              currentTransaction().availableFrom ||
+                currentTransaction().date ||
+                new Date().toISOString()
+            )}
+            onChange={e => {
+              // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
+              if (e.target.value) {
+                updateValue(
+                  'availableFrom',
+                  dateToIsoString(setToFirstOfTheMonth(e.target.value))
+                )
+              }
+            }}
+          />
+        ) : null}
       </FormFields>
 
       <div className="pt-6 gap-4 grid grid-cols-2">
