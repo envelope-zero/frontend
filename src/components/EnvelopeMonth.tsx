@@ -13,6 +13,7 @@ import {
 import Modal from './Modal'
 import { translatedMonthFormat } from '../lib/dates'
 import AllocationInputs from './AllocationInputs'
+import { safeName } from '../lib/name-helper'
 
 type props = {
   envelope: EnvelopeMonthType
@@ -84,9 +85,11 @@ const EnvelopeMonth = ({
       <td>
         <Link
           to={`/envelopes/${envelope.id}`}
-          className="h-full block whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 dark:text-gray-300 sm:pl-6 overflow-hidden text-ellipsis"
+          className={`h-full block whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 dark:text-gray-300 sm:pl-6 overflow-hidden text-ellipsis ${
+            !envelope.name && 'italic'
+          }`}
         >
-          {envelope.name}
+          {safeName(envelope, 'envelope')}
         </Link>
       </td>
 
