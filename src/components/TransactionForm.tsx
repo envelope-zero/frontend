@@ -95,6 +95,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
             ...template,
             id: undefined,
             date: new Date().toISOString(),
+            availableFrom: new Date().toISOString(),
           })
         })
       )
