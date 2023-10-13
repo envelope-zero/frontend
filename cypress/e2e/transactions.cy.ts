@@ -8,6 +8,11 @@ import { Budget, Account, Envelope } from '../../src/types'
 import { dateFromIsoString } from '../../src/lib/dates'
 
 describe('Transactions', () => {
+  const date = new Date()
+  const currentMonth = `${date.getFullYear()}-${
+    date.getMonth() < 9 ? '0' : ''
+  }${date.getMonth() + 1}`
+
   beforeEach(() => {
     // prepare a budget with two internal & one external accounts
     cy.wrap(createBudget({ name: 'Transactions Test' })).then(
@@ -106,8 +111,8 @@ describe('Transactions', () => {
     cy.getInputFor('Destination').type('Bank ac')
     cy.contains('Bank account').click()
 
-    cy.getInputFor('Available From').type('2020-03-01')
-    cy.getInputFor('Available From').should('have.value', '2020-03-01')
+    cy.getInputFor('Available From').type(currentMonth)
+    cy.getInputFor('Available From').should('have.value', currentMonth)
 
     cy.getInputFor('Envelope').type('Onl')
     cy.contains('Only one').click()
