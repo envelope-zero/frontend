@@ -60,7 +60,8 @@ jobs:
           start: npm run start-ci
           # Frontend runs on :3000, API on :8080
           wait-on: 'http://localhost:3000, http://localhost:8080'
-          browser: chrome
+          browser: chromium
+          headed: true
 
       - uses: actions/upload-artifact@v3.1.3
         if: failure()
