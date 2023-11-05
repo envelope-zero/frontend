@@ -1,4 +1,5 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "group:monorepos",
     "group:recommended",
@@ -32,6 +33,12 @@
       "matchPackageNames": ["ghcr.io/envelope-zero/backend"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
+    },
+    {
+      "description": "Use node versioning for node Docker image",
+      "matchDepNames": "node",
+      "matchManagers": "dockerfile",
+      "versioning": "node"
     }
   ],
   "regexManagers": [
