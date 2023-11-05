@@ -35,13 +35,13 @@
       "automerge": true
     },
     {
-      "description": "Use node versioning for node Docker image",
+      "description": "Disable dockerfile manager for node, version is managed with customManager",
       "matchDepNames": "node",
       "matchManagers": "dockerfile",
-      "versioning": "node"
+      "enabled": false
     }
   ],
-  "regexManagers": [
+  "customManagers": [
     {
       "fileMatch": ["^Dockerfile$"],
       "matchStrings": ["FROM node:(?<currentValue>.*?)-alpine"],
