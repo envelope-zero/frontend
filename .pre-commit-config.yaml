@@ -13,6 +13,6 @@ repos:
       - id: prettier
 
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 37.45.0
+    rev: 37.47.0
     hooks:
       - id: renovate-config-validator
