@@ -287,6 +287,31 @@ describe('Transactions', () => {
     cy.getInputFor('Envelope').should('have.value', 'Only one')
   })
 
+  // This needs to be a declared function to have a binding for 'this'
+  // Regression test for https://github.com/envelope-zero/frontend/issues/1170
+  it.only('does not suggest an envelope for the source account', function () {
+    cy.wrap(
+      createTransaction(
+        {
+          sourceAccountId: this.bankAccount.id,
+          destinationAccountId: this.externalAccount.id,
+          envelopeId: this.envelope.id,
+          amount: '7',
+        },
+        this.budget
+      )
+    )
+
+    cy.visit('/transactions/new')
+
+    cy.getInputFor('Envelope').should('have.value', '')
+
+    cy.getInputFor('Source').type('Best fri')
+    cy.contains('Best Friend').click()
+
+    cy.getInputFor('Envelope').should('have.value', '')
+  })
+
   it('can search for transactions by their note', function () {
     const transactionData = {
       sourceAccountId: this.bankAccount.id,
