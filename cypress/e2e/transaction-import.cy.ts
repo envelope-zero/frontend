@@ -39,7 +39,7 @@ describe('Transaction Import', () => {
 
     cy.clickAndWait('Submit')
 
-    cy.contains('1 of 4')
+    cy.contains('1 of 5')
     cy.getByTitle('Previous Transaction').should('be.disabled')
 
     // first transaction - checked prefilled values
@@ -55,6 +55,7 @@ describe('Transaction Import', () => {
     cy.get('li').contains('Create "Non Existing Account"')
     cy.getInputFor('Destination').clear().type('EDITED ACCOUNT{enter}')
     cy.getInputFor('Date').should('have.value', '2023-06-20')
+    cy.contains('Available From').should('not.exist')
 
     // move back and forth - edits should be persisted
     cy.getByTitle('Next Transaction').click()
@@ -93,7 +94,7 @@ describe('Transaction Import', () => {
       .and('include', 'MY NOTE')
 
     // second transaction
-    cy.contains('2 of 4')
+    cy.contains('2 of 5')
     cy.getByTitle('Previous Transaction').should('be.disabled')
     cy.getInputFor('Source').should('have.value', 'My Other Account')
     // dropdown results in source should be "My Other Account" & 'Create "My Other Account"'
@@ -104,6 +105,7 @@ describe('Transaction Import', () => {
     // newly created account is available for selection
     cy.getInputFor('Source').clear().type('EDITE')
     cy.contains('EDITED ACCOUNT')
+    cy.contains('Available From').should('not.exist')
 
     cy.getInputFor('Destination')
       .should('have.value', 'My Account')
@@ -118,8 +120,9 @@ describe('Transaction Import', () => {
       .should('have.length', 1)
 
     // third transaction
-    cy.contains('3 of 4')
+    cy.contains('3 of 5')
     cy.getByTitle('Previous Transaction').should('not.be.disabled')
+    cy.contains('Available From').should('not.exist')
 
     // delete this transaction
     cy.get('button').contains('Delete').click()
@@ -131,26 +134,32 @@ describe('Transaction Import', () => {
       .should('have.length', 1)
 
     // deleted transaction is skipped
-    cy.contains('4 of 4')
+    cy.contains('4 of 5')
     cy.getByTitle('Previous Transaction').click()
-    cy.contains('2 of 4')
+    cy.contains('2 of 5')
     cy.getByTitle('Next Transaction').click()
-    cy.contains('4 of 4')
+    cy.contains('4 of 5')
 
     // import this transaction
     cy.get('button').contains('Import').click()
-    cy.contains('2 of 4')
+
+    // Now at the last transaction, import this too
+    cy.getInputFor('Available From').should('have.value', '2023-06')
+    cy.get('button').contains('Import').click()
+
+    // Now back at the second transactions since we skipped it
+    cy.contains('2 of 5')
     cy.getByTitle('Next Transaction').should('be.disabled')
 
-    // now there are two transactions
+    // now there are three transactions
     cy.wrap(null)
       .then(() => listTransactions(this.budget))
-      .should('have.length', 2)
+      .should('have.length', 3)
 
-    // one transaction connected to existing account "External Account"
+    // two transactions connected to existing account "External Account"
     cy.wrap(null)
       .then(() => listTransactions(this.externalAccount))
-      .should('have.length', 1)
+      .should('have.length', 2)
 
     // import the last remaining transaction
     cy.get('button').contains('Import').click()

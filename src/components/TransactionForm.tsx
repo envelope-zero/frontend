@@ -8,6 +8,7 @@ import {
   dateFromIsoString,
   dateToIsoString,
   monthYearFromDate,
+  setToFirstOfTheMonth,
 } from '../lib/dates'
 import { safeName } from '../lib/name-helper'
 import {
@@ -28,6 +29,7 @@ import FormField from './FormField'
 import Autocomplete from './Autocomplete'
 import InputCurrency from './InputCurrency'
 import isSupported from '../lib/is-supported'
+import { isIncome } from '../lib/transaction-helper'
 
 const transactionApi = api('transactions')
 const accountApi = api('accounts')
@@ -37,11 +39,6 @@ type Props = {
   budget: Budget
   accounts: Account[]
   reloadAccounts: () => void
-}
-
-const setToFirstOfTheMonth = (date: string) => {
-  const [year, month] = date.split('-')
-  return `${year}-${month}-01`
 }
 
 const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
@@ -145,29 +142,6 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
         sourceAccountId,
         destinationAccountId,
       }))
-  }
-
-  const isExternal = (accountId: string | undefined) => {
-    if (typeof accountId === 'undefined') {
-      return true
-    }
-
-    const account = accounts.find(acc => acc.id === accountId)
-    if (typeof account === 'undefined') {
-      return true
-    }
-
-    return account.external
-  }
-
-  const isIncome = () => {
-    const hasEnvelope = Boolean(transaction.envelopeId)
-
-    return (
-      !hasEnvelope &&
-      isExternal(transaction.sourceAccountId) &&
-      !isExternal(transaction.destinationAccountId)
-    )
   }
 
   const accountGroups = [
@@ -408,7 +382,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
               }}
               options={{ disabled: transaction.reconciled || false }}
             />
-            {isIncome() ? (
+            {isIncome(transaction, accounts) ? (
               <FormField
                 type={isSupported.inputTypeMonth() ? 'month' : 'date'}
                 name="availableFrom"

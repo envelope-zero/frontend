@@ -23,11 +23,17 @@ const dateFromMonthYear = (date: string) => {
   return new Date(`${month}/15/${year}`)
 }
 
+const setToFirstOfTheMonth = (date: string) => {
+  const [year, month] = date.split('-')
+  return `${year}-${month}-01`
+}
+
 export {
   dateFromIsoString,
   dateToIsoString,
   monthYearFromDate,
   dateFromMonthYear,
+  setToFirstOfTheMonth,
   translatedMonthFormat,
   shortTranslatedMonthFormat,
 }
