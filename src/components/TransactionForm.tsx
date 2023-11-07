@@ -281,14 +281,6 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                   const valuesToUpdate: UnpersistedTransaction = {
                     sourceAccountId: account.id,
                   }
-                  if (
-                    account.external &&
-                    !transaction.envelopeId &&
-                    account.recentEnvelopes.length
-                  ) {
-                    setRecentEnvelopes(account.recentEnvelopes)
-                    valuesToUpdate.envelopeId = account.recentEnvelopes[0].id
-                  }
                   setTransaction({ ...transaction, ...valuesToUpdate })
                 }
               }}
@@ -317,6 +309,9 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                   const valuesToUpdate: UnpersistedTransaction = {
                     destinationAccountId: account.id,
                   }
+
+                  // Suggest the first of the recentEnvelopes as the Envelope
+                  // to use for this transaction
                   if (
                     account.external &&
                     !transaction.envelopeId &&
@@ -325,6 +320,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                     setRecentEnvelopes(account.recentEnvelopes)
                     valuesToUpdate.envelopeId = account.recentEnvelopes[0].id
                   }
+
                   setTransaction({ ...transaction, ...valuesToUpdate })
                 }
               }}
