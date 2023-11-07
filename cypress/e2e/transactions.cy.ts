@@ -289,7 +289,7 @@ describe('Transactions', () => {
 
   // This needs to be a declared function to have a binding for 'this'
   // Regression test for https://github.com/envelope-zero/frontend/issues/1170
-  it.only('does not suggest an envelope for the source account', function () {
+  it('does not suggest an envelope for the source account', function () {
     cy.wrap(
       createTransaction(
         {
