@@ -384,7 +384,11 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                 name="availableFrom"
                 label={t('transactions.availableFrom')}
                 note={`(${t('transactions.onlyRelevantForIncome')})`}
-                tooltip={t('transactions.availableFromExplanation')}
+                tooltip={`${t('transactions.availableFromExplanation')}${
+                  isSupported.inputTypeMonth()
+                    ? ''
+                    : t('transactions.availableFromMonthField')
+                }`}
                 value={(isSupported.inputTypeMonth()
                   ? (date: string) => monthYearFromDate(new Date(date))
                   : (date: string) =>

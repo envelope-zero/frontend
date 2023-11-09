@@ -12,7 +12,9 @@ repos:
     hooks:
       - id: prettier
 
-  - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 37.53.1
+  # Explicitly not using the renovate upstream hook because for some reason installing it is
+  # excruciatingly slow (> 10 minutes in some cases)
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.27.1
     hooks:
-      - id: renovate-config-validator
+      - id: check-renovate
