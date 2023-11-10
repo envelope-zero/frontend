@@ -114,6 +114,7 @@
     "availableFrom": "Available From",
     "onlyRelevantForIncome": "Only relevant for income",
     "availableFromExplanation": "The month in which this income should be made available to budget.\n Use this setting to prevent allocating funds that are not yet available.\n\nFor example, if your salary is paid at the end of the month, you might want to set this to the following month.",
+    "availableFromMonthField": "\n\nThis field is fixed to the first of the month since the availability is always for a whole month. Your browser does not support a month input field, therefore Envelope Zero displays a date input.",
     "note": "Note",
     "destinationAccountId": "Destination",
     "sourceAccountId": "Source",
