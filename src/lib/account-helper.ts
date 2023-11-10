@@ -1,7 +1,6 @@
 import { Account } from '../types'
 
 const isExternal = (accountId: string | undefined, accounts: Account[]) => {
-  console.log(`looking for ${accountId} in ${accounts}`)
   if (typeof accountId === 'undefined') {
     return true
   }
