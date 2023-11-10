@@ -225,222 +225,226 @@ const Result = (props: Props) => {
         </div>
       </div>
 
-      <div className="w-full full-centered">
-        <button
-          type="button"
-          title={t('transactions.import.previous')}
-          disabled={hidePrevButton}
-          className={`icon mr-4 ${hidePrevButton ? 'opacity-20' : ''}`}
-          onClick={() => {
-            clearError()
-            setCurrentIndex(previousIndex())
-          }}
-        >
-          <ChevronLeftIcon />
-        </button>
-        <span>
-          {t('indexOfLength', {
-            index: currentIndex + 1,
-            length: transactions.length,
-          })}
-        </span>
-        <button
-          type="button"
-          title={t('transactions.import.next')}
-          disabled={hideNextButton}
-          className={`icon ml-4 ${hideNextButton ? 'opacity-20' : ''}`}
-          onClick={() => {
-            clearError()
-            setCurrentIndex(nextIndex())
-          }}
-        >
-          <ChevronRightIcon />
-        </button>
-      </div>
+      <form
+        onSubmit={e => {
+          e.preventDefault()
+          createTransaction()
+            .then(() => {
+              updatePreviewValue('processed', true)
+              props.setNotification(t('transactions.import.importSuccess'))
+              clearError()
+              goToNextTransaction()
+            })
+            .catch(err => {
+              setError(err.message)
+            })
+        }}
+      >
+        <div className="w-full full-centered">
+          <button
+            type="button"
+            title={t('transactions.import.previous')}
+            disabled={hidePrevButton}
+            className={`icon mr-4 ${hidePrevButton ? 'opacity-20' : ''}`}
+            onClick={() => {
+              clearError()
+              setCurrentIndex(previousIndex())
+            }}
+          >
+            <ChevronLeftIcon />
+          </button>
+          <span>
+            {t('indexOfLength', {
+              index: currentIndex + 1,
+              length: transactions.length,
+            })}
+          </span>
+          <button
+            type="button"
+            title={t('transactions.import.next')}
+            disabled={hideNextButton}
+            className={`icon ml-4 ${hideNextButton ? 'opacity-20' : ''}`}
+            onClick={() => {
+              clearError()
+              setCurrentIndex(nextIndex())
+            }}
+          >
+            <ChevronRightIcon />
+          </button>
+        </div>
 
-      <div className="mt-2">
-        <Error error={error} />
-      </div>
+        <div className="mt-2">
+          <Error error={error} />
+        </div>
 
-      {transactions[currentIndex].duplicateTransactionIds.length > 0 && (
-        <InfoBox text={t('transactions.import.duplicateDetected')} />
-      )}
+        {transactions[currentIndex].duplicateTransactionIds.length > 0 && (
+          <InfoBox text={t('transactions.import.duplicateDetected')} />
+        )}
 
-      <FormFields>
-        <FormField
-          type="text"
-          name="note"
-          label={t('transactions.note')}
-          value={currentTransaction().note || ''}
-          onChange={e => updateValue('note', e.target.value)}
-        />
-
-        <FormField
-          type="number"
-          name="amount"
-          label={t('transactions.amount')}
-          value={currentTransaction().amount ?? ''}
-          onChange={e => updateValue('amount', e.target.value)}
-          options={{ step: 'any' }}
-        >
-          <InputCurrency currency={budget.currency} />
-        </FormField>
-
-        <Autocomplete<Account>
-          groups={accountGroups()}
-          allowNewCreation={true}
-          itemLabel={account => safeName(account, 'account')}
-          itemId={account => account.id || safeName(account, 'account')}
-          label={t('transactions.sourceAccountId')}
-          onChange={account => {
-            if (!account.id) {
-              setSourceAccountToCreate(account)
-              updateValue('sourceAccountId', undefined)
-              updatePreviewValue('sourceAccountName', account.name || '')
-            } else {
-              setSourceAccountToCreate(undefined)
-              updateValue('sourceAccountId', account.id)
-            }
-          }}
-          value={
-            (accounts.find(
-              account => account.id === currentTransaction().sourceAccountId
-            ) as Account) ||
-            sourceAccountToCreate ||
-            ''
-          }
-          disabled={currentTransaction().sourceAccountId === targetAccountId}
-        />
-
-        <Autocomplete<Account>
-          groups={accountGroups()}
-          allowNewCreation={true}
-          itemLabel={account => safeName(account, 'account')}
-          itemId={account => account.id || safeName(account, 'account')}
-          label={t('transactions.destinationAccountId')}
-          onChange={account => {
-            if (!account.id) {
-              setDestinationAccountToCreate(account)
-              updateValue('destinationAccountId', undefined)
-              updatePreviewValue('destinationAccountName', account.name || '')
-            } else {
-              setDestinationAccountToCreate(undefined)
-              updateValue('destinationAccountId', account.id)
-            }
-          }}
-          value={
-            (accounts.find(
-              account =>
-                account.id === currentTransaction().destinationAccountId
-            ) as Account) ||
-            destinationAccountToCreate ||
-            ''
-          }
-          disabled={
-            currentTransaction().destinationAccountId === targetAccountId
-          }
-        />
-
-        <Autocomplete<Envelope>
-          groups={groupedEnvelopes}
-          allowNewCreation={false}
-          emptyOption={t('envelopes.none')}
-          value={
-            (groupedEnvelopes
-              .flatMap(group => group.items)
-              .find(
-                envelope => envelope.id === currentTransaction().envelopeId
-              ) as Envelope) || null
-          }
-          label={t('transactions.envelopeId')}
-          itemLabel={envelope => safeName(envelope, 'envelope')}
-          itemId={envelope => envelope.id || safeName(envelope, 'envelope')}
-          onChange={envelope => {
-            if (envelope === null) {
-              updateValue('envelopeId', null)
-            } else {
-              updateValue('envelopeId', envelope.id)
-            }
-          }}
-        />
-
-        <FormField
-          type="date"
-          name="date"
-          label={t('transactions.date')}
-          value={dateFromIsoString(
-            currentTransaction().date || new Date().toISOString()
-          )}
-          onChange={e => {
-            // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
-            if (e.target.value) {
-              updateValue('date', dateToIsoString(e.target.value))
-            }
-          }}
-        />
-
-        {isIncome(currentTransaction(), accounts) ? (
+        <FormFields>
           <FormField
-            type={isSupported.inputTypeMonth() ? 'month' : 'date'}
-            name="availableFrom"
-            label={t('transactions.availableFrom')}
-            note={`(${t('transactions.onlyRelevantForIncome')})`}
-            tooltip={t('transactions.availableFromExplanation')}
-            value={(isSupported.inputTypeMonth()
-              ? (date: string) => monthYearFromDate(new Date(date))
-              : (date: string) =>
-                  setToFirstOfTheMonth(dateFromIsoString(date)))(
-              currentTransaction().availableFrom ||
-                currentTransaction().date ||
-                new Date().toISOString()
+            type="text"
+            name="note"
+            label={t('transactions.note')}
+            value={currentTransaction().note || ''}
+            onChange={e => updateValue('note', e.target.value)}
+          />
+
+          <FormField
+            type="number"
+            name="amount"
+            label={t('transactions.amount')}
+            value={currentTransaction().amount ?? ''}
+            onChange={e => updateValue('amount', e.target.value)}
+            options={{ step: 'any' }}
+          >
+            <InputCurrency currency={budget.currency} />
+          </FormField>
+
+          <Autocomplete<Account>
+            groups={accountGroups()}
+            allowNewCreation={true}
+            itemLabel={account => safeName(account, 'account')}
+            itemId={account => account.id || safeName(account, 'account')}
+            label={t('transactions.sourceAccountId')}
+            onChange={account => {
+              if (!account.id) {
+                setSourceAccountToCreate(account)
+                updateValue('sourceAccountId', undefined)
+                updatePreviewValue('sourceAccountName', account.name || '')
+              } else {
+                setSourceAccountToCreate(undefined)
+                updateValue('sourceAccountId', account.id)
+              }
+            }}
+            value={
+              (accounts.find(
+                account => account.id === currentTransaction().sourceAccountId
+              ) as Account) ||
+              sourceAccountToCreate ||
+              ''
+            }
+            disabled={currentTransaction().sourceAccountId === targetAccountId}
+          />
+
+          <Autocomplete<Account>
+            groups={accountGroups()}
+            allowNewCreation={true}
+            itemLabel={account => safeName(account, 'account')}
+            itemId={account => account.id || safeName(account, 'account')}
+            label={t('transactions.destinationAccountId')}
+            onChange={account => {
+              if (!account.id) {
+                setDestinationAccountToCreate(account)
+                updateValue('destinationAccountId', undefined)
+                updatePreviewValue('destinationAccountName', account.name || '')
+              } else {
+                setDestinationAccountToCreate(undefined)
+                updateValue('destinationAccountId', account.id)
+              }
+            }}
+            value={
+              (accounts.find(
+                account =>
+                  account.id === currentTransaction().destinationAccountId
+              ) as Account) ||
+              destinationAccountToCreate ||
+              ''
+            }
+            disabled={
+              currentTransaction().destinationAccountId === targetAccountId
+            }
+          />
+
+          <Autocomplete<Envelope>
+            groups={groupedEnvelopes}
+            allowNewCreation={false}
+            emptyOption={t('envelopes.none')}
+            value={
+              (groupedEnvelopes
+                .flatMap(group => group.items)
+                .find(
+                  envelope => envelope.id === currentTransaction().envelopeId
+                ) as Envelope) || null
+            }
+            label={t('transactions.envelopeId')}
+            itemLabel={envelope => safeName(envelope, 'envelope')}
+            itemId={envelope => envelope.id || safeName(envelope, 'envelope')}
+            onChange={envelope => {
+              if (envelope === null) {
+                updateValue('envelopeId', null)
+              } else {
+                updateValue('envelopeId', envelope.id)
+              }
+            }}
+          />
+
+          <FormField
+            type="date"
+            name="date"
+            label={t('transactions.date')}
+            value={dateFromIsoString(
+              currentTransaction().date || new Date().toISOString()
             )}
             onChange={e => {
               // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
               if (e.target.value) {
-                updateValue(
-                  'availableFrom',
-                  dateToIsoString(setToFirstOfTheMonth(e.target.value))
-                )
+                updateValue('date', dateToIsoString(e.target.value))
               }
             }}
           />
-        ) : null}
-      </FormFields>
 
-      <div className="pt-6 gap-4 grid grid-cols-2">
-        <button
-          type="button"
-          onClick={() => {
-            updatePreviewValue('processed', true) // TODO: this might be problematic as soon as we introduce "import all" – we'll need to make sure these transactions are ignored
-            props.setNotification(t('transactions.import.deleteSuccess'))
-            clearError()
-            goToNextTransaction()
-          }}
-          className="btn-secondary col-span-1 full-centered"
-        >
-          <TrashIcon className="icon-red icon-sm mr-1 relative bottom-0.5" />
-          {t('delete')}
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            createTransaction()
-              .then(() => {
-                updatePreviewValue('processed', true)
-                props.setNotification(t('transactions.import.importSuccess'))
-                clearError()
-                goToNextTransaction()
-              })
-              .catch(err => {
-                setError(err.message)
-              })
-          }}
-          className="btn-secondary link-blue col-span-1 full-centered"
-        >
-          <CheckCircleIcon className="icon-sm mr-1" />
-          {t('import')}
-        </button>
-      </div>
+          {isIncome(currentTransaction(), accounts) ? (
+            <FormField
+              type={isSupported.inputTypeMonth() ? 'month' : 'date'}
+              name="availableFrom"
+              label={t('transactions.availableFrom')}
+              note={`(${t('transactions.onlyRelevantForIncome')})`}
+              tooltip={t('transactions.availableFromExplanation')}
+              value={(isSupported.inputTypeMonth()
+                ? (date: string) => monthYearFromDate(new Date(date))
+                : (date: string) =>
+                    setToFirstOfTheMonth(dateFromIsoString(date)))(
+                currentTransaction().availableFrom ||
+                  currentTransaction().date ||
+                  new Date().toISOString()
+              )}
+              onChange={e => {
+                // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
+                if (e.target.value) {
+                  updateValue(
+                    'availableFrom',
+                    dateToIsoString(setToFirstOfTheMonth(e.target.value))
+                  )
+                }
+              }}
+            />
+          ) : null}
+        </FormFields>
+
+        <div className="pt-6 gap-4 grid grid-cols-2">
+          <button
+            type="button"
+            onClick={() => {
+              updatePreviewValue('processed', true) // TODO: this might be problematic as soon as we introduce "import all" – we'll need to make sure these transactions are ignored
+              props.setNotification(t('transactions.import.deleteSuccess'))
+              clearError()
+              goToNextTransaction()
+            }}
+            className="btn-secondary col-span-1 full-centered"
+          >
+            <TrashIcon className="icon-red icon-sm mr-1 relative bottom-0.5" />
+            {t('delete')}
+          </button>
+          <button
+            type="submit"
+            className="btn-secondary link-blue col-span-1 full-centered"
+          >
+            <CheckCircleIcon className="icon-sm mr-1" />
+            {t('import')}
+          </button>
+        </div>
+      </form>
     </>
   )
 }
