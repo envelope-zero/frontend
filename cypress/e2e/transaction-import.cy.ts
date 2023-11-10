@@ -140,8 +140,9 @@ describe('Transaction Import', () => {
     cy.getByTitle('Next Transaction').click()
     cy.contains('4 of 5')
 
-    // import this transaction
-    cy.get('button').contains('Import').click()
+    // import this transaction by pressing enter
+    cy.getInputFor('Note').type('{enter}')
+    cy.contains('Successfully imported')
 
     // Now at the last transaction, import this too
     cy.getInputFor('Available From').should('have.value', '2023-06')
