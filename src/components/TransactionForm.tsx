@@ -39,9 +39,15 @@ type Props = {
   budget: Budget
   accounts: Account[]
   reloadAccounts: () => void
+  setNotification: (notification: string) => void
 }
 
-const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
+const TransactionForm = ({
+  budget,
+  accounts,
+  reloadAccounts,
+  setNotification,
+}: Props) => {
   const { t }: Translation = useTranslation()
   const { transactionId } = useParams()
   const navigate = useNavigate()
@@ -427,6 +433,7 @@ const TransactionForm = ({ budget, accounts, reloadAccounts }: Props) => {
                     transactionApi
                       .delete(transaction as Transaction)
                       .then(() => {
+                        setNotification(t('deleteSuccess'))
                         navigate(-1)
                       })
                       .catch(err => {
