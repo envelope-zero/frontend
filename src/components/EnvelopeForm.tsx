@@ -140,9 +140,10 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
               groups={[{ items: categories }]}
               allowNewCreation={true}
               value={
-                (categories.find(
-                  category => category.id === envelope.categoryId
-                ) as Category) || categoryToCreate
+                (categoryToCreate ||
+                  categories.find(
+                    category => category.id === envelope.categoryId
+                  )) as Category
               }
               label={t('envelopes.category')}
               itemLabel={category =>
