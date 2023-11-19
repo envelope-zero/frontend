@@ -1,22 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Account, Budget, TransactionPreview } from '../../types'
 import Form from './Form'
 import Result from './Result'
+import { api } from '../../lib/api/base'
 
 type Props = {
-  accounts: Account[]
   budget: Budget
   setNotification: (notification: string) => void
 }
 
-const TransactionImport = (props: Props) => {
-  const [isLoading, setIsLoading] = useState(false)
+const accountApi = api('accounts')
+
+const TransactionImport = ({ budget, setNotification }: Props) => {
+  const [isLoading, setIsLoading] = useState(true)
   const [result, setResult] = useState<TransactionPreview[] | undefined>()
   const [targetAccountId, setTargetAccountId] = useState('')
+  const [accounts, setAccounts] = useState<Account[]>([])
+  const [possibleTargetAccounts, setPossibleTargetAccounts] = useState<
+    Account[]
+  >([])
 
-  const possibleTargetAccounts = props.accounts.filter(
-    account => !account.external && !account.hidden
-  )
+  useEffect(() => {
+    isLoading || setIsLoading(true)
+    accountApi.getAll(budget).then((allAccounts: Account[]) => {
+      setAccounts(allAccounts)
+      setPossibleTargetAccounts(
+        allAccounts.filter(account => !account.external && !account.hidden)
+      )
+      setIsLoading(false)
+    })
+  }, [budget])
 
   if (typeof result === 'undefined') {
     return (
@@ -33,13 +46,13 @@ const TransactionImport = (props: Props) => {
   } else {
     return (
       <Result
-        accounts={props.accounts}
+        accounts={accounts}
         transactions={result}
-        budget={props.budget}
+        budget={budget}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         targetAccountId={targetAccountId}
-        setNotification={props.setNotification}
+        setNotification={setNotification}
       />
     )
   }
