@@ -20,10 +20,9 @@ const accountApi = api('accounts')
 type Props = {
   budget: Budget
   type: 'internal' | 'external'
-  reloadAccounts: () => void
 }
 
-const AccountForm = ({ budget, type, reloadAccounts }: Props) => {
+const AccountForm = ({ budget, type }: Props) => {
   const { t }: Translation = useTranslation()
   const { accountId } = useParams()
   const navigate = useNavigate()
@@ -78,7 +77,6 @@ const AccountForm = ({ budget, type, reloadAccounts }: Props) => {
         if ('id' in account) {
           accountApi
             .update(account)
-            .then(reloadAccounts)
             .then(() => navigate(-1))
             .catch(err => {
               setError(err.message)
@@ -86,7 +84,6 @@ const AccountForm = ({ budget, type, reloadAccounts }: Props) => {
         } else {
           accountApi
             .create(account, budget)
-            .then(reloadAccounts)
             .then(() => navigate(-1))
             .catch(err => {
               setError(err.message)
@@ -247,7 +244,6 @@ const AccountForm = ({ budget, type, reloadAccounts }: Props) => {
                   if (window.confirm(t('accounts.confirmDelete'))) {
                     accountApi
                       .delete(account as Account)
-                      .then(reloadAccounts)
                       .then(() => {
                         navigate(-1)
                       })

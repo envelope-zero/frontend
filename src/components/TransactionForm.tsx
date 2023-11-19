@@ -37,17 +37,10 @@ const categoryApi = api('categories')
 
 type Props = {
   budget: Budget
-  accounts: Account[]
-  reloadAccounts: () => void
   setNotification: (notification: string) => void
 }
 
-const TransactionForm = ({
-  budget,
-  accounts,
-  reloadAccounts,
-  setNotification,
-}: Props) => {
+const TransactionForm = ({ budget, setNotification }: Props) => {
   const { t }: Translation = useTranslation()
   const { transactionId } = useParams()
   const navigate = useNavigate()
@@ -56,6 +49,7 @@ const TransactionForm = ({
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
 
+  const [accounts, setAccounts] = useState<Account[]>([])
   const [groupedEnvelopes, setGroupedEnvelopes] = useState<GroupedEnvelopes>([])
   const [transaction, setTransaction] = useState<
     UnpersistedTransaction | Transaction
@@ -85,6 +79,7 @@ const TransactionForm = ({
           }))
         )
       ),
+      accountApi.getAll(budget).then(setAccounts),
     ]
 
     if (isPersisted) {
@@ -142,12 +137,10 @@ const TransactionForm = ({
       )
     }
 
-    return Promise.all(promises)
-      .then(reloadAccounts)
-      .then(() => ({
-        sourceAccountId,
-        destinationAccountId,
-      }))
+    return Promise.all(promises).then(() => ({
+      sourceAccountId,
+      destinationAccountId,
+    }))
   }
 
   const accountGroups = [

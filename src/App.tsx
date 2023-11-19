@@ -21,20 +21,16 @@ import CategoryForm from './components/CategoryForm'
 import cookie from './lib/cookie'
 import connectBudgetApi from './lib/api/budgets'
 import './i18n'
-import { Account, Budget, Theme } from './types'
+import { Budget, Theme } from './types'
 import LoadingSpinner from './components/LoadingSpinner'
-import { api } from './lib/api/base'
 import BudgetImport from './components/BudgetImport'
 import Settings from './components/Settings'
 import TransactionImport from './components/TransactionImport'
-
-const accountApi = api('accounts')
 
 const preferredTheme = () => localStorage.theme || 'default'
 
 const App = () => {
   const [budget, setBudget] = useState<Budget>()
-  const [accounts, setAccounts] = useState<Account[]>([])
   const [error, setError] = useState('')
   const [notification, setNotification] = useState('')
   const [isLoading, setIsLoading] = useState(true)
@@ -48,7 +44,7 @@ const App = () => {
           .getBudget(budgetId)
           .then(data => {
             setBudget(data)
-            loadAccounts(data)
+            setIsLoading(false)
             setError('')
           })
           .catch(err => {
@@ -74,15 +70,6 @@ const App = () => {
       document.documentElement.classList.remove('dark')
     }
   }, [theme])
-
-  const loadAccounts = (budget: Budget) => {
-    accountApi
-      .getAll(budget)
-      .then(setAccounts)
-      .then(() => {
-        setIsLoading(false)
-      })
-  }
 
   const updateTheme = (setting: Theme) => {
     setTheme(setting)
@@ -146,13 +133,7 @@ const App = () => {
               />
               <Route
                 path="own-accounts/:accountId"
-                element={
-                  <AccountForm
-                    budget={budget}
-                    type="internal"
-                    reloadAccounts={() => loadAccounts(budget)}
-                  />
-                }
+                element={<AccountForm budget={budget} type="internal" />}
               />
               <Route
                 path="external-accounts"
@@ -160,27 +141,17 @@ const App = () => {
               />
               <Route
                 path="external-accounts/:accountId"
-                element={
-                  <AccountForm
-                    budget={budget}
-                    type="external"
-                    reloadAccounts={() => loadAccounts(budget)}
-                  />
-                }
+                element={<AccountForm budget={budget} type="external" />}
               />
               <Route
                 path="transactions"
-                element={
-                  <TransactionsList budget={budget} accounts={accounts} />
-                }
+                element={<TransactionsList budget={budget} />}
               />
               <Route
                 path="transactions/:transactionId"
                 element={
                   <TransactionForm
                     budget={budget}
-                    accounts={accounts}
-                    reloadAccounts={() => loadAccounts(budget)}
                     setNotification={setNotification}
                   />
                 }
@@ -189,7 +160,6 @@ const App = () => {
                 path="transaction-import"
                 element={
                   <TransactionImport
-                    accounts={accounts}
                     budget={budget}
                     setNotification={setNotification}
                   />

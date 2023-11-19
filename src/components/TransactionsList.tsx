@@ -30,10 +30,10 @@ import { XMarkIcon } from '@heroicons/react/20/solid'
 
 const transactionApi = api('transactions')
 const categoryApi = api('categories')
+const accountApi = api('accounts')
 
 type Props = {
   budget: Budget
-  accounts: Account[]
 }
 
 const egg = `
@@ -46,12 +46,13 @@ const egg = `
   </span>
 `
 
-const TransactionsList = ({ budget, accounts }: Props) => {
+const TransactionsList = ({ budget }: Props) => {
   const { t }: Translation = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [isLoading, setIsLoading] = useState(true)
   const [showFilters, setShowFilters] = useState(false)
+  const [accounts, setAccounts] = useState<Account[]>([])
   const [groupedEnvelopes, setGroupedEnvelopes] = useState<GroupedEnvelopes>([])
   const [groupedTransactions, setGroupedTransactions] =
     useState<GroupedTransactionsType>({})
@@ -72,18 +73,23 @@ const TransactionsList = ({ budget, accounts }: Props) => {
     }
 
     Promise.all([
-      transactionApi.getAll(budget, activeFilters),
-      categoryApi.getAll(budget),
-    ]).then(([transactions, categories]: [Transaction[], Category[]]) => {
-      setGroupedTransactions(
-        groupBy(transactions, ({ date }: Transaction) => formatDate(date))
-      )
-      setGroupedEnvelopes(
-        categories.map(category => ({
-          title: safeName(category, 'category', t('categories.category')),
-          items: category.envelopes,
-        }))
-      )
+      transactionApi
+        .getAll(budget, activeFilters)
+        .then(transactions =>
+          setGroupedTransactions(
+            groupBy(transactions, ({ date }: Transaction) => formatDate(date))
+          )
+        ),
+      categoryApi.getAll(budget).then((categories: Category[]) =>
+        setGroupedEnvelopes(
+          categories.map(category => ({
+            title: safeName(category, 'category', t('categories.category')),
+            items: category.envelopes,
+          }))
+        )
+      ),
+      accountApi.getAll(budget).then(setAccounts),
+    ]).then(() => {
       setIsLoading(false)
     })
   }, [budget, searchParams]) // eslint-disable-line react-hooks/exhaustive-deps
