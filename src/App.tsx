@@ -183,6 +183,7 @@ const App = () => {
                     budget={budget}
                     accounts={accounts}
                     reloadAccounts={() => loadAccounts(budget)}
+                    setNotification={setNotification}
                   />
                 }
               />

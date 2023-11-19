@@ -121,7 +121,10 @@ describe('Transactions', () => {
 
     cy.clickAndWait('Save')
     cy.contains('Best Friend → Bank account')
-    cy.contains('+13.37')
+    cy.contains('+13.37').click()
+
+    cy.contains('Delete Transaction').click()
+    cy.contains('Successfully deleted')
   })
 
   it('can create a new transfer between internal accounts', () => {

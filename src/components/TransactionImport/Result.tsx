@@ -427,7 +427,7 @@ const Result = (props: Props) => {
             type="button"
             onClick={() => {
               updatePreviewValue('processed', true) // TODO: this might be problematic as soon as we introduce "import all" – we'll need to make sure these transactions are ignored
-              props.setNotification(t('transactions.import.deleteSuccess'))
+              props.setNotification(t('deleteSuccess'))
               clearError()
               goToNextTransaction()
             }}
