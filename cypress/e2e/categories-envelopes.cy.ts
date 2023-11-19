@@ -54,6 +54,14 @@ describe('Envelope: Creation', () => {
     cy.contains('Grocery Envelope')
     cy.contains('Restaurants')
     cy.contains('Rent').should('not.exist')
+
+    // edit the envelope again to create a new category
+    cy.clickAndWait('Cancel')
+    cy.contains('Restaurants').click()
+    cy.getInputFor('Category').clear().type('New Category')
+    cy.contains('Create "New Category"').click()
+    cy.clickAndWait('Save')
+    cy.contains('New Category')
   })
 
   it('shows an error when trying to save invalid data', () => {
