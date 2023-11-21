@@ -110,7 +110,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5.1.0
         with:
-          push: true
+          push: contains('refs/tags/', github.ref) && github.repository == "envelope-zero/frontend"
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
