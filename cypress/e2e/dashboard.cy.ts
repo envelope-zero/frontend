@@ -191,7 +191,7 @@ describe('Dashboard', () => {
   })
 
   // This needs to be a declared function to have a binding for 'this'
-  it.only('links to the filtered transaction list', function () {
+  it('links to the filtered transaction list', function () {
     cy.wrap(
       Cypress.Promise.all([
         createAccount({ name: 'Internal' }, this.budget),
