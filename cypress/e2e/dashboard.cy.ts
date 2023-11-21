@@ -237,6 +237,7 @@ describe('Dashboard', () => {
 
     // We need to reload to load everything from the backend, not just the transactions
     cy.reload()
+    cy.get('h1').contains('Dashboard Test')
 
     // We created transactions for August, September and October 2023, visit September to verify
     cy.visit('#', { qs: { month: '2023-09' } })
