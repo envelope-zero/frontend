@@ -37,6 +37,9 @@ const AllocationInputs = ({
             bigDecimal.subtract(e.target.value, savedAllocation)
           )
         }}
+        onFocus={e => {
+          e.target.select()
+        }}
         compact
       >
         <InputCurrency currency={budget.currency} />

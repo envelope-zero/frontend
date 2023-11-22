@@ -8,6 +8,7 @@ type Props = {
   value?: string
   options?: { [option: string]: string | boolean }
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
   children?: React.ReactNode
   hideLabel?: boolean
   compact?: boolean
@@ -22,6 +23,7 @@ const FormField = ({
   value,
   options,
   onChange,
+  onFocus,
   children,
   hideLabel,
   compact,
@@ -69,6 +71,7 @@ const FormField = ({
             id={name}
             value={value}
             onChange={onChange}
+            onFocus={onFocus}
             {...options}
           />
           {children}
