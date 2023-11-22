@@ -104,6 +104,16 @@ describe('Dashboard', () => {
     cy.contains('-30.00').should('not.exist')
     cy.contains('12.00')
 
+    // select content of allocation input field when focusing it
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
+    cy.getInputFor('Set to amount').clear().type('1337')
+    cy.get('button[type="submit"]').click()
+    cy.awaitLoading()
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
+    cy.getInputFor('Set to amount').type('12')
+    cy.getInputFor('Set to amount').should('have.value', '12')
+    cy.get('button[type="submit"]').click()
+
     // set allocation for second envelope
     cy.get('[aria-label*="Edit Allocation for Second Envelope"]').click()
     cy.getInputFor('Set to amount').clear().type('-22.00')
