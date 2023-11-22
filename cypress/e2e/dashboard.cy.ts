@@ -69,9 +69,9 @@ describe('Dashboard', () => {
     cy.url().should('include', '?month=2019-12')
 
     cy.get('#month').click()
-    cy.get('input#month').type('2022-03-01')
+    cy.get('input#month').type('2022-03')
     cy.awaitLoading()
-    cy.get('#month').should('have.value', '2022-03-01')
+    cy.get('#month').should('have.value', '2022-03')
     cy.contains('Feb')
     cy.contains('Apr')
   })
@@ -191,7 +191,7 @@ describe('Dashboard', () => {
   })
 
   // This needs to be a declared function to have a binding for 'this'
-  it.only('links to the filtered transaction list', function () {
+  it('links to the filtered transaction list', function () {
     cy.wrap(
       Cypress.Promise.all([
         createAccount({ name: 'Internal' }, this.budget),
@@ -237,6 +237,7 @@ describe('Dashboard', () => {
 
     // We need to reload to load everything from the backend, not just the transactions
     cy.reload()
+    cy.get('h1').contains('Dashboard Test')
 
     // We created transactions for August, September and October 2023, visit September to verify
     cy.visit('#', { qs: { month: '2023-09' } })

@@ -2,6 +2,7 @@ name: Test, build and push
 
 on:
   push:
+  pull_request:
 
 concurrency:
   group: ${{ github.ref }}
@@ -109,7 +110,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5.1.0
         with:
-          push: true
+          push: ${{ github.repository_owner == 'envelope-zero' && contains('refs/tags/', github.ref) }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
