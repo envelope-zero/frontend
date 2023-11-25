@@ -2,6 +2,14 @@ name: Test, build and push
 
 on:
   push:
+    # Always run on main so that the cached dependencies are up to date
+    # PRs can access caches created by the default branch, but if we do
+    # not create the cache on the default branch, PRs would allways create
+    # a new one, which defeats the purpose.
+    branches:
+      - main
+    tags:
+      - '*'
   pull_request:
 
 concurrency:
