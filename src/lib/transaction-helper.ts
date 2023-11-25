@@ -34,14 +34,14 @@ const getConfiguration = (
       povAccount.id === transaction.sourceAccountId
         ? outgoing
         : povAccount.id === transaction.destinationAccountId
-        ? incoming
-        : transfer
+          ? incoming
+          : transfer
   } else {
     numberFormat = sourceAccount?.external
       ? incoming
       : destinationAccount?.external
-      ? outgoing
-      : transfer
+        ? outgoing
+        : transfer
   }
 
   const { sign, color } = numberFormat
