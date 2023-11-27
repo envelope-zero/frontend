@@ -33,6 +33,8 @@ The default frontend configuration and default backend configuration match up, s
 
 Please write tests when you add features and add regression tests for bug fixes. We use [cypress](https://docs.cypress.io) for end-to-end testing of the frontend, see the [cypress/e2e](cypress/e2e/) directory for all tests.
 
+When tests run in the CI, they are uploaded to [Cypress Cloud](https://cloud.cypress.io/projects/uc2vus), where we can analyze them more easily.
+
 You can run the tests as follows:
 
 ```sh
