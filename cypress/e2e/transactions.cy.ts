@@ -54,7 +54,6 @@ describe('Transactions', () => {
   it('can create a new outgoing transaction', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Note').type('Birthday Present')
     cy.getInputFor('Amount').type('42.7')
@@ -101,7 +100,6 @@ describe('Transactions', () => {
   it('can create a new incoming transaction', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Amount').type('13.37')
 
@@ -130,7 +128,6 @@ describe('Transactions', () => {
   it('can create a new transfer between internal accounts', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Amount').type('0.04')
 
@@ -160,7 +157,6 @@ describe('Transactions', () => {
   it('can create a new account', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Amount').type('13')
 
@@ -199,7 +195,6 @@ describe('Transactions', () => {
   it('can select an archived account by entering its full name', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Destination').type('Archived Acc')
     cy.contains('Archived Account').should('not.exist')
@@ -210,7 +205,6 @@ describe('Transactions', () => {
   it('can duplicate an existing transaction', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Note').type('Burgers')
     cy.getInputFor('Amount').type('5')
@@ -245,7 +239,6 @@ describe('Transactions', () => {
   it('clears the inputs when switching to a new transaction', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Note').type("I shouldn't be buying this")
     cy.getInputFor('Amount').type('1000000')

@@ -44,8 +44,10 @@ describe('Dashboard', () => {
         cy.wrap(firstEnvelope).as('firstEnvelope')
         cy.wrap(secondEnvelope).as('secondEnvelope')
         cy.visit('/').get('h3').contains('Dashboard Test').click()
+
+        // This cookie is set with the response, therefore we don't
+        // need to awaitLoading() here
         cy.getCookie('budgetId').should('exist')
-        cy.awaitLoading()
       })
     })
   })

@@ -86,17 +86,22 @@ describe('Budget: ynab4 import', () => {
     cy.contains('2,558.00 US$')
   })
 
-  it('shows potential errors', () => {
+  it('shows error on wrong file type', () => {
     cy.visit('/budget-import')
     cy.getInputFor('Budget Name').clear().type('Imported Budget')
-
     cy.getInputFor('File').selectFile('cypress/fixtures/ynab4-budget.json')
     cy.contains('Save').click()
+
     cy.awaitLoading()
     cy.contains('this endpoint only supports .yfull files')
+  })
 
+  it('shows error on empty file', () => {
+    cy.visit('/budget-import')
+    cy.getInputFor('Budget Name').clear().type('Imported Budget')
     cy.getInputFor('File').selectFile('cypress/fixtures/empty.yfull')
     cy.contains('Save').click()
+
     cy.awaitLoading()
     cy.contains(
       'not a valid YNAB4 Budget.yfull file: unexpected end of JSON input'

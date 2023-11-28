@@ -28,7 +28,6 @@ describe('Transaction Import', () => {
   it('can import parsed transactions', function () {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Import Transactions').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Account').type('account')
     cy.contains('External Account').should('not.exist')
@@ -180,7 +179,6 @@ describe('Transaction Import', () => {
   it('errors on already parsed file', function () {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Import Transactions').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Account').type('account')
     cy.contains('External Account').should('not.exist')
@@ -198,7 +196,6 @@ describe('Transaction Import', () => {
   it('errors on an unparseable file', function () {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Import Transactions').click()
-    cy.awaitLoading()
 
     cy.getInputFor('Account').type('account')
     cy.contains('External Account').should('not.exist')

@@ -51,7 +51,6 @@ describe('Account: Creation', () => {
     )
 
     cy.contains('Accounts').click()
-    cy.awaitLoading()
     cy.contains('Old account').click()
     cy.awaitLoading()
     cy.contains('Archive Account').click()

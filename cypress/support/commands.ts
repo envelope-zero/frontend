@@ -17,6 +17,13 @@ Cypress.Commands.add('clickAndWait', element => {
 })
 
 Cypress.Commands.add('awaitLoading', () => {
+  // Wait for the loading icon to exist
+  // This avoids test errors when the loading
+  // icon is taking longer to appear than the
+  // test to execute the next action
+  cy.get('#loading').should('exist')
+
+  // Wait until loading is done
   cy.get('#loading').should('not.exist')
 })
 
