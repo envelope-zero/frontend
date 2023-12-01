@@ -144,7 +144,13 @@ describe('Transaction Import', () => {
     cy.getInputFor('Note').type('{enter}')
     cy.contains('Successfully imported')
 
+    // go to dashboard, then resume import
+    cy.contains('Home').click()
+    cy.contains('You have an unfinished transaction import in progress.')
+    cy.contains('Resume now').click()
+
     // Now at the last transaction, import this too
+    cy.contains('5 of 5')
     cy.getInputFor('Available From').should('have.value', '2023-06')
     cy.get('button').contains('Import').click()
 

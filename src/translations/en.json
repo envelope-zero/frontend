@@ -90,6 +90,8 @@
     "import": {
       "importTransactions": "Import Transactions",
       "account": "Account",
+      "cancel": "Cancel import",
+      "confirmCancel": "Are you sure you want to cancel the unfinished import?",
       "description": "Import a list of transactions, for example a downloaded bank statement.\n\nYou will be able to review the transactions before they are saved.\n\nUploads are parsed in your browser, powered by <a class='link-blue' href='https://l.envelope-zero.org/ynap'>YNAP</a>, and by Envelope Zero. A list of all currently supported banks can be found <a class='link-blue' href='https://l.envelope-zero.org/ynap-formats'>here</a>.",
       "previous": "Previous Transaction",
       "next": "Next Transaction",
@@ -97,7 +99,10 @@
       "duplicateDetected": "This is a duplicate of an existing transaction",
       "complete": "Import complete",
       "alreadyConverted": "This file has already been parsed. Please upload the CSV file from your bank.",
-      "noParser": "This file can not be parsed. Please check if your bank is on the list of supported formats linked below."
+      "noParser": "This file can not be parsed. Please check if your bank is on the list of supported formats linked below.",
+      "unfinishedImportInProgress": "You have an unfinished transaction import in progress.",
+      "resumeNow": "Resume now",
+      "youCanCloseAndResume": "You can safely close this page and come back later to finish the import. All changes are saved in your browser."
     },
     "from": "From",
     "to": "To",
