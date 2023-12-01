@@ -41,7 +41,9 @@
 
   .header {
     @apply fixed top-[1.625rem] left-0 right-0 m-auto text-center md:relative md:top-0 z-10 flex justify-center items-center md:h-12;
-    width: calc(100% - 9rem);
+    @media (max-width: 767px) {
+      width: calc(100% - 9rem);
+    }
 
     h1 {
       @apply whitespace-nowrap overflow-hidden text-ellipsis max-w-full;
@@ -49,7 +51,7 @@
     }
 
     .header--action {
-      @apply fixed right-6 text-red-800 dark:text-red-600 flex gap-x-2;
+      @apply fixed md:absolute right-6 md:right-0 text-red-800 dark:text-red-600 flex gap-x-2;
 
       .header--action__secondary {
         @apply text-gray-600 dark:text-gray-400;
