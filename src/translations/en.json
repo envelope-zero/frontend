@@ -86,6 +86,7 @@
   "transactions": {
     "transactions": "Transactions",
     "transaction": "Transaction",
+    "latest": "Latest Transactions",
     "import": {
       "importTransactions": "Import Transactions",
       "account": "Account",

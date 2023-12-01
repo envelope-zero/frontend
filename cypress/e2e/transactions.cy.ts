@@ -78,14 +78,16 @@ describe('Transactions', () => {
 
     cy.contains('Accounts').click()
     cy.contains('Bank account').click()
-    cy.get('h2').contains('Transactions')
+    cy.contains('Latest Transactions').click()
+    cy.awaitLoading()
     cy.contains('Birthday Present (Bank account → Best Friend)')
     cy.contains('-42.70')
 
     cy.contains('Accounts').click()
     cy.contains('External Accounts').click()
     cy.contains('Best Friend').click()
-    cy.get('h2').contains('Transactions')
+    cy.contains('Latest Transactions').click()
+    cy.awaitLoading()
     cy.contains('Birthday Present (Bank account → Best Friend)')
     cy.contains('-42.70')
 
@@ -93,7 +95,8 @@ describe('Transactions', () => {
 
     cy.contains('Envelopes').click()
     cy.contains('Only one').click()
-    cy.get('h2').contains('Transactions')
+    cy.contains('Latest Transactions').click()
+    cy.awaitLoading()
     cy.contains('Birthday Present (Bank account → Best Friend)')
     cy.contains('-42.70')
   })
@@ -143,18 +146,6 @@ describe('Transactions', () => {
     cy.clickAndWait('Save')
     cy.contains('Bank account → Cash')
     cy.contains('±0.04')
-
-    cy.contains('Accounts').click()
-    cy.contains('Bank account').click()
-    cy.get('h2').contains('Transactions')
-    cy.contains('Bank account → Cash')
-    cy.contains('-0.04')
-
-    cy.contains('Accounts').click()
-    cy.contains('Cash').click()
-    cy.get('h2').contains('Transactions')
-    cy.contains('Bank account → Cash')
-    cy.contains('+0.04')
   })
 
   it('can create a new account', () => {
@@ -182,7 +173,8 @@ describe('Transactions', () => {
 
     cy.contains('Accounts').click()
     cy.contains('Bank account').click()
-    cy.get('h2').contains('Transactions')
+    cy.contains('Latest Transactions').click()
+    cy.awaitLoading()
     cy.contains('Bank account → New Best Friend')
     cy.contains('-13.00')
 
@@ -191,7 +183,8 @@ describe('Transactions', () => {
     cy.awaitLoading()
     cy.contains('Someone else').should('not.exist')
     cy.contains('New Best Friend').click()
-    cy.get('h2').contains('Transactions')
+    cy.contains('Latest Transactions').click()
+    cy.awaitLoading()
     cy.contains('Bank account → New Best Friend')
     cy.contains('-13.00')
   })

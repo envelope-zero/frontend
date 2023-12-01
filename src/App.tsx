@@ -150,7 +150,6 @@ const App = () => {
                   <AccountForm
                     budget={budget}
                     type="internal"
-                    accounts={accounts}
                     reloadAccounts={() => loadAccounts(budget)}
                   />
                 }
@@ -165,7 +164,6 @@ const App = () => {
                   <AccountForm
                     budget={budget}
                     type="external"
-                    accounts={accounts}
                     reloadAccounts={() => loadAccounts(budget)}
                   />
                 }
@@ -203,7 +201,7 @@ const App = () => {
               />
               <Route
                 path="envelopes/:envelopeId"
-                element={<EnvelopeForm budget={budget} accounts={accounts} />}
+                element={<EnvelopeForm budget={budget} />}
               />
               <Route
                 path="categories/:categoryId"

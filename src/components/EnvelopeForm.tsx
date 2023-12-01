@@ -7,7 +7,6 @@ import { api } from '../lib/api/base'
 import { safeName } from '../lib/name-helper'
 import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 import {
-  Account,
   Budget,
   Envelope,
   UnpersistedEnvelope,
@@ -19,18 +18,16 @@ import Autocomplete from './Autocomplete'
 import Error from './Error'
 import FormField from './FormField'
 import FormFields from './FormFields'
-import LatestTransactions from './LatestTransactions'
 import LoadingSpinner from './LoadingSpinner'
-import RemainingHeightContainer from './RemainingHeightContainer'
 import ArchiveButton from './ArchiveButton'
 import InfoBox from './InfoBox'
 
 const envelopeApi = api('envelopes')
 const categoryApi = api('categories')
 
-type Props = { budget: Budget; accounts: Account[] }
+type Props = { budget: Budget }
 
-const EnvelopeForm = ({ budget, accounts }: Props) => {
+const EnvelopeForm = ({ budget }: Props) => {
   const { t }: Translation = useTranslation()
   const { envelopeId } = useParams()
   const navigate = useNavigate()
@@ -126,6 +123,18 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
               })}
             />
           ) : null}
+
+          {isPersisted && (
+            <Link
+              onClick={confirmDiscardingUnsavedChanges}
+              to={`/transactions?envelope=${envelopeId}`}
+              className="flex items-center justify-end link-blue"
+            >
+              {t('transactions.latest')}
+              <ChevronRightIcon className="inline h-6" />
+            </Link>
+          )}
+
           <FormFields>
             <FormField
               type="text"
@@ -215,28 +224,6 @@ const EnvelopeForm = ({ budget, accounts }: Props) => {
                 <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
                 {t('envelopes.delete')}
               </button>
-            </div>
-          ) : null}
-
-          {'links' in envelope ? (
-            <div className="pt-8">
-              <RemainingHeightContainer>
-                <div className="flex justify-between">
-                  <h2>{t('transactions.transactions')}</h2>
-                  <Link
-                    onClick={confirmDiscardingUnsavedChanges}
-                    to={`/transactions?envelope=${envelope.id}`}
-                    className="flex items-center link-blue"
-                  >
-                    {t('seeAll')} <ChevronRightIcon className="inline h-6" />
-                  </Link>
-                </div>
-                <LatestTransactions
-                  accounts={accounts}
-                  parent={envelope}
-                  budget={budget}
-                />
-              </RemainingHeightContainer>
             </div>
           ) : null}
         </>
