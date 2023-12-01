@@ -124,16 +124,16 @@ describe('Transaction Import', () => {
     cy.getByTitle('Previous Transaction').should('not.be.disabled')
     cy.contains('Available From').should('not.exist')
 
-    // delete this transaction
-    cy.get('button').contains('Delete').click()
-    cy.contains('Successfully deleted')
+    // dismiss this transaction
+    cy.get('button').contains('Dismiss').click()
+    cy.contains('Successfully dismissed')
 
     // there is still only one transaction
     cy.wrap(null)
       .then(() => listTransactions(this.budget))
       .should('have.length', 1)
 
-    // deleted transaction is skipped
+    // dismissed transaction is skipped
     cy.contains('4 of 5')
     cy.getByTitle('Previous Transaction').click()
     cy.contains('2 of 5')

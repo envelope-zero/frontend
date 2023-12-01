@@ -13,7 +13,7 @@ import {
   Envelope,
   UnpersistedAccount,
 } from '../../types'
-import { CheckCircleIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 import FormFields from '../FormFields'
 import FormField from '../FormField'
 import InputCurrency from '../InputCurrency'
@@ -450,20 +450,20 @@ const Result = (props: Props) => {
             type="button"
             onClick={() => {
               updatePreviewValue('processed', true) // TODO: this might be problematic as soon as we introduce "import all" – we'll need to make sure these transactions are ignored
-              props.setNotification(t('deleteSuccess'))
+              props.setNotification(t('dismissSuccess'))
               clearError()
               goToNextTransaction()
             }}
             className="btn-secondary col-span-1 full-centered"
           >
-            <TrashIcon className="icon-red icon-sm mr-1 relative bottom-0.5" />
-            {t('delete')}
+            <XCircleIcon className="icon-red mr-1" />
+            {t('dismiss')}
           </button>
           <button
             type="submit"
             className="btn-secondary link-blue col-span-1 full-centered"
           >
-            <CheckCircleIcon className="icon-sm mr-1" />
+            <CheckCircleIcon className="icon mr-1" />
             {t('import')}
           </button>
           <div className="flex justify-center col-span-2 dark:text-gray-400 text-gray-600">
