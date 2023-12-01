@@ -7,6 +7,8 @@
   "cancel": "Cancel",
   "delete": "Delete",
   "deleteSuccess": "Successfully deleted",
+  "dismiss": "Dismiss",
+  "dismissSuccess": "Successfully dismissed",
   "import": "Import",
   "select": "Select...",
   "close": "Close",
