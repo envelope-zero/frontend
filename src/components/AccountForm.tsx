@@ -8,8 +8,6 @@ import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
-import LatestTransactions from './LatestTransactions'
-import RemainingHeightContainer from './RemainingHeightContainer'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 import InputCurrency from './InputCurrency'
@@ -22,11 +20,10 @@ const accountApi = api('accounts')
 type Props = {
   budget: Budget
   type: 'internal' | 'external'
-  accounts: Account[]
   reloadAccounts: () => void
 }
 
-const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
+const AccountForm = ({ budget, type, reloadAccounts }: Props) => {
   const { t }: Translation = useTranslation()
   const { accountId } = useParams()
   const navigate = useNavigate()
@@ -121,6 +118,17 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
         <LoadingSpinner />
       ) : (
         <>
+          {isPersisted && (
+            <Link
+              onClick={confirmDiscardingUnsavedChanges}
+              to={`/transactions?account=${accountId}`}
+              className="flex items-center justify-end link-blue"
+            >
+              {t('transactions.latest')}
+              <ChevronRightIcon className="inline h-6" />
+            </Link>
+          )}
+
           <FormFields>
             <FormField
               type="text"
@@ -254,28 +262,6 @@ const AccountForm = ({ budget, type, accounts, reloadAccounts }: Props) => {
                 {t('accounts.delete')}
               </button>
               {/* TODO: reconcile */}
-            </div>
-          ) : null}
-          {'links' in account ? (
-            <div className="pt-8">
-              <RemainingHeightContainer>
-                <div className="flex justify-between">
-                  <h2>{t('transactions.transactions')}</h2>
-                  <Link
-                    onClick={confirmDiscardingUnsavedChanges}
-                    to={`/transactions?account=${account.id}`}
-                    className="flex items-center link-blue"
-                  >
-                    {t('seeAll')} <ChevronRightIcon className="inline h-6" />
-                  </Link>
-                </div>
-                <LatestTransactions
-                  accounts={accounts}
-                  parent={account}
-                  budget={budget}
-                  povFromAccount={true}
-                />
-              </RemainingHeightContainer>
             </div>
           ) : null}
         </>
