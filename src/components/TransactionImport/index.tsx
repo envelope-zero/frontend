@@ -3,6 +3,7 @@ import { Account, Budget, TransactionPreview } from '../../types'
 import Form from './Form'
 import Result from './Result'
 import { api } from '../../lib/api/base'
+import LoadingSpinner from '../LoadingSpinner'
 
 type Props = {
   budget: Budget
@@ -13,7 +14,9 @@ const accountApi = api('accounts')
 
 const TransactionImport = ({ budget, setNotification }: Props) => {
   const [isLoading, setIsLoading] = useState(true)
-  const [result, setResult] = useState<TransactionPreview[] | undefined>()
+  const [result, setResult] = useState<TransactionPreview[]>(
+    JSON.parse(localStorage.getItem('importTransactions') || '[]')
+  )
   const [targetAccountId, setTargetAccountId] = useState('')
   const [accounts, setAccounts] = useState<Account[]>([])
   const [possibleTargetAccounts, setPossibleTargetAccounts] = useState<
@@ -31,12 +34,12 @@ const TransactionImport = ({ budget, setNotification }: Props) => {
     })
   }, [budget])
 
-  if (typeof result === 'undefined') {
+  if (isLoading) {
+    return <LoadingSpinner />
+  } else if (result.length === 0) {
     return (
       <Form
         accounts={possibleTargetAccounts}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
         setResult={(newResult, targetAccountId) => {
           setResult(newResult)
           setTargetAccountId(targetAccountId)
@@ -49,8 +52,6 @@ const TransactionImport = ({ budget, setNotification }: Props) => {
         accounts={accounts}
         transactions={result}
         budget={budget}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
         targetAccountId={targetAccountId}
         setNotification={setNotification}
       />

@@ -1,4 +1,4 @@
-import { Outlet, NavLink, Link } from 'react-router-dom'
+import { Outlet, NavLink, Link, useLocation } from 'react-router-dom'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
@@ -19,6 +19,7 @@ import { Budget, Translation } from '../types'
 import { safeName } from '../lib/name-helper'
 import Error from './Error'
 import Notification from './Notification'
+import ImportBanner from './ImportBanner'
 
 type LayoutProps = {
   budget?: Budget
@@ -38,7 +39,9 @@ const Layout = ({
   setNotification,
 }: LayoutProps) => {
   const { t }: Translation = useTranslation()
+  const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [showImportBanner, setShowImportBanner] = useState<boolean>(false)
   const headerRef = useRef<HTMLElement>()
 
   useEffect(() => {
@@ -50,6 +53,17 @@ const Layout = ({
       }
     })
   }, [])
+
+  useEffect(() => {
+    if (
+      localStorage.getItem('importTransactions') &&
+      location.pathname !== '/transaction-import'
+    ) {
+      setShowImportBanner(true)
+    } else {
+      setShowImportBanner(false)
+    }
+  }, [location])
 
   const hideNav = typeof budget === 'undefined'
 
@@ -311,6 +325,13 @@ const Layout = ({
         </div>
         <main className="flex-1">
           <div className="py-4 md:py-6">
+            {showImportBanner && (
+              <ImportBanner
+                hideBanner={() => {
+                  setShowImportBanner(false)
+                }}
+              />
+            )}
             <div className="max-w-7xl mx-auto px-6 md:px-8">
               <Error error={error} />
               <Outlet />

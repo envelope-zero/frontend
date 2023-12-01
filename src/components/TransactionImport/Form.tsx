@@ -13,15 +13,14 @@ import { safeName } from '../../lib/name-helper'
 
 type Props = {
   accounts: Account[]
-  isLoading: boolean
-  setIsLoading: (isLoading: boolean) => void
   setResult: (result: TransactionPreview[], targetAccountId: string) => void
 }
 
-const Form = ({ accounts, isLoading, setIsLoading, setResult }: Props) => {
+const Form = ({ accounts, setResult }: Props) => {
   const { t }: Translation = useTranslation()
   const [error, setError] = useState('')
   const [accountId, setAccountId] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <form

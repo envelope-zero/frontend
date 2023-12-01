@@ -35,8 +35,6 @@ type Props = {
   accounts: Account[]
   transactions: TransactionPreview[]
   budget: Budget
-  isLoading: boolean
-  setIsLoading: (isLoading: boolean) => void
   setNotification: (notification: string) => void
   targetAccountId: string
 }
@@ -46,14 +44,22 @@ const accountApi = api('accounts')
 const transactionApi = api('transactions')
 
 const Result = (props: Props) => {
-  const { budget, isLoading, setIsLoading, targetAccountId } = props
+  const { budget, targetAccountId } = props
 
   const { t }: Translation = useTranslation()
   const navigate = useNavigate()
 
+  const [isLoading, setIsLoading] = useState(false)
   const [accounts, setAccounts] = useState(props.accounts)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [transactions, setTransactions] = useState([...props.transactions])
+  const [currentIndex, setCurrentIndex] = useState(
+    JSON.parse(localStorage.getItem('importIndex') || '0')
+  )
+  const [transactions, setTransactions] = useState(
+    JSON.parse(
+      localStorage.getItem('importTransactions') ||
+        JSON.stringify(props.transactions)
+    )
+  )
   const [groupedEnvelopes, setGroupedEnvelopes] = useState<GroupedEnvelopes>([])
   const [error, setError] = useState('')
   const [sourceAccountToCreate, setSourceAccountToCreate] =
@@ -83,6 +89,14 @@ const Result = (props: Props) => {
         }
       })
   }, [budget]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    localStorage.setItem('importIndex', JSON.stringify(currentIndex))
+  }, [currentIndex])
+
+  useEffect(() => {
+    localStorage.setItem('importTransactions', JSON.stringify(transactions))
+  }, [transactions])
 
   useEffect(() => {
     const transactionPreview = transactions[currentIndex]
@@ -201,6 +215,8 @@ const Result = (props: Props) => {
       setCurrentIndex(previousIndex())
     } else {
       props.setNotification(t('transactions.import.complete'))
+      localStorage.removeItem('importTransactions')
+      localStorage.removeItem('importIndex')
       navigate('/transactions')
     }
   }
@@ -219,7 +235,14 @@ const Result = (props: Props) => {
       <div className="header">
         <h1>{t('budgets.import.import')}</h1>
         <div className="header--action">
-          <Link to={-1 as any} className="header--action__secondary">
+          <Link
+            to={-1 as any}
+            className="header--action__secondary"
+            onClick={() => {
+              localStorage.removeItem('importTransactions')
+              localStorage.removeItem('importIndex')
+            }}
+          >
             {t('cancel')}
           </Link>
         </div>
@@ -443,6 +466,9 @@ const Result = (props: Props) => {
             <CheckCircleIcon className="icon-sm mr-1" />
             {t('import')}
           </button>
+          <div className="flex justify-center col-span-2 dark:text-gray-400 text-gray-600">
+            {t('transactions.import.youCanCloseAndResume')}
+          </div>
         </div>
       </form>
     </>
