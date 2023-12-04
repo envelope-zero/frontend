@@ -5,7 +5,7 @@ volumes:
 
 services:
   backend:
-    image: ghcr.io/envelope-zero/backend:v3.19.1
+    image: ghcr.io/envelope-zero/backend:v3.19.2
     volumes:
       - ez-dev-data:/data
     ports:
