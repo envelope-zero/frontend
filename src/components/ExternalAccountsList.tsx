@@ -16,7 +16,7 @@ const accountApi = api('accounts')
 const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
   const { t }: Translation = useTranslation()
   const [searchParams] = useSearchParams()
-  const hidden = searchParams.get('hidden') === 'true'
+  const archived = searchParams.get('archived') === 'true'
 
   const [isLoading, setIsLoading] = useState(true)
   const [accounts, setAccounts] = useState<{ [key: string]: Account[] }>({})
@@ -28,7 +28,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
     }
 
     accountApi
-      .getAll(budget, { external: true, hidden: Boolean(hidden) })
+      .getAll(budget, { external: true, archived: Boolean(archived) })
       .then(data => {
         const groupedAccounts = data.reduce(
           (object: { [letter: string]: Account[] }, account: Account) => {
@@ -51,7 +51,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
         setError(err.message)
         setIsLoading(false)
       })
-  }, [budget, hidden]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [budget, archived]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -74,16 +74,16 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
         <LoadingSpinner />
       ) : (
         <>
-          {hidden ? (
+          {archived ? (
             <div className="flex align-center justify-start link-blue pb-2">
-              <Link to="/external-accounts?hidden=false">
+              <Link to="/external-accounts?archived=false">
                 <ChevronLeftIcon className="icon inline relative bottom-0.5" />
                 {t('back')}
               </Link>
             </div>
           ) : (
             <div className="flex align-center justify-end link-blue pb-2">
-              <Link to="/external-accounts?hidden=true">
+              <Link to="/external-accounts?archived=true">
                 {t('showArchived')}
                 <ChevronRightIcon className="icon inline relative bottom-0.5" />
               </Link>
@@ -116,7 +116,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                                     } text-sm font-medium text-gray-900 dark:text-gray-100 flex justify-between`}
                                   >
                                     <span className="full-centered">
-                                      {account.hidden ? (
+                                      {account.archived ? (
                                         <ArchiveBoxIcon
                                           className="icon-sm inline link-blue mr-2 stroke-2"
                                           title={t('archived')}

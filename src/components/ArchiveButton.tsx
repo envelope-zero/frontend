@@ -24,14 +24,14 @@ const ArchiveButton = ({
       type="button"
       onClick={() => {
         apiConnection
-          .update({ ...resource, hidden: !resource.hidden })
+          .update({ ...resource, archived: !resource.archived })
           .then(onSuccess)
           .catch(onError)
       }}
       className="btn-secondary link-blue text-center"
     >
       <ArchiveBoxIcon className="icon-sm inline mr-1 relative bottom-0.5" />
-      {t(resource.hidden ? 'unarchiveObject' : 'archiveObject', {
+      {t(resource.archived ? 'unarchiveObject' : 'archiveObject', {
         object: resourceTypeTranslation,
       })}
     </button>

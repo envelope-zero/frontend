@@ -25,7 +25,7 @@ export type UnpersistedAccount = {
   onBudget?: boolean
   initialBalance?: string
   initialBalanceDate?: string
-  hidden?: boolean
+  archived?: boolean
 }
 
 export type ApiConnection<T> = {
@@ -52,7 +52,7 @@ export type Account = UnpersistedAccount &
     balance: string
     reconciledBalance: string
     budgetId: UUID
-    recentEnvelopes: Envelope[]
+    recentEnvelopes: UUID[]
   }
 
 export type ApiResponse<T> = {
@@ -103,7 +103,7 @@ export type GroupedEnvelopes = { title?: string; items: Envelope[] }[]
 export type UnpersistedCategory = {
   name?: string
   note?: string
-  hidden?: boolean
+  archived?: boolean
 }
 
 export type Category = UnpersistedCategory &
@@ -125,7 +125,7 @@ export type UnpersistedEnvelope = {
   name?: string
   note?: string
   categoryId?: UUID
-  hidden?: boolean
+  archived?: boolean
 }
 
 export type Envelope = UnpersistedEnvelope &
@@ -139,7 +139,6 @@ export type EnvelopeMonth = Envelope & {
   allocation: string
   balance: string
   spent: string
-  month: string
 }
 
 export type BudgetMonth = ApiObject & {
@@ -159,12 +158,19 @@ export type FilterOptions = {
   account?: string
   envelope?: string
   external?: boolean
-  hidden?: boolean
+  archived?: boolean
   note?: string
   amountMoreOrEqual?: string
   amountLessOrEqual?: string
   fromDate?: string
   untilDate?: string
+}
+
+export type MonthConfig = {
+  envelopeId: UUID
+  allocation: string
+  month: string
+  note: string
 }
 
 export type Theme = 'dark' | 'light' | 'default'

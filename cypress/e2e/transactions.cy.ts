@@ -1,8 +1,9 @@
 import {
   createBudget,
-  createAccount,
+  createAccounts,
   createEnvelope,
   createTransaction,
+  createTransactions,
 } from '../support/setup'
 import { Budget, Account, Envelope } from '../../src/types'
 import { dateFromIsoString } from '../../src/lib/dates'
@@ -21,32 +22,24 @@ describe('Transactions', () => {
 
         cy.wrap(
           Cypress.Promise.all([
-            createAccount({ name: 'Bank account', external: false }, budget),
-            createAccount({ name: 'Cash', external: false }, budget),
-            createAccount({ name: 'Best Friend', external: true }, budget),
-            createAccount(
-              { name: 'Archived Account', external: true, hidden: true },
-              budget
-            ),
+            createAccounts(budget, [
+              { name: 'Bank account', external: false },
+              { name: 'Cash', external: false },
+              { name: 'Best Friend', external: true },
+              { name: 'Archived Account', external: true, archived: true },
+            ]),
             createEnvelope({ name: 'Only one' }, budget),
           ])
-        ).then(
-          ([
-            bankAccount,
-            cashAccount,
-            externalAccount,
-            archivedAccount,
-            envelope,
-          ]: (Account | Envelope)[]) => {
-            cy.wrap(bankAccount).as('bankAccount')
-            cy.wrap(cashAccount).as('cashAccount')
-            cy.wrap(externalAccount).as('externalAccount')
-            cy.wrap(envelope).as('envelope')
+        ).then(([accounts, envelope]: (Account | Envelope)[]) => {
+          cy.wrap(accounts[0].data).as('bankAccount')
+          cy.wrap(accounts[1].data).as('cashAccount')
+          cy.wrap(accounts[2].data).as('externalAccount')
+          cy.wrap(envelope).as('envelope')
 
-            // select budget
-            cy.visit('/').get('h3').contains('Transactions Test').click()
-          }
-        )
+          // select budget
+          cy.visit('/').get('h3').contains('Transactions Test').click()
+          cy.awaitLoading()
+        })
       }
     )
   })
@@ -317,10 +310,10 @@ describe('Transactions', () => {
     }
 
     cy.wrap(
-      Cypress.Promise.all([
-        createTransaction({ ...transactionData, note: 'food' }, this.budget),
-        createTransaction({ ...transactionData, note: 'foo' }, this.budget),
-        createTransaction({ ...transactionData, note: 'other' }, this.budget),
+      createTransactions(this.budget, [
+        { ...transactionData, note: 'food' },
+        { ...transactionData, note: 'foo' },
+        { ...transactionData, note: 'other' },
       ])
     )
 
@@ -332,6 +325,7 @@ describe('Transactions', () => {
     cy.contains('other')
 
     cy.getInputFor('Search Transactions').type('foo{enter}')
+    cy.awaitLoading()
 
     cy.contains('food')
     cy.contains('foo')
@@ -348,43 +342,25 @@ describe('Transactions', () => {
     }
 
     cy.wrap(
-      Cypress.Promise.all([
-        createTransaction(
-          { ...transactionData, note: 'Everything Correct' },
-          this.budget
-        ),
-        createTransaction(
-          {
-            ...transactionData,
-            note: 'Wrong Account',
-            sourceAccountId: this.cashAccount.id,
-          },
-          this.budget
-        ),
-        createTransaction(
-          { ...transactionData, note: 'Amount too large', amount: '200' },
-          this.budget
-        ),
-        createTransaction(
-          { ...transactionData, note: 'Amount too small', amount: '4' },
-          this.budget
-        ),
-        createTransaction(
-          {
-            ...transactionData,
-            note: 'Date too early',
-            date: new Date('2022-12-21').toISOString(),
-          },
-          this.budget
-        ),
-        createTransaction(
-          {
-            ...transactionData,
-            note: 'Date too late',
-            date: new Date('2023-01-01').toISOString(),
-          },
-          this.budget
-        ),
+      createTransactions(this.budget, [
+        { ...transactionData, note: 'Everything Correct' },
+        {
+          ...transactionData,
+          note: 'Wrong Account',
+          sourceAccountId: this.cashAccount.id,
+        },
+        { ...transactionData, note: 'Amount too large', amount: '200' },
+        { ...transactionData, note: 'Amount too small', amount: '4' },
+        {
+          ...transactionData,
+          note: 'Date too early',
+          date: new Date('2022-12-21').toISOString(),
+        },
+        {
+          ...transactionData,
+          note: 'Date too late',
+          date: new Date('2023-01-01').toISOString(),
+        },
       ])
     )
 
@@ -392,6 +368,10 @@ describe('Transactions', () => {
     cy.awaitLoading()
 
     cy.getByTitle('Filter Transactions').click()
+
+    // Wait for all transactions and the accounts to be loaded
+    // This is needed so that auto-completion works
+    cy.awaitLoading()
 
     cy.getInputFor('Account').type('Bank Acc{enter}')
     cy.getInputFor('Amount (Min)').type('12')

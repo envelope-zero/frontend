@@ -13,10 +13,10 @@ import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
 
 const CategoryEnvelopes = ({
   category,
-  hidden,
+  archived,
 }: {
   category: Category
-  hidden: boolean
+  archived: boolean
 }) => {
   const { t }: Translation = useTranslation()
 
@@ -43,7 +43,7 @@ const CategoryEnvelopes = ({
         >
           <span className={!category.name ? 'italic' : ''}>
             {safeName(category, 'category', t('categories.category'))}
-            {category.hidden ? (
+            {category.archived ? (
               <ArchiveBoxIcon
                 className="icon-sm inline link-blue ml-2 stroke-2"
                 title={t('archived')}
@@ -70,7 +70,8 @@ const CategoryEnvelopes = ({
           {category.envelopes
             .filter(
               envelope =>
-                (hidden && category.hidden) || envelope.hidden === hidden
+                (archived && category.archived) ||
+                envelope.archived === archived
             )
             .map(envelope => (
               <Link
@@ -80,7 +81,7 @@ const CategoryEnvelopes = ({
               >
                 <span className={!envelope.name ? 'italic' : ''}>
                   {safeName(envelope, 'envelope')}
-                  {envelope.hidden ? (
+                  {envelope.archived ? (
                     <ArchiveBoxIcon
                       className="icon-sm inline link-blue ml-2 stroke-2"
                       title={t('archived')}

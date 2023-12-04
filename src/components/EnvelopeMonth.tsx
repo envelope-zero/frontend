@@ -14,9 +14,11 @@ import Modal from './Modal'
 import { translatedMonthFormat } from '../lib/dates'
 import AllocationInputs from './AllocationInputs'
 import { safeName } from '../lib/name-helper'
+import { getApiInfo } from '../lib/api/base'
 
 type props = {
   envelope: EnvelopeMonthType
+  month: Date
   i: number
   budget: Budget
   editingEnvelope?: UUID
@@ -25,10 +27,9 @@ type props = {
   setError: (message: string) => void
 }
 
-const allocationApi = api('allocation')
-
 const EnvelopeMonth = ({
   envelope,
+  month,
   i,
   budget,
   editingEnvelope,
@@ -43,36 +44,31 @@ const EnvelopeMonth = ({
     editEnvelope(undefined)
   }
 
-  const updateAllocation = async () => {
-    if (Number(allocatedAmount) === 0) {
-      return allocationApi.delete(undefined, { url: envelope.links.allocation })
-    } else {
-      return allocationApi.update(
-        { amount: allocatedAmount },
-        envelope.links.allocation
-      )
-    }
-  }
-
-  const createAllocation = async () => {
-    return allocationApi.create(
-      {
-        amount: allocatedAmount,
-        envelopeId: envelope.id,
-        month: envelope.month,
-      },
-      budget,
-      envelope.links.allocation
-    )
-  }
-
-  const month = new Date(envelope.month)
   const localMonth = translatedMonthFormat.format(month)
   const lastDay = new Date(
     month.getFullYear(),
     month.getMonth() + 1,
     0
   ).toISOString()
+  const firstDay = new Date(
+    month.getFullYear(),
+    month.getMonth(),
+    1
+  ).toISOString()
+
+  // TODO: Can this be done better using a MonthConfig?
+  const apiMonth = `${month.getFullYear()}-${month.getMonth() < 9 ? '0' : ''}${
+    month.getMonth() + 1
+  }`
+
+  const updateAllocation = async () => {
+    const endpoint = await getApiInfo().then(data => data.links.envelopes)
+
+    return api('').update(
+      { allocation: allocatedAmount },
+      `${endpoint}/${envelope.id}/${apiMonth}`
+    )
+  }
 
   return (
     <tr
@@ -107,11 +103,7 @@ const EnvelopeMonth = ({
           <form
             onSubmit={e => {
               e.preventDefault()
-              const response =
-                Number(envelope.allocation) === 0
-                  ? createAllocation()
-                  : updateAllocation()
-
+              const response = updateAllocation()
               response.then(closeInput).then(reloadBudgetMonth).catch(setError)
             }}
             onReset={e => {
@@ -182,7 +174,7 @@ const EnvelopeMonth = ({
         }`}
       >
         <Link
-          to={`/transactions?envelope=${envelope.id}&fromDate=${envelope.month}&untilDate=${lastDay}`}
+          to={`/transactions?envelope=${envelope.id}&fromDate=${firstDay}&untilDate=${lastDay}`}
         >
           {formatMoney(envelope.spent, budget.currency, {
             hideZero: true,
@@ -197,7 +189,7 @@ const EnvelopeMonth = ({
         }`}
       >
         <Link
-          to={`/transactions?envelope=${envelope.id}&fromDate=${envelope.month}&untilDate=${lastDay}`}
+          to={`/transactions?envelope=${envelope.id}&fromDate=${firstDay}&untilDate=${lastDay}`}
         >
           {formatMoney(envelope.balance, budget.currency, {
             hideZero: true,

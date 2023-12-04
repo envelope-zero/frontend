@@ -69,7 +69,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
   )
 
   const loadBudgetMonth = useCallback(async () => {
-    return get(replaceMonthInLinks(budget.links.groupedMonth))
+    return get(replaceMonthInLinks(budget.links.month))
       .then(data => {
         setBudgetMonth(data)
         if (error) {
@@ -178,7 +178,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
           </div>
           <div className="box text-center py-2 px-4 text-sm font-medium">
             <QuickAllocationForm
-              link={replaceMonthInLinks(budget.links.monthAllocations)}
+              link={replaceMonthInLinks(budget.links.month)}
               reloadBudgetMonth={reloadBudgetMonth}
             />
           </div>
@@ -256,14 +256,15 @@ const Dashboard = ({ budget }: DashboardProps) => {
                       {budgetMonth.categories
                         .filter(
                           category =>
-                            !category.hidden ||
+                            !category.archived ||
                             category.envelopes.some(
-                              envelope => !envelope.hidden
+                              envelope => !envelope.archived
                             )
                         )
                         .map(category => (
                           <CategoryMonth
                             key={category.id}
+                            month={new Date(budgetMonth.month)}
                             category={category}
                             budget={budget}
                             editingEnvelope={editingEnvelope}

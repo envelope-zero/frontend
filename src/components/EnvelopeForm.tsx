@@ -93,6 +93,7 @@ const EnvelopeForm = ({ budget }: Props) => {
                 .create({ ...envelope, categoryId: categoryId }, budget)
                 .then(() => navigate(-1))
                 .catch(err => {
+                  console.log(err)
                   setError(err.message)
                 })
             }
@@ -116,7 +117,7 @@ const EnvelopeForm = ({ budget }: Props) => {
         <LoadingSpinner />
       ) : (
         <>
-          {envelope.hidden ? (
+          {envelope.archived ? (
             <InfoBox
               text={t('archivedObjectInformation', {
                 object: t('envelopes.envelope'),

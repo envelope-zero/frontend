@@ -68,6 +68,6 @@ describe('Envelope: Creation', () => {
     cy.contains('Envelopes').click()
     cy.getByTitle('Create Envelope').first().click()
     cy.contains('Save').click()
-    cy.contains('No Category ID specified')
+    cy.contains('no Category ID specified')
   })
 })

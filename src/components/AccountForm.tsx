@@ -103,7 +103,7 @@ const AccountForm = ({ budget, type }: Props) => {
 
       <Error error={error} />
 
-      {account.hidden ? (
+      {account.archived ? (
         <InfoBox
           text={t('archivedObjectInformation', {
             object: t('accounts.account'),

@@ -2,7 +2,7 @@ import { ApiObject, UUID, Budget, FilterOptions } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 import trimWhitespace from '../trim-whitespace'
 
-const endpoint = window.location.origin + '/api/v1'
+const endpoint = window.location.origin + '/api/v3'
 
 const getApiInfo = async () => {
   return fetch(endpoint).then(checkStatus).then(parseJSON)
@@ -24,6 +24,7 @@ const api = (linkKey: string) => {
           url.searchParams.set(key, value.toString())
         }
       })
+      url.searchParams.set('limit', '-1')
       return get(url.href)
     },
     get: (id: UUID, parent: ApiObject) => {
@@ -42,16 +43,35 @@ const api = (linkKey: string) => {
         .then(data => data.data)
     },
     create: (object: any, budget: Budget, url?: string) => {
+      // Are we creating a single resource?
+      let single = false
+
+      // If the object is not an array yet, make it one
+      if (!Array.isArray(object)) {
+        single = true
+        object = [object]
+      }
+
+      object = object.map((entry: any) => {
+        return { ...entry, budgetId: budget.id }
+      })
+
       return fetch(url || budget.links[linkKey], {
         method: 'POST',
-        body: JSON.stringify(
-          trimWhitespace({ ...object, budgetId: budget.id })
-        ),
+        body: JSON.stringify(trimWhitespace(object)),
         headers: { 'Content-Type': 'application/json' },
       })
         .then(checkStatus)
         .then(parseJSON)
-        .then(data => data.data)
+        .then(data => {
+          // If we created a single object, return its data
+          if (single) {
+            return data.data[0].data
+          }
+
+          // List of objects
+          return data.data
+        })
     },
     delete: (object: ApiObject | undefined, options: { url?: string } = {}) => {
       if (typeof object === 'undefined' && !options.url) {

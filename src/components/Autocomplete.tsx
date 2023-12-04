@@ -49,7 +49,7 @@ const Autocomplete = <T extends ArchivableResource>({
   const [query, setQuery] = useState('')
 
   const isArchived = (item: T) => {
-    return item.hidden
+    return item.archived
   }
 
   useEffect(() => {

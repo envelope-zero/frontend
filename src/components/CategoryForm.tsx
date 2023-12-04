@@ -81,7 +81,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
         <LoadingSpinner />
       ) : (
         <>
-          {category.hidden ? (
+          {category.archived ? (
             <InfoBox
               text={t('archivedObjectInformation', {
                 object: t('categories.category'),

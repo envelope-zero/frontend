@@ -4,6 +4,7 @@ import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { api } from '../lib/api/base'
+import { UUID } from '../types'
 import {
   dateFromIsoString,
   dateToIsoString,
@@ -34,6 +35,7 @@ import { isIncome } from '../lib/transaction-helper'
 const transactionApi = api('transactions')
 const accountApi = api('accounts')
 const categoryApi = api('categories')
+const envelopeApi = api('envelopes')
 
 type Props = {
   budget: Budget
@@ -49,6 +51,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
 
+  const [envelopes, setEnvelopes] = useState<Envelope[]>([])
   const [accounts, setAccounts] = useState<Account[]>([])
   const [groupedEnvelopes, setGroupedEnvelopes] = useState<GroupedEnvelopes>([])
   const [transaction, setTransaction] = useState<
@@ -58,7 +61,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
     useState<UnpersistedAccount>()
   const [destinationAccountToCreate, setDestinationAccountToCreate] =
     useState<UnpersistedAccount>()
-  const [recentEnvelopes, setRecentEnvelopes] = useState([] as Envelope[])
+  const [recentEnvelopes, setRecentEnvelopes] = useState([] as UUID[])
 
   const isPersisted =
     typeof transactionId !== 'undefined' && transactionId !== 'new'
@@ -80,6 +83,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
         )
       ),
       accountApi.getAll(budget).then(setAccounts),
+      envelopeApi.getAll(budget).then(setEnvelopes),
     ]
 
     if (isPersisted) {
@@ -314,10 +318,10 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                   if (
                     account.external &&
                     !transaction.envelopeId &&
-                    account.recentEnvelopes.length
+                    account.recentEnvelopes?.length
                   ) {
                     setRecentEnvelopes(account.recentEnvelopes)
-                    valuesToUpdate.envelopeId = account.recentEnvelopes[0].id
+                    valuesToUpdate.envelopeId = account.recentEnvelopes[0]
                   }
 
                   setTransaction({ ...transaction, ...valuesToUpdate })
@@ -337,7 +341,9 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
               groups={[
                 {
                   title: t('transactions.recentEnvelopes'),
-                  items: recentEnvelopes,
+                  items: envelopes.filter(envelope =>
+                    recentEnvelopes.includes(envelope.id)
+                  ),
                 },
                 ...groupedEnvelopes,
               ]}
