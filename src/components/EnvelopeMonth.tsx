@@ -56,10 +56,9 @@ const EnvelopeMonth = ({
     1
   ).toISOString()
 
-  const apiMonth = `${month.getFullYear()}-${month
-    .getMonth()
+  const apiMonth = `${month.getFullYear()}-${(month.getMonth() + 1)
     .toString()
-    .padStart(2, '0')}${month.getMonth() + 1}`
+    .padStart(2, '0')}`
 
   const updateAllocation = async () => {
     return api('').update(
