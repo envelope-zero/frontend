@@ -5,7 +5,7 @@ volumes:
 
 services:
   backend:
-    image: ghcr.io/envelope-zero/backend:v3.20.1
+    image: ghcr.io/envelope-zero/backend:v3.21.0
     volumes:
       - ez-production-data:/data
     environment:
