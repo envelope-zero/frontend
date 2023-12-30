@@ -14,7 +14,7 @@ import Modal from './Modal'
 import { translatedMonthFormat } from '../lib/dates'
 import AllocationInputs from './AllocationInputs'
 import { safeName } from '../lib/name-helper'
-import { getApiInfo } from '../lib/api/base'
+import { replaceMonthInLinks } from '../lib/month-helper'
 
 type props = {
   envelope: EnvelopeMonthType
@@ -56,18 +56,15 @@ const EnvelopeMonth = ({
     1
   ).toISOString()
 
-  // TODO: Can this be done better using a MonthConfig?
   const apiMonth = `${month.getFullYear()}-${month
     .getMonth()
     .toString()
     .padStart(2, '0')}${month.getMonth() + 1}`
 
   const updateAllocation = async () => {
-    const endpoint = await getApiInfo().then(data => data.links.envelopes)
-
     return api('').update(
       { allocation: allocatedAmount },
-      `${endpoint}/${envelope.id}/${apiMonth}`
+      replaceMonthInLinks(envelope.links.month, apiMonth)
     )
   }
 
