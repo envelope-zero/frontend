@@ -14,11 +14,7 @@ const checkStatus = async response => {
       // The error is parseable, but null. Inspect the first element of the response
       // to see if it is a bulk creation element error
       if (!error) {
-        try {
-          error = JSON.parse(text).data[0].error
-        } catch (e) {
-          error = 'Unknown error: ' + text
-        }
+        error = JSON.parse(text).data[0].error
       }
     } catch (e) {
       error = 'Unknown error: ' + text

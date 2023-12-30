@@ -23,6 +23,8 @@ const api = (linkKey: string) => {
           url.searchParams.set(key, value.toString())
         }
       })
+      // Set the limit to -1 to retrieve all resources - if unset the backend defaults to 50,
+      // but we don't have endless scroll implemented yet
       url.searchParams.set('limit', '-1')
       return get(url.href)
     },
@@ -43,15 +45,10 @@ const api = (linkKey: string) => {
     },
     create: (object: any, budget: Budget, url?: string) => {
       // Are we creating a single resource?
-      let single = false
+      let single = !Array.isArray(object)
 
       // If the object is not an array yet, make it one
-      if (!Array.isArray(object)) {
-        single = true
-        object = [object]
-      }
-
-      object = object.map((entry: any) => {
+      object = [].concat(object).map((entry: any) => {
         return { ...entry, budgetId: budget.id }
       })
 

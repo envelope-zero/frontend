@@ -22,12 +22,15 @@ describe('Transactions', () => {
 
         cy.wrap(
           Cypress.Promise.all([
-            createAccounts(budget, [
-              { name: 'Bank account', external: false },
-              { name: 'Cash', external: false },
-              { name: 'Best Friend', external: true },
-              { name: 'Archived Account', external: true, archived: true },
-            ]),
+            createAccounts(
+              [
+                { name: 'Bank account', external: false },
+                { name: 'Cash', external: false },
+                { name: 'Best Friend', external: true },
+                { name: 'Archived Account', external: true, archived: true },
+              ],
+              budget
+            ),
             createEnvelope({ name: 'Only one' }, budget),
           ])
         ).then(([accounts, envelope]: (Account | Envelope)[]) => {
@@ -310,11 +313,14 @@ describe('Transactions', () => {
     }
 
     cy.wrap(
-      createTransactions(this.budget, [
-        { ...transactionData, note: 'food' },
-        { ...transactionData, note: 'foo' },
-        { ...transactionData, note: 'other' },
-      ])
+      createTransactions(
+        [
+          { ...transactionData, note: 'food' },
+          { ...transactionData, note: 'foo' },
+          { ...transactionData, note: 'other' },
+        ],
+        this.budget
+      )
     )
 
     cy.visit('/transactions')
@@ -342,26 +348,29 @@ describe('Transactions', () => {
     }
 
     cy.wrap(
-      createTransactions(this.budget, [
-        { ...transactionData, note: 'Everything Correct' },
-        {
-          ...transactionData,
-          note: 'Wrong Account',
-          sourceAccountId: this.cashAccount.id,
-        },
-        { ...transactionData, note: 'Amount too large', amount: '200' },
-        { ...transactionData, note: 'Amount too small', amount: '4' },
-        {
-          ...transactionData,
-          note: 'Date too early',
-          date: new Date('2022-12-21').toISOString(),
-        },
-        {
-          ...transactionData,
-          note: 'Date too late',
-          date: new Date('2023-01-01').toISOString(),
-        },
-      ])
+      createTransactions(
+        [
+          { ...transactionData, note: 'Everything Correct' },
+          {
+            ...transactionData,
+            note: 'Wrong Account',
+            sourceAccountId: this.cashAccount.id,
+          },
+          { ...transactionData, note: 'Amount too large', amount: '200' },
+          { ...transactionData, note: 'Amount too small', amount: '4' },
+          {
+            ...transactionData,
+            note: 'Date too early',
+            date: new Date('2022-12-21').toISOString(),
+          },
+          {
+            ...transactionData,
+            note: 'Date too late',
+            date: new Date('2023-01-01').toISOString(),
+          },
+        ],
+        this.budget
+      )
     )
 
     cy.visit('/transactions')

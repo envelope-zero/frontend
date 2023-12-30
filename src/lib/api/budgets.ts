@@ -43,7 +43,7 @@ export default async function budgets() {
       })
         .then(checkStatus)
         .then(parseJSON)
-        .then(data => data.data[0].data)
+        .then(data => data.data[0]?.data)
     },
 
     updateBudget,

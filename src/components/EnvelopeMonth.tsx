@@ -57,9 +57,10 @@ const EnvelopeMonth = ({
   ).toISOString()
 
   // TODO: Can this be done better using a MonthConfig?
-  const apiMonth = `${month.getFullYear()}-${month.getMonth() < 9 ? '0' : ''}${
-    month.getMonth() + 1
-  }`
+  const apiMonth = `${month.getFullYear()}-${month
+    .getMonth()
+    .toString()
+    .padStart(2, '0')}${month.getMonth() + 1}`
 
   const updateAllocation = async () => {
     const endpoint = await getApiInfo().then(data => data.links.envelopes)
@@ -103,8 +104,10 @@ const EnvelopeMonth = ({
           <form
             onSubmit={e => {
               e.preventDefault()
-              const response = updateAllocation()
-              response.then(closeInput).then(reloadBudgetMonth).catch(setError)
+              updateAllocation()
+                .then(closeInput)
+                .then(reloadBudgetMonth)
+                .catch(setError)
             }}
             onReset={e => {
               e.preventDefault()

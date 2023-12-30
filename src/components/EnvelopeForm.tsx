@@ -93,7 +93,6 @@ const EnvelopeForm = ({ budget }: Props) => {
                 .create({ ...envelope, categoryId: categoryId }, budget)
                 .then(() => navigate(-1))
                 .catch(err => {
-                  console.log(err)
                   setError(err.message)
                 })
             }
