@@ -23,7 +23,7 @@ Check the table below for the minimal required [backend](https://github.com/enve
 | ---------------- | -------------------------------- |
 | 0.9.0            | v0.22.0                          |
 | 1.9.0            | v2.0.0                           |
-| 2.0.0            | v4.0.0                           |
+| 2.0.0            | v3.21.1                          |
 
 ## Contributing
 
