@@ -28,7 +28,7 @@ const TransactionImport = ({ budget, setNotification }: Props) => {
     accountApi.getAll(budget).then((allAccounts: Account[]) => {
       setAccounts(allAccounts)
       setPossibleTargetAccounts(
-        allAccounts.filter(account => !account.external && !account.hidden)
+        allAccounts.filter(account => !account.external && !account.archived)
       )
       setIsLoading(false)
     })

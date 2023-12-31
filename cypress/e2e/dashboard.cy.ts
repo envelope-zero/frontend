@@ -34,7 +34,7 @@ describe('Dashboard', () => {
               {
                 name: 'Archived Envelope',
                 categoryId: firstCategory.id,
-                hidden: true,
+                archived: true,
               },
               budget
             ),
@@ -44,8 +44,8 @@ describe('Dashboard', () => {
         cy.wrap(firstEnvelope).as('firstEnvelope')
         cy.wrap(secondEnvelope).as('secondEnvelope')
         cy.visit('/').get('h3').contains('Dashboard Test').click()
-        cy.getCookie('budgetId').should('exist')
         cy.awaitLoading()
+        cy.getCookie('budgetId').should('exist')
       })
     })
   })
@@ -85,7 +85,14 @@ describe('Dashboard', () => {
     cy.getInputFor('Set to amount').type('12.00')
     cy.get('button[type="submit"]').click()
     cy.awaitLoading()
-    cy.contains('12.00')
+
+    // First Envelope is an anchor in a table data cell, get the data cell and its parents
+    // then get the span
+    cy.contains('First Envelope')
+      .parent()
+      .siblings()
+      .find('span')
+      .contains('12.00')
     cy.contains('-12.00 Available to budget')
 
     // close input without saving
@@ -102,7 +109,11 @@ describe('Dashboard', () => {
     cy.get('button[type="reset"]').click()
     cy.get('input[type=number]').should('not.exist')
     cy.contains('-30.00').should('not.exist')
-    cy.contains('12.00')
+    cy.contains('First Envelope')
+      .parent()
+      .siblings()
+      .find('span')
+      .contains('12.00')
 
     // select content of allocation input field when focusing it
     cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
@@ -120,6 +131,11 @@ describe('Dashboard', () => {
     cy.get('button[type="submit"]').click()
     cy.awaitLoading()
     cy.get('input[type=number]').should('not.exist')
+    cy.contains('Second Envelope')
+      .parent()
+      .siblings()
+      .find('span')
+      .contains('-22.00')
 
     // set allocation for third envelope
     cy.get('[aria-label*="Edit Allocation for Third Envelope"]').click()
@@ -252,6 +268,7 @@ describe('Dashboard', () => {
     // We need to reload to load everything from the backend, not just the transactions
     cy.reload()
     cy.get('h1').contains('Dashboard Test')
+    cy.awaitLoading()
 
     // We created transactions for August, September and October 2023, visit September to verify
     cy.visit('#', { qs: { month: '2023-09' } })

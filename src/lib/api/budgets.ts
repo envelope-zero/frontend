@@ -38,12 +38,12 @@ export default async function budgets() {
     createBudget: async (data: UnpersistedBudget) => {
       return fetch(endpoint, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify([data]),
         headers: { 'Content-Type': 'application/json' },
       })
         .then(checkStatus)
         .then(parseJSON)
-        .then(data => data.data)
+        .then(data => data.data[0]?.data)
     },
 
     updateBudget,

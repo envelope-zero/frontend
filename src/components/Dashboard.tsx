@@ -19,6 +19,7 @@ import {
 import CategoryMonth from './CategoryMonth'
 import MonthPicker from './MonthPicker'
 import QuickAllocationForm from './QuickAllocationForm'
+import { replaceMonthInLinks } from '../lib/month-helper'
 
 type DashboardProps = { budget: Budget }
 
@@ -60,16 +61,8 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
   const useNativeMonthPicker = isSupported.inputTypeMonth()
 
-  const replaceMonthInLinks = useCallback(
-    (link: string) => {
-      const [year, month] = activeMonth.split('-')
-      return link.replace('YYYY', year).replace('MM', month)
-    },
-    [activeMonth]
-  )
-
   const loadBudgetMonth = useCallback(async () => {
-    return get(replaceMonthInLinks(budget.links.groupedMonth))
+    return get(replaceMonthInLinks(budget.links.month, activeMonth))
       .then(data => {
         setBudgetMonth(data)
         if (error) {
@@ -178,7 +171,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
           </div>
           <div className="box text-center py-2 px-4 text-sm font-medium">
             <QuickAllocationForm
-              link={replaceMonthInLinks(budget.links.monthAllocations)}
+              link={replaceMonthInLinks(budget.links.month, activeMonth)}
               reloadBudgetMonth={reloadBudgetMonth}
             />
           </div>
@@ -256,14 +249,15 @@ const Dashboard = ({ budget }: DashboardProps) => {
                       {budgetMonth.categories
                         .filter(
                           category =>
-                            !category.hidden ||
+                            !category.archived ||
                             category.envelopes.some(
-                              envelope => !envelope.hidden
+                              envelope => !envelope.archived
                             )
                         )
                         .map(category => (
                           <CategoryMonth
                             key={category.id}
+                            month={new Date(budgetMonth.month)}
                             category={category}
                             budget={budget}
                             editingEnvelope={editingEnvelope}

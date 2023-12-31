@@ -43,7 +43,7 @@ const Form = ({ accounts, setResult }: Props) => {
             )
 
             // Send the parsed file to the backend for processing
-            fetch(`/api/v1/import/ynab-import-preview?accountId=${accountId}`, {
+            fetch(`/api/v3/import/ynab-import-preview?accountId=${accountId}`, {
               method: 'POST',
               body: data,
             })

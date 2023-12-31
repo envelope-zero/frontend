@@ -12,6 +12,7 @@ import { formatMoney } from '../lib/format'
 
 type props = {
   category: CategoryMonthType
+  month: Date
   budget: Budget
   editingEnvelope?: UUID
   editEnvelope: (id?: UUID) => void
@@ -20,6 +21,7 @@ type props = {
 }
 
 const CategoryMonth = ({
+  month,
   budget,
   category,
   editingEnvelope,
@@ -32,7 +34,7 @@ const CategoryMonth = ({
 
   const { spent, allocation, balance } = category
 
-  const envelopes = category.envelopes.filter(envelope => !envelope.hidden)
+  const envelopes = category.envelopes.filter(envelope => !envelope.archived)
 
   return (
     <>
@@ -70,6 +72,7 @@ const CategoryMonth = ({
           <EnvelopeMonth
             key={envelope.id}
             envelope={envelope}
+            month={month}
             i={i}
             budget={budget}
             editingEnvelope={editingEnvelope}

@@ -17,14 +17,13 @@ This project is under heavy development. Therefore, only the latest release is s
 
 Please check the [releases page](https://github.com/envelope-zero/frontend/releases) for the latest release.
 
-Check the table below for the minimal required frontend version for specific [backend](https://github.com/envelope-zero/backend) versions.
+Check the table below for the minimal required [backend](https://github.com/envelope-zero/backend) versions.
 
-Please note that below version 1.0.0, any new minor version for the backend might break compatibility.
-
-| Backend version | Minimal frontend version |
-| --------------- | ------------------------ |
-| v0.22.0+        | 0.9.0                    |
-| v2.0.0+         | 1.9.0                    |
+| Frontend version | Minimum required backend version |
+| ---------------- | -------------------------------- |
+| 0.9.0            | v0.22.0                          |
+| 1.9.0            | v2.0.0                           |
+| 2.0.0            | v3.21.1                          |
 
 ## Contributing
 

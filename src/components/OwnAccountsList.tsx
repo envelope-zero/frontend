@@ -25,7 +25,7 @@ const accountApi = api('accounts')
 const OwnAccountsList = ({ budget }: Props) => {
   const { t }: Translation = useTranslation()
   const [searchParams] = useSearchParams()
-  const hidden = searchParams.get('hidden') === 'true'
+  const archived = searchParams.get('archived') === 'true'
 
   const [isLoading, setIsLoading] = useState(true)
   const [accounts, setAccounts] = useState<Account[]>([])
@@ -37,7 +37,7 @@ const OwnAccountsList = ({ budget }: Props) => {
     }
 
     accountApi
-      .getAll(budget, { external: false, hidden: Boolean(hidden) })
+      .getAll(budget, { external: false, archived: Boolean(archived) })
       .then(data => {
         setAccounts(data)
         setIsLoading(false)
@@ -47,7 +47,7 @@ const OwnAccountsList = ({ budget }: Props) => {
         setError(err.message)
         setIsLoading(false)
       })
-  }, [budget, hidden]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [budget, archived]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -69,16 +69,16 @@ const OwnAccountsList = ({ budget }: Props) => {
         <LoadingSpinner />
       ) : (
         <div>
-          {hidden ? (
+          {archived ? (
             <div className="flex align-center justify-start link-blue pb-2">
-              <Link to="/own-accounts?hidden=false">
+              <Link to="/own-accounts?archived=false">
                 <ChevronLeftIcon className="icon inline relative bottom-0.5" />
                 {t('back')}
               </Link>
             </div>
           ) : (
             <div className="flex align-center justify-end link-blue pb-2">
-              <Link to="/own-accounts?hidden=true">
+              <Link to="/own-accounts?archived=true">
                 {t('showArchived')}
                 <ChevronRightIcon className="icon inline relative bottom-0.5" />
               </Link>
@@ -101,7 +101,7 @@ const OwnAccountsList = ({ budget }: Props) => {
                       }`}
                     >
                       {safeName(account, 'account')}
-                      {account.hidden ? (
+                      {account.archived ? (
                         <ArchiveBoxIcon
                           className="icon-sm inline link-blue ml-2 stroke-2"
                           title={t('archived')}

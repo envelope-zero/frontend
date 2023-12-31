@@ -15,15 +15,15 @@ type Props = { budget: Budget }
 const EnvelopesList = ({ budget }: Props) => {
   const { t }: Translation = useTranslation()
   const [searchParams] = useSearchParams()
-  const hidden = searchParams.get('hidden') === 'true'
+  const archived = searchParams.get('archived') === 'true'
 
   const [error, setError] = useState('')
   const [categories, setCategories] = useState<Category[]>([])
 
   useEffect(() => {
     const filter: FilterOptions = {}
-    if (!hidden) {
-      filter.hidden = false
+    if (!archived) {
+      filter.archived = false
     }
 
     categoryApi
@@ -35,7 +35,7 @@ const EnvelopesList = ({ budget }: Props) => {
       .catch(err => {
         setError(err.message)
       })
-  }, [budget, hidden])
+  }, [budget, archived])
 
   return (
     <>
@@ -50,16 +50,16 @@ const EnvelopesList = ({ budget }: Props) => {
 
       <Error error={error} />
 
-      {hidden ? (
+      {archived ? (
         <div className="flex align-center justify-start link-blue pb-2">
-          <Link to="/envelopes?hidden=false">
+          <Link to="/envelopes?archived=false">
             <ChevronLeftIcon className="icon inline relative bottom-0.5" />
             {t('back')}
           </Link>
         </div>
       ) : (
         <div className="flex align-center justify-end link-blue pb-2">
-          <Link to="/envelopes?hidden=true">
+          <Link to="/envelopes?archived=true">
             {t('showArchived')}
             <ChevronRightIcon className="icon inline relative bottom-0.5" />
           </Link>
@@ -71,14 +71,16 @@ const EnvelopesList = ({ budget }: Props) => {
           {categories
             .filter(
               category =>
-                category.hidden === hidden ||
-                category.envelopes.some(envelope => envelope.hidden === hidden)
+                category.archived === archived ||
+                category.envelopes.some(
+                  envelope => envelope.archived === archived
+                )
             )
             .map(category => (
               <CategoryEnvelopes
                 category={category}
                 key={category.id}
-                hidden={hidden}
+                archived={archived}
               />
             ))}
         </div>

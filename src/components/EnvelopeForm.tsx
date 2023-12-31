@@ -116,7 +116,7 @@ const EnvelopeForm = ({ budget }: Props) => {
         <LoadingSpinner />
       ) : (
         <>
-          {envelope.hidden ? (
+          {envelope.archived ? (
             <InfoBox
               text={t('archivedObjectInformation', {
                 object: t('envelopes.envelope'),

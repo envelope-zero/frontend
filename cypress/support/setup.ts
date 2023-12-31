@@ -23,6 +23,11 @@ export const createAccount = async (
   budget: Budget
 ) => api('accounts').create({ name: randomName(), ...account }, budget)
 
+export const createAccounts = async (
+  accounts: UnpersistedAccount[],
+  budget: Budget
+) => api('accounts').create(accounts, budget)
+
 export const listAccounts = async (budget: Budget) =>
   api('accounts').getAll(budget)
 
@@ -53,6 +58,11 @@ export const createTransaction = async (
   transaction: UnpersistedTransaction,
   budget: Budget
 ) => api('transactions').create(transaction, budget)
+
+export const createTransactions = async (
+  transactions: UnpersistedTransaction[],
+  budget: Budget
+) => api('transactions').create(transactions, budget)
 
 export const listTransactions = async (budget: Budget) =>
   api('transactions').getAll(budget)
