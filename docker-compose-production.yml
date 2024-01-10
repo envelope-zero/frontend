@@ -6,6 +6,7 @@ volumes:
 services:
   backend:
     image: ghcr.io/envelope-zero/backend:v4.2.2
+    user: root
     volumes:
       - ez-production-data:/data
     environment:

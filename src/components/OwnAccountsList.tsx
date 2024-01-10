@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Translation, Budget, Account } from '../types'
+import { Translation, Budget, Account, AccountComputedData } from '../types'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import {
   ArchiveBoxIcon,
   PlusCircleIcon,
   PlusIcon,
 } from '@heroicons/react/24/outline'
-import { api } from '../lib/api/base'
+import { api, get } from '../lib/api/base'
 import { formatMoney } from '../lib/format'
 import { safeName } from '../lib/name-helper'
 import LoadingSpinner from './LoadingSpinner'
@@ -39,7 +39,29 @@ const OwnAccountsList = ({ budget }: Props) => {
     accountApi
       .getAll(budget, { external: false, archived: Boolean(archived) })
       .then(data => {
-        setAccounts(data)
+        // Create list of all IDs
+        const ids: string = data.map((account: Account) => {
+          return account.id
+        })
+
+        // Get the computed data for all accounts and add it to the accounts
+        return get(
+          data[0].links.computedData,
+          JSON.stringify({
+            time: new Date(),
+            ids: ids,
+          })
+        ).then(computedData => {
+          return data.map((account: Account) => ({
+            ...account,
+            computedData: computedData.find(
+              (e: AccountComputedData) => e.id == account.id
+            ),
+          }))
+        })
+      })
+      .then(accounts => {
+        setAccounts(accounts)
         setIsLoading(false)
         setError('')
       })
@@ -120,13 +142,16 @@ const OwnAccountsList = ({ budget }: Props) => {
                     ) : null}
                     <div
                       className={`${
-                        Number(account.balance) >= 0
+                        Number(account.computedData?.balance) >= 0
                           ? 'text-lime-600'
                           : 'text-red-600'
                       } mt-2 text-lg`}
                     >
                       <strong>
-                        {formatMoney(account.balance, budget.currency)}
+                        {formatMoney(
+                          account.computedData?.balance,
+                          budget.currency
+                        )}
                       </strong>
                     </div>
                   </Link>

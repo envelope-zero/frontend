@@ -47,12 +47,23 @@ export type BudgetApiConnection = {
   createBudget: (data: UnpersistedBudget) => Promise<Budget>
 }
 
+export type AccountComputedData = {
+  id: string
+  balance: string
+  reconciledBalance: string
+}
+
+export type AccountRecentEnvelopes = {
+  recentEnvelopes: {
+    name: string
+    id: UUID
+  }[]
+}
+
 export type Account = UnpersistedAccount &
   ApiObject & {
-    balance: string
-    reconciledBalance: string
     budgetId: UUID
-    recentEnvelopes: UUID[]
+    computedData?: AccountComputedData
   }
 
 export type ApiResponse<T> = {
@@ -178,3 +189,8 @@ export type Theme = 'dark' | 'light' | 'default'
 export type QuickAllocationMode =
   | 'ALLOCATE_LAST_MONTH_BUDGET'
   | 'ALLOCATE_LAST_MONTH_SPEND'
+
+export type RecentEnvelope = {
+  name: string
+  id: UUID
+}

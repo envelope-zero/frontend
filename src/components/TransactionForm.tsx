@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline'
-import { api } from '../lib/api/base'
+import { api, get } from '../lib/api/base'
 import { UUID } from '../types'
 import {
   dateFromIsoString,
@@ -22,6 +22,7 @@ import {
   Envelope,
   Category,
   GroupedEnvelopes,
+  RecentEnvelope,
 } from '../types'
 import LoadingSpinner from './LoadingSpinner'
 import Error from './Error'
@@ -61,7 +62,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
     useState<UnpersistedAccount>()
   const [destinationAccountToCreate, setDestinationAccountToCreate] =
     useState<UnpersistedAccount>()
-  const [recentEnvelopes, setRecentEnvelopes] = useState([] as UUID[])
+  const [recentEnvelopes, setRecentEnvelopes] = useState([] as RecentEnvelope[])
 
   const isPersisted =
     typeof transactionId !== 'undefined' && transactionId !== 'new'
@@ -313,18 +314,25 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                     destinationAccountId: account.id,
                   }
 
-                  // Suggest the first of the recentEnvelopes as the Envelope
-                  // to use for this transaction
-                  if (
-                    account.external &&
-                    !transaction.envelopeId &&
-                    account.recentEnvelopes?.length
-                  ) {
-                    setRecentEnvelopes(account.recentEnvelopes)
-                    valuesToUpdate.envelopeId = account.recentEnvelopes[0]
+                  let envelopePromises = []
+
+                  // Verify if we need to propose an envelope
+                  if (account.external && !transaction.envelopeId) {
+                    // Fetch the recent envelopes and suggest the first one
+                    // as the Envelope to use for this transaction
+                    envelopePromises.push(
+                      get(account.links.recentEnvelopes).then(data => {
+                        setRecentEnvelopes(data)
+                        if (data.length) {
+                          valuesToUpdate.envelopeId = data[0].id
+                        }
+                      })
+                    )
                   }
 
-                  setTransaction({ ...transaction, ...valuesToUpdate })
+                  Promise.all(envelopePromises).then(() =>
+                    setTransaction({ ...transaction, ...valuesToUpdate })
+                  )
                 }
               }}
               value={
@@ -341,9 +349,15 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
               groups={[
                 {
                   title: t('transactions.recentEnvelopes'),
-                  items: envelopes.filter(envelope =>
-                    recentEnvelopes.includes(envelope.id)
-                  ),
+                  items: envelopes.filter(envelope => {
+                    // TODO: I'm sure this can be done better
+                    for (let recentEnvelope of recentEnvelopes) {
+                      if (recentEnvelope.id === envelope.id) {
+                        return true
+                      }
+                    }
+                    return false
+                  }),
                 },
                 ...groupedEnvelopes,
               ]}
