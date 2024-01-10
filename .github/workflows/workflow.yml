@@ -54,12 +54,13 @@ jobs:
     # Current backend version as service container
     services:
       backend:
-        image: ghcr.io/envelope-zero/backend:v3.22.2
+        image: ghcr.io/envelope-zero/backend:v4.2.1
         env:
           CORS_ALLOW_ORIGINS: http://localhost:3000
           API_URL: http://localhost:3000/api
         ports:
           - 8080:8080
+        options: --user root
 
     strategy:
       fail-fast: false # https://github.com/cypress-io/github-action/issues/48
