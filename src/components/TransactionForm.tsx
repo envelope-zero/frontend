@@ -62,7 +62,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
     useState<UnpersistedAccount>()
   const [destinationAccountToCreate, setDestinationAccountToCreate] =
     useState<UnpersistedAccount>()
-  const [recentEnvelopes, setRecentEnvelopes] = useState([] as RecentEnvelope[])
+  const [recentEnvelopes, setRecentEnvelopes] = useState<RecentEnvelope[]>([])
 
   const isPersisted =
     typeof transactionId !== 'undefined' && transactionId !== 'new'
