@@ -1,7 +1,7 @@
 const locale = 'en-US' // TODO: user preference
 
 const formatMoney = (
-  amount: string = '0',
+  amount: string,
   currency: string = '',
   options: {
     signDisplay?: Intl.NumberFormatOptions['signDisplay']

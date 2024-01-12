@@ -351,15 +351,12 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
               groups={[
                 {
                   title: t('transactions.recentEnvelopes'),
-                  items: envelopes.filter(envelope => {
-                    // TODO: I'm sure this can be done better
-                    for (let recentEnvelope of recentEnvelopes) {
-                      if (recentEnvelope.id === envelope.id) {
-                        return true
-                      }
-                    }
-                    return false
-                  }),
+                  items: recentEnvelopes.map(
+                    recentEnvelope =>
+                      envelopes.find(
+                        envelope => envelope.id === recentEnvelope.id
+                      ) as Envelope
+                  ),
                 },
                 ...groupedEnvelopes,
               ]}

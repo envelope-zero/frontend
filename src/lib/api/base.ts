@@ -11,7 +11,7 @@ const get = async (url: string, body?: BodyInit) => {
   // HTTP GET supports request body, but JS fetch does not
   // Therefore, the backend exposes certain endpoints as
   // HTTP POST
-  const method = body != null ? 'POST' : 'GET'
+  const method = typeof body === 'undefined' ? 'GET' : 'POST'
 
   return fetch(url, { method: method, body: body })
     .then(checkStatus)

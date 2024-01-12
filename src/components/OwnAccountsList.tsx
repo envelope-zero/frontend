@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Translation, Budget, Account, AccountComputedData } from '../types'
+import { Translation, Budget, Account } from '../types'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import {
   ArchiveBoxIcon,
@@ -40,7 +40,7 @@ const OwnAccountsList = ({ budget }: Props) => {
       .getAll(budget, { external: false, archived: Boolean(archived) })
       .then(data => {
         // Create list of all IDs
-        const ids: string = data.map((account: Account) => {
+        const ids = data.map((account: Account) => {
           return account.id
         })
 
@@ -55,7 +55,7 @@ const OwnAccountsList = ({ budget }: Props) => {
           return data.map((account: Account) => ({
             ...account,
             computedData: computedData.find(
-              (e: AccountComputedData) => e.id == account.id
+              (e: Account['computedData']) => e?.id == account.id
             ),
           }))
         })
@@ -140,20 +140,22 @@ const OwnAccountsList = ({ budget }: Props) => {
                         {account.note}
                       </p>
                     ) : null}
-                    <div
-                      className={`${
-                        Number(account.computedData?.balance) >= 0
-                          ? 'text-lime-600'
-                          : 'text-red-600'
-                      } mt-2 text-lg`}
-                    >
-                      <strong>
-                        {formatMoney(
-                          account.computedData?.balance,
-                          budget.currency
-                        )}
-                      </strong>
-                    </div>
+                    {account.computedData ? (
+                      <div
+                        className={`${
+                          Number(account.computedData.balance) >= 0
+                            ? 'text-lime-600'
+                            : 'text-red-600'
+                        } mt-2 text-lg`}
+                      >
+                        <strong>
+                          {formatMoney(
+                            account.computedData.balance,
+                            budget.currency
+                          )}
+                        </strong>
+                      </div>
+                    ) : null}
                   </Link>
                 </li>
               ))}

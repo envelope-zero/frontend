@@ -47,23 +47,14 @@ export type BudgetApiConnection = {
   createBudget: (data: UnpersistedBudget) => Promise<Budget>
 }
 
-export type AccountComputedData = {
-  id: string
-  balance: string
-  reconciledBalance: string
-}
-
-export type AccountRecentEnvelopes = {
-  recentEnvelopes: {
-    name: string
-    id: UUID
-  }[]
-}
-
 export type Account = UnpersistedAccount &
   ApiObject & {
     budgetId: UUID
-    computedData?: AccountComputedData
+    computedData?: {
+      id: string
+      balance: string
+      reconciledBalance: string
+    }
   }
 
 export type ApiResponse<T> = {
