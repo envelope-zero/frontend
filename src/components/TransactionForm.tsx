@@ -328,6 +328,8 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                         }
                       })
                     )
+                  } else if (!account.external) {
+                    setRecentEnvelopes([])
                   }
 
                   Promise.all(envelopePromises).then(() =>
