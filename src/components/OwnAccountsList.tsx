@@ -8,7 +8,7 @@ import {
   PlusCircleIcon,
   PlusIcon,
 } from '@heroicons/react/24/outline'
-import { api } from '../lib/api/base'
+import { api, get } from '../lib/api/base'
 import { formatMoney } from '../lib/format'
 import { safeName } from '../lib/name-helper'
 import LoadingSpinner from './LoadingSpinner'
@@ -39,7 +39,29 @@ const OwnAccountsList = ({ budget }: Props) => {
     accountApi
       .getAll(budget, { external: false, archived: Boolean(archived) })
       .then(data => {
-        setAccounts(data)
+        // Create list of all IDs
+        const ids = data.map((account: Account) => {
+          return account.id
+        })
+
+        // Get the computed data for all accounts and add it to the accounts
+        return get(
+          data[0].links.computedData,
+          JSON.stringify({
+            time: new Date(),
+            ids: ids,
+          })
+        ).then(computedData => {
+          return data.map((account: Account) => ({
+            ...account,
+            computedData: computedData.find(
+              (e: Account['computedData']) => e?.id == account.id
+            ),
+          }))
+        })
+      })
+      .then(accounts => {
+        setAccounts(accounts)
         setIsLoading(false)
         setError('')
       })
@@ -118,17 +140,22 @@ const OwnAccountsList = ({ budget }: Props) => {
                         {account.note}
                       </p>
                     ) : null}
-                    <div
-                      className={`${
-                        Number(account.balance) >= 0
-                          ? 'text-lime-600'
-                          : 'text-red-600'
-                      } mt-2 text-lg`}
-                    >
-                      <strong>
-                        {formatMoney(account.balance, budget.currency)}
-                      </strong>
-                    </div>
+                    {account.computedData ? (
+                      <div
+                        className={`${
+                          Number(account.computedData.balance) >= 0
+                            ? 'text-lime-600'
+                            : 'text-red-600'
+                        } mt-2 text-lg`}
+                      >
+                        <strong>
+                          {formatMoney(
+                            account.computedData.balance,
+                            budget.currency
+                          )}
+                        </strong>
+                      </div>
+                    ) : null}
                   </Link>
                 </li>
               ))}

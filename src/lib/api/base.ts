@@ -1,14 +1,19 @@
 import { ApiObject, UUID, Budget, FilterOptions } from '../../types'
 import { checkStatus, parseJSON } from '../fetch-helper'
 
-const endpoint = window.location.origin + '/api/v3'
+const endpoint = window.location.origin + '/api/v4'
 
 const getApiInfo = async () => {
   return fetch(endpoint).then(checkStatus).then(parseJSON)
 }
 
-const get = async (url: string) => {
-  return fetch(url)
+const get = async (url: string, body?: BodyInit) => {
+  // HTTP GET supports request body, but JS fetch does not
+  // Therefore, the backend exposes certain endpoints as
+  // HTTP POST
+  const method = typeof body === 'undefined' ? 'GET' : 'POST'
+
+  return fetch(url, { method: method, body: body })
     .then(checkStatus)
     .then(parseJSON)
     .then(data => data.data)
