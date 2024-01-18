@@ -74,7 +74,7 @@ jobs:
         run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
 
       - name: Run cypress
-        uses: cypress-io/github-action@v6.6.0
+        uses: cypress-io/github-action@v6.6.1
         with:
           start: npm run start-ci
           # Frontend runs on :3000, API on :8080
