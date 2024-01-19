@@ -28,9 +28,24 @@ const api = (linkKey: string) => {
           url.searchParams.set(key, value.toString())
         }
       })
-      // Set the limit to -1 to retrieve all resources - if unset the backend defaults to 50,
-      // but we don't have endless scroll implemented yet
+      // Set the limit to -1 to retrieve all resources - if unset the backend defaults to 50
       url.searchParams.set('limit', '-1')
+      return get(url.href)
+    },
+    getBatch: (
+      parent: ApiObject,
+      offset: Number,
+      limit: Number = 50,
+      filterOptions: FilterOptions = {}
+    ) => {
+      const url = new URL(parent.links[linkKey])
+      Object.entries(filterOptions).forEach(([key, value]) => {
+        if (typeof value !== 'undefined') {
+          url.searchParams.set(key, value.toString())
+        }
+      })
+      url.searchParams.set('limit', limit.toString())
+      url.searchParams.set('offset', offset.toString())
       return get(url.href)
     },
     get: (id: UUID, parent: ApiObject) => {
