@@ -27,6 +27,7 @@ import { FunnelIcon } from '@heroicons/react/24/solid'
 import TransactionFilters from './TransactionFilters'
 import { safeName } from '../lib/name-helper'
 import { XMarkIcon } from '@heroicons/react/20/solid'
+import InfiniteScroll from './InfiniteScroll'
 
 const transactionApi = api('transactions')
 const categoryApi = api('categories')
@@ -46,11 +47,14 @@ const egg = `
   </span>
 `
 
+const batchSize = 50
+
 const TransactionsList = ({ budget }: Props) => {
   const { t }: Translation = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [showFilters, setShowFilters] = useState(false)
   const [accounts, setAccounts] = useState<Account[]>([])
   const [groupedEnvelopes, setGroupedEnvelopes] = useState<GroupedEnvelopes>([])
@@ -73,13 +77,7 @@ const TransactionsList = ({ budget }: Props) => {
     }
 
     Promise.all([
-      transactionApi
-        .getAll(budget, activeFilters)
-        .then(transactions =>
-          setGroupedTransactions(
-            groupBy(transactions, ({ date }: Transaction) => formatDate(date))
-          )
-        ),
+      loadTransactionBatch(0),
       categoryApi.getAll(budget).then((categories: Category[]) =>
         setGroupedEnvelopes(
           categories.map(category => ({
@@ -93,6 +91,28 @@ const TransactionsList = ({ budget }: Props) => {
       setIsLoading(false)
     })
   }, [budget, searchParams]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const loadTransactionBatch = (
+    offset: number,
+    appendTransactions: boolean = false
+  ) => {
+    return transactionApi
+      .getBatch(budget, offset, batchSize, activeFilters)
+      .then(transactions => {
+        const allTransactions = appendTransactions
+          ? [
+              ...transactions,
+              ...Object.values(groupedTransactions).flat(),
+            ].sort((a: Transaction, b: Transaction) => {
+              return Date.parse(b.date) - Date.parse(a.date)
+            })
+          : transactions
+        setGroupedTransactions(
+          groupBy(allTransactions, ({ date }: Transaction) => formatDate(date))
+        )
+        return transactions
+      })
+  }
 
   const displayValue = (
     filter: keyof FilterOptions,
@@ -251,11 +271,25 @@ const TransactionsList = ({ budget }: Props) => {
         <LoadingSpinner />
       ) : Object.keys(groupedTransactions).length ? (
         <div className="sm:card">
-          <GroupedTransactions
-            budget={budget}
-            accounts={accounts}
-            transactions={groupedTransactions}
-          />
+          <InfiniteScroll
+            batchSize={batchSize}
+            onLoadMore={offset => {
+              setIsLoadingMore(true)
+              return loadTransactionBatch(offset, true).then(
+                (transactions: Transaction[]) => {
+                  setIsLoadingMore(false)
+                  return transactions.length > 0
+                }
+              )
+            }}
+          >
+            <GroupedTransactions
+              budget={budget}
+              accounts={accounts}
+              transactions={groupedTransactions}
+            />
+            {isLoadingMore && <LoadingSpinner />}
+          </InfiniteScroll>
         </div>
       ) : (
         t('transactions.emptyList')
