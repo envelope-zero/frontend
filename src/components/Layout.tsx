@@ -57,7 +57,7 @@ const Layout = ({
   useEffect(() => {
     if (
       localStorage.getItem('importTransactions') &&
-      location.pathname !== '/transaction-import'
+      location.pathname !== '/transactions/import'
     ) {
       setShowImportBanner(true)
     } else {
@@ -166,7 +166,6 @@ const Layout = ({
                           <NavLink
                             key={item.name}
                             to={item.href}
-                            end
                             onClick={() => setSidebarOpen(false)}
                             className={({ isActive }) =>
                               classNames(
@@ -257,7 +256,6 @@ const Layout = ({
                       <NavLink
                         key={item.name}
                         to={item.href}
-                        end
                         className={({ isActive }) =>
                           classNames(
                             isActive

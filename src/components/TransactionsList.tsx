@@ -179,7 +179,7 @@ const TransactionsList = ({ budget }: Props) => {
         </h1>
         <div className="header--action full-centered">
           <Link
-            to="/transaction-import"
+            to="/transactions/import"
             title={t('transactions.import.importTransactions')}
           >
             <DocumentArrowUpIcon className="icon-red" />

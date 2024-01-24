@@ -148,18 +148,18 @@ const App = () => {
                 element={<TransactionsList budget={budget} />}
               />
               <Route
-                path="transactions/:transactionId"
+                path="transactions/import"
                 element={
-                  <TransactionForm
+                  <TransactionImport
                     budget={budget}
                     setNotification={setNotification}
                   />
                 }
               />
               <Route
-                path="transaction-import"
+                path="transactions/:transactionId"
                 element={
-                  <TransactionImport
+                  <TransactionForm
                     budget={budget}
                     setNotification={setNotification}
                   />
