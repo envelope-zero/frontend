@@ -185,11 +185,11 @@ const Dashboard = ({ budget }: DashboardProps) => {
                       <tr>
                         <th
                           scope="col"
-                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-300 sm:pl-6 w-1/2"
+                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-300 sm:pl-6 w-2/3 md:w-1/2"
                         ></th>
                         <th
                           scope="col"
-                          className="px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/4 md:w-1/6"
+                          className="hidden md:table-cell px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/6"
                         >
                           {t('dashboard.allocation')}
                         </th>
@@ -201,7 +201,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                         </th>
                         <th
                           scope="col"
-                          className="pl-3 pr-4 sm:pr-6 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/4 md:w-1/6"
+                          className="pl-3 pr-4 sm:pr-6 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/3 md:w-1/6"
                         >
                           {t('dashboard.balance')}
                         </th>
@@ -211,7 +211,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                       <tr>
                         <td></td>
                         <td
-                          className={`whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
+                          className={`hidden md:table-cell whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
                             Number(budgetMonth.allocation) < 0
                               ? 'negative'
                               : 'text-gray-500 dark:text-gray-400'
