@@ -4,6 +4,8 @@ import submitOnMetaEnter from '../lib/submit-on-meta-enter'
 import { useState } from 'react'
 import { updateBudget } from '../lib/api/budgets'
 import Error from './Error'
+import FormFields from './FormFields'
+import FormField from './FormField'
 
 type Props = {
   budget: Budget
@@ -50,47 +52,31 @@ const Settings = ({
         <h2 className="text-base font-medium text-gray-700 dark:text-gray-300 pl-4 pb-2">
           {t('settings.budget')}
         </h2>
-        <div className="card pl-4">
-          <dl className="divide-y divide-gray-200 dark:divide-gray-900">
-            <div className="grid grid-cols-3 gap-4 py-1 pr-4">
-              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
-                <label htmlFor="budget-name">{t('budgets.name')}</label>
-              </dt>
-              <dd className="text-sm text-gray-900 col-span-2 mt-0">
-                <input
-                  className="settings-input"
-                  type="text"
-                  name="budget-name"
-                  id="budget-name"
-                  value={tmpBudget.name || ''}
-                  onChange={e =>
-                    setTmpBudget({ ...tmpBudget, name: e.target.value })
-                  }
-                />
-              </dd>
-            </div>
-            <div className="grid grid-cols-3 gap-4 py-1 pr-4">
-              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
-                <label htmlFor="budget-currency">{t('budgets.currency')}</label>
-              </dt>
-              <dd className="text-sm text-gray-900 col-span-2 mt-0">
-                <input
-                  className="settings-input"
-                  type="text"
-                  name="budget-currency"
-                  id="budget-currency"
-                  value={tmpBudget.currency || ''}
-                  onChange={e =>
-                    setTmpBudget({ ...tmpBudget, currency: e.target.value })
-                  }
-                />
-              </dd>
-            </div>
-            <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 pr-4">
-              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                <label htmlFor="budget-note">{t('budgets.note')}</label>
-              </dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <div className="card">
+          <FormFields>
+            <FormField
+              type="text"
+              name="budget-name"
+              label={t('budgets.name')}
+              value={tmpBudget.name || ''}
+              onChange={e =>
+                setTmpBudget({ ...tmpBudget, name: e.target.value })
+              }
+            />
+            <FormField
+              type="text"
+              name="budget-currency"
+              label={t('budgets.currency')}
+              value={tmpBudget.currency || ''}
+              onChange={e =>
+                setTmpBudget({ ...tmpBudget, currency: e.target.value })
+              }
+            />
+            <div className="form-field--wrapper">
+              <label htmlFor="budget-note" className="form-field--label">
+                {t('budgets.note')}
+              </label>
+              <div className="mt-1 sm:mt-0 sm:col-span-2">
                 <textarea
                   id="budget-note"
                   name="budget-note"
@@ -99,11 +85,11 @@ const Settings = ({
                   onChange={e =>
                     setTmpBudget({ ...tmpBudget, note: e.target.value })
                   }
-                  className="input border-gray-200"
+                  className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
                 />
-              </dd>
+              </div>
             </div>
-          </dl>
+          </FormFields>
         </div>
       </div>
 
@@ -111,23 +97,23 @@ const Settings = ({
         <h2 className="text-base font-medium text-gray-700 dark:text-gray-300 pl-4 pb-2">
           {t('settings.app')}
         </h2>
-        <div className="card pl-4">
-          <dl className="divide-y divide-gray-200">
-            <div className="grid grid-cols-3 gap-4 py-1 pr-4">
-              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center">
-                <label htmlFor="theme">{t('settings.theme')}</label>
-              </dt>
-              <dd className="text-sm text-gray-900 col-span-2 mt-0">
+        <div className="card">
+          <FormFields>
+            <div className="form-field--wrapper">
+              <label htmlFor="theme" className="form-field--label">
+                {t('settings.theme')}
+              </label>
+              <div className="mt-1 sm:mt-0 sm:col-span-2">
                 <select
                   id="theme"
                   name="theme"
                   value={theme}
-                  className="settings-input"
                   onChange={e => {
                     if (['dark', 'light', 'default'].includes(e.target.value)) {
                       setTheme(e.target.value as Theme)
                     }
                   }}
+                  className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
                 >
                   <option value="default">
                     {t('settings.themes.default')}
@@ -135,9 +121,9 @@ const Settings = ({
                   <option value="dark">{t('settings.themes.dark')}</option>
                   <option value="light">{t('settings.themes.light')}</option>
                 </select>
-              </dd>
+              </div>
             </div>
-          </dl>
+          </FormFields>
         </div>
       </div>
     </form>

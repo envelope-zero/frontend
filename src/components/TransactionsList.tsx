@@ -205,15 +205,33 @@ const TransactionsList = ({ budget }: Props) => {
       />
 
       <div className="mb-2 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setShowFilters(!showFilters)}
-          title={t('filterResource', {
-            resource: t('transactions.transactions'),
-          })}
-        >
-          <FunnelIcon className="icon-red icon-sm" />
-        </button>
+        {Object.values(activeFilters).some(
+          value => typeof value !== 'undefined'
+        ) ? (
+          <button
+            type="button"
+            onClick={() => setShowFilters(!showFilters)}
+            title={t('filterResource', {
+              resource: t('transactions.transactions'),
+            })}
+          >
+            <FunnelIcon className="icon-red icon-sm" />
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="rounded-full full-centered  px-2.5 py-1.5 bg-red-800 text-sm text-gray-100"
+            onClick={() => setShowFilters(!showFilters)}
+            title={t('filterResource', {
+              resource: t('transactions.transactions'),
+            })}
+          >
+            <FunnelIcon className="icon-sm inline mr-1" />
+            {t('filterResource', {
+              resource: t('transactions.transactions'),
+            })}
+          </button>
+        )}
 
         {Object.keys(activeFilters).map(filter => {
           const value = activeFilters[filter as keyof FilterOptions]
@@ -270,7 +288,7 @@ const TransactionsList = ({ budget }: Props) => {
       {isLoading ? (
         <LoadingSpinner />
       ) : Object.keys(groupedTransactions).length ? (
-        <div className="sm:card">
+        <div className="card p-0">
           <InfiniteScroll
             batchSize={batchSize}
             onLoadMore={offset => {

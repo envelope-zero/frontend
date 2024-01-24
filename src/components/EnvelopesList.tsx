@@ -67,7 +67,7 @@ const EnvelopesList = ({ budget }: Props) => {
       )}
 
       {categories.length ? (
-        <div className="space-y-4">
+        <div className="card p-0">
           {categories
             .filter(
               category =>

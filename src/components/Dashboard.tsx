@@ -155,7 +155,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
       ) : (
         <>
           <Error error={error} />
-          <div className="card w-full my-4 md:mb-8 text-center text-gray-500">
+          <div className="card p-0 w-full my-4 md:mb-8 text-center text-gray-500">
             <div className="py-4 md:py-8">
               <div className="text-gray-500 dark:text-gray-400 font-medium uppercase">
                 {t('dashboard.available')}
@@ -180,7 +180,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="mt-4 flex flex-col py-2">
-              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 card">
+              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 card px-0 py-2">
                 <div className="inline-block w-full align-middle">
                   <table className="w-full table-fixed">
                     <thead className="bg-white dark:bg-slate-800 uppercase">

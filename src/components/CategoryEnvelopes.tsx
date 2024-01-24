@@ -25,7 +25,9 @@ const CategoryEnvelopes = ({
   return (
     <>
       <div
-        className="box p-2 flex dark:text-gray-100"
+        className={`flex bg-gray-50 dark:bg-gray-700 p-4 text-gray-500 dark:text-gray-100 cursor-pointer ${
+          showEnvelopes ? 'border-y first:border-t-0' : ''
+        } border-gray-200 dark:border-gray-900`}
         onClick={() => {
           setShowEnvelopes(!showEnvelopes)
         }}
@@ -66,7 +68,7 @@ const CategoryEnvelopes = ({
       </div>
 
       {showEnvelopes ? (
-        <div className="divide-y dark:divide-gray-900 space-y-2 ml-4">
+        <div>
           {category.envelopes
             .filter(
               envelope =>
@@ -77,7 +79,7 @@ const CategoryEnvelopes = ({
               <Link
                 to={envelope.id}
                 key={envelope.id}
-                className="flex justify-between pt-2 first:pt-0 dark:text-gray-300"
+                className="relative px-6 py-5 flex justify-between items-center space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 <span className={!envelope.name ? 'italic' : ''}>
                   {safeName(envelope, 'envelope')}

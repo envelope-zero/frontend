@@ -2,7 +2,11 @@ import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Budget, Translation, Account } from '../types'
-import { ArchiveBoxIcon, PlusIcon } from '@heroicons/react/24/outline'
+import {
+  ArchiveBoxIcon,
+  PlusCircleIcon,
+  PlusIcon,
+} from '@heroicons/react/24/outline'
 import LoadingSpinner from './LoadingSpinner'
 import AccountListSwitch from './AccountListSwitch'
 import Error from './Error'
@@ -90,48 +94,49 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
             </div>
           )}
           {Object.keys(accounts).length ? (
-            <nav className="h-full overflow-y-auto" aria-label="Directory">
+            <nav
+              className="h-full overflow-y-auto card p-0"
+              aria-label="Directory"
+            >
               {Object.keys(accounts)
                 .sort()
                 .map(letter => (
                   <div key={letter} className="relative">
-                    <div className="border-t border-b border-gray-200 dark:border-gray-900 bg-gray-50  dark:bg-gray-700 px-6 py-1 text-sm font-medium text-gray-500">
+                    <div className="border-y border-gray-200 dark:border-gray-900 bg-gray-50  dark:bg-gray-700 px-6 py-1 text-sm font-medium text-gray-500">
                       <h3>{letter || t('untitled')}</h3>
                     </div>
-                    <ul className="relative z-0 divide-y divide-gray-200 dark:divide-gray-900">
+                    <ul className="relative z-0">
                       {accounts[letter].map(account => (
                         <li
                           key={account.id}
-                          className="bg-white dark:bg-slate-800"
+                          className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700"
                         >
-                          <div className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <div className="flex-1 min-w-0">
-                              <Link to={`${account.id}`}>
-                                <div>
-                                  <div
-                                    className={`${
-                                      typeof account.name === 'undefined'
-                                        ? 'italic'
-                                        : ''
-                                    } text-sm font-medium text-gray-900 dark:text-gray-100 flex justify-between`}
-                                  >
-                                    <span className="full-centered">
-                                      {account.archived ? (
-                                        <ArchiveBoxIcon
-                                          className="icon-sm inline link-blue mr-2 stroke-2"
-                                          title={t('archived')}
-                                        />
-                                      ) : null}
-                                      {safeName(account, 'account')}
-                                    </span>
-                                    <PencilIcon className="icon-red" />
-                                  </div>
-                                  <p className="text-sm text-gray-500 truncate">
-                                    {account.note}
-                                  </p>
+                          <div className="flex-1 min-w-0">
+                            <Link to={`${account.id}`}>
+                              <div>
+                                <div
+                                  className={`${
+                                    typeof account.name === 'undefined'
+                                      ? 'italic'
+                                      : ''
+                                  } text-sm font-medium text-gray-900 dark:text-gray-100 flex justify-between`}
+                                >
+                                  <span className="full-centered">
+                                    {account.archived ? (
+                                      <ArchiveBoxIcon
+                                        className="icon-sm inline link-blue mr-2 stroke-2"
+                                        title={t('archived')}
+                                      />
+                                    ) : null}
+                                    {safeName(account, 'account')}
+                                  </span>
+                                  <PencilIcon className="icon-red" />
                                 </div>
-                              </Link>
-                            </div>
+                                <p className="text-sm text-gray-500 truncate">
+                                  {account.note}
+                                </p>
+                              </div>
+                            </Link>
                           </div>
                         </li>
                       ))}
@@ -140,8 +145,13 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                 ))}
             </nav>
           ) : (
-            <div className="text-gray-700 dark:text-gray-300">
-              {t('accounts.emptyList')}
+            <div className="text-gray-700 dark:text-gray-300 text-center">
+              {archived ? t('accounts.emptyArchive') : t('accounts.emptyList')}
+              {!archived && (
+                <Link to="/external-accounts/new" title={t('accounts.create')}>
+                  <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
+                </Link>
+              )}
             </div>
           )}
         </>

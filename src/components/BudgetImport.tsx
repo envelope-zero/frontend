@@ -58,29 +58,31 @@ const BudgetImport = (props: Props) => {
         <>
           <Error error={error} />
 
-          <FormFields>
-            <FormField
-              type="text"
-              name="budgetName"
-              label={t('budgets.import.budgetName')}
-              value={budgetName}
-              onChange={e => setBudgetName(e.target.value)}
-              options={{ required: true }}
-            ></FormField>
-            <FormField
-              type="file"
-              name="file"
-              label={t('budgets.import.file')}
-              options={{ required: true }}
-            ></FormField>
-          </FormFields>
+          <div className="card">
+            <FormFields>
+              <FormField
+                type="text"
+                name="budgetName"
+                label={t('budgets.import.budgetName')}
+                value={budgetName}
+                onChange={e => setBudgetName(e.target.value)}
+                options={{ required: true }}
+              ></FormField>
+              <FormField
+                type="file"
+                name="file"
+                label={t('budgets.import.file')}
+                options={{ required: true }}
+              ></FormField>
+            </FormFields>
 
-          <p
-            className="pt-4 whitespace-pre-line dark:text-gray-400"
-            dangerouslySetInnerHTML={{
-              __html: t('budgets.import.description'),
-            }}
-          ></p>
+            <p
+              className="mt-8 whitespace-pre-line dark:text-gray-400"
+              dangerouslySetInnerHTML={{
+                __html: t('budgets.import.description'),
+              }}
+            ></p>
+          </div>
         </>
       )}
     </form>

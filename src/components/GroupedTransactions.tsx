@@ -31,11 +31,11 @@ const GroupedTransactions = ({
   return (
     <ul>
       {Object.keys(transactions).map(date => (
-        <div key={date}>
-          <h3 className="border-t first:sm:border-t-0 border-b border-gray-200 dark:border-gray-900 bg-gray-50 dark:bg-slate-700 px-3 py-1 text-sm font-medium text-gray-500">
+        <div key={date} className="group">
+          <h3 className="border-y group-first:border-t-0 border-gray-200 dark:border-gray-900 bg-gray-50 dark:bg-slate-700 px-3 py-1 text-sm font-medium text-gray-500">
             {formatDate(date)}
           </h3>
-          <div className="divide-y divide-gray-200 dark:divide-gray-900">
+          <div>
             {transactions[date].map(transaction => {
               const { sign, color, counterparties } = getConfiguration(
                 transaction,
