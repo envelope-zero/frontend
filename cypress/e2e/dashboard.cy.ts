@@ -95,7 +95,7 @@ describe('Dashboard', () => {
       .siblings()
       .find('span')
       .contains('12.00')
-    cy.contains('-12.00 Available to budget')
+    cy.contains('Unallocated funds-12.00')
 
     // close input without saving
     cy.get('[aria-label*="Edit Allocation for Second Envelope"]')
@@ -157,7 +157,7 @@ describe('Dashboard', () => {
     cy.get('button[type="submit"]').click()
     cy.awaitLoading()
     cy.contains('30.00')
-    cy.contains('-20.00 Available to budget')
+    cy.contains('Unallocated funds-20.00')
 
     // collapse category
     cy.contains('First Category').click()
@@ -230,10 +230,10 @@ describe('Dashboard', () => {
 
     cy.visit('#', { qs: { month: '2023-05' } })
     cy.awaitLoading()
-    cy.contains('-12.00 Available to budget')
-    cy.get('select').select("Last month's allocation")
-    cy.clickAndWait('Submit')
-    cy.contains('-24.00 Available to budget')
+    cy.contains('Unallocated funds-12.00')
+    cy.contains('Quick Allocation').click()
+    cy.contains("Last month's allocation").click()
+    cy.contains('Unallocated funds-24.00')
   })
 
   // This needs to be a declared function to have a binding for 'this'

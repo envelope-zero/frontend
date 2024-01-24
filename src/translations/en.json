@@ -163,7 +163,7 @@
     "confirmDelete": "This action can't be undone. Consider archiving the category instead. Are you sure you want to delete this category?"
   },
   "dashboard": {
-    "available": "Available to budget",
+    "available": "Unallocated funds",
     "quickAllocation": "Quick Allocation",
     "allocation": "Allocation",
     "allocationForEnvelope": "Allocation for {{envelope}}",

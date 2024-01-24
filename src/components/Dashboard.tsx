@@ -155,25 +155,27 @@ const Dashboard = ({ budget }: DashboardProps) => {
       ) : (
         <>
           <Error error={error} />
-          <div className="box w-full mt-4 mb-2 py-2 text-center">
-            <div
-              className={`${
-                Number(budgetMonth.available) >= 0 ? 'positive' : 'negative'
-              } text-xl font-bold`}
-            >
-              {formatMoney(budgetMonth.available, budget.currency, {
-                signDisplay: 'auto',
-              })}
+          <div className="box w-full mt-4 mb-2 text-center text-gray-500">
+            <div className="py-4 md:py-8">
+              <div className="text-gray-500 dark:text-gray-400 font-medium uppercase">
+                {t('dashboard.available')}
+              </div>
+              <div
+                className={`${
+                  Number(budgetMonth.available) >= 0 ? 'positive' : 'negative'
+                } text-3xl font-bold`}
+              >
+                {formatMoney(budgetMonth.available, budget.currency, {
+                  signDisplay: 'auto',
+                })}
+              </div>
             </div>
-            <div className="text-gray-500 dark:text-gray-400 font-medium">
-              {t('dashboard.available')}
+            <div className="rounded-b-md bg-gray-200 dark:bg-slate-600 py-2 text-sm font-medium dark:text-gray-300">
+              <QuickAllocationForm
+                link={replaceMonthInLinks(budget.links.month, activeMonth)}
+                reloadBudgetMonth={reloadBudgetMonth}
+              />
             </div>
-          </div>
-          <div className="box text-center py-2 px-4 text-sm font-medium">
-            <QuickAllocationForm
-              link={replaceMonthInLinks(budget.links.month, activeMonth)}
-              reloadBudgetMonth={reloadBudgetMonth}
-            />
           </div>
 
           <div className="px-4 sm:px-6 lg:px-8">
