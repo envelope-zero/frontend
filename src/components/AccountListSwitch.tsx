@@ -7,8 +7,8 @@ type Props = { selected: 'internal' | 'external' }
 const AccountListSwitch = ({ selected }: Props) => {
   const tabClasses = (isActive: boolean) =>
     `${
-      isActive ? 'bg-white dark:bg-slate-600' : ''
-    } text-sm text-center rounded-md p-1 grow`
+      isActive ? 'bg-gray-100 dark:bg-slate-600' : ''
+    } text-sm text-center rounded-md p-2 grow`
 
   const { t }: Translation = useTranslation()
 

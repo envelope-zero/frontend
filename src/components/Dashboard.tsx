@@ -108,7 +108,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                 type="month"
                 id="month"
                 value={activeMonth}
-                className="border-none cursor-pointer text-center"
+                className="border-none cursor-pointer text-center bg-transparent"
                 onChange={e => {
                   e.preventDefault()
                   navigate(linkToMonth(e.target.value))
@@ -155,7 +155,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
       ) : (
         <>
           <Error error={error} />
-          <div className="box w-full mt-4 mb-2 text-center text-gray-500">
+          <div className="card w-full my-4 md:mb-8 text-center text-gray-500">
             <div className="py-4 md:py-8">
               <div className="text-gray-500 dark:text-gray-400 font-medium uppercase">
                 {t('dashboard.available')}
@@ -170,7 +170,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                 })}
               </div>
             </div>
-            <div className="rounded-b-md bg-gray-200 dark:bg-slate-600 py-2 text-sm font-medium dark:text-gray-300">
+            <div className="rounded-b-md bg-gray-100 dark:bg-slate-700 py-2 text-sm font-medium dark:text-gray-300">
               <QuickAllocationForm
                 link={replaceMonthInLinks(budget.links.month, activeMonth)}
                 reloadBudgetMonth={reloadBudgetMonth}
@@ -180,10 +180,10 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="mt-4 flex flex-col py-2">
-              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 md:card">
+              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 card">
                 <div className="inline-block w-full align-middle">
                   <table className="w-full table-fixed">
-                    <thead className="bg-white dark:bg-slate-800">
+                    <thead className="bg-white dark:bg-slate-800 uppercase">
                       <tr>
                         <th
                           scope="col"
