@@ -39,7 +39,9 @@ const CategoryMonth = ({
   return (
     <>
       <tr
-        className="border-t border-gray-200 dark:border-gray-900 bg-gray-50 dark:bg-slate-700 cursor-pointer"
+        className={`${
+          showEnvelopes ? 'border-y' : 'border-t'
+        } border-gray-200 dark:border-gray-900 bg-gray-50 dark:bg-slate-700 cursor-pointer`}
         onClick={() => {
           if (
             category.envelopes.some(envelope => envelope.id === editingEnvelope)

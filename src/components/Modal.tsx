@@ -20,7 +20,7 @@ const Modal = ({ open, setOpen, children }: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500/[.75] dark:bg-slate-900/[.8]  transition-opacity" />
+          <div className="fixed inset-0 bg-gray-800/[.8] dark:bg-slate-700/[.8]  transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">

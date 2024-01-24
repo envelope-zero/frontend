@@ -69,13 +69,7 @@ const EnvelopeMonth = ({
   }
 
   return (
-    <tr
-      className={`hover:bg-gray-50 dark:hover:bg-slate-700 border-t ${
-        i === 0
-          ? 'border-gray-300 dark:border-black'
-          : 'border-gray-200 dark:border-gray-900'
-      }`}
-    >
+    <tr className="hover:bg-gray-50 dark:hover:bg-slate-700">
       <td>
         <Link
           to={`/envelopes/${envelope.id}`}
