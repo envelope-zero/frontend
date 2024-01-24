@@ -261,7 +261,7 @@ const Layout = ({
                         className={({ isActive }) =>
                           classNames(
                             isActive
-                              ? 'bg-red-800/[.1] dark:bg-red-600/[.15] text-gray-900 dark:text-gray-100'
+                              ? 'bg-red-800/[.1] dark:bg-red-600/[.15] text-gray-900 dark:text-gray-100 border-r-4 border-red-800'
                               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-200',
                             'group flex items-center px-4 py-2 text-sm font-medium'
                           )
