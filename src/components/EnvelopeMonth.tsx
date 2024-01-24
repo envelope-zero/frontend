@@ -15,6 +15,7 @@ import { translatedMonthFormat } from '../lib/dates'
 import AllocationInputs from './AllocationInputs'
 import { safeName } from '../lib/name-helper'
 import { replaceMonthInLinks } from '../lib/month-helper'
+import { PlusCircleIcon } from '@heroicons/react/24/outline'
 
 type props = {
   envelope: EnvelopeMonthType
@@ -84,15 +85,6 @@ const EnvelopeMonth = ({
         >
           {safeName(envelope, 'envelope')}
         </Link>
-      </td>
-
-      <td
-        className={`whitespace-nowrap px-1 py-4 text-sm text-right ${
-          Number(allocatedAmount) < 0
-            ? 'negative'
-            : 'text-gray-500 dark:text-gray-400'
-        }`}
-      >
         <Modal
           open={editingEnvelope === envelope.id}
           setOpen={open => (open ? editEnvelope(envelope.id) : closeInput())}
@@ -146,7 +138,15 @@ const EnvelopeMonth = ({
             </div>
           </form>
         </Modal>
+      </td>
 
+      <td
+        className={`hidden md:table-cell whitespace-nowrap px-1 py-4 text-sm text-right ${
+          Number(allocatedAmount) < 0
+            ? 'negative'
+            : 'text-gray-500 dark:text-gray-400'
+        }`}
+      >
         <div onClick={() => editEnvelope(envelope.id)}>
           <span className="pr-1">
             {formatMoney(envelope.allocation, budget.currency, {
@@ -190,11 +190,31 @@ const EnvelopeMonth = ({
         <Link
           to={`/transactions?envelope=${envelope.id}&fromDate=${firstDay}&untilDate=${lastDay}`}
         >
-          {formatMoney(envelope.balance, budget.currency, {
-            hideZero: true,
-            signDisplay: 'auto',
-          })}
+          <span className="hidden md:inline">
+            {formatMoney(envelope.balance, budget.currency, {
+              hideZero: true,
+              signDisplay: 'auto',
+            })}
+          </span>
+          {/* Only hide zero on bigger displays */}
+          <span className="md:hidden">
+            {formatMoney(envelope.balance, budget.currency, {
+              signDisplay: 'auto',
+            })}
+          </span>
         </Link>
+        <button
+          aria-label={t('editObject', {
+            object: t('dashboard.allocationForEnvelopeMonth', {
+              envelope: envelope.name,
+              month: localMonth,
+            }),
+          })}
+          onClick={() => editEnvelope(envelope.id)}
+          className="md:hidden pl-2"
+        >
+          <PlusCircleIcon className="inline icon text-gray-400" />
+        </button>
       </td>
     </tr>
   )

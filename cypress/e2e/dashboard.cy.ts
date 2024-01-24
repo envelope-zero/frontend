@@ -81,7 +81,9 @@ describe('Dashboard', () => {
     cy.awaitLoading()
 
     // set allocation
-    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]')
+      .filter(':visible')
+      .click()
     cy.getInputFor('Set to amount').type('12.00')
     cy.get('button[type="submit"]').click()
     cy.awaitLoading()
@@ -96,14 +98,18 @@ describe('Dashboard', () => {
     cy.contains('-12.00 Available to budget')
 
     // close input without saving
-    cy.get('[aria-label*="Edit Allocation for Second Envelope"]').click()
+    cy.get('[aria-label*="Edit Allocation for Second Envelope"]')
+      .filter(':visible')
+      .click()
     cy.getInputFor('Set to amount').type('7.00')
     cy.get('body').click(0, 0) // click outside of the modal to close it without saving or explicitly canceling
     cy.get('input[type=number]').should('not.exist')
     cy.contains('7.00').should('not.exist')
 
     // reset input
-    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]')
+      .filter(':visible')
+      .click()
     cy.getInputFor('Add / Subtract amount').type('-42')
     cy.getInputFor('Set to amount').should('have.value', '-30')
     cy.get('button[type="reset"]').click()
@@ -116,17 +122,23 @@ describe('Dashboard', () => {
       .contains('12.00')
 
     // select content of allocation input field when focusing it
-    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]')
+      .filter(':visible')
+      .click()
     cy.getInputFor('Set to amount').clear().type('1337')
     cy.get('button[type="submit"]').click()
     cy.awaitLoading()
-    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]')
+      .filter(':visible')
+      .click()
     cy.getInputFor('Set to amount').type('12')
     cy.getInputFor('Set to amount').should('have.value', '12')
     cy.get('button[type="submit"]').click()
 
     // set allocation for second envelope
-    cy.get('[aria-label*="Edit Allocation for Second Envelope"]').click()
+    cy.get('[aria-label*="Edit Allocation for Second Envelope"]')
+      .filter(':visible')
+      .click()
     cy.getInputFor('Set to amount').clear().type('-22.00')
     cy.get('button[type="submit"]').click()
     cy.awaitLoading()
@@ -138,7 +150,9 @@ describe('Dashboard', () => {
       .contains('-22.00')
 
     // set allocation for third envelope
-    cy.get('[aria-label*="Edit Allocation for Third Envelope"]').click()
+    cy.get('[aria-label*="Edit Allocation for Third Envelope"]')
+      .filter(':visible')
+      .click()
     cy.getInputFor('Set to amount').type('30.00')
     cy.get('button[type="submit"]').click()
     cy.awaitLoading()
@@ -207,7 +221,9 @@ describe('Dashboard', () => {
     cy.awaitLoading()
 
     // set allocation
-    cy.get('[aria-label*="Edit Allocation for First Envelope"]').click()
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]')
+      .filter(':visible')
+      .click()
     cy.getInputFor('Set to amount').type('12.00')
     cy.get('button[type="submit"]').click()
     cy.awaitLoading()
