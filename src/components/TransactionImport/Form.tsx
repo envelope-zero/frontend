@@ -94,36 +94,38 @@ const Form = ({ accounts, setResult }: Props) => {
       ) : (
         <>
           <Error error={error} />
-          <p
-            className="pt-4 whitespace-pre-line dark:text-gray-400"
-            dangerouslySetInnerHTML={{
-              __html: t('transactions.import.description'),
-            }}
-          ></p>
-          <FormFields>
-            <Autocomplete<Account>
-              groups={[{ items: accounts }]}
-              allowNewCreation={false}
-              itemLabel={account => safeName(account, 'account')}
-              itemId={account => account.id}
-              label={t('transactions.import.account')}
-              onChange={account => {
-                setAccountId(account.id)
+          <div className="card mt-4">
+            <p
+              className="whitespace-pre-line dark:text-gray-400 mb-4"
+              dangerouslySetInnerHTML={{
+                __html: t('transactions.import.description'),
               }}
-              value={
-                (accounts.find(
-                  account => account.id === accountId
-                ) as Account) || ''
-              }
-            />
+            ></p>
+            <FormFields>
+              <Autocomplete<Account>
+                groups={[{ items: accounts }]}
+                allowNewCreation={false}
+                itemLabel={account => safeName(account, 'account')}
+                itemId={account => account.id}
+                label={t('transactions.import.account')}
+                onChange={account => {
+                  setAccountId(account.id)
+                }}
+                value={
+                  (accounts.find(
+                    account => account.id === accountId
+                  ) as Account) || ''
+                }
+              />
 
-            <FormField
-              type="file"
-              name="file"
-              label={t('budgets.import.file')}
-              options={{ required: true }}
-            ></FormField>
-          </FormFields>
+              <FormField
+                type="file"
+                name="file"
+                label={t('budgets.import.file')}
+                options={{ required: true }}
+              ></FormField>
+            </FormFields>
+          </div>
         </>
       )}
     </form>

@@ -4,7 +4,6 @@ import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { api, get } from '../lib/api/base'
-import { UUID } from '../types'
 import {
   dateFromIsoString,
   dateToIsoString,
@@ -215,7 +214,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <>
+        <div className="card">
           {transaction.reconciled ? (
             <div>
               <button
@@ -460,7 +459,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
               </button>
             </div>
           ) : null}
-        </>
+        </div>
       )}
     </form>
   )

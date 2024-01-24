@@ -23,7 +23,7 @@ const FlyoutMenu = ({ items }: Props) => {
           <Popover.Button
             className={classNames(
               open ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500',
-              'group inline-flex items-center rounded-md bg-white dark:bg-slate-800 text-base font-medium hover:text-gray-900 dark:hover:text-gray-100'
+              'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 dark:hover:text-gray-100'
             )}
             title={t('more')}
           >

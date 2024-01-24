@@ -115,64 +115,66 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
         </>
       )}
 
-      <FormFields>
-        <FormField
-          type="text"
-          name="name"
-          label={t('budgets.name')}
-          value={budget?.name || ''}
-          onChange={e => updateValue('name', e.target.value)}
-          options={{ autoFocus: true }}
-        />
+      <div className="card">
+        <FormFields>
+          <FormField
+            type="text"
+            name="name"
+            label={t('budgets.name')}
+            value={budget?.name || ''}
+            onChange={e => updateValue('name', e.target.value)}
+            options={{ autoFocus: true }}
+          />
 
-        <FormField
-          type="text"
-          name="currency"
-          label={t('budgets.currency')}
-          value={budget?.currency || ''}
-          onChange={e => updateValue('currency', e.target.value)}
-        />
+          <FormField
+            type="text"
+            name="currency"
+            label={t('budgets.currency')}
+            value={budget?.currency || ''}
+            onChange={e => updateValue('currency', e.target.value)}
+          />
 
-        <div className="form-field--wrapper">
-          <label htmlFor="note" className="form-field--label">
-            {t('budgets.note')}
-          </label>
-          <div className="mt-1 sm:mt-0 sm:col-span-2">
-            <textarea
-              id="note"
-              name="note"
-              rows={3}
-              value={budget?.note || ''}
-              onChange={e => updateValue('note', e.target.value)}
-              className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
-            />
+          <div className="form-field--wrapper">
+            <label htmlFor="note" className="form-field--label">
+              {t('budgets.note')}
+            </label>
+            <div className="mt-1 sm:mt-0 sm:col-span-2">
+              <textarea
+                id="note"
+                name="note"
+                rows={3}
+                value={budget?.note || ''}
+                onChange={e => updateValue('note', e.target.value)}
+                className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
+              />
+            </div>
           </div>
-        </div>
-      </FormFields>
+        </FormFields>
 
-      {isPersisted ? (
-        <div className="pt-5">
-          <button
-            type="button"
-            onClick={() => {
-              if (window.confirm(t('budgets.confirmDelete'))) {
-                deleteBudget(budget as Budget)
-                  .then(() => {
-                    selectBudget(undefined)
-                    setError('')
-                    navigate('/budgets')
-                  })
-                  .catch(err => {
-                    setError(err.message)
-                  })
-              }
-            }}
-            className="box w-full text-red-800 dark:text-red-600 py-2 px-4 text-sm font-medium hover:bg-gray-200 dark:hover:bg-slate-700"
-          >
-            {t('budgets.delete')}
-          </button>
-        </div>
-      ) : null}
+        {isPersisted ? (
+          <div className="pt-5">
+            <button
+              type="button"
+              onClick={() => {
+                if (window.confirm(t('budgets.confirmDelete'))) {
+                  deleteBudget(budget as Budget)
+                    .then(() => {
+                      selectBudget(undefined)
+                      setError('')
+                      navigate('/budgets')
+                    })
+                    .catch(err => {
+                      setError(err.message)
+                    })
+                }
+              }}
+              className="btn-secondary"
+            >
+              {t('budgets.delete')}
+            </button>
+          </div>
+        ) : null}
+      </div>
     </form>
   )
 }

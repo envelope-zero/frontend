@@ -39,6 +39,10 @@ const OwnAccountsList = ({ budget }: Props) => {
     accountApi
       .getAll(budget, { external: false, archived: Boolean(archived) })
       .then(data => {
+        if (data.length === 0) {
+          return []
+        }
+
         // Create list of all IDs
         const ids = data.map((account: Account) => {
           return account.id
@@ -55,7 +59,7 @@ const OwnAccountsList = ({ budget }: Props) => {
           return data.map((account: Account) => ({
             ...account,
             computedData: computedData.find(
-              (e: Account['computedData']) => e?.id == account.id
+              (e: Account['computedData']) => e?.id === account.id
             ),
           }))
         })
@@ -111,7 +115,7 @@ const OwnAccountsList = ({ budget }: Props) => {
               {accounts.map(account => (
                 <li
                   key={account.id}
-                  className="box col-span-1 relative hover:bg-gray-200 dark:hover:bg-slate-600 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+                  className="card col-span-1 relative hover:bg-gray-50 dark:hover:bg-slate-700 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
                   <Link to={`${account.id}`} className="w-full text-center">
                     <div title={t('edit')} className="absolute right-4">
@@ -162,12 +166,16 @@ const OwnAccountsList = ({ budget }: Props) => {
             </ul>
           ) : (
             <>
-              <div className="text-gray-700 dark:text-gray-300">
-                {t('accounts.emptyList')}
+              <div className="text-gray-700 dark:text-gray-300 text-center">
+                {archived
+                  ? t('accounts.emptyArchive')
+                  : t('accounts.emptyList')}
               </div>
-              <Link to="/own-accounts/new" title={t('accounts.create')}>
-                <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
-              </Link>
+              {!archived && (
+                <Link to="/own-accounts/new" title={t('accounts.create')}>
+                  <PlusCircleIcon className="icon-red icon-lg mx-auto mt-4" />
+                </Link>
+              )}
             </>
           )}
         </div>

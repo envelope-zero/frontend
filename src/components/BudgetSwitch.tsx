@@ -70,7 +70,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
               {budgets.map(budget => (
                 <li
                   key={budget.id}
-                  className="box col-span-1 relative hover:bg-gray-200 dark:hover:bg-slate-600 p-4 md:hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+                  className="card col-span-1 relative hover:bg-gray-50 dark:hover:bg-slate-700 p-4 md:hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                 >
                   <Link
                     to="/"
