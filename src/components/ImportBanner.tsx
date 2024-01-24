@@ -15,7 +15,7 @@ const ImportBanner = ({ hideBanner }: Props) => {
             {t('transactions.import.unfinishedImportInProgress')}
           </p>
           <Link
-            to="/transaction-import"
+            to="/transactions/import"
             className="flex-none rounded-full bg-red-800 px-3.5 py-1 text-sm font-semibold text-gray-100 shadow-sm hover:bg-red-900 dark:hover:bg-red-700"
           >
             {t('transactions.import.resumeNow')}{' '}
