@@ -102,12 +102,6 @@ const EnvelopeForm = ({ budget }: Props) => {
     >
       <div className="header">
         <h1>{t('envelopes.envelope')}</h1>
-        <div className="header--action">
-          <Link to={-1 as any} className="header--action__secondary">
-            {t('cancel')}
-          </Link>
-          <button type="submit">{t('save')}</button>
-        </div>
       </div>
 
       <Error error={error} />
@@ -135,7 +129,7 @@ const EnvelopeForm = ({ budget }: Props) => {
             </Link>
           )}
           <div className="card">
-            <FormFields>
+            <FormFields className="md:grid grid-cols-2 gap-x-4 space-y-6 md:space-y-0 md:gap-y-6">
               <FormField
                 type="text"
                 name="name"
@@ -172,7 +166,7 @@ const EnvelopeForm = ({ budget }: Props) => {
                 }}
               />
 
-              <div className="form-field--wrapper">
+              <div className="col-span-full">
                 <label htmlFor="note" className="form-field--label">
                   {t('accounts.note')}
                 </label>
@@ -183,7 +177,7 @@ const EnvelopeForm = ({ budget }: Props) => {
                     rows={3}
                     value={envelope?.note || ''}
                     onChange={e => updateValue('note', e.target.value)}
-                    className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
+                    className="input"
                   />
                 </div>
               </div>
@@ -191,41 +185,50 @@ const EnvelopeForm = ({ budget }: Props) => {
 
             {/* TODO: balance per month */}
 
-            {isPersisted ? (
-              <div className="pt-5 space-y-3">
-                <ArchiveButton
-                  resource={envelope as Envelope}
-                  resourceTypeTranslation={t('envelopes.envelope')}
-                  apiConnection={envelopeApi}
-                  onSuccess={data => {
-                    setEnvelope(data)
-                    if (error) {
-                      setError('')
-                    }
-                  }}
-                  onError={setError}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (window.confirm(t('envelopes.confirmDelete'))) {
-                      envelopeApi
-                        .delete(envelope as Envelope)
-                        .then(() => {
-                          navigate(-1)
-                        })
-                        .catch(err => {
-                          setError(err.message)
-                        })
-                    }
-                  }}
-                  className="btn-secondary"
-                >
-                  <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
-                  {t('envelopes.delete')}
-                </button>
-              </div>
-            ) : null}
+            <div className="button-group mt-8">
+              <button type="submit" className="btn-primary">
+                {t('save')}
+              </button>
+              {isPersisted ? (
+                <>
+                  <ArchiveButton
+                    resource={envelope as Envelope}
+                    resourceTypeTranslation={t('envelopes.envelope')}
+                    apiConnection={envelopeApi}
+                    onSuccess={data => {
+                      setEnvelope(data)
+                      if (error) {
+                        setError('')
+                      }
+                    }}
+                    onError={setError}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (window.confirm(t('envelopes.confirmDelete'))) {
+                        envelopeApi
+                          .delete(envelope as Envelope)
+                          .then(() => {
+                            navigate(-1)
+                          })
+                          .catch(err => {
+                            setError(err.message)
+                          })
+                      }
+                    }}
+                    className="btn-secondary-red"
+                  >
+                    <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
+                    {t('envelopes.delete')}
+                  </button>
+                </>
+              ) : (
+                <Link to={-1 as any} className="btn-secondary">
+                  {t('cancel')}
+                </Link>
+              )}
+            </div>
           </div>
         </>
       )}

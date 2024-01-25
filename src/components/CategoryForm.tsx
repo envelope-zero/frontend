@@ -71,7 +71,6 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
           <Link to={-1 as any} className="header--action__secondary">
             {t('cancel')}
           </Link>
-          <button type="submit">{t('save')}</button>
         </div>
       </div>
 
@@ -88,7 +87,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
               })}
             />
           ) : null}
-          <div className="card mt-4">
+          <div className="card md:mt-4">
             <FormFields>
               <FormField
                 type="text"
@@ -99,7 +98,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
                 options={{ autoFocus: true }}
               />
 
-              <div className="form-field--wrapper">
+              <div>
                 <label htmlFor="note" className="form-field--label">
                   {t('categories.note')}
                 </label>
@@ -110,13 +109,16 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
                     rows={3}
                     value={category.note || ''}
                     onChange={e => updateValue('note', e.target.value)}
-                    className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
+                    className="input"
                   />
                 </div>
               </div>
             </FormFields>
 
-            <div className="pt-5 space-y-3">
+            <div className="button-group mt-8">
+              <button type="submit" className="btn-primary">
+                {t('save')}
+              </button>
               <ArchiveButton
                 resource={category as Category}
                 resourceTypeTranslation={t('categories.category')}
@@ -143,49 +145,48 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
                       })
                   }
                 }}
-                className="btn-secondary"
+                className="btn-secondary-red"
               >
                 <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
                 {t('categories.delete')}
               </button>
             </div>
+          </div>
+          <div className="card mt-8">
+            <h2>{t('categories.envelopes')}</h2>
+            <ul>
+              {'envelopes' in category ? (
+                category.envelopes.map(envelope => {
+                  return (
+                    <li key={envelope.id}>
+                      <Link
+                        onClick={confirmDiscardingUnsavedChanges}
+                        to={`/envelopes/${envelope.id}`}
+                        className="block hover:bg-gray-50 dark:hover:bg-gray-700"
+                      >
+                        <div className="px-2 py-4">
+                          <div className="flex items-center justify-between">
+                            <p
+                              className={`text-sm font-medium truncate dark:text-gray-300 ${
+                                envelope.name ? '' : 'italic'
+                              }`}
+                            >
+                              {safeName(envelope, 'envelope')}
+                            </p>
 
-            <div className="pt-8">
-              <h2>{t('categories.envelopes')}</h2>
-              <ul>
-                {'envelopes' in category ? (
-                  category.envelopes.map(envelope => {
-                    return (
-                      <li key={envelope.id}>
-                        <Link
-                          onClick={confirmDiscardingUnsavedChanges}
-                          to={`/envelopes/${envelope.id}`}
-                          className="block hover:bg-gray-50 dark:hover:bg-gray-700"
-                        >
-                          <div className="px-2 py-4">
-                            <div className="flex items-center justify-between">
-                              <p
-                                className={`text-sm font-medium truncate dark:text-gray-300 ${
-                                  envelope.name ? '' : 'italic'
-                                }`}
-                              >
-                                {safeName(envelope, 'envelope')}
-                              </p>
-
-                              <div className={'flex w-5'}>
-                                <ChevronRightIcon className="text-gray-900 dark:text-gray-300" />
-                              </div>
+                            <div className={'flex w-5'}>
+                              <ChevronRightIcon className="text-gray-900 dark:text-gray-300" />
                             </div>
                           </div>
-                        </Link>
-                      </li>
-                    )
-                  })
-                ) : (
-                  <LoadingSpinner />
-                )}
-              </ul>
-            </div>
+                        </div>
+                      </Link>
+                    </li>
+                  )
+                })
+              ) : (
+                <LoadingSpinner />
+              )}
+            </ul>
           </div>
         </>
       )}

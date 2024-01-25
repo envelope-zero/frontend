@@ -34,7 +34,7 @@ const MonthPicker = ({ open, setOpen, activeMonth }: Props) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 px-4 pt-6 pb-4 text-left shadow-xl border transition-all sm:max-w-sm sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 px-4 pt-6 pb-4 text-left shadow-xl border dark:border-gray-500 transition-all sm:max-w-sm sm:p-6">
                 <div>
                   <button
                     type="button"
@@ -57,28 +57,31 @@ const MonthPicker = ({ open, setOpen, activeMonth }: Props) => {
                       </label>
                     </Dialog.Title>
                     <div className="mt-2">
-                      <input
-                        type="date"
-                        id="month"
-                        name="month"
-                        value={selectedDate}
-                        onChange={e => {
-                          e.preventDefault()
-                          if (e.target.value) {
-                            setSelectedDate(e.target.value)
-                          }
-                        }}
-                      ></input>
-                      <Link
-                        to={`/?month=${selectedDate}`}
-                        onClick={() => setOpen(false)}
-                        className="pl-2"
-                        title={translatedMonthFormat.format(
-                          new Date(selectedDate)
-                        )}
-                      >
-                        <ArrowLongRightIcon className="icon-red inline" />
-                      </Link>
+                      <div className="flex items-center">
+                        <input
+                          type="date"
+                          id="month"
+                          name="month"
+                          className="input"
+                          value={selectedDate}
+                          onChange={e => {
+                            e.preventDefault()
+                            if (e.target.value) {
+                              setSelectedDate(e.target.value)
+                            }
+                          }}
+                        ></input>
+                        <Link
+                          to={`/?month=${selectedDate}`}
+                          onClick={() => setOpen(false)}
+                          className="pl-2"
+                          title={translatedMonthFormat.format(
+                            new Date(selectedDate)
+                          )}
+                        >
+                          <ArrowLongRightIcon className="icon-red inline" />
+                        </Link>
+                      </div>
                       <Link
                         to="/"
                         className="block link-blue text-end text-sm pt-2"

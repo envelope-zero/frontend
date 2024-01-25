@@ -81,12 +81,6 @@ const Form = ({ accounts, setResult }: Props) => {
     >
       <div className="header">
         <h1>{t('budgets.import.import')}</h1>
-        <div className="header--action">
-          <Link to={-1 as any} className="header--action__secondary">
-            {t('cancel')}
-          </Link>
-          <button type="submit">{t('submit')}</button>
-        </div>
       </div>
 
       {isLoading ? (
@@ -94,14 +88,14 @@ const Form = ({ accounts, setResult }: Props) => {
       ) : (
         <>
           <Error error={error} />
-          <div className="card mt-4">
+          <div className="card md:mt-4">
             <p
               className="whitespace-pre-line dark:text-gray-400 mb-4"
               dangerouslySetInnerHTML={{
                 __html: t('transactions.import.description'),
               }}
             ></p>
-            <FormFields>
+            <FormFields className="md:grid grid-cols-2 gap-x-4 space-y-6 md:space-y-0 md:gap-y-6">
               <Autocomplete<Account>
                 groups={[{ items: accounts }]}
                 allowNewCreation={false}
@@ -125,6 +119,14 @@ const Form = ({ accounts, setResult }: Props) => {
                 options={{ required: true }}
               ></FormField>
             </FormFields>
+            <div className="button-group mt-10">
+              <button type="submit" className="btn-primary">
+                {t('submit')}
+              </button>
+              <Link to={-1 as any} className="btn-secondary">
+                {t('cancel')}
+              </Link>
+            </div>
           </div>
         </>
       )}

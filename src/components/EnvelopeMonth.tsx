@@ -116,17 +116,11 @@ const EnvelopeMonth = ({
                 </div>
               </div>
             </div>
-            <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-              <button
-                type="submit"
-                className="inline-flex w-full justify-center rounded-md border border-transparent bg-sky-500 dark:bg-sky-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-sky-600 dark:hover:bg-sky-500 sm:col-start-2 sm:text-sm"
-              >
+            <div className="button-group mt-8">
+              <button type="submit" className="btn-primary">
                 {t('save')}
               </button>
-              <button
-                type="reset"
-                className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-slate-800 px-4 py-2 text-base font-medium text-gray-700 dark:text-gray-400 shadow-sm hover:bg-gray-50 dark:hover:bg-slate-700 sm:col-start-1 sm:mt-0 sm:text-sm"
-              >
+              <button type="reset" className="btn-secondary">
                 {t('cancel')}
               </button>
             </div>

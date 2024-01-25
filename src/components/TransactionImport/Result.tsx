@@ -305,13 +305,14 @@ const Result = (props: Props) => {
         )}
 
         <div className="card mt-4">
-          <FormFields>
+          <FormFields className="md:grid grid-cols-2 gap-x-4 space-y-6 md:space-y-0 md:gap-y-6">
             <FormField
               type="text"
               name="note"
               label={t('transactions.note')}
               value={currentTransaction().note || ''}
               onChange={e => updateValue('note', e.target.value)}
+              className="col-span-full"
             />
 
             <FormField
@@ -351,6 +352,7 @@ const Result = (props: Props) => {
               disabled={
                 currentTransaction().sourceAccountId === targetAccountId
               }
+              wrapperClass="col-start-1"
             />
 
             <Autocomplete<Account>
@@ -406,6 +408,7 @@ const Result = (props: Props) => {
                   updateValue('envelopeId', envelope.id)
                 }
               }}
+              wrapperClass="col-span-full"
             />
 
             <FormField
@@ -451,7 +454,7 @@ const Result = (props: Props) => {
             ) : null}
           </FormFields>
 
-          <div className="pt-6 gap-4 grid grid-cols-2">
+          <div className="button-group mt-6 grid grid-cols-2">
             <button
               type="button"
               onClick={() => {
@@ -460,15 +463,12 @@ const Result = (props: Props) => {
                 clearError()
                 goToNextTransaction()
               }}
-              className="btn-secondary col-span-1 full-centered"
+              className="btn-secondary-red"
             >
               <XCircleIcon className="icon-red mr-1" />
               {t('dismiss')}
             </button>
-            <button
-              type="submit"
-              className="btn-secondary link-blue col-span-1 full-centered"
-            >
+            <button type="submit" className="btn-primary">
               <CheckCircleIcon className="icon mr-1" />
               {t('import')}
             </button>

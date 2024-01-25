@@ -25,7 +25,7 @@ const AllocationInputs = ({
   )
 
   return (
-    <FormFields>
+    <FormFields className="space-y-4">
       <FormField
         type="number"
         name="absoluteAllocation"
@@ -40,7 +40,6 @@ const AllocationInputs = ({
         onFocus={e => {
           e.target.select()
         }}
-        compact
       >
         <InputCurrency currency={budget.currency} />
       </FormField>
@@ -59,7 +58,6 @@ const AllocationInputs = ({
           )
           setRelativeAllocation(e.target.value)
         }}
-        compact
       >
         <InputCurrency currency={budget.currency} />
       </FormField>

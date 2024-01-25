@@ -201,12 +201,6 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
     >
       <div className="header">
         <h1>{t('transactions.transaction')}</h1>
-        <div className="header--action">
-          <Link to={-1 as any} className="header--action__secondary">
-            {t('cancel')}
-          </Link>
-          <button type="submit">{t('save')}</button>
-        </div>
       </div>
 
       <Error error={error} />
@@ -214,7 +208,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <div className="card">
+        <div className="card md:mt-8">
           {transaction.reconciled ? (
             <div>
               <button
@@ -242,7 +236,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
             </div>
           ) : null}
 
-          <FormFields>
+          <FormFields className="md:grid grid-cols-2 gap-x-4 space-y-6 md:space-y-0 md:gap-y-6">
             <FormField
               type="text"
               name="note"
@@ -253,6 +247,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                 disabled: transaction.reconciled || false,
                 autoFocus: true,
               }}
+              className="col-span-full"
             />
 
             <FormField
@@ -295,6 +290,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                 ''
               }
               disabled={transaction.reconciled}
+              wrapperClass="col-start-1"
             />
 
             <Autocomplete<Account>
@@ -378,6 +374,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                   updateValue('envelopeId', envelope.id)
                 }
               }}
+              wrapperClass="col-span-2"
             />
 
             <FormField
@@ -428,37 +425,46 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
             ) : null}
           </FormFields>
 
-          {isPersisted ? (
-            <div className="pt-6 space-y-3">
-              <Link
-                to={`/transactions/new?duplicateFrom=${transactionId}`}
-                className="block btn-secondary link-blue text-center"
-              >
-                <DocumentDuplicateIcon className="icon-sm inline mr-1 relative bottom-0.5" />
-                {t('transactions.repeat')}
+          <div className="mt-8 button-group">
+            <button type="submit" className="btn-primary">
+              {t('save')}
+            </button>
+            {isPersisted ? (
+              <>
+                <Link
+                  to={`/transactions/new?duplicateFrom=${transactionId}`}
+                  className="btn-secondary"
+                >
+                  <DocumentDuplicateIcon className="icon-sm inline mr-1 relative bottom-0.5" />
+                  {t('transactions.repeat')}
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.confirm(t('transactions.confirmDelete'))) {
+                      transactionApi
+                        .delete(transaction as Transaction)
+                        .then(() => {
+                          setNotification(t('deleteSuccess'))
+                          navigate(-1)
+                        })
+                        .catch(err => {
+                          setError(err.message)
+                        })
+                    }
+                  }}
+                  className="btn-secondary-red"
+                >
+                  <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
+                  {t('transactions.delete')}
+                </button>
+              </>
+            ) : (
+              <Link to={-1 as any} className="btn-secondary">
+                {t('cancel')}
               </Link>
-              <button
-                type="button"
-                onClick={() => {
-                  if (window.confirm(t('transactions.confirmDelete'))) {
-                    transactionApi
-                      .delete(transaction as Transaction)
-                      .then(() => {
-                        setNotification(t('deleteSuccess'))
-                        navigate(-1)
-                      })
-                      .catch(err => {
-                        setError(err.message)
-                      })
-                  }
-                }}
-                className="btn-secondary"
-              >
-                <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
-                {t('transactions.delete')}
-              </button>
-            </div>
-          ) : null}
+            )}
+          </div>
         </div>
       )}
     </form>

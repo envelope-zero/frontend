@@ -28,7 +28,7 @@ const ArchiveButton = ({
           .then(onSuccess)
           .catch(onError)
       }}
-      className="btn-secondary link-blue text-center"
+      className="btn-secondary"
     >
       <ArchiveBoxIcon className="icon-sm inline mr-1 relative bottom-0.5" />
       {t(resource.archived ? 'unarchiveObject' : 'archiveObject', {

@@ -44,12 +44,6 @@ const BudgetImport = (props: Props) => {
     >
       <div className="header">
         <h1>{t('budgets.import.import')}</h1>
-        <div className="header--action">
-          <Link to={-1 as any} className="header--action__secondary">
-            {t('cancel')}
-          </Link>
-          <button type="submit">{t('save')}</button>
-        </div>
       </div>
 
       {isLoading ? (
@@ -82,6 +76,15 @@ const BudgetImport = (props: Props) => {
                 __html: t('budgets.import.description'),
               }}
             ></p>
+            <div className="button-group mt-4">
+              <button type="submit" className="btn-primary">
+                {t('save')}
+              </button>
+
+              <Link to={-1 as any} className="btn-secondary">
+                {t('cancel')}
+              </Link>
+            </div>
           </div>
         </>
       )}

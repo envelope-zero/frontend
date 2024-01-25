@@ -92,12 +92,6 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
     >
       <div className="header">
         <h1>{t('budgets.budget')}</h1>
-        <div className="header--action">
-          <Link to={-1 as any} className="header--action__secondary">
-            {t('cancel')}
-          </Link>
-          <button type="submit">{t('save')}</button>
-        </div>
       </div>
 
       <Error error={error} />
@@ -115,7 +109,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
         </>
       )}
 
-      <div className="card">
+      <div className="card md:mt-4">
         <FormFields>
           <FormField
             type="text"
@@ -134,7 +128,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
             onChange={e => updateValue('currency', e.target.value)}
           />
 
-          <div className="form-field--wrapper">
+          <div>
             <label htmlFor="note" className="form-field--label">
               {t('budgets.note')}
             </label>
@@ -145,14 +139,17 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
                 rows={3}
                 value={budget?.note || ''}
                 onChange={e => updateValue('note', e.target.value)}
-                className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
+                className="input"
               />
             </div>
           </div>
         </FormFields>
 
-        {isPersisted ? (
-          <div className="pt-5">
+        <div className="mt-8 button-group">
+          <button type="submit" className="btn-primary">
+            {t('save')}
+          </button>
+          {isPersisted ? (
             <button
               type="button"
               onClick={() => {
@@ -172,8 +169,12 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
             >
               {t('budgets.delete')}
             </button>
-          </div>
-        ) : null}
+          ) : (
+            <Link to={-1 as any} className="btn-secondary">
+              {t('cancel')}
+            </Link>
+          )}
+        </div>
       </div>
     </form>
   )

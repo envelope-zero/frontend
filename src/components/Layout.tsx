@@ -245,7 +245,7 @@ const Layout = ({
                   </div>
                   <Link
                     to="/transactions/new"
-                    className="my-4 border-y dark:border-gray-900 text-sky-600 hover:text-sky-700 dark:text-sky-400 hover:bg-gray-50 dark:hover:bg-slate-700 group flex items-center p-4 text-sm font-medium shadow-inner"
+                    className="my-4 border-y dark:border-gray-900 link-blue hover:bg-gray-50 dark:hover:bg-slate-700 group flex items-center p-4 text-sm font-medium shadow-inner"
                     onClick={() => setSidebarOpen(false)}
                   >
                     <BoltIcon className="mr-3 flex-shrink-0 h-6 w-6" />
