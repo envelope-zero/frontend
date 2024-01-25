@@ -6,6 +6,7 @@ import { updateBudget } from '../lib/api/budgets'
 import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
+import { Link } from 'react-router-dom'
 
 type Props = {
   budget: Budget
@@ -41,90 +42,106 @@ const Settings = ({
     >
       <div className="header">
         <h1>{t('settings.settings')}</h1>
-        <div className="header--action">
-          <button type="submit">{t('save')}</button>
-        </div>
       </div>
 
       <Error error={error} />
 
-      <div>
-        <h2 className="text-base font-medium text-gray-700 dark:text-gray-300 pl-4 pb-2">
-          {t('settings.budget')}
-        </h2>
-        <div className="card">
-          <FormFields>
-            <FormField
-              type="text"
-              name="budget-name"
-              label={t('budgets.name')}
-              value={tmpBudget.name || ''}
-              onChange={e =>
-                setTmpBudget({ ...tmpBudget, name: e.target.value })
-              }
-            />
-            <FormField
-              type="text"
-              name="budget-currency"
-              label={t('budgets.currency')}
-              value={tmpBudget.currency || ''}
-              onChange={e =>
-                setTmpBudget({ ...tmpBudget, currency: e.target.value })
-              }
-            />
-            <div className="form-field--wrapper">
-              <label htmlFor="budget-note" className="form-field--label">
-                {t('budgets.note')}
-              </label>
-              <div className="mt-1 sm:mt-0 sm:col-span-2">
-                <textarea
-                  id="budget-note"
-                  name="budget-note"
-                  rows={3}
-                  value={tmpBudget.note || ''}
-                  onChange={e =>
-                    setTmpBudget({ ...tmpBudget, note: e.target.value })
-                  }
-                  className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
-                />
+      <div className="space-y-10 divide-y divide-gray-900/10 dark:divide-gray-200/10">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
+          <div className="px-4 sm:px-0">
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              {t('settings.budget')}
+            </h2>
+          </div>
+
+          <div className="card md:col-span-2">
+            <FormFields>
+              <FormField
+                type="text"
+                name="budget-name"
+                label={t('budgets.name')}
+                value={tmpBudget.name || ''}
+                onChange={e =>
+                  setTmpBudget({ ...tmpBudget, name: e.target.value })
+                }
+              />
+              <FormField
+                type="text"
+                name="budget-currency"
+                label={t('budgets.currency')}
+                value={tmpBudget.currency || ''}
+                onChange={e =>
+                  setTmpBudget({ ...tmpBudget, currency: e.target.value })
+                }
+              />
+              <div>
+                <label htmlFor="budget-note" className="form-field--label">
+                  {t('budgets.note')}
+                </label>
+                <div className="input--outer">
+                  <textarea
+                    id="budget-note"
+                    name="budget-note"
+                    rows={3}
+                    value={tmpBudget.note || ''}
+                    onChange={e =>
+                      setTmpBudget({ ...tmpBudget, note: e.target.value })
+                    }
+                    className="input"
+                  />
+                </div>
               </div>
-            </div>
-          </FormFields>
+            </FormFields>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
+          <div className="px-4 sm:px-0">
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              {t('settings.app')}
+            </h2>
+          </div>
+
+          <div className="card md:col-span-2">
+            <FormFields>
+              <div>
+                <label htmlFor="theme" className="form-field--label">
+                  {t('settings.theme')}
+                </label>
+                <div className="input--outer">
+                  <select
+                    id="theme"
+                    name="theme"
+                    value={theme}
+                    onChange={e => {
+                      if (
+                        ['dark', 'light', 'default'].includes(e.target.value)
+                      ) {
+                        setTheme(e.target.value as Theme)
+                      }
+                    }}
+                    className="input"
+                  >
+                    <option value="default">
+                      {t('settings.themes.default')}
+                    </option>
+                    <option value="dark">{t('settings.themes.dark')}</option>
+                    <option value="light">{t('settings.themes.light')}</option>
+                  </select>
+                </div>
+              </div>
+            </FormFields>
+          </div>
         </div>
       </div>
 
-      <div className="mt-6">
-        <h2 className="text-base font-medium text-gray-700 dark:text-gray-300 pl-4 pb-2">
-          {t('settings.app')}
-        </h2>
-        <div className="card">
-          <FormFields>
-            <div className="form-field--wrapper">
-              <label htmlFor="theme" className="form-field--label">
-                {t('settings.theme')}
-              </label>
-              <div className="mt-1 sm:mt-0 sm:col-span-2">
-                <select
-                  id="theme"
-                  name="theme"
-                  value={theme}
-                  onChange={e => {
-                    if (['dark', 'light', 'default'].includes(e.target.value)) {
-                      setTheme(e.target.value as Theme)
-                    }
-                  }}
-                  className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
-                >
-                  <option value="default">
-                    {t('settings.themes.default')}
-                  </option>
-                  <option value="dark">{t('settings.themes.dark')}</option>
-                  <option value="light">{t('settings.themes.light')}</option>
-                </select>
-              </div>
-            </div>
-          </FormFields>
-        </div>
+      <div className="button-group mt-10">
+        <button type="submit" className="btn-primary">
+          {t('save')}
+        </button>
+        <Link to={-1 as any} className="btn-secondary">
+          {t('cancel')}
+        </Link>
       </div>
     </form>
   )

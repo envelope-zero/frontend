@@ -93,12 +93,6 @@ const AccountForm = ({ budget, type }: Props) => {
     >
       <div className="header">
         <h1>{t('accounts.account')}</h1>
-        <div className="header--action">
-          <Link to={-1 as any} className="header--action__secondary">
-            {t('cancel')}
-          </Link>
-          <button type="submit">{t('save')}</button>
-        </div>
       </div>
 
       <Error error={error} />
@@ -126,8 +120,9 @@ const AccountForm = ({ budget, type }: Props) => {
             </Link>
           )}
           <div className="card">
-            <FormFields>
+            <FormFields className="md:grid grid-cols-2 md:gap-x-4 md:gap-y-6">
               <FormField
+                className="col-span-full"
                 type="text"
                 name="name"
                 label={t('accounts.name')}
@@ -138,13 +133,7 @@ const AccountForm = ({ budget, type }: Props) => {
 
               {type === 'internal' ? (
                 <>
-                  <div className="grid grid-cols-3 gap-4 items-center">
-                    <label
-                      className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                      htmlFor="onbudget"
-                    >
-                      {t('accounts.onBudget')}
-                    </label>
+                  <div className="relative flex items-start col-span-full">
                     <div
                       className="mt-px pt-2 pr-2 col-span-2 flex sm:block justify-end"
                       onClick={e => {
@@ -179,6 +168,19 @@ const AccountForm = ({ budget, type }: Props) => {
                         />
                       </div>
                     </div>
+                    <div className="ml-3 text-sm leading-6">
+                      <label className="form-field--label" htmlFor="onbudget">
+                        {t('accounts.onBudget')}
+                      </label>
+                      <p
+                        id="comments-description"
+                        className="text-gray-500 dark:text-gray-400"
+                      >
+                        {account.onBudget
+                          ? t('accounts.onBudgetExplanation')
+                          : t('accounts.offBudgetExplanation')}
+                      </p>
+                    </div>
                   </div>
                   <FormField
                     type="number"
@@ -211,7 +213,7 @@ const AccountForm = ({ budget, type }: Props) => {
                 </>
               ) : null}
 
-              <div className="form-field--wrapper">
+              <div className="col-span-full">
                 <label htmlFor="note" className="form-field--label">
                   {t('accounts.note')}
                 </label>
@@ -222,48 +224,57 @@ const AccountForm = ({ budget, type }: Props) => {
                     rows={3}
                     value={account?.note || ''}
                     onChange={e => updateValue('note', e.target.value)}
-                    className="max-w-lg shadow-sm block w-full sm:text-sm border rounded-md"
+                    className="input"
                   />
                 </div>
               </div>
             </FormFields>
 
-            {isPersisted ? (
-              <div className="pt-5 space-y-3">
-                <ArchiveButton
-                  resource={account as Account}
-                  resourceTypeTranslation={t('accounts.account')}
-                  apiConnection={accountApi}
-                  onSuccess={data => {
-                    setAccount(data)
-                    if (error) {
-                      setError('')
-                    }
-                  }}
-                  onError={setError}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (window.confirm(t('accounts.confirmDelete'))) {
-                      accountApi
-                        .delete(account as Account)
-                        .then(() => {
-                          navigate(-1)
-                        })
-                        .catch(err => {
-                          setError(err.message)
-                        })
-                    }
-                  }}
-                  className="btn-secondary"
-                >
-                  <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
-                  {t('accounts.delete')}
-                </button>
-                {/* TODO: reconcile */}
-              </div>
-            ) : null}
+            <div className="mt-8 button-group">
+              <button type="submit" className="btn-primary">
+                {t('save')}
+              </button>
+              {isPersisted ? (
+                <>
+                  <ArchiveButton
+                    resource={account as Account}
+                    resourceTypeTranslation={t('accounts.account')}
+                    apiConnection={accountApi}
+                    onSuccess={data => {
+                      setAccount(data)
+                      if (error) {
+                        setError('')
+                      }
+                    }}
+                    onError={setError}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (window.confirm(t('accounts.confirmDelete'))) {
+                        accountApi
+                          .delete(account as Account)
+                          .then(() => {
+                            navigate(-1)
+                          })
+                          .catch(err => {
+                            setError(err.message)
+                          })
+                      }
+                    }}
+                    className="btn-secondary-red"
+                  >
+                    <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
+                    {t('accounts.delete')}
+                  </button>
+                  {/* TODO: reconcile */}
+                </>
+              ) : (
+                <Link to={-1 as any} className="btn-secondary">
+                  {t('cancel')}
+                </Link>
+              )}
+            </div>
           </div>
         </>
       )}

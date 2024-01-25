@@ -48,14 +48,14 @@ const Notification = ({ notification, setNotification }: Props) => {
                   />
                 </div>
                 <div className="ml-3 w-0 flex-1 pt-0.5">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-green-700">
                     {notification}
                   </p>
                 </div>
                 <div className="ml-4 flex flex-shrink-0">
                   <button
                     type="button"
-                    className="inline-flex rounded-md bg-green-100 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="inline-flex rounded-md bg-green-100 text-green-700 hover:text-green-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     onClick={() => {
                       setShow(false)
                     }}

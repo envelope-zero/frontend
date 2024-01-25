@@ -4,7 +4,7 @@ import { QuickAllocationMode, Translation } from '../types'
 import { checkStatus } from '../lib/fetch-helper'
 import Error from './Error'
 import Modal from './Modal'
-import { ChevronRightIcon } from '@heroicons/react/24/outline'
+import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const quickAllocationModes = [
   'ALLOCATE_LAST_MONTH_BUDGET',
@@ -52,6 +52,21 @@ const QuickAllocationForm = ({ link, reloadBudgetMonth }: Props) => {
         }}
       >
         <Error error={error} />
+        <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
+          <button
+            type="button"
+            className="rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            onClick={() => {
+              setShowPopup(false)
+              if (error) {
+                setError('')
+              }
+            }}
+          >
+            <span className="sr-only">{t('cancel')}</span>
+            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+          </button>
+        </div>
         <div className="space-y-2 text-center">
           <h3 className="text-lg font-medium leading-6">
             {t('dashboard.quickAllocation')}
@@ -60,11 +75,11 @@ const QuickAllocationForm = ({ link, reloadBudgetMonth }: Props) => {
             {t('dashboard.quickAllocationExplanation')}
           </p>
           <div>{t('dashboard.quickAllocationMode.allocateBasedOn')}</div>
-          <div className="rounded-md border border-gray-200 dark:border-gray-500 divide-y divide-gray-200 dark:divide-gray-500">
+          <div className="space-y-2">
             {quickAllocationModes.map(quickAllocationMode => (
               <button
                 key={quickAllocationMode}
-                className="btn-secondary link-blue rounded-none first:rounded-t-md w-full"
+                className="btn-secondary w-full"
                 onClick={() =>
                   submitMode(quickAllocationMode as QuickAllocationMode)
                     .then(() => setShowPopup(false))
@@ -76,17 +91,6 @@ const QuickAllocationForm = ({ link, reloadBudgetMonth }: Props) => {
                 {t(`dashboard.quickAllocationMode.${quickAllocationMode}`)}
               </button>
             ))}
-            <button
-              className="rounded-b-md rounded-t-none btn-secondary"
-              onClick={() => {
-                setShowPopup(false)
-                if (error) {
-                  setError('')
-                }
-              }}
-            >
-              {t(`cancel`)}
-            </button>
           </div>
         </div>
       </Modal>

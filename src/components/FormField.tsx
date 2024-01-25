@@ -1,4 +1,4 @@
-import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
+import { QuestionMarkCircleIcon } from '@heroicons/react/20/solid'
 import { Tooltip } from 'flowbite-react'
 
 type Props = {
@@ -10,10 +10,9 @@ type Props = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
   children?: React.ReactNode
-  hideLabel?: boolean
-  compact?: boolean
   note?: string
   tooltip?: string
+  className?: string
 }
 
 const FormField = ({
@@ -25,58 +24,51 @@ const FormField = ({
   onChange,
   onFocus,
   children,
-  hideLabel,
-  compact,
   note,
   tooltip,
+  className,
 }: Props) => {
   if (type === 'number' && typeof options?.step === 'undefined') {
     options = { ...options, step: 'any' }
   }
 
   return (
-    <div className={`form-field--wrapper ${compact ? 'border-0' : ''}`}>
-      <label
-        htmlFor={name}
-        className={`form-field--label ${hideLabel ? 'sr-only' : ''}`}
-      >
-        <span className="flex">
+    <div className={className || ''}>
+      <label htmlFor={name} className="form-field--label">
+        <span className="flex items-center">
           {label}
           {typeof tooltip !== 'undefined' ? (
             <Tooltip
               content={tooltip}
               trigger="click"
-              className="whitespace-pre-line max-w-lg"
+              className="whitespace-pre-line max-w-lg mx-2 shadow-2xl dark:border dark:border-slate-800"
             >
-              <button type="button" className="ml-1 my-auto">
-                <QuestionMarkCircleIcon className="icon-sm" />
+              <button
+                type="button"
+                className="ml-1 my-auto text-gray-500 full-centered"
+              >
+                <QuestionMarkCircleIcon className="icon-xs" />
                 <span className="sr-only">?</span>
               </button>
             </Tooltip>
           ) : null}
         </span>
-        {note && <small className="block">{note}</small>}
       </label>
 
-      <div
-        className={`input--outer ${
-          hideLabel ? 'sm:col-span-3' : 'sm:col-span-2'
-        }`}
-      >
-        <div className="input--inner">
-          <input
-            className="input"
-            type={type}
-            name={name}
-            id={name}
-            value={value}
-            onChange={onChange}
-            onFocus={onFocus}
-            {...options}
-          />
-          {children}
-        </div>
+      <div className={'input--outer sm:col-span-2'}>
+        <input
+          className="input"
+          type={type}
+          name={name}
+          id={name}
+          value={value}
+          onChange={onChange}
+          onFocus={onFocus}
+          {...options}
+        />
+        {children}
       </div>
+      {note && <small className="block">{note}</small>}
     </div>
   )
 }
