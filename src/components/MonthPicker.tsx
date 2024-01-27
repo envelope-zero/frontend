@@ -34,12 +34,12 @@ const MonthPicker = ({ open, setOpen, activeMonth }: Props) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 px-4 pt-6 pb-4 text-left shadow-xl border dark:border-gray-500 transition-all sm:max-w-sm sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg border bg-white px-4 pb-4 pt-6 text-left shadow-xl transition-all dark:border-gray-500 dark:bg-slate-800 sm:max-w-sm sm:p-6">
                 <div>
                   <button
                     type="button"
                     title={t('close')}
-                    className="absolute top-2 right-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+                    className="absolute right-2 top-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
                     onClick={e => {
                       e.preventDefault()
                       setOpen(false)
@@ -84,7 +84,7 @@ const MonthPicker = ({ open, setOpen, activeMonth }: Props) => {
                       </div>
                       <Link
                         to="/"
-                        className="block link-blue text-end text-sm pt-2"
+                        className="link-blue block pt-2 text-end text-sm"
                         onClick={() => setOpen(false)}
                       >
                         {t('dashboard.goToCurrentMonth')}

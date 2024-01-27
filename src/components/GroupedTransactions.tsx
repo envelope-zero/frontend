@@ -32,7 +32,7 @@ const GroupedTransactions = ({
     <ul>
       {Object.keys(transactions).map(date => (
         <div key={date} className="group">
-          <h3 className="border-y group-first:border-t-0 border-gray-200 dark:border-gray-900 bg-gray-50 dark:bg-slate-700 px-3 py-1 text-sm font-medium text-gray-500">
+          <h3 className="border-y border-gray-200 bg-gray-50 px-3 py-1 text-sm font-medium text-gray-500 group-first:border-t-0 dark:border-gray-900 dark:bg-slate-700">
             {formatDate(date)}
           </h3>
           <div>
@@ -52,7 +52,7 @@ const GroupedTransactions = ({
                     <div className="px-2 py-4 sm:px-6">
                       <div className="flex items-center justify-between">
                         <p
-                          className={`text-sm dark:text-gray-300 font-medium truncate ${
+                          className={`truncate text-sm font-medium dark:text-gray-300 ${
                             transaction.note ? '' : 'italic'
                           }`}
                         >
@@ -60,10 +60,10 @@ const GroupedTransactions = ({
                             ? `${transaction.note} (${counterparties})`
                             : counterparties}
                         </p>
-                        <div className="flex items-center flex-shrink-0">
-                          <div className="pl-2 flex items-center">
+                        <div className="flex flex-shrink-0 items-center">
+                          <div className="flex items-center pl-2">
                             <p
-                              className={`px-2 inline-flex text-xs leading-5 font-bold rounded-full ${color}`}
+                              className={`inline-flex rounded-full px-2 text-xs font-bold leading-5 ${color}`}
                             >
                               {sign}
                               {formatMoney(

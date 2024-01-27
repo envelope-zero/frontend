@@ -122,14 +122,14 @@ const EnvelopeForm = ({ budget }: Props) => {
             <Link
               onClick={confirmDiscardingUnsavedChanges}
               to={`/transactions?envelope=${envelopeId}`}
-              className="flex items-center justify-end link-blue py-4"
+              className="link-blue flex items-center justify-end py-4"
             >
               {t('transactions.latest')}
               <ChevronRightIcon className="inline h-6" />
             </Link>
           )}
           <div className="card">
-            <FormFields className="md:grid grid-cols-2 gap-x-4 space-y-6 md:space-y-0 md:gap-y-6">
+            <FormFields className="grid-cols-2 gap-x-4 space-y-6 md:grid md:gap-y-6 md:space-y-0">
               <FormField
                 type="text"
                 name="name"
@@ -170,7 +170,7 @@ const EnvelopeForm = ({ budget }: Props) => {
                 <label htmlFor="note" className="form-field--label">
                   {t('accounts.note')}
                 </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                <div className="mt-1 sm:col-span-2 sm:mt-0">
                   <textarea
                     id="note"
                     name="note"
@@ -219,7 +219,7 @@ const EnvelopeForm = ({ budget }: Props) => {
                     }}
                     className="btn-secondary-red"
                   >
-                    <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
+                    <TrashIcon className="icon-red icon-sm relative bottom-0.5 mr-1 inline" />
                     {t('envelopes.delete')}
                   </button>
                 </>

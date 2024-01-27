@@ -130,7 +130,7 @@ const TransactionsList = ({ budget }: Props) => {
       case 'account':
         return (
           <>
-            <BanknotesIcon className="icon-red icon-sm inline mr-1" />
+            <BanknotesIcon className="icon-red icon-sm mr-1 inline" />
             {safeName(
               accounts.find(account => account.id === value),
               'account'
@@ -145,7 +145,7 @@ const TransactionsList = ({ budget }: Props) => {
 
         return (
           <>
-            <EnvelopeIcon className="icon-red icon-sm inline mr-1" />
+            <EnvelopeIcon className="icon-red icon-sm mr-1 inline" />
             {safeName(
               envelopes.find(envelope => envelope.id === value),
               'envelope'
@@ -220,13 +220,13 @@ const TransactionsList = ({ budget }: Props) => {
         ) : (
           <button
             type="button"
-            className="rounded-full full-centered  px-2.5 py-1.5 bg-red-800 text-sm text-gray-100"
+            className="full-centered rounded-full  bg-red-800 px-2.5 py-1.5 text-sm text-gray-100"
             onClick={() => setShowFilters(!showFilters)}
             title={t('filterResource', {
               resource: t('transactions.transactions'),
             })}
           >
-            <FunnelIcon className="icon-sm inline mr-1" />
+            <FunnelIcon className="icon-sm mr-1 inline" />
             {t('filterResource', {
               resource: t('transactions.transactions'),
             })}
@@ -244,7 +244,7 @@ const TransactionsList = ({ budget }: Props) => {
           return (
             <button
               key={filter}
-              className="rounded-full full-centered border border-red-800 dark:border-red-600 bg-white dark:bg-slate-800 px-2.5 py-1.5 text-sm font-medium text-red-800 hover:text-red-900 dark:text-red-600 max-w-full truncate group"
+              className="full-centered group max-w-full truncate rounded-full border border-red-800 bg-white px-2.5 py-1.5 text-sm font-medium text-red-800 hover:text-red-900 dark:border-red-600 dark:bg-slate-800 dark:text-red-600"
               type="button"
               onClick={() => {
                 searchParams.delete(filter)

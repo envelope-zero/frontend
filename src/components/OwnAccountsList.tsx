@@ -100,17 +100,17 @@ const OwnAccountsList = ({ budget }: Props) => {
       ) : (
         <div>
           {archived ? (
-            <div className="flex align-center justify-start link-blue pb-2">
+            <div className="align-center link-blue flex justify-start pb-2">
               <Link to="/own-accounts?archived=false">
-                <ChevronLeftIcon className="icon inline relative bottom-0.5" />
+                <ChevronLeftIcon className="icon relative bottom-0.5 inline" />
                 {t('back')}
               </Link>
             </div>
           ) : (
-            <div className="flex align-center justify-end link-blue pb-2">
+            <div className="align-center link-blue flex justify-end pb-2">
               <Link to="/own-accounts?archived=true">
                 {t('showArchived')}
-                <ChevronRightIcon className="icon inline relative bottom-0.5" />
+                <ChevronRightIcon className="icon relative bottom-0.5 inline" />
               </Link>
             </div>
           )}
@@ -120,11 +120,11 @@ const OwnAccountsList = ({ budget }: Props) => {
                 {accounts.map(account => (
                   <li
                     key={account.id}
-                    className="col-span-1 card p-0 flex flex-col justify-between  divide-y divide-gray-200 dark:divide-gray-600"
+                    className="card col-span-1 flex flex-col justify-between divide-y  divide-gray-200 p-0 dark:divide-gray-600"
                   >
                     <div className="flex w-full items-center justify-between space-x-6 p-6">
                       <div className="flex-1 truncate">
-                        <div className="lg:flex items-start justify-between lg:space-x-3">
+                        <div className="items-start justify-between lg:flex lg:space-x-3">
                           <div className="flex justify-between lg:block">
                             <h3
                               className={`truncate text-base font-bold ${
@@ -134,7 +134,7 @@ const OwnAccountsList = ({ budget }: Props) => {
                               {safeName(account, 'account')}
                               {account.archived ? (
                                 <ArchiveBoxIcon
-                                  className="icon-sm inline link-blue ml-2 stroke-2"
+                                  className="icon-sm link-blue ml-2 inline stroke-2"
                                   title={t('archived')}
                                 />
                               ) : null}
@@ -145,7 +145,7 @@ const OwnAccountsList = ({ budget }: Props) => {
                                   Number(account.computedData.balance) >= 0
                                     ? 'text-lime-600'
                                     : 'text-red-600'
-                                } lg:mt-2 text-lg text-right lg:text-left`}
+                                } text-right text-lg lg:mt-2 lg:text-left`}
                               >
                                 <strong>
                                   {formatMoney(
@@ -201,7 +201,7 @@ const OwnAccountsList = ({ budget }: Props) => {
             </>
           ) : (
             <>
-              <div className="text-gray-700 dark:text-gray-300 text-center">
+              <div className="text-center text-gray-700 dark:text-gray-300">
                 {archived
                   ? t('accounts.emptyArchive')
                   : t('accounts.emptyList')}

@@ -25,7 +25,7 @@ const CategoryEnvelopes = ({
   return (
     <>
       <div
-        className={`flex bg-gray-50 dark:bg-gray-700 p-4 text-gray-500 dark:text-gray-100 cursor-pointer ${
+        className={`flex cursor-pointer bg-gray-50 p-4 text-gray-500 dark:bg-gray-700 dark:text-gray-100 ${
           showEnvelopes ? 'border-y first:border-t-0' : ''
         } border-gray-200 dark:border-gray-900`}
         onClick={() => {
@@ -40,14 +40,14 @@ const CategoryEnvelopes = ({
 
         <div
           className={`grow ${
-            showEnvelopes || ' whitespace-nowrap overflow-hidden text-ellipsis'
+            showEnvelopes || ' overflow-hidden text-ellipsis whitespace-nowrap'
           }`}
         >
           <span className={!category.name ? 'italic' : ''}>
             {safeName(category, 'category', t('categories.category'))}
             {category.archived ? (
               <ArchiveBoxIcon
-                className="icon-sm inline link-blue ml-2 stroke-2"
+                className="icon-sm link-blue ml-2 inline stroke-2"
                 title={t('archived')}
               />
             ) : null}
@@ -79,18 +79,18 @@ const CategoryEnvelopes = ({
               <Link
                 to={envelope.id}
                 key={envelope.id}
-                className="relative px-6 py-5 flex justify-between items-center space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="relative flex items-center justify-between space-x-3 px-6 py-5 hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 <span className={!envelope.name ? 'italic' : ''}>
                   {safeName(envelope, 'envelope')}
                   {envelope.archived ? (
                     <ArchiveBoxIcon
-                      className="icon-sm inline link-blue ml-2 stroke-2"
+                      className="icon-sm link-blue ml-2 inline stroke-2"
                       title={t('archived')}
                     />
                   ) : null}
                 </span>
-                <ChevronRightIcon className="h-6 mr-3 flex-shrink-0" />
+                <ChevronRightIcon className="mr-3 h-6 flex-shrink-0" />
               </Link>
             ))}
         </div>

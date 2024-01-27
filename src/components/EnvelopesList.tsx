@@ -51,17 +51,17 @@ const EnvelopesList = ({ budget }: Props) => {
       <Error error={error} />
 
       {archived ? (
-        <div className="flex align-center justify-start link-blue pb-2">
+        <div className="align-center link-blue flex justify-start pb-2">
           <Link to="/envelopes?archived=false">
-            <ChevronLeftIcon className="icon inline relative bottom-0.5" />
+            <ChevronLeftIcon className="icon relative bottom-0.5 inline" />
             {t('back')}
           </Link>
         </div>
       ) : (
-        <div className="flex align-center justify-end link-blue pb-2">
+        <div className="align-center link-blue flex justify-end pb-2">
           <Link to="/envelopes?archived=true">
             {t('showArchived')}
-            <ChevronRightIcon className="icon inline relative bottom-0.5" />
+            <ChevronRightIcon className="icon relative bottom-0.5 inline" />
           </Link>
         </div>
       )}

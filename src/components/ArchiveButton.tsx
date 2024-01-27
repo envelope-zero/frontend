@@ -30,7 +30,7 @@ const ArchiveButton = ({
       }}
       className="btn-secondary"
     >
-      <ArchiveBoxIcon className="icon-sm inline mr-1 relative bottom-0.5" />
+      <ArchiveBoxIcon className="icon-sm relative bottom-0.5 mr-1 inline" />
       {t(resource.archived ? 'unarchiveObject' : 'archiveObject', {
         object: resourceTypeTranslation,
       })}

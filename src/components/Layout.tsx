@@ -90,7 +90,7 @@ const Layout = ({
           <Transition.Root show={sidebarOpen} as={Fragment}>
             <Dialog
               as="div"
-              className="fixed inset-0 flex z-40 lg:hidden"
+              className="fixed inset-0 z-40 flex lg:hidden"
               open={sidebarOpen}
               onClose={() => setSidebarOpen(false)}
             >
@@ -114,7 +114,7 @@ const Layout = ({
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-slate-800">
+                <div className="relative flex w-full max-w-xs flex-1 flex-col bg-white dark:bg-slate-800">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -127,7 +127,7 @@ const Layout = ({
                     <div className="-mr-12 pt-2">
                       <button
                         type="button"
-                        className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none"
+                        className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none"
                         onClick={() => setSidebarOpen(false)}
                       >
                         <span className="sr-only">
@@ -137,9 +137,9 @@ const Layout = ({
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex-1 flex flex-col justify-between h-0 pt-5 pb-4 overflow-y-auto">
+                  <div className="flex h-0 flex-1 flex-col justify-between overflow-y-auto pb-4 pt-5">
                     <div>
-                      <div className="flex-shrink-0 flex items-center px-4">
+                      <div className="flex flex-shrink-0 items-center px-4">
                         <div>
                           <div className="text-lg font-bold text-gray-900 dark:text-gray-100">
                             {safeName(budget, 'budget')}
@@ -156,9 +156,9 @@ const Layout = ({
                       <Link
                         to="/transactions/new"
                         onClick={() => setSidebarOpen(false)}
-                        className="my-4 border-y dark:border-gray-900 text-sky-600 dark:text-sky-400 group flex items-center p-4 text-base font-medium shadow-inner"
+                        className="group my-4 flex items-center border-y p-4 text-base font-medium text-sky-600 shadow-inner dark:border-gray-900 dark:text-sky-400"
                       >
-                        <BoltIcon className="inline mr-4 flex-shrink-0 h-6 w-6" />
+                        <BoltIcon className="mr-4 inline h-6 w-6 flex-shrink-0" />
                         {t('transactions.add')}
                       </Link>
                       <nav className="space-y-1">
@@ -170,21 +170,21 @@ const Layout = ({
                             className={({ isActive }) =>
                               classNames(
                                 isActive
-                                  ? 'bg-red-800/[.1] dark:bg-red-600/[.15] text-gray-900 dark:text-gray-100'
+                                  ? 'bg-red-800/[.1] text-gray-900 dark:bg-red-600/[.15] dark:text-gray-100'
                                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-200',
                                 'group flex items-center px-4 py-4 text-base font-medium'
                               )
                             }
                           >
                             {({ isActive }) => (
-                              <div className="flex justify-between w-full">
+                              <div className="flex w-full justify-between">
                                 <div className="flex">
                                   <item.icon
                                     className={classNames(
                                       isActive
                                         ? 'text-red-800 dark:text-red-600'
                                         : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-200',
-                                      'mr-4 flex-shrink-0 h-6 w-6'
+                                      'mr-4 h-6 w-6 flex-shrink-0'
                                     )}
                                     aria-hidden="true"
                                   />
@@ -193,7 +193,7 @@ const Layout = ({
                                 {isActive ? (
                                   <ChevronLeftIcon className="icon-red" />
                                 ) : (
-                                  <ChevronRightIcon className="text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-200 icon" />
+                                  <ChevronRightIcon className="icon text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-200" />
                                 )}
                               </div>
                             )}
@@ -203,33 +203,33 @@ const Layout = ({
                     </div>
                     <div>
                       <a
-                        className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-slate-700 flex items-center px-4 py-4 text-base font-medium"
+                        className="group flex items-center px-4 py-4 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-100"
                         href="https://github.com/envelope-zero/frontend/issues/new?labels=bug&template=bug_report.md"
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <ExclamationTriangleIcon className="text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100 mr-4 flex-shrink-0 h-6 w-6" />{' '}
+                        <ExclamationTriangleIcon className="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100" />{' '}
                         {t('navigation.bugReport')}
                       </a>
-                      <div className="text-gray-400 flex items-center px-4 text-sm font-medium justify-end">
+                      <div className="flex items-center justify-end px-4 text-sm font-medium text-gray-400">
                         {t('version')} {import.meta.env.VITE_VERSION || '0.0.0'}
                       </div>
                     </div>
                   </div>
                 </div>
               </Transition.Child>
-              <div className="flex-shrink-0 w-14">
+              <div className="w-14 flex-shrink-0">
                 {/* Force sidebar to shrink to fit close icon */}
               </div>
             </Dialog>
           </Transition.Root>
 
           {/* Static sidebar for desktop */}
-          <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
-            <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 dark:border-gray-900 bg-white dark:bg-slate-800">
-              <div className="flex-1 flex flex-col justify-between pt-5 pb-4 overflow-y-auto">
+          <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+            <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white dark:border-gray-900 dark:bg-slate-800">
+              <div className="flex flex-1 flex-col justify-between overflow-y-auto pb-4 pt-5">
                 <div>
-                  <div className="flex-shrink-0 flex items-center px-4">
+                  <div className="flex flex-shrink-0 items-center px-4">
                     <div>
                       <div className="text-base font-bold text-gray-900 dark:text-gray-100">
                         {safeName(budget, 'budget')}
@@ -245,13 +245,13 @@ const Layout = ({
                   </div>
                   <Link
                     to="/transactions/new"
-                    className="my-4 border-y dark:border-gray-900 link-blue hover:bg-gray-50 dark:hover:bg-slate-700 group flex items-center p-4 text-sm font-medium shadow-inner"
+                    className="link-blue group my-4 flex items-center border-y p-4 text-sm font-medium shadow-inner hover:bg-gray-50 dark:border-gray-900 dark:hover:bg-slate-700"
                     onClick={() => setSidebarOpen(false)}
                   >
-                    <BoltIcon className="mr-3 flex-shrink-0 h-6 w-6" />
+                    <BoltIcon className="mr-3 h-6 w-6 flex-shrink-0" />
                     {t('transactions.add')}
                   </Link>
-                  <nav className="mt-5 flex-1 bg-white dark:bg-slate-800 space-y-1">
+                  <nav className="mt-5 flex-1 space-y-1 bg-white dark:bg-slate-800">
                     {navigation.map(item => (
                       <NavLink
                         key={item.name}
@@ -259,7 +259,7 @@ const Layout = ({
                         className={({ isActive }) =>
                           classNames(
                             isActive
-                              ? 'bg-red-800/[.1] dark:bg-red-600/[.15] text-gray-900 dark:text-gray-100 border-r-4 border-red-800'
+                              ? 'border-r-4 border-red-800 bg-red-800/[.1] text-gray-900 dark:bg-red-600/[.15] dark:text-gray-100'
                               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-200',
                             'group flex items-center px-4 py-2 text-sm font-medium'
                           )
@@ -272,7 +272,7 @@ const Layout = ({
                                 isActive
                                   ? 'text-red-800 dark:text-red-600'
                                   : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-200',
-                                'mr-3 flex-shrink-0 h-6 w-6'
+                                'mr-3 h-6 w-6 flex-shrink-0'
                               )}
                               aria-hidden="true"
                             />
@@ -285,15 +285,15 @@ const Layout = ({
                 </div>
                 <div>
                   <a
-                    className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 group dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-slate-700 flex items-center px-4 py-2 text-sm font-medium"
+                    className="group flex items-center px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-100"
                     href="https://github.com/envelope-zero/frontend/issues/new?labels=bug&template=bug_report.md"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <ExclamationTriangleIcon className="text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100 mr-3 flex-shrink-0 h-6 w-6" />{' '}
+                    <ExclamationTriangleIcon className="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100" />{' '}
                     {t('navigation.bugReport')}
                   </a>
-                  <div className="text-gray-400 flex items-center px-4 text-sm font-medium">
+                  <div className="flex items-center px-4 text-sm font-medium text-gray-400">
                     {t('version')} {import.meta.env.VITE_VERSION || '0.0.0'}
                   </div>
                 </div>
@@ -303,14 +303,14 @@ const Layout = ({
         </>
       )}
 
-      <div className={`${hideNav ? '' : 'lg:pl-64'} flex flex-col flex-1`}>
+      <div className={`${hideNav ? '' : 'lg:pl-64'} flex flex-1 flex-col`}>
         <div
-          className="sticky top-0 z-10 lg:hidden px-6 pt-4 bg-gray-100 dark:bg-slate-900"
+          className="sticky top-0 z-10 bg-gray-100 px-6 pt-4 dark:bg-slate-900 lg:hidden"
           ref={headerRef as React.RefObject<HTMLDivElement>}
         >
           <button
             type="button"
-            className={`-ml-0.5 -mt-0.5 h-12 inline-flex items-center rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 ${
+            className={`-ml-0.5 -mt-0.5 inline-flex h-12 items-center rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 ${
               hideNav ? 'invisible' : 'visible'
             }`}
             onClick={() => {
@@ -330,7 +330,7 @@ const Layout = ({
                 }}
               />
             )}
-            <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <Error error={error} />
               <Outlet />
             </div>

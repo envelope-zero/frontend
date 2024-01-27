@@ -227,7 +227,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                   }
                 }}
               >
-                <LockClosedIcon className="icon-red inline mr-1" />
+                <LockClosedIcon className="icon-red mr-1 inline" />
                 {t('transactions.unlock')}
               </button>
               <small className="text-xs md:text-sm">
@@ -236,7 +236,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
             </div>
           ) : null}
 
-          <FormFields className="md:grid grid-cols-2 gap-x-4 space-y-6 md:space-y-0 md:gap-y-6">
+          <FormFields className="grid-cols-2 gap-x-4 space-y-6 md:grid md:gap-y-6 md:space-y-0">
             <FormField
               type="text"
               name="note"
@@ -425,7 +425,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
             ) : null}
           </FormFields>
 
-          <div className="mt-8 button-group">
+          <div className="button-group mt-8">
             <button type="submit" className="btn-primary">
               {t('save')}
             </button>
@@ -435,7 +435,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                   to={`/transactions/new?duplicateFrom=${transactionId}`}
                   className="btn-secondary"
                 >
-                  <DocumentDuplicateIcon className="icon-sm inline mr-1 relative bottom-0.5" />
+                  <DocumentDuplicateIcon className="icon-sm relative bottom-0.5 mr-1 inline" />
                   {t('transactions.repeat')}
                 </Link>
                 <button
@@ -455,7 +455,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                   }}
                   className="btn-secondary-red"
                 >
-                  <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
+                  <TrashIcon className="icon-red icon-sm relative bottom-0.5 mr-1 inline" />
                   {t('transactions.delete')}
                 </button>
               </>

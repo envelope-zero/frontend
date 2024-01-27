@@ -42,7 +42,7 @@ const CategoryMonth = ({
       <tr
         className={`${
           showEnvelopes ? 'border-y' : 'border-t'
-        } border-gray-200 dark:border-gray-900 bg-gray-50 dark:bg-slate-700 cursor-pointer`}
+        } cursor-pointer border-gray-200 bg-gray-50 dark:border-gray-900 dark:bg-slate-700`}
         onClick={() => {
           if (
             category.envelopes.some(envelope => envelope.id === editingEnvelope)
@@ -56,7 +56,7 @@ const CategoryMonth = ({
         <th
           colSpan={4}
           scope="colgroup"
-          className="px-4 py-2 text-left text-sm font-bold text-gray-900 dark:text-gray-300 sm:px-6 text-ellipsis"
+          className="text-ellipsis px-4 py-2 text-left text-sm font-bold text-gray-900 dark:text-gray-300 sm:px-6"
         >
           <span
             className={`flex items-center ${!category.name ? 'italic' : ''}`}
@@ -87,14 +87,14 @@ const CategoryMonth = ({
           ></EnvelopeMonth>
         ))
       ) : (
-        <tr className="bg-gray-50 dark:bg-slate-700 cursor-pointer">
-          <td className="whitespace-nowrap pb-2 pl-10 pr-1 text-sm font-medium text-gray-500 dark:text-gray-400 sm:pl-12 overflow-hidden text-ellipsis italic">
+        <tr className="cursor-pointer bg-gray-50 dark:bg-slate-700">
+          <td className="overflow-hidden text-ellipsis whitespace-nowrap pb-2 pl-10 pr-1 text-sm font-medium italic text-gray-500 dark:text-gray-400 sm:pl-12">
             {t('envelopes.envelopesWithCount', {
               count: envelopes.length,
             })}
           </td>
           <td
-            className={`whitespace-nowrap px-1 pb-2 text-sm text-right ${
+            className={`whitespace-nowrap px-1 pb-2 text-right text-sm ${
               Number(allocation) < 0
                 ? 'negative'
                 : 'text-gray-500 dark:text-gray-400'
@@ -105,7 +105,7 @@ const CategoryMonth = ({
             })}
           </td>
           <td
-            className={`hidden md:table-cell whitespace-nowrap px-1 pb-2 text-sm text-right ${
+            className={`hidden whitespace-nowrap px-1 pb-2 text-right text-sm md:table-cell ${
               Number(spent) > 0
                 ? 'positive'
                 : 'text-gray-500 dark:text-gray-400'
@@ -114,7 +114,7 @@ const CategoryMonth = ({
             {formatMoney(spent, budget.currency)}
           </td>
           <td
-            className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 pb-2 text-sm text-right ${
+            className={`whitespace-nowrap pb-2 pl-1 pr-4 text-right text-sm sm:pr-6 ${
               Number(balance) < 0
                 ? 'negative'
                 : 'text-gray-500 dark:text-gray-400'

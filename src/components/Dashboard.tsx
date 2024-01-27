@@ -108,7 +108,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                 type="month"
                 id="month"
                 value={activeMonth}
-                className="border-none cursor-pointer text-center bg-transparent"
+                className="cursor-pointer border-none bg-transparent text-center"
                 onChange={e => {
                   e.preventDefault()
                   navigate(linkToMonth(e.target.value))
@@ -116,7 +116,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
               />
             </div>
           ) : (
-            <div className="flex justify-center items-center">
+            <div className="flex items-center justify-center">
               <span className="mr-2 text-center">
                 {translatedMonthFormat.format(dateFromMonthYear(activeMonth))}
               </span>
@@ -155,9 +155,9 @@ const Dashboard = ({ budget }: DashboardProps) => {
       ) : (
         <>
           <Error error={error} />
-          <div className="card p-0 w-full my-4 md:mb-8 text-center text-gray-500">
+          <div className="card my-4 w-full p-0 text-center text-gray-500 md:mb-8">
             <div className="py-4 md:py-8">
-              <div className="text-gray-500 dark:text-gray-400 font-medium uppercase">
+              <div className="font-medium uppercase text-gray-500 dark:text-gray-400">
                 {t('dashboard.available')}
               </div>
               <div
@@ -170,7 +170,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                 })}
               </div>
             </div>
-            <div className="rounded-b-md bg-gray-100 dark:bg-slate-700 py-2 text-sm font-medium dark:text-gray-300">
+            <div className="rounded-b-md bg-gray-100 py-2 text-sm font-medium dark:bg-slate-700 dark:text-gray-300">
               <QuickAllocationForm
                 link={replaceMonthInLinks(budget.links.month, activeMonth)}
                 reloadBudgetMonth={reloadBudgetMonth}
@@ -180,30 +180,30 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="mt-4 flex flex-col py-2">
-              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 card px-0 py-2">
+              <div className="card -mx-4 -my-2 overflow-x-auto px-0 py-2 sm:-mx-6 lg:-mx-8">
                 <div className="inline-block w-full align-middle">
                   <table className="w-full table-fixed">
-                    <thead className="bg-white dark:bg-slate-800 uppercase">
+                    <thead className="bg-white uppercase dark:bg-slate-800">
                       <tr>
                         <th
                           scope="col"
-                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-300 sm:pl-6 w-2/3 md:w-1/2"
+                          className="w-2/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-300 sm:pl-6 md:w-1/2"
                         ></th>
                         <th
                           scope="col"
-                          className="hidden md:table-cell px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/6"
+                          className="hidden w-1/6 px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 md:table-cell"
                         >
                           {t('dashboard.allocation')}
                         </th>
                         <th
                           scope="col"
-                          className="hidden md:table-cell px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/6"
+                          className="hidden w-1/6 px-3 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 md:table-cell"
                         >
                           {t('dashboard.spent')}
                         </th>
                         <th
                           scope="col"
-                          className="pl-3 pr-4 sm:pr-6 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 w-1/3 md:w-1/6"
+                          className="w-1/3 pl-3 pr-4 pt-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-300 sm:pr-6 md:w-1/6"
                         >
                           {t('dashboard.balance')}
                         </th>
@@ -213,7 +213,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                       <tr>
                         <td></td>
                         <td
-                          className={`hidden md:table-cell whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
+                          className={`hidden whitespace-nowrap px-3 pb-3 text-right text-sm font-semibold md:table-cell ${
                             Number(budgetMonth.allocation) < 0
                               ? 'negative'
                               : 'text-gray-500 dark:text-gray-400'
@@ -228,7 +228,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                           )}
                         </td>
                         <td
-                          className={`hidden md:table-cell whitespace-nowrap px-3 pb-3 text-sm font-semibold text-right ${
+                          className={`hidden whitespace-nowrap px-3 pb-3 text-right text-sm font-semibold md:table-cell ${
                             Number(budgetMonth.spent) > 0
                               ? 'positive'
                               : 'text-gray-500 dark:text-gray-400'
@@ -237,7 +237,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
                           {formatMoney(budgetMonth.spent, budget.currency)}
                         </td>
                         <td
-                          className={`whitespace-nowrap pl-3 pr-4 sm:pr-6 pb-3 text-sm font-semibold text-right ${
+                          className={`whitespace-nowrap pb-3 pl-3 pr-4 text-right text-sm font-semibold sm:pr-6 ${
                             Number(budgetMonth.balance) < 0
                               ? 'negative'
                               : 'text-gray-500 dark:text-gray-400'

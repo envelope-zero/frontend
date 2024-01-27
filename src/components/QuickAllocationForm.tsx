@@ -36,7 +36,7 @@ const QuickAllocationForm = ({ link, reloadBudgetMonth }: Props) => {
   return (
     <div>
       <button
-        className="text-base w-full full-centered"
+        className="full-centered w-full text-base"
         onClick={() => setShowPopup(true)}
       >
         {t('dashboard.quickAllocation')}
@@ -55,7 +55,7 @@ const QuickAllocationForm = ({ link, reloadBudgetMonth }: Props) => {
         <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
           <button
             type="button"
-            className="rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:hover:text-gray-300"
             onClick={() => {
               setShowPopup(false)
               if (error) {

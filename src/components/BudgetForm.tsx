@@ -101,7 +101,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
           <h2>{t('budgets.createNew')}</h2>
           <Link
             to="/budget-import"
-            className="text-sm link-blue flex align-center"
+            className="link-blue align-center flex text-sm"
           >
             <DocumentArrowUpIcon className="icon-sm mr-1" />
             {t('budgets.import.importInstead')}
@@ -132,7 +132,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
             <label htmlFor="note" className="form-field--label">
               {t('budgets.note')}
             </label>
-            <div className="mt-1 sm:mt-0 sm:col-span-2">
+            <div className="mt-1 sm:col-span-2 sm:mt-0">
               <textarea
                 id="note"
                 name="note"
@@ -145,7 +145,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
           </div>
         </FormFields>
 
-        <div className="mt-8 button-group">
+        <div className="button-group mt-8">
           <button type="submit" className="btn-primary">
             {t('save')}
           </button>

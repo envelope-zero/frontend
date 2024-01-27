@@ -1,9 +1,9 @@
 const LoadingSpinner = () => {
   return (
-    <div className="w-full flex justify-center p-4" id="loading">
+    <div className="flex w-full justify-center p-4" id="loading">
       <div
         style={{ borderTopColor: 'transparent' }}
-        className="w-8 h-8 border-4 border-gray-600 dark:border-gray-400 border-dotted rounded-full animate-spin"
+        className="h-8 w-8 animate-spin rounded-full border-4 border-dotted border-gray-600 dark:border-gray-400"
       ></div>
     </div>
   )
