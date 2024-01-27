@@ -74,7 +74,7 @@ const EnvelopeMonth = ({
         <Link
           to={`/envelopes/${envelope.id}`}
           className={`h-full block whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 dark:text-gray-300 sm:pl-6 overflow-hidden text-ellipsis ${
-            !envelope.name && 'italic'
+            !envelope.name ? 'italic' : ''
           }`}
         >
           {safeName(envelope, 'envelope')}
