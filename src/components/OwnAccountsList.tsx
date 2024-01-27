@@ -120,9 +120,12 @@ const OwnAccountsList = ({ budget }: Props) => {
                 {accounts.map(account => (
                   <li
                     key={account.id}
-                    className="card col-span-1 flex flex-col justify-between divide-y  divide-gray-200 p-0 dark:divide-gray-600"
+                    className="card col-span-1 flex cursor-pointer flex-col justify-between  divide-y divide-gray-200 p-0 hover:-translate-y-1 hover:shadow-xl dark:divide-gray-600"
                   >
-                    <div className="flex w-full items-center justify-between space-x-6 p-6">
+                    <Link
+                      to={`${account.id}`}
+                      className="flex w-full items-center justify-between space-x-6 p-6"
+                    >
                       <div className="flex-1 truncate">
                         <div className="items-start justify-between lg:flex lg:space-x-3">
                           <div className="justify-between truncate max-md:flex max-md:space-x-2">
@@ -169,7 +172,7 @@ const OwnAccountsList = ({ budget }: Props) => {
                           {account.note}
                         </p>
                       </div>
-                    </div>
+                    </Link>
                     <div className="-mt-px flex divide-x divide-gray-200 dark:divide-gray-600">
                       <div className="flex w-0 flex-1">
                         <Link
