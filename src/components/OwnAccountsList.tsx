@@ -125,11 +125,12 @@ const OwnAccountsList = ({ budget }: Props) => {
                     <div className="flex w-full items-center justify-between space-x-6 p-6">
                       <div className="flex-1 truncate">
                         <div className="items-start justify-between lg:flex lg:space-x-3">
-                          <div className="flex justify-between lg:block">
+                          <div className="justify-between truncate max-md:flex max-md:space-x-2">
                             <h3
                               className={`truncate text-base font-bold ${
                                 account.name === '' ? 'italic' : ''
                               }`}
+                              title={safeName(account, 'account')}
                             >
                               {safeName(account, 'account')}
                               {account.archived ? (
