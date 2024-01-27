@@ -72,11 +72,11 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
         <div className="mt-3">
           {budgets.length ? (
             <>
-              <ul className="grid grid-cols-1 gap-10 lg:gap-6 lg:grid-cols-2">
+              <ul className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-6">
                 {budgets.map(budget => (
                   <li
                     key={budget.id}
-                    className={`card p-0 col-span-1 divide-y divide-gray-200 dark:divide-gray-600 flex flex-col justify-between ${
+                    className={`card col-span-1 flex flex-col justify-between divide-y divide-gray-200 p-0 dark:divide-gray-600 ${
                       budget.id === props.currentBudget?.id
                         ? 'border-2 border-red-800 dark:border-red-600'
                         : ''

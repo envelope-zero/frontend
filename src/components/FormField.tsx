@@ -41,11 +41,11 @@ const FormField = ({
             <Tooltip
               content={tooltip}
               trigger="click"
-              className="whitespace-pre-line max-w-lg mx-2 shadow-2xl dark:border dark:border-slate-800"
+              className="mx-2 max-w-lg whitespace-pre-line shadow-2xl dark:border dark:border-slate-800"
             >
               <button
                 type="button"
-                className="ml-1 my-auto text-gray-500 full-centered"
+                className="full-centered my-auto ml-1 text-gray-500"
               >
                 <QuestionMarkCircleIcon className="icon-xs" />
                 <span className="sr-only">?</span>

@@ -43,7 +43,7 @@ const AllocationInputs = ({
       >
         <InputCurrency currency={budget.currency} />
       </FormField>
-      <p className="text-sm text-gray-500 dark:text-gray-400 uppercase">
+      <p className="text-sm uppercase text-gray-500 dark:text-gray-400">
         {' '}
         – {t('or')} –{' '}
       </p>

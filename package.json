@@ -83,5 +83,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier-plugin-tailwindcss": "^0.5.11"
   }
 }

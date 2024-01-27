@@ -28,30 +28,30 @@
   }
 
   h1 {
-    @apply text-xl leading-6 font-black text-gray-900 dark:text-gray-100 tracking-wide;
+    @apply text-xl font-black leading-6 tracking-wide text-gray-900 dark:text-gray-100;
   }
 
   h2 {
-    @apply text-lg leading-6 font-bold text-gray-900 dark:text-gray-100;
+    @apply text-lg font-bold leading-6 text-gray-900 dark:text-gray-100;
   }
 
   h3 {
-    @apply text-lg leading-6 font-medium text-gray-900 dark:text-gray-100;
+    @apply text-lg font-medium leading-6 text-gray-900 dark:text-gray-100;
   }
 
   .header {
-    @apply fixed top-[1.625rem] left-0 right-0 m-auto text-center md:relative md:top-0 z-10 flex justify-center items-center md:h-12;
+    @apply fixed left-0 right-0 top-[1.625rem] z-10 m-auto flex items-center justify-center text-center md:relative md:top-0 md:h-12;
     @media (max-width: 767px) {
       width: calc(100% - 9rem);
     }
 
     h1 {
-      @apply whitespace-nowrap overflow-hidden text-ellipsis max-w-full;
+      @apply max-w-full overflow-hidden text-ellipsis whitespace-nowrap;
       max-width: calc(100% - 1.5rem);
     }
 
     .header--action {
-      @apply fixed md:absolute right-6 md:right-0 text-red-800 dark:text-red-600 flex gap-x-2;
+      @apply fixed right-6 flex gap-x-2 text-red-800 dark:text-red-600 md:absolute md:right-0;
 
       .header--action__secondary {
         @apply text-gray-600 dark:text-gray-400;
@@ -88,31 +88,31 @@
   }
 
   .box {
-    @apply shadow-sm rounded-md bg-gray-100 dark:bg-slate-700;
+    @apply rounded-md bg-gray-100 shadow-sm dark:bg-slate-700;
   }
 
   .card {
-    @apply bg-white dark:bg-slate-800 shadow-lg overflow-hidden rounded-lg p-4 md:p-8;
+    @apply overflow-hidden rounded-lg bg-white p-4 shadow-lg dark:bg-slate-800 md:p-8;
   }
 
   .error {
-    @apply bg-red-100 p-2 rounded-md text-red-800 dark:text-red-600;
+    @apply rounded-md bg-red-100 p-2 text-red-800 dark:text-red-600;
   }
 
   .button-group {
-    @apply gap-4 flex flex-col md:flex-row-reverse md:justify-start;
+    @apply flex flex-col gap-4 md:flex-row-reverse md:justify-start;
   }
 
   .btn-primary {
-    @apply w-full min-w-32 md:w-auto shadow-sm rounded-md full-centered bg-blue-800 hover:bg-blue-900 dark:hover:bg-blue-700 text-white py-3 px-4 text-sm font-bold;
+    @apply full-centered w-full min-w-32 rounded-md bg-blue-800 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-900 dark:hover:bg-blue-700 md:w-auto;
   }
 
   .btn-secondary {
-    @apply w-full min-w-32 md:w-auto shadow-sm rounded-md full-centered text-blue-800 hover:text-blue-900 dark:text-gray-300 dark:hover:text-gray-200 py-2 px-4 text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-700 border border-blue-800 dark:border-gray-300;
+    @apply full-centered w-full min-w-32 rounded-md border border-blue-800 px-4 py-2 text-sm font-medium text-blue-800 shadow-sm hover:bg-gray-50 hover:text-blue-900 dark:border-gray-300 dark:text-gray-300 dark:hover:bg-slate-700 dark:hover:text-gray-200 md:w-auto;
   }
 
   .btn-secondary-red {
-    @apply btn-secondary text-red-800 hover:text-red-900 border-red-800 dark:text-red-600 dark:hover:text-red-600 dark:border-red-600;
+    @apply btn-secondary border-red-800 text-red-800 hover:text-red-900 dark:border-red-600 dark:text-red-600 dark:hover:text-red-600;
   }
 
   .link-blue {
@@ -131,11 +131,11 @@
   }
 
   .input--outer {
-    @apply mt-2 relative;
+    @apply relative mt-2;
   }
 
   .input {
-    @apply flex-1 block w-full min-w-0 sm:text-sm border-gray-300 rounded-md  dark:text-gray-100 dark:border-slate-700 dark:bg-slate-700 dark:focus:bg-slate-700 focus:outline-transparent focus:border-transparent focus:ring-2 focus:ring-inset focus:ring-blue-800 dark:focus:ring-blue-700;
+    @apply block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-transparent  focus:outline-transparent focus:ring-2 focus:ring-inset focus:ring-blue-800 dark:border-slate-700 dark:bg-slate-700 dark:text-gray-100 dark:focus:bg-slate-700 dark:focus:ring-blue-700 sm:text-sm;
   }
 
   .dashboard {
@@ -143,7 +143,7 @@
       @apply grid grid-cols-12;
 
       a {
-        @apply text-gray-500 dark:text-gray-400 text-sm font-medium col-span-3 text-center flex justify-center items-center border-gray-300 dark:border-gray-500;
+        @apply col-span-3 flex items-center justify-center border-gray-300 text-center text-sm font-medium text-gray-500 dark:border-gray-500 dark:text-gray-400;
       }
 
       > div {
@@ -152,7 +152,7 @@
 
       > div,
       a {
-        @apply pb-1 border-b-2;
+        @apply border-b-2 pb-1;
       }
     }
   }
@@ -168,7 +168,7 @@
   .trans {
     font-size: 0;
     & > span {
-      @apply text-xl /* h1 */;
+      @apply /* h1 */ text-xl;
     }
   }
 

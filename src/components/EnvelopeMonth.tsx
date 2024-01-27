@@ -73,7 +73,7 @@ const EnvelopeMonth = ({
       <td>
         <Link
           to={`/envelopes/${envelope.id}`}
-          className={`h-full block whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 dark:text-gray-300 sm:pl-6 overflow-hidden text-ellipsis ${
+          className={`block h-full overflow-hidden text-ellipsis whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 dark:text-gray-300 sm:pl-6 ${
             !envelope.name ? 'italic' : ''
           }`}
         >
@@ -129,7 +129,7 @@ const EnvelopeMonth = ({
       </td>
 
       <td
-        className={`hidden md:table-cell whitespace-nowrap px-1 py-4 text-sm text-right ${
+        className={`hidden whitespace-nowrap px-1 py-4 text-right text-sm md:table-cell ${
           Number(allocatedAmount) < 0
             ? 'negative'
             : 'text-gray-500 dark:text-gray-400'
@@ -149,12 +149,12 @@ const EnvelopeMonth = ({
               }),
             })}
           >
-            <PencilIcon className="inline icon-xs text-gray-400" />
+            <PencilIcon className="icon-xs inline text-gray-400" />
           </button>
         </div>
       </td>
       <td
-        className={`hidden md:table-cell whitespace-nowrap px-1 py-4 text-sm text-right ${
+        className={`hidden whitespace-nowrap px-1 py-4 text-right text-sm md:table-cell ${
           Number(envelope.spent) > 0
             ? 'positive'
             : 'text-gray-500 dark:text-gray-400'
@@ -169,7 +169,7 @@ const EnvelopeMonth = ({
         </Link>
       </td>
       <td
-        className={`whitespace-nowrap pl-1 pr-4 sm:pr-6 py-4 text-sm text-right ${
+        className={`whitespace-nowrap py-4 pl-1 pr-4 text-right text-sm sm:pr-6 ${
           Number(envelope.balance) < 0
             ? 'negative'
             : 'text-gray-500 dark:text-gray-400'
@@ -199,9 +199,9 @@ const EnvelopeMonth = ({
             }),
           })}
           onClick={() => editEnvelope(envelope.id)}
-          className="md:hidden pl-2"
+          className="pl-2 md:hidden"
         >
-          <PlusCircleIcon className="inline icon text-gray-400" />
+          <PlusCircleIcon className="icon inline text-gray-400" />
         </button>
       </td>
     </tr>

@@ -263,7 +263,7 @@ const Result = (props: Props) => {
             })
         }}
       >
-        <div className="w-full full-centered mb-4">
+        <div className="full-centered mb-4 w-full">
           <button
             type="button"
             title={t('transactions.import.previous')}
@@ -305,7 +305,7 @@ const Result = (props: Props) => {
         )}
 
         <div className="card mt-4">
-          <FormFields className="md:grid grid-cols-2 gap-x-4 space-y-6 md:space-y-0 md:gap-y-6">
+          <FormFields className="grid-cols-2 gap-x-4 space-y-6 md:grid md:gap-y-6 md:space-y-0">
             <FormField
               type="text"
               name="note"
@@ -472,7 +472,7 @@ const Result = (props: Props) => {
               <CheckCircleIcon className="icon mr-1" />
               {t('import')}
             </button>
-            <div className="flex justify-center col-span-2 dark:text-gray-400 text-gray-600">
+            <div className="col-span-2 flex justify-center text-gray-600 dark:text-gray-400">
               {t('transactions.import.youCanCloseAndResume')}
             </div>
           </div>

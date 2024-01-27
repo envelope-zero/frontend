@@ -102,7 +102,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
                 <label htmlFor="note" className="form-field--label">
                   {t('categories.note')}
                 </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                <div className="mt-1 sm:col-span-2 sm:mt-0">
                   <textarea
                     id="note"
                     name="note"
@@ -147,7 +147,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
                 }}
                 className="btn-secondary-red"
               >
-                <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
+                <TrashIcon className="icon-red icon-sm relative bottom-0.5 mr-1 inline" />
                 {t('categories.delete')}
               </button>
             </div>
@@ -167,7 +167,7 @@ const CategoryForm = ({ budget }: { budget: Budget }) => {
                         <div className="px-2 py-4">
                           <div className="flex items-center justify-between">
                             <p
-                              className={`text-sm font-medium truncate dark:text-gray-300 ${
+                              className={`truncate text-sm font-medium dark:text-gray-300 ${
                                 envelope.name ? '' : 'italic'
                               }`}
                             >

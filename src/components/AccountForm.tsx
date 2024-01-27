@@ -113,14 +113,14 @@ const AccountForm = ({ budget, type }: Props) => {
             <Link
               onClick={confirmDiscardingUnsavedChanges}
               to={`/transactions?account=${accountId}`}
-              className="flex items-center justify-end link-blue py-4"
+              className="link-blue flex items-center justify-end py-4"
             >
               {t('transactions.latest')}
               <ChevronRightIcon className="inline h-6" />
             </Link>
           )}
           <div className="card">
-            <FormFields className="md:grid grid-cols-2 md:gap-x-4 md:gap-y-6">
+            <FormFields className="grid-cols-2 md:grid md:gap-x-4 md:gap-y-6">
               <FormField
                 className="col-span-full"
                 type="text"
@@ -133,9 +133,9 @@ const AccountForm = ({ budget, type }: Props) => {
 
               {type === 'internal' ? (
                 <>
-                  <div className="relative flex items-start col-span-full">
+                  <div className="relative col-span-full flex items-start">
                     <div
-                      className="mt-px pt-2 pr-2 col-span-2 flex sm:block justify-end"
+                      className="col-span-2 mt-px flex justify-end pr-2 pt-2 sm:block"
                       onClick={e => {
                         e.preventDefault()
                         updateValue('onBudget', !account.onBudget)
@@ -146,7 +146,7 @@ const AccountForm = ({ budget, type }: Props) => {
                           account.onBudget
                             ? 'bg-lime-600 dark:bg-lime-500'
                             : 'bg-gray-200 dark:bg-slate-700'
-                        } relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2`}
+                        } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2`}
                       >
                         <span
                           aria-hidden="true"
@@ -154,13 +154,13 @@ const AccountForm = ({ budget, type }: Props) => {
                             account?.onBudget
                               ? 'translate-x-5'
                               : 'translate-x-0'
-                          } inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 pointer-events-none`}
+                          } pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
                         ></span>
                         <input
                           type="checkbox"
                           id="onBudget"
                           name="onBudget"
-                          className="absolute inset-0 sr-only"
+                          className="sr-only absolute inset-0"
                           defaultChecked={account?.onBudget}
                           onChange={e =>
                             updateValue('onBudget', e.target.checked)
@@ -217,7 +217,7 @@ const AccountForm = ({ budget, type }: Props) => {
                 <label htmlFor="note" className="form-field--label">
                   {t('accounts.note')}
                 </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                <div className="mt-1 sm:col-span-2 sm:mt-0">
                   <textarea
                     id="note"
                     name="note"
@@ -230,7 +230,7 @@ const AccountForm = ({ budget, type }: Props) => {
               </div>
             </FormFields>
 
-            <div className="mt-8 button-group">
+            <div className="button-group mt-8">
               <button type="submit" className="btn-primary">
                 {t('save')}
               </button>
@@ -264,7 +264,7 @@ const AccountForm = ({ budget, type }: Props) => {
                     }}
                     className="btn-secondary-red"
                   >
-                    <TrashIcon className="icon-red icon-sm inline mr-1 relative bottom-0.5" />
+                    <TrashIcon className="icon-red icon-sm relative bottom-0.5 mr-1 inline" />
                     {t('accounts.delete')}
                   </button>
                   {/* TODO: reconcile */}

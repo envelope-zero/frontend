@@ -104,7 +104,7 @@ const Autocomplete = <T extends ArchivableResource>({
           />
         </Combobox.Button>
 
-        <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-slate-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+        <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-800 sm:text-sm">
           {emptyOption && query.length === 0 ? (
             <Combobox.Option
               value={null}
@@ -126,7 +126,7 @@ const Autocomplete = <T extends ArchivableResource>({
           {filteredGroups.map((group, i) => (
             <div key={i}>
               {filteredGroups.length > 1 ? (
-                <div className="relative py-2 pl-3 pr-9 text-gray-800 dark:text-gray-200 bg-gray-200 dark:bg-slate-700">
+                <div className="relative bg-gray-200 py-2 pl-3 pr-9 text-gray-800 dark:bg-slate-700 dark:text-gray-200">
                   {group.title}
                 </div>
               ) : null}
@@ -155,7 +155,7 @@ const Autocomplete = <T extends ArchivableResource>({
                         >
                           {isArchived(item) ? (
                             <ArchiveBoxIcon
-                              className="icon-sm inline link-blue mr-2 stroke-2"
+                              className="icon-sm link-blue mr-2 inline stroke-2"
                               title={t('archived')}
                             />
                           ) : null}
@@ -188,7 +188,7 @@ const Autocomplete = <T extends ArchivableResource>({
               value={{ name: query }}
               className={({ active }) =>
                 classNames(
-                  'relative cursor-default select-none py-2 pl-3 pr-9 border-t dark:border-gray-900',
+                  'relative cursor-default select-none border-t py-2 pl-3 pr-9 dark:border-gray-900',
                   active
                     ? 'bg-sky-600 text-white'
                     : 'text-gray-900 dark:text-gray-300'

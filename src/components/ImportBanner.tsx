@@ -8,8 +8,8 @@ type Props = { hideBanner: () => void }
 const ImportBanner = ({ hideBanner }: Props) => {
   const { t }: Translation = useTranslation()
   return (
-    <div className="bg-gray-200 dark:bg-slate-700 mb-8 md:mb-4">
-      <div className="flex items-center mx-auto gap-x-6 max-w-7xl px-6 md:px-8 py-2.5 sm:px-3.5 sm:before:flex-1">
+    <div className="mb-8 bg-gray-200 dark:bg-slate-700 md:mb-4">
+      <div className="mx-auto flex max-w-7xl items-center gap-x-6 px-6 py-2.5 sm:px-3.5 sm:before:flex-1 md:px-8">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <p className="text-sm leading-6 text-gray-900 dark:text-gray-100">
             {t('transactions.import.unfinishedImportInProgress')}

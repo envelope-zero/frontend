@@ -79,50 +79,50 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
       ) : (
         <>
           {archived ? (
-            <div className="flex align-center justify-start link-blue pb-2">
+            <div className="align-center link-blue flex justify-start pb-2">
               <Link to="/external-accounts?archived=false">
-                <ChevronLeftIcon className="icon inline relative bottom-0.5" />
+                <ChevronLeftIcon className="icon relative bottom-0.5 inline" />
                 {t('back')}
               </Link>
             </div>
           ) : (
-            <div className="flex align-center justify-end link-blue pb-2">
+            <div className="align-center link-blue flex justify-end pb-2">
               <Link to="/external-accounts?archived=true">
                 {t('showArchived')}
-                <ChevronRightIcon className="icon inline relative bottom-0.5" />
+                <ChevronRightIcon className="icon relative bottom-0.5 inline" />
               </Link>
             </div>
           )}
           {Object.keys(accounts).length ? (
             <nav
-              className="h-full overflow-y-auto card p-0"
+              className="card h-full overflow-y-auto p-0"
               aria-label="Directory"
             >
               {Object.keys(accounts)
                 .sort()
                 .map(letter => (
                   <div key={letter} className="relative">
-                    <div className="border-y border-gray-200 dark:border-gray-900 bg-gray-50  dark:bg-gray-700 px-6 py-1 text-sm font-medium text-gray-500">
+                    <div className="border-y border-gray-200 bg-gray-50 px-6  py-1 text-sm font-medium text-gray-500 dark:border-gray-900 dark:bg-gray-700">
                       <h3>{letter || t('untitled')}</h3>
                     </div>
                     <ul className="relative z-0">
                       {accounts[letter].map(account => (
                         <li
                           key={account.id}
-                          className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700"
+                          className="relative flex items-center space-x-3 px-6 py-5 hover:bg-gray-50 dark:hover:bg-gray-700"
                         >
-                          <div className="flex-1 min-w-0">
+                          <div className="min-w-0 flex-1">
                             <Link to={`${account.id}`}>
                               <div>
                                 <div
                                   className={`${
                                     !account.name ? 'italic' : ''
-                                  } text-sm font-medium text-gray-900 dark:text-gray-100 flex justify-between`}
+                                  } flex justify-between text-sm font-medium text-gray-900 dark:text-gray-100`}
                                 >
                                   <span className="full-centered">
                                     {account.archived ? (
                                       <ArchiveBoxIcon
-                                        className="icon-sm inline link-blue mr-2 stroke-2"
+                                        className="icon-sm link-blue mr-2 inline stroke-2"
                                         title={t('archived')}
                                       />
                                     ) : null}
@@ -130,7 +130,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                                   </span>
                                   <PencilIcon className="icon-red" />
                                 </div>
-                                <p className="text-sm text-gray-500 truncate">
+                                <p className="truncate text-sm text-gray-500">
                                   {account.note}
                                 </p>
                               </div>
@@ -143,7 +143,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                 ))}
             </nav>
           ) : (
-            <div className="text-gray-700 dark:text-gray-300 text-center">
+            <div className="text-center text-gray-700 dark:text-gray-300">
               {archived ? t('accounts.emptyArchive') : t('accounts.emptyList')}
               {!archived && (
                 <Link to="/external-accounts/new" title={t('accounts.create')}>

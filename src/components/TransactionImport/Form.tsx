@@ -90,12 +90,12 @@ const Form = ({ accounts, setResult }: Props) => {
           <Error error={error} />
           <div className="card md:mt-4">
             <p
-              className="whitespace-pre-line dark:text-gray-400 mb-4"
+              className="mb-4 whitespace-pre-line dark:text-gray-400"
               dangerouslySetInnerHTML={{
                 __html: t('transactions.import.description'),
               }}
             ></p>
-            <FormFields className="md:grid grid-cols-2 gap-x-4 space-y-6 md:space-y-0 md:gap-y-6">
+            <FormFields className="grid-cols-2 gap-x-4 space-y-6 md:grid md:gap-y-6 md:space-y-0">
               <Autocomplete<Account>
                 groups={[{ items: accounts }]}
                 allowNewCreation={false}
