@@ -40,8 +40,8 @@
   }
 
   .header {
-    @apply fixed left-0 right-0 top-[1.625rem] z-10 m-auto flex items-center justify-center text-center md:relative md:top-0 md:h-12;
-    @media (max-width: 767px) {
+    @apply fixed left-0 right-0 top-[1.625rem] z-10 m-auto flex items-center justify-center text-center lg:relative lg:top-0 lg:h-12;
+    @media (max-width: 1023px) {
       width: calc(100% - 9rem);
     }
 
@@ -51,7 +51,7 @@
     }
 
     .header--action {
-      @apply fixed right-6 flex gap-x-2 text-red-800 dark:text-red-600 md:absolute md:right-0;
+      @apply fixed right-6 flex gap-x-2 text-red-800 dark:text-red-600 lg:absolute lg:right-0;
 
       .header--action__secondary {
         @apply text-gray-600 dark:text-gray-400;
