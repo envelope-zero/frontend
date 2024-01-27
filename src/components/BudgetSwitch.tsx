@@ -76,13 +76,19 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                 {budgets.map(budget => (
                   <li
                     key={budget.id}
-                    className={`card col-span-1 flex flex-col justify-between divide-y divide-gray-200 p-0 dark:divide-gray-600 ${
+                    className={`card col-span-1 flex cursor-pointer flex-col justify-between divide-y divide-gray-200 p-0 hover:-translate-y-1 hover:shadow-xl dark:divide-gray-600 ${
                       budget.id === props.currentBudget?.id
                         ? 'border-2 border-red-800 dark:border-red-600'
                         : ''
                     }`}
                   >
-                    <div className="flex w-full items-center justify-between space-x-6 p-6">
+                    <Link
+                      to="/"
+                      onClick={() => {
+                        props.selectBudget(budget)
+                      }}
+                      className="flex w-full items-center justify-between space-x-6 p-6"
+                    >
                       <div className="flex-1 truncate">
                         <div className="flex items-center space-x-3">
                           <h3
@@ -106,7 +112,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                       >
                         <PencilIcon className="icon-red icon-sm" />
                       </Link>
-                    </div>
+                    </Link>
                     <div className="-mt-px flex divide-x divide-gray-200 dark:divide-gray-600">
                       <div className="flex w-0 flex-1">
                         <Link
