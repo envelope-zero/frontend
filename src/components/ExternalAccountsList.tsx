@@ -116,9 +116,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                               <div>
                                 <div
                                   className={`${
-                                    typeof account.name === 'undefined'
-                                      ? 'italic'
-                                      : ''
+                                    !account.name ? 'italic' : ''
                                   } text-sm font-medium text-gray-900 dark:text-gray-100 flex justify-between`}
                                 >
                                   <span className="full-centered">

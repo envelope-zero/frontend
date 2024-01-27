@@ -9,6 +9,7 @@ import {
 import EnvelopeMonth from './EnvelopeMonth'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import { formatMoney } from '../lib/format'
+import { safeName } from '../lib/name-helper'
 
 type props = {
   category: CategoryMonthType
@@ -57,7 +58,9 @@ const CategoryMonth = ({
           scope="colgroup"
           className="px-4 py-2 text-left text-sm font-bold text-gray-900 dark:text-gray-300 sm:px-6 text-ellipsis"
         >
-          <span className="flex items-center">
+          <span
+            className={`flex items-center ${!category.name ? 'italic' : ''}`}
+          >
             <button>
               {showEnvelopes ? (
                 <ChevronUpIcon className="icon" />
@@ -65,7 +68,7 @@ const CategoryMonth = ({
                 <ChevronDownIcon className="icon" />
               )}
             </button>
-            {category.name}
+            {safeName(category, 'category', t('categories.category'))}
           </span>
         </th>
       </tr>
