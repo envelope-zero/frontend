@@ -169,7 +169,7 @@ const AccountForm = ({ budget, type }: Props) => {
                       </div>
                     </div>
                     <div className="ml-3 text-sm leading-6">
-                      <label className="form-field--label" htmlFor="onbudget">
+                      <label className="form-field--label" htmlFor="onBudget">
                         {t('accounts.onBudget')}
                       </label>
                       <p

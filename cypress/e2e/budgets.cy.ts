@@ -42,11 +42,15 @@ describe('Budget: Switch', () => {
     cy.awaitLoading()
 
     cy.contains('Switch Budget').click()
-    cy.get('h3').contains('First Budget').click()
+    cy.get('h3').contains('First Budget').closest('li').contains('Open').click()
     cy.get('h1').contains('First Budget')
 
     cy.contains('Switch Budget').click()
-    cy.get('h3').contains('Second Budget').click()
+    cy.get('h3')
+      .contains('Second Budget')
+      .closest('li')
+      .contains('Open')
+      .click()
     cy.get('h1').contains('Second Budget')
   })
 
