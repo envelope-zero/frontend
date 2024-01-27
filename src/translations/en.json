@@ -12,6 +12,7 @@
   "import": "Import",
   "select": "Select...",
   "close": "Close",
+  "open": "Open",
   "untitled": "Untitled",
   "version": "Version",
   "seeAll": "See All",
@@ -86,7 +87,8 @@
     "initialBalance": "Initial Balance",
     "initialBalanceDate": "Date of Initial Balance",
     "onBudgetExplanation": "You can assign money from this account to your envelopes",
-    "offBudgetExplanation": "Money in this account is tracked, but can not be assigned to envelopes"
+    "offBudgetExplanation": "Money in this account is tracked, but can not be assigned to envelopes",
+    "showTransactions": "Show Transactions"
   },
   "transactions": {
     "transactions": "Transactions",
@@ -117,7 +119,7 @@
     "unlockBeforeEditingError": "This transaction has been reconciled and needs to be unlocked before updating it.",
     "create": "Create Transaction",
     "delete": "Delete Transaction",
-    "add": "Add transaction",
+    "add": "Add Transaction",
     "repeat": "Repeat Transaction",
     "confirmDelete": "Are you sure you want to delete this transaction?",
     "amount": "Amount",

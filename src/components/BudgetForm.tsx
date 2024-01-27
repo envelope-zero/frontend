@@ -165,7 +165,7 @@ const BudgetForm = ({ selectBudget, selectedBudget }: BudgetFormProps) => {
                     })
                 }
               }}
-              className="btn-secondary"
+              className="btn-secondary-red"
             >
               {t('budgets.delete')}
             </button>

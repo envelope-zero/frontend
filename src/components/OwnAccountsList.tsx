@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Translation, Budget, Account } from '../types'
-import { PencilIcon } from '@heroicons/react/24/solid'
 import {
   ArchiveBoxIcon,
   PlusCircleIcon,
@@ -14,7 +13,12 @@ import { safeName } from '../lib/name-helper'
 import LoadingSpinner from './LoadingSpinner'
 import AccountListSwitch from './AccountListSwitch'
 import Error from './Error'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import {
+  ArrowsRightLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PencilIcon,
+} from '@heroicons/react/20/solid'
 
 type Props = {
   budget: Budget
@@ -111,59 +115,90 @@ const OwnAccountsList = ({ budget }: Props) => {
             </div>
           )}
           {accounts.length ? (
-            <ul className="grid grid-cols-1 gap-5 sm:gap-6">
-              {accounts.map(account => (
-                <li
-                  key={account.id}
-                  className="card col-span-1 relative hover:bg-gray-50 dark:hover:bg-slate-700 p-4 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
-                >
-                  <Link to={`${account.id}`} className="w-full text-center">
-                    <div title={t('edit')} className="absolute right-4">
-                      <PencilIcon className="icon-red" />
-                    </div>
-                    <h3
-                      className={`full-centered ${
-                        typeof account.name === 'undefined' ? 'italic' : ''
-                      }`}
-                    >
-                      {safeName(account, 'account')}
-                      {account.archived ? (
-                        <ArchiveBoxIcon
-                          className="icon-sm inline link-blue ml-2 stroke-2"
-                          title={t('archived')}
-                        />
-                      ) : null}
-                    </h3>
-                    {account.onBudget ? null : (
-                      <div className="text-gray-700 dark:text-gray-300">
-                        {t('accounts.offBudget')}
-                      </div>
-                    )}
-                    {account.note ? (
-                      <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line">
-                        {account.note}
-                      </p>
-                    ) : null}
-                    {account.computedData ? (
-                      <div
-                        className={`${
-                          Number(account.computedData.balance) >= 0
-                            ? 'text-lime-600'
-                            : 'text-red-600'
-                        } mt-2 text-lg`}
-                      >
-                        <strong>
-                          {formatMoney(
-                            account.computedData.balance,
-                            budget.currency
+            <>
+              <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {accounts.map(account => (
+                  <li
+                    key={account.id}
+                    className="col-span-1 card p-0 flex flex-col justify-between  divide-y divide-gray-200 dark:divide-gray-600"
+                  >
+                    <div className="flex w-full items-center justify-between space-x-6 p-6">
+                      <div className="flex-1 truncate">
+                        <div className="md:flex items-start justify-between md:space-x-3">
+                          <div className="flex justify-between md:block">
+                            <h3
+                              className={`truncate text-base font-bold ${
+                                account.name === '' ? 'italic' : ''
+                              }`}
+                            >
+                              {safeName(account, 'account')}
+                              {account.archived ? (
+                                <ArchiveBoxIcon
+                                  className="icon-sm inline link-blue ml-2 stroke-2"
+                                  title={t('archived')}
+                                />
+                              ) : null}
+                            </h3>
+                            {account.computedData ? (
+                              <div
+                                className={`${
+                                  Number(account.computedData.balance) >= 0
+                                    ? 'text-lime-600'
+                                    : 'text-red-600'
+                                } md:mt-2 text-lg text-right md:text-left`}
+                              >
+                                <strong>
+                                  {formatMoney(
+                                    account.computedData.balance,
+                                    budget.currency,
+                                    { signDisplay: 'auto' }
+                                  )}
+                                </strong>
+                              </div>
+                            ) : null}
+                          </div>
+                          {!account.onBudget && (
+                            <span className="inline-flex flex-shrink-0 items-center rounded-full bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800">
+                              {t('accounts.offBudget')}
+                            </span>
                           )}
-                        </strong>
+                        </div>
+
+                        <p className="mt-1 truncate text-sm text-gray-500 dark:text-gray-400">
+                          {account.note}
+                        </p>
                       </div>
-                    ) : null}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                    </div>
+                    <div className="-mt-px flex divide-x divide-gray-200 dark:divide-gray-600">
+                      <div className="flex w-0 flex-1">
+                        <Link
+                          to={`/transactions?account=${account.id}`}
+                          className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 dark:text-gray-100"
+                        >
+                          <ArrowsRightLeftIcon
+                            className="icon-sm text-gray-400"
+                            aria-hidden="true"
+                          />
+                          {t('accounts.showTransactions')}
+                        </Link>
+                      </div>
+                      <div className="-ml-px flex w-0 flex-1">
+                        <Link
+                          to={`${account.id}`}
+                          className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-800 dark:text-gray-200"
+                        >
+                          <PencilIcon
+                            className="icon-sm text-gray-400"
+                            aria-hidden="true"
+                          />
+                          {t('editObject', { object: t('accounts.account') })}
+                        </Link>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </>
           ) : (
             <>
               <div className="text-gray-700 dark:text-gray-300 text-center">

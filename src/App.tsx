@@ -106,7 +106,12 @@ const App = () => {
         >
           <Route
             path="budgets"
-            element={<BudgetSwitch selectBudget={selectBudget} />}
+            element={
+              <BudgetSwitch
+                selectBudget={selectBudget}
+                currentBudget={budget}
+              />
+            }
           />
           <Route
             path="budgets/:budgetId"
