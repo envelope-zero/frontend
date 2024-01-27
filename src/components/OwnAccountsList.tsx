@@ -116,7 +116,7 @@ const OwnAccountsList = ({ budget }: Props) => {
           )}
           {accounts.length ? (
             <>
-              <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+              <ul className="grid grid-cols-1 gap-6 lg:grid-cols-2 2xl:grid-cols-3">
                 {accounts.map(account => (
                   <li
                     key={account.id}
@@ -124,8 +124,8 @@ const OwnAccountsList = ({ budget }: Props) => {
                   >
                     <div className="flex w-full items-center justify-between space-x-6 p-6">
                       <div className="flex-1 truncate">
-                        <div className="md:flex items-start justify-between md:space-x-3">
-                          <div className="flex justify-between md:block">
+                        <div className="lg:flex items-start justify-between lg:space-x-3">
+                          <div className="flex justify-between lg:block">
                             <h3
                               className={`truncate text-base font-bold ${
                                 account.name === '' ? 'italic' : ''
@@ -145,7 +145,7 @@ const OwnAccountsList = ({ budget }: Props) => {
                                   Number(account.computedData.balance) >= 0
                                     ? 'text-lime-600'
                                     : 'text-red-600'
-                                } md:mt-2 text-lg text-right md:text-left`}
+                                } lg:mt-2 text-lg text-right lg:text-left`}
                               >
                                 <strong>
                                   {formatMoney(
