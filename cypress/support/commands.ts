@@ -1,6 +1,15 @@
 Cypress.Commands.add('getByTitle', title => cy.get(`[title="${title}"]`))
 
-Cypress.Commands.add('getInputFor', label =>
+Cypress.Commands.add('getInputFor', label => {
+  return cy
+    .contains('label', label)
+    .invoke('attr', 'for')
+    .then(id => {
+      return cy.get(`#${id}`)
+    })
+})
+
+Cypress.Commands.add('getAutocompleteFor', label =>
   cy.contains('label', label).siblings().find('input, textarea, select')
 )
 

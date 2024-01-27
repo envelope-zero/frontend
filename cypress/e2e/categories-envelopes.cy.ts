@@ -4,7 +4,7 @@ describe('Envelope: Creation', () => {
   beforeEach(() => {
     // prepare & select a budget
     cy.wrap(createBudget({ name: 'Category Test' })).then(() => {
-      cy.visit('/').get('h3').contains('Category Test').click()
+      cy.visit('/').get('li').contains('Open').click()
     })
   })
 
@@ -14,7 +14,7 @@ describe('Envelope: Creation', () => {
     // Grocery Envelope (category Daily Spending)
     cy.getByTitle('Create Envelope').first().click()
     cy.getInputFor('Name').type('Grocery Envelope')
-    cy.getInputFor('Category').type('Daily Spending')
+    cy.getAutocompleteFor('Category').type('Daily Spending')
     cy.contains('Create "Daily Spending"').click()
     cy.getInputFor('Note').type(
       'Groceries.{enter}{enter}Usually bought at a supermarket.'
@@ -24,14 +24,14 @@ describe('Envelope: Creation', () => {
     // Restaurant Envelope (category Daily Spending)
     cy.getByTitle('Create Envelope').first().click()
     cy.getInputFor('Name').type('Restaurants')
-    cy.getInputFor('Category').type('Dail')
+    cy.getAutocompleteFor('Category').type('Dail')
     cy.contains('Daily Spending').click()
     cy.clickAndWait('Save')
 
     // Rent Envelope (category Running Costs)
     cy.getByTitle('Create Envelope').first().click()
     cy.getInputFor('Name').type('Rent')
-    cy.getInputFor('Category').type('Running Costs')
+    cy.getAutocompleteFor('Category').type('Running Costs')
     cy.contains('Create "Running Costs"').click()
     cy.clickAndWait('Save')
 
@@ -50,7 +50,7 @@ describe('Envelope: Creation', () => {
     // envelopes from other categories are still visible
     cy.contains('Rent')
 
-    cy.getByTitle('Edit category').first().click()
+    cy.getByTitle('Edit Category').first().click()
     cy.contains('Grocery Envelope')
     cy.contains('Restaurants')
     cy.contains('Rent').should('not.exist')
@@ -58,7 +58,7 @@ describe('Envelope: Creation', () => {
     // edit the envelope again to create a new category
     cy.clickAndWait('Cancel')
     cy.contains('Restaurants').click()
-    cy.getInputFor('Category').clear().type('New Category')
+    cy.getAutocompleteFor('Category').clear().type('New Category')
     cy.contains('Create "New Category"').click()
     cy.clickAndWait('Save')
     cy.contains('New Category')

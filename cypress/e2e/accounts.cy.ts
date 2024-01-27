@@ -5,7 +5,7 @@ describe('Account: Creation', () => {
     // prepare & select a budget
     cy.wrap(createBudget({ name: 'Account Test' })).then(budget => {
       cy.wrap(budget).as('budget')
-      cy.visit('/').get('h3').contains('Account Test').click()
+      cy.visit('/').get('li').contains('Open').click()
     })
   })
 
@@ -29,7 +29,7 @@ describe('Account: Creation', () => {
   it('can create an external account for a budget', () => {
     cy.contains('Accounts').click()
     cy.contains('External Accounts').click()
-    cy.getByTitle('Create Account').click()
+    cy.getByTitle('Create Account').first().click()
 
     cy.getInputFor('Name').type('Cash Test Account')
     cy.contains('On Budget').should('not.exist')
@@ -52,7 +52,7 @@ describe('Account: Creation', () => {
 
     cy.contains('Accounts').click()
     cy.awaitLoading()
-    cy.contains('Old account').click()
+    cy.contains('Old account').closest('li').contains('Edit Account').click()
     cy.awaitLoading()
     cy.contains('Archive Account').click()
     cy.contains('This Account is archived')

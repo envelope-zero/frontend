@@ -20,7 +20,7 @@ describe('Transaction Import', () => {
       ).then(([ownAccount, otherOwnAccount, externalAccount]: Account[]) => {
         cy.wrap(externalAccount).as('externalAccount')
         // select budget
-        cy.visit('/').get('h3').contains('My Budget').click()
+        cy.visit('/').get('li').contains('Open').click()
       })
     })
   })
@@ -30,7 +30,7 @@ describe('Transaction Import', () => {
     cy.getByTitle('Import Transactions').click()
     cy.awaitLoading()
 
-    cy.getInputFor('Account').type('account')
+    cy.getAutocompleteFor('Account').type('account')
     cy.contains('External Account').should('not.exist')
     cy.contains('My Other Account')
     cy.contains('My Account').click()
@@ -45,15 +45,18 @@ describe('Transaction Import', () => {
     // first transaction - checked prefilled values
     cy.getInputFor('Note').should('have.value', 'Text').clear().type('MY NOTE')
     cy.getInputFor('Amount').should('have.value', '84.76')
-    cy.getInputFor('Source')
+    cy.getAutocompleteFor('Source')
       .should('have.value', 'My Account')
       .should('be.disabled')
-    cy.getInputFor('Destination').should('have.value', 'Non Existing Account')
+    cy.getAutocompleteFor('Destination').should(
+      'have.value',
+      'Non Existing Account'
+    )
     // only result in destination drop down is 'Create "Non Existing Account"'
-    cy.getInputFor('Destination').type('{downArrow}')
+    cy.getAutocompleteFor('Destination').type('{downArrow}')
     cy.get('ul').find('li').should('have.length', 1)
     cy.get('li').contains('Create "Non Existing Account"')
-    cy.getInputFor('Destination').clear().type('EDITED ACCOUNT{enter}')
+    cy.getAutocompleteFor('Destination').clear().type('EDITED ACCOUNT{enter}')
     cy.getInputFor('Date').should('have.value', '2023-06-20')
     cy.contains('Available From').should('not.exist')
 
@@ -63,12 +66,12 @@ describe('Transaction Import', () => {
       'have.value',
       'Transfer from my other account'
     )
-    cy.getInputFor('Destination')
+    cy.getAutocompleteFor('Destination')
       .should('have.value', 'My Account')
       .should('be.disabled')
     cy.getByTitle('Previous Transaction').click()
     cy.getInputFor('Note').should('have.value', 'MY NOTE')
-    cy.getInputFor('Destination').should('have.value', 'EDITED ACCOUNT')
+    cy.getAutocompleteFor('Destination').should('have.value', 'EDITED ACCOUNT')
 
     // import this transaction
     cy.get('button').contains('Import').click()
@@ -96,18 +99,18 @@ describe('Transaction Import', () => {
     // second transaction
     cy.contains('2 of 5')
     cy.getByTitle('Previous Transaction').should('be.disabled')
-    cy.getInputFor('Source').should('have.value', 'My Other Account')
+    cy.getAutocompleteFor('Source').should('have.value', 'My Other Account')
     // dropdown results in source should be "My Other Account" & 'Create "My Other Account"'
-    cy.getInputFor('Source').type('{downArrow}')
+    cy.getAutocompleteFor('Source').type('{downArrow}')
     cy.get('ul').find('li').should('have.length', 2)
     cy.get('li').contains(/^My Other Account$/) // match "My Other Account" exactly
     cy.get('li').contains('Create "My Other Account"')
     // newly created account is available for selection
-    cy.getInputFor('Source').clear().type('EDITE')
+    cy.getAutocompleteFor('Source').clear().type('EDITE')
     cy.contains('EDITED ACCOUNT')
     cy.contains('Available From').should('not.exist')
 
-    cy.getInputFor('Destination')
+    cy.getAutocompleteFor('Destination')
       .should('have.value', 'My Account')
       .should('be.disabled')
 
@@ -176,7 +179,7 @@ describe('Transaction Import', () => {
     cy.getByTitle('Import Transactions').click()
     cy.awaitLoading()
 
-    cy.getInputFor('Account').type('My account{enter}')
+    cy.getAutocompleteFor('Account').type('My account{enter}')
     cy.getInputFor('File').selectFile('cypress/fixtures/comdirect.csv')
 
     cy.clickAndWait('Submit')
@@ -188,7 +191,7 @@ describe('Transaction Import', () => {
     cy.getByTitle('Import Transactions').click()
     cy.awaitLoading()
 
-    cy.getInputFor('Account').type('account')
+    cy.getAutocompleteFor('Account').type('account')
     cy.contains('External Account').should('not.exist')
     cy.contains('My Other Account')
     cy.contains('My Account').click()
@@ -206,7 +209,7 @@ describe('Transaction Import', () => {
     cy.getByTitle('Import Transactions').click()
     cy.awaitLoading()
 
-    cy.getInputFor('Account').type('account')
+    cy.getAutocompleteFor('Account').type('account')
     cy.contains('External Account').should('not.exist')
     cy.contains('My Other Account')
     cy.contains('My Account').click()

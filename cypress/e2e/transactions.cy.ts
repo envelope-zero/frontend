@@ -40,7 +40,7 @@ describe('Transactions', () => {
           cy.wrap(envelope).as('envelope')
 
           // select budget
-          cy.visit('/').get('h3').contains('Transactions Test').click()
+          cy.visit('/').get('li').contains('Open').click()
           cy.awaitLoading()
         })
       }
@@ -55,13 +55,13 @@ describe('Transactions', () => {
     cy.getInputFor('Note').type('Birthday Present')
     cy.getInputFor('Amount').type('42.7')
 
-    cy.getInputFor('Source').type('Bank ac')
+    cy.getAutocompleteFor('Source').type('Bank ac')
     cy.contains('Bank account').click()
 
-    cy.getInputFor('Destination').type('Best fri')
+    cy.getAutocompleteFor('Destination').type('Best fri')
     cy.contains('Best Friend').click()
 
-    cy.getInputFor('Envelope').type('Onl')
+    cy.getAutocompleteFor('Envelope').type('Onl')
     cy.contains('Only one').click()
 
     cy.contains('Available From').should('not.exist')
@@ -73,7 +73,7 @@ describe('Transactions', () => {
     // "Latest Transactions" per Account
 
     cy.contains('Accounts').click()
-    cy.contains('Bank account').click()
+    cy.contains('Bank account').closest('li').contains('Edit Account').click()
     cy.contains('Latest Transactions').click()
     cy.awaitLoading()
     cy.contains('Birthday Present (Bank account → Best Friend)')
@@ -104,16 +104,16 @@ describe('Transactions', () => {
 
     cy.getInputFor('Amount').type('13.37')
 
-    cy.getInputFor('Source').type('Best fri')
+    cy.getAutocompleteFor('Source').type('Best fri')
     cy.contains('Best Friend').click()
 
-    cy.getInputFor('Destination').type('Bank ac')
+    cy.getAutocompleteFor('Destination').type('Bank ac')
     cy.contains('Bank account').click()
 
     cy.getInputFor('Available From').type(currentMonth)
     cy.getInputFor('Available From').should('have.value', currentMonth)
 
-    cy.getInputFor('Envelope').type('Onl')
+    cy.getAutocompleteFor('Envelope').type('Onl')
     cy.contains('Only one').click()
 
     cy.contains('Available From').should('not.exist')
@@ -133,10 +133,10 @@ describe('Transactions', () => {
 
     cy.getInputFor('Amount').type('0.04')
 
-    cy.getInputFor('Source').type('Bank ac')
+    cy.getAutocompleteFor('Source').type('Bank ac')
     cy.contains('Bank account').click()
 
-    cy.getInputFor('Destination').type('Ca')
+    cy.getAutocompleteFor('Destination').type('Ca')
     cy.contains('Cash').click()
 
     cy.clickAndWait('Save')
@@ -151,16 +151,16 @@ describe('Transactions', () => {
 
     cy.getInputFor('Amount').type('13')
 
-    cy.getInputFor('Source').type('Bank ac')
+    cy.getAutocompleteFor('Source').type('Bank ac')
     cy.contains('Bank account').click()
 
-    cy.getInputFor('Destination').type('Someone else')
+    cy.getAutocompleteFor('Destination').type('Someone else')
     cy.contains('Create "Someone else"').click()
 
-    cy.getInputFor('Envelope').type('Onl')
+    cy.getAutocompleteFor('Envelope').type('Onl')
     cy.contains('Only one').click()
 
-    cy.getInputFor('Destination').clear().type('New Best Friend')
+    cy.getAutocompleteFor('Destination').clear().type('New Best Friend')
     cy.contains('Create "New Best Friend"').click()
 
     cy.clickAndWait('Save')
@@ -168,7 +168,8 @@ describe('Transactions', () => {
     cy.contains('-13.00')
 
     cy.contains('Accounts').click()
-    cy.contains('Bank account').click()
+    cy.contains('Bank account').closest('li').contains('Edit Account').click()
+
     cy.contains('Latest Transactions').click()
     cy.awaitLoading()
     cy.contains('Bank account → New Best Friend')
@@ -190,9 +191,9 @@ describe('Transactions', () => {
     cy.getByTitle('Create Transaction').click()
     cy.awaitLoading()
 
-    cy.getInputFor('Destination').type('Archived Acc')
+    cy.getAutocompleteFor('Destination').type('Archived Acc')
     cy.contains('Archived Account').should('not.exist')
-    cy.getInputFor('Destination').clear().type('Archived Account')
+    cy.getAutocompleteFor('Destination').clear().type('Archived Account')
     cy.contains('Archived Account')
   })
 
@@ -204,9 +205,9 @@ describe('Transactions', () => {
     cy.getInputFor('Note').type('Burgers')
     cy.getInputFor('Amount').type('5')
     cy.getInputFor('Date').type('2012-12-21')
-    cy.getInputFor('Source').type('Cas{enter}') // {enter} selects the first result in the dropdown
-    cy.getInputFor('Destination').type('Best fri{enter}') // {enter} selects the first result in the dropdown
-    cy.getInputFor('Envelope').type('Onl{enter}')
+    cy.getAutocompleteFor('Source').type('Cas{enter}') // {enter} selects the first result in the dropdown
+    cy.getAutocompleteFor('Destination').type('Best fri{enter}') // {enter} selects the first result in the dropdown
+    cy.getAutocompleteFor('Envelope').type('Onl{enter}')
 
     cy.clickAndWait('Save')
     cy.contains('Burgers').click()
@@ -218,9 +219,9 @@ describe('Transactions', () => {
       'have.value',
       dateFromIsoString(new Date().toISOString())
     )
-    cy.getInputFor('Source').should('have.value', 'Cash')
-    cy.getInputFor('Destination').should('have.value', 'Best Friend')
-    cy.getInputFor('Envelope').should('have.value', 'Only one')
+    cy.getAutocompleteFor('Source').should('have.value', 'Cash')
+    cy.getAutocompleteFor('Destination').should('have.value', 'Best Friend')
+    cy.getAutocompleteFor('Envelope').should('have.value', 'Only one')
 
     cy.getInputFor('Amount').clear().type('5.5')
 
@@ -238,9 +239,9 @@ describe('Transactions', () => {
 
     cy.getInputFor('Note').type("I shouldn't be buying this")
     cy.getInputFor('Amount').type('1000000')
-    cy.getInputFor('Source').type('Bank ac{enter}')
-    cy.getInputFor('Destination').type('Best fri{enter}')
-    cy.getInputFor('Envelope').type('Onl{enter}')
+    cy.getAutocompleteFor('Source').type('Bank ac{enter}')
+    cy.getAutocompleteFor('Destination').type('Best fri{enter}')
+    cy.getAutocompleteFor('Envelope').type('Onl{enter}')
 
     cy.clickAndWait('Save')
     cy.contains("I shouldn't be buying this").click()
@@ -248,7 +249,7 @@ describe('Transactions', () => {
     cy.getInputFor('Note').should('have.value', "I shouldn't be buying this")
     cy.getInputFor('Amount').should('have.value', '1000000')
 
-    cy.contains('Add transaction').click()
+    cy.contains('Add Transaction').click()
     cy.awaitLoading()
 
     cy.getInputFor('Note').should('have.value', '')
@@ -271,12 +272,12 @@ describe('Transactions', () => {
 
     cy.visit('/transactions/new')
 
-    cy.getInputFor('Envelope').should('have.value', '')
+    cy.getAutocompleteFor('Envelope').should('have.value', '')
 
-    cy.getInputFor('Destination').type('Best fri')
+    cy.getAutocompleteFor('Destination').type('Best fri')
     cy.contains('Best Friend').click()
 
-    cy.getInputFor('Envelope').should('have.value', 'Only one')
+    cy.getAutocompleteFor('Envelope').should('have.value', 'Only one')
   })
 
   // This needs to be a declared function to have a binding for 'this'
@@ -296,12 +297,12 @@ describe('Transactions', () => {
 
     cy.visit('/transactions/new')
 
-    cy.getInputFor('Envelope').should('have.value', '')
+    cy.getAutocompleteFor('Envelope').should('have.value', '')
 
-    cy.getInputFor('Source').type('Best fri')
+    cy.getAutocompleteFor('Source').type('Best fri')
     cy.contains('Best Friend').click()
 
-    cy.getInputFor('Envelope').should('have.value', '')
+    cy.getAutocompleteFor('Envelope').should('have.value', '')
   })
 
   it('can search for transactions by their note', function () {
@@ -382,10 +383,10 @@ describe('Transactions', () => {
     // This is needed so that auto-completion works
     cy.awaitLoading()
 
-    cy.getInputFor('Account').type('Bank Acc{enter}')
+    cy.getAutocompleteFor('Account').type('Bank Acc{enter}')
     cy.getInputFor('Amount (Min)').type('12')
     cy.getInputFor('Amount (Max)').type('100')
-    cy.getInputFor('Envelope').type('Only on{enter}')
+    cy.getAutocompleteFor('Envelope').type('Only on{enter}')
     cy.getInputFor('From').type('2022-12-24')
     cy.getInputFor('Until').type('2022-12-31')
 

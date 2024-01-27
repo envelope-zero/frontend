@@ -43,7 +43,7 @@ describe('Dashboard', () => {
       ).then(([firstEnvelope, secondEnvelope]: Envelope[]) => {
         cy.wrap(firstEnvelope).as('firstEnvelope')
         cy.wrap(secondEnvelope).as('secondEnvelope')
-        cy.visit('/').get('h3').contains('Dashboard Test').click()
+        cy.visit('/').get('li').contains('Open').click()
         cy.awaitLoading()
         cy.getCookie('budgetId').should('exist')
       })
