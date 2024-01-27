@@ -94,7 +94,7 @@ const CategoryMonth = ({
             })}
           </td>
           <td
-            className={`whitespace-nowrap px-1 pb-2 text-right text-sm ${
+            className={`hidden whitespace-nowrap px-1 pb-2 text-right text-sm md:table-cell ${
               Number(allocation) < 0
                 ? 'negative'
                 : 'text-gray-500 dark:text-gray-400'
