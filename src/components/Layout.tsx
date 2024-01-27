@@ -90,7 +90,7 @@ const Layout = ({
           <Transition.Root show={sidebarOpen} as={Fragment}>
             <Dialog
               as="div"
-              className="fixed inset-0 flex z-40 md:hidden"
+              className="fixed inset-0 flex z-40 lg:hidden"
               open={sidebarOpen}
               onClose={() => setSidebarOpen(false)}
             >
@@ -225,7 +225,7 @@ const Layout = ({
           </Transition.Root>
 
           {/* Static sidebar for desktop */}
-          <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+          <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
             <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 dark:border-gray-900 bg-white dark:bg-slate-800">
               <div className="flex-1 flex flex-col justify-between pt-5 pb-4 overflow-y-auto">
                 <div>
@@ -303,9 +303,9 @@ const Layout = ({
         </>
       )}
 
-      <div className={`${hideNav ? '' : 'md:pl-64'} flex flex-col flex-1`}>
+      <div className={`${hideNav ? '' : 'lg:pl-64'} flex flex-col flex-1`}>
         <div
-          className="sticky top-0 z-10 md:hidden px-6 pt-4 bg-gray-100 dark:bg-slate-900"
+          className="sticky top-0 z-10 lg:hidden px-6 pt-4 bg-gray-100 dark:bg-slate-900"
           ref={headerRef as React.RefObject<HTMLDivElement>}
         >
           <button
@@ -322,7 +322,7 @@ const Layout = ({
           </button>
         </div>
         <main className="flex-1">
-          <div className="py-4 md:py-6">
+          <div className="py-4 lg:py-6">
             {showImportBanner && (
               <ImportBanner
                 hideBanner={() => {
@@ -330,7 +330,7 @@ const Layout = ({
                 }}
               />
             )}
-            <div className="max-w-7xl mx-auto px-6 md:px-8">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <Error error={error} />
               <Outlet />
             </div>
