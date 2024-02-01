@@ -1,53 +1,22 @@
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useState, useCallback } from 'react'
-import { useSearchParams, Link, useNavigate } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
+import { get } from '../lib/api/base'
+import { monthYearFromDate } from '../lib/dates'
+import { formatMoney } from '../lib/format'
+import { replaceMonthInLinks } from '../lib/month-helper'
 import { safeName } from '../lib/name-helper'
 import { Budget, BudgetMonth, Translation, UUID } from '../types'
-import { CalendarDaysIcon } from '@heroicons/react/24/solid'
-import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
-import { get } from '../lib/api/base'
-import { formatMoney } from '../lib/format'
-import isSupported from '../lib/is-supported'
-import LoadingSpinner from './LoadingSpinner'
-import Error from './Error'
-import {
-  dateFromMonthYear,
-  monthYearFromDate,
-  translatedMonthFormat,
-  shortTranslatedMonthFormat,
-} from '../lib/dates'
 import CategoryMonth from './CategoryMonth'
-import MonthPicker from './MonthPicker'
+import Error from './Error'
+import LoadingSpinner from './LoadingSpinner'
+import MonthSlider from './MonthSlider'
 import QuickAllocationForm from './QuickAllocationForm'
-import { replaceMonthInLinks } from '../lib/month-helper'
 
 type DashboardProps = { budget: Budget }
 
-const previousMonth = (yearMonth: string) => {
-  const [year, month] = yearMonth.split('-')
-
-  if (month === '01') {
-    return new Date(parseInt(year) - 1, 11, 15)
-  } else {
-    return new Date(parseInt(year), parseInt(month) - 2, 15)
-  }
-}
-
-const nextMonth = (yearMonth: string) => {
-  const [year, month] = yearMonth.split('-')
-
-  if (month === '12') {
-    return new Date(parseInt(year) + 1, 0, 15)
-  } else {
-    return new Date(parseInt(year), parseInt(month), 15)
-  }
-}
-
-const linkToMonth = (month: string) => `/?month=${month}`
-
 const Dashboard = ({ budget }: DashboardProps) => {
   const { t }: Translation = useTranslation()
-  const navigate = useNavigate()
 
   const [searchParams] = useSearchParams()
   const activeMonth =
@@ -56,10 +25,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
   const [budgetMonth, setBudgetMonth] = useState<BudgetMonth>()
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const [showMonthPicker, setShowMonthPicker] = useState(false)
   const [editingEnvelope, setEditingEnvelope] = useState<UUID>()
-
-  const useNativeMonthPicker = isSupported.inputTypeMonth()
 
   const loadBudgetMonth = useCallback(async () => {
     return get(replaceMonthInLinks(budget.links.month, activeMonth))
@@ -89,66 +55,7 @@ const Dashboard = ({ budget }: DashboardProps) => {
         <h1>{safeName(budget, 'budget')}</h1>
       </div>
 
-      <div className="month-slider">
-        <Link
-          to={linkToMonth(monthYearFromDate(previousMonth(activeMonth)))}
-          title={translatedMonthFormat.format(previousMonth(activeMonth))}
-          onClick={() => setIsLoading(true)}
-        >
-          <ChevronLeftIcon className="inline h-6" />
-          {shortTranslatedMonthFormat.format(previousMonth(activeMonth))}
-        </Link>
-        <div className="border-red-800 dark:border-red-600">
-          {useNativeMonthPicker ? (
-            <div className="text-center">
-              <label htmlFor="month" className="sr-only">
-                {t('dashboard.selectMonth')}
-              </label>
-              <input
-                type="month"
-                id="month"
-                value={activeMonth}
-                className="cursor-pointer border-none bg-transparent text-center"
-                onChange={e => {
-                  e.preventDefault()
-                  navigate(linkToMonth(e.target.value))
-                }}
-              />
-            </div>
-          ) : (
-            <div className="flex items-center justify-center">
-              <span className="mr-2 text-center">
-                {translatedMonthFormat.format(dateFromMonthYear(activeMonth))}
-              </span>
-              <button
-                type="button"
-                title={t('dashboard.selectMonth')}
-                onClick={() => {
-                  setShowMonthPicker(!showMonthPicker)
-                }}
-              >
-                <CalendarDaysIcon className="icon" />
-              </button>
-            </div>
-          )}
-        </div>
-        <Link
-          to={linkToMonth(monthYearFromDate(nextMonth(activeMonth)))}
-          title={translatedMonthFormat.format(nextMonth(activeMonth))}
-          onClick={() => setIsLoading(true)}
-        >
-          {shortTranslatedMonthFormat.format(nextMonth(activeMonth))}
-          <ChevronRightIcon className="inline h-6" />
-        </Link>
-      </div>
-
-      {useNativeMonthPicker ? null : (
-        <MonthPicker
-          open={showMonthPicker}
-          setOpen={setShowMonthPicker}
-          activeMonth={activeMonth}
-        />
-      )}
+      <MonthSlider budget={budget} setIsLoading={setIsLoading} />
 
       {isLoading || !budgetMonth ? (
         <LoadingSpinner />
