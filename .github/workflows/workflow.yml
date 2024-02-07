@@ -44,7 +44,7 @@ jobs:
       - name: install node modules
         run: npm ci
 
-      - uses: pre-commit/action@v3.0.0
+      - uses: pre-commit/action@v3.0.1
 
   cypress:
     runs-on: ubuntu-latest
