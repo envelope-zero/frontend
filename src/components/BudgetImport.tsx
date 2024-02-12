@@ -26,7 +26,7 @@ const BudgetImport = (props: Props) => {
         event.preventDefault()
 
         setIsLoading(true)
-        fetch(`/api/v3/import/ynab4?budgetName=${budgetName}`, {
+        fetch(`/api/v4/import/ynab4?budgetName=${budgetName}`, {
           method: 'POST',
           body: new FormData(event.target as HTMLFormElement),
         })

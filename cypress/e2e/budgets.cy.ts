@@ -84,7 +84,9 @@ describe('Budget: ynab4 import', () => {
     cy.getInputFor('File').selectFile('cypress/fixtures/ynab4-budget.json')
     cy.contains('Save').click()
     cy.awaitLoading()
-    cy.contains('this endpoint only supports .yfull files')
+    cy.contains(
+      'this endpoint only supports files of the following types: .yfull'
+    )
 
     cy.getInputFor('File').selectFile('cypress/fixtures/empty.yfull')
     cy.contains('Save').click()

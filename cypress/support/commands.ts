@@ -31,5 +31,5 @@ Cypress.Commands.add('awaitLoading', () => {
 
 Cypress.Commands.add('resetDb', () => {
   // Delete all resources
-  cy.request('DELETE', '/api/v3?confirm=yes-please-delete-everything')
+  cy.request('DELETE', '/api/v4?confirm=yes-please-delete-everything')
 })
