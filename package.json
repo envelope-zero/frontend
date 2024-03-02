@@ -1,7 +1,7 @@
 {
   "name": "envelope-zero-frontend",
   "dependencies": {
-    "@envelope-zero/ynap-parsers": "1.17.1",
+    "@envelope-zero/ynap-parsers": "1.17.3",
     "@headlessui/react": "1.7.18",
     "@heroicons/react": "2.1.1",
     "@tailwindcss/forms": "0.5.7",
@@ -67,7 +67,7 @@
     "server:dev": "docker-compose --project-name frontend-dev --file docker-compose-dev.yml up",
     "server:test": "docker-compose --project-name frontend-test --file docker-compose-test.yml up",
     "server:production": "docker-compose --project-name frontend-production --file docker-compose-production.yml up --build",
-    "test": "cypress run --browser chromium",
+    "test": "cypress run",
     "test:watch": "cypress open",
     "format": "prettier --write .",
     "postinstall": "patch-package"

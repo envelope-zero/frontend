@@ -50,28 +50,31 @@ describe('Dashboard', () => {
     })
   })
 
-  const date = new Date()
-  const currentMonth = `${date.getFullYear()}-${
-    date.getMonth() < 9 ? '0' : ''
-  }${date.getMonth() + 1}`
+  // Get the current month in YYYY-MM-01 format
+  const currentMonth = `${new Date(Date.now())
+    .toISOString()
+    .substring(0, 7)}-01`
 
   it('can switch between the months', () => {
+    cy.getByTitle('Select Month').first().click()
     cy.get('#month').should('have.value', currentMonth)
 
     cy.visit('#', { qs: { month: '2020-02' } })
-    cy.get('#month').should('have.value', '2020-02')
+    cy.contains('February 2020')
     cy.contains('Mar')
 
     cy.contains('Jan').click()
     cy.contains('Dec').click()
 
-    cy.get('#month').should('have.value', '2019-12')
+    cy.contains('December 2019')
     cy.url().should('include', '?month=2019-12')
 
-    cy.get('#month').click()
-    cy.get('input#month').type('2022-03')
+    cy.getByTitle('Select Month').first().click()
+
+    cy.get('input#month').type('2022-03-01')
+    cy.getByTitle('March 2022').first().click()
     cy.awaitLoading()
-    cy.get('#month').should('have.value', '2022-03')
+    cy.contains('March 2022')
     cy.contains('Feb')
     cy.contains('Apr')
   })
@@ -216,6 +219,7 @@ describe('Dashboard', () => {
   })
 
   it('can quickly allocate funds to all envelopes', () => {
+    cy.getByTitle('Select Month').first().click()
     cy.get('#month').should('have.value', currentMonth)
     cy.visit('#', { qs: { month: '2023-04' } })
     cy.awaitLoading()
