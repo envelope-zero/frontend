@@ -51,7 +51,7 @@ jobs:
     # Current backend version as service container
     services:
       backend:
-        image: ghcr.io/envelope-zero/backend:v5.1.0
+        image: ghcr.io/envelope-zero/backend:v5.1.3
         env:
           CORS_ALLOW_ORIGINS: http://localhost:3000
           API_URL: http://localhost:3000/api
@@ -74,8 +74,6 @@ jobs:
           start: npm run start-ci
           # Frontend runs on :3000, API on :8080
           wait-on: 'http://localhost:3000, http://localhost:8080'
-          browser: chromium
-          headed: true
 
           # Records to Cypress Cloud
           record: true

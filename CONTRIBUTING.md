@@ -45,7 +45,7 @@ npm run start:test
 npm run test
 
 # If you want to see your browser go wrooom and inspect the tests in detail, use this.
-# Note that you'll need to select Chrome or Chromium as browser since neither Electron nor Firefox support Month pickers as of now
+# Note that you'll need to select Electron
 npm run test:watch
 
 # To run only a specific test, use

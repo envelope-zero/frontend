@@ -10,9 +10,11 @@ import { dateFromIsoString } from '../../src/lib/dates'
 
 describe('Transactions', () => {
   const date = new Date()
-  const currentMonth = `${date.getFullYear()}-${
-    date.getMonth() < 9 ? '0' : ''
-  }${date.getMonth() + 1}`
+
+  // Get the current month in YYYY-MM-01 format
+  const currentMonth = `${new Date(Date.now())
+    .toISOString()
+    .substring(0, 7)}-01`
 
   beforeEach(() => {
     // prepare a budget with two internal & one external accounts
