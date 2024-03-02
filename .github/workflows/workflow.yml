@@ -38,9 +38,6 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: set npm auth
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
-
       - name: install node modules
         run: npm ci
 
@@ -70,11 +67,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Set npm auth
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
-
       - name: Run cypress
         uses: cypress-io/github-action@v6.6.1
+        timeout-minutes: 5
         with:
           start: npm run start-ci
           # Frontend runs on :3000, API on :8080
@@ -137,4 +132,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             VITE_VERSION=${{ github.ref_name }}
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}

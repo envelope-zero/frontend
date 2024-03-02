@@ -7,7 +7,6 @@ Contributions are welcome. Please note the [Code of Conduct](CODE_OF_CONDUCT.md)
 You will need to:
 
 - Install [pre-commit](https://pre-commit.com/)
-- Set up a GitHub Personal Access Token to read from the GitHub package repository. Follow the steps in https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token.
 
 Once these steps are done, run `make setup` to perform the repository setup.
 

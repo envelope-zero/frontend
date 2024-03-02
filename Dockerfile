@@ -7,9 +7,7 @@ WORKDIR /app
 COPY package.json package-lock.json /app/
 COPY patches /app/patches
 
-ARG GITHUB_TOKEN
-RUN echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> ~/.npmrc && \
-    npm install --production
+RUN npm install --production
 
 # Copy app files
 COPY src /app/src
