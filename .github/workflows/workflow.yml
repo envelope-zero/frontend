@@ -122,7 +122,7 @@ jobs:
             type=semver,pattern={{version}}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5.2.0
+        uses: docker/build-push-action@v5.3.0
         with:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.repository_owner == 'envelope-zero' && contains(github.ref, 'refs/tags/') }}
