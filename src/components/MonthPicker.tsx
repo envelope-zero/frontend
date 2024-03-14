@@ -1,18 +1,19 @@
-import { Fragment, SetStateAction, Dispatch, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { translatedMonthFormat } from '../lib/dates'
 import { ArrowLongRightIcon, XMarkIcon } from '@heroicons/react/20/solid'
-import { Link } from 'react-router-dom'
-import { Translation } from '../types'
+import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { translatedMonthFormat } from '../lib/dates'
+import { Translation } from '../types'
 
 type Props = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   activeMonth: string
+  route?: string
 }
 
-const MonthPicker = ({ open, setOpen, activeMonth }: Props) => {
+const MonthPicker = ({ open, setOpen, activeMonth, route = '' }: Props) => {
   const { t }: Translation = useTranslation()
   const [selectedDate, setSelectedDate] = useState(`${activeMonth}-01`)
 
@@ -72,7 +73,7 @@ const MonthPicker = ({ open, setOpen, activeMonth }: Props) => {
                           }}
                         ></input>
                         <Link
-                          to={`/?month=${selectedDate}`}
+                          to={`/${route}?month=${selectedDate}`}
                           onClick={() => setOpen(false)}
                           className="pl-2"
                           title={translatedMonthFormat.format(
@@ -83,7 +84,7 @@ const MonthPicker = ({ open, setOpen, activeMonth }: Props) => {
                         </Link>
                       </div>
                       <Link
-                        to="/"
+                        to={`/${route}`}
                         className="link-blue block pt-2 text-end text-sm"
                         onClick={() => setOpen(false)}
                       >
