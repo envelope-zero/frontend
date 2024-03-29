@@ -55,7 +55,11 @@ const Dashboard = ({ budget }: DashboardProps) => {
         <h1>{safeName(budget, 'budget')}</h1>
       </div>
 
-      <MonthSlider budget={budget} setIsLoading={setIsLoading} />
+      <MonthSlider
+        budget={budget}
+        activeMonth={activeMonth}
+        setIsLoading={setIsLoading}
+      />
 
       {isLoading || !budgetMonth ? (
         <LoadingSpinner />

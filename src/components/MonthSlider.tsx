@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/20/solid'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {
   dateFromMonthYear,
@@ -20,6 +20,7 @@ import MonthPicker from './MonthPicker'
 type Props = {
   budget: Budget
   route?: string
+  activeMonth: string
   setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
@@ -43,13 +44,14 @@ const nextMonth = (yearMonth: string) => {
   }
 }
 
-const MonthSlider = ({ budget, route = '', setIsLoading }: Props) => {
+const MonthSlider = ({
+  budget,
+  route = '',
+  activeMonth,
+  setIsLoading,
+}: Props) => {
   const { t }: Translation = useTranslation()
   const navigate = useNavigate()
-
-  const [searchParams] = useSearchParams()
-  const activeMonth =
-    searchParams.get('month')?.substring(0, 7) || monthYearFromDate(new Date())
 
   const [showMonthPicker, setShowMonthPicker] = useState(false)
   const useNativeMonthPicker = isSupported.inputTypeMonth()
