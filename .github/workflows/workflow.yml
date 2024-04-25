@@ -30,7 +30,7 @@ jobs:
       packages: read
 
     steps:
-      - uses: actions/checkout@v4.1.3
+      - uses: actions/checkout@v4.1.4
 
       - name: Cache dependencies
         uses: actions/setup-node@v4.0.2
@@ -65,7 +65,7 @@ jobs:
         containers: [1, 2, 3, 4, 5, 6] # Use 6 parallel instances as per Cypress Cloud recommendation
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.3
+        uses: actions/checkout@v4.1.4
 
       - name: Run cypress
         uses: cypress-io/github-action@v6.6.1
@@ -95,7 +95,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.1.3
+        uses: actions/checkout@v4.1.4
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
