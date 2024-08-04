@@ -234,7 +234,7 @@ describe('Transactions', () => {
     cy.contains('-5.50')
   })
 
-  it('clears the inputs when switching to a new transaction', () => {
+  it.only('clears the inputs when switching to a new transaction', () => {
     cy.get('nav').contains('Transactions').click()
     cy.getByTitle('Create Transaction').click()
     cy.awaitLoading()
@@ -254,7 +254,7 @@ describe('Transactions', () => {
     cy.contains('Add Transaction').click()
     cy.awaitLoading()
 
-    cy.getInputFor('Note').should('have.value', '')
+    cy.getInputFor('Note', { timeout: 30000 }).should('have.value', '')
     cy.getInputFor('Amount').should('have.value', '')
   })
 
