@@ -316,12 +316,19 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                     // Fetch the recent envelopes and suggest the first one
                     // as the Envelope to use for this transaction
                     envelopePromises.push(
-                      get(account.links.recentEnvelopes).then(data => {
-                        setRecentEnvelopes(data)
-                        if (data.length) {
-                          valuesToUpdate.envelopeId = data[0].id
+                      get(account.links.recentEnvelopes).then(
+                        (data: RecentEnvelope[]) => {
+                          // We use the first envelope in recent envelopes as suggestion
+                          // if its ID is not null. If its ID is null, income is the most
+                          // common "envelope" for this account, so we don't set it.
+                          if (data.length && data[0].id !== null) {
+                            valuesToUpdate.envelopeId = data[0].id
+                          }
+
+                          // Remove income from the recent envelopes
+                          setRecentEnvelopes(data.filter(e => e.id !== null))
                         }
-                      })
+                      )
                     )
                   } else if (!account.external) {
                     setRecentEnvelopes([])

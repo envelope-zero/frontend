@@ -183,5 +183,5 @@ export type QuickAllocationMode =
 
 export type RecentEnvelope = {
   name: string
-  id: UUID
+  id: UUID | null
 }
