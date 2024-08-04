@@ -1,11 +1,11 @@
 Cypress.Commands.add('getByTitle', title => cy.get(`[title="${title}"]`))
 
-Cypress.Commands.add('getInputFor', label => {
+Cypress.Commands.add('getInputFor', (label, options) => {
   return cy
     .contains('label', label)
     .invoke('attr', 'for')
     .then(id => {
-      return cy.get(`#${id}`)
+      return cy.get(`#${id}`, options)
     })
 })
 
