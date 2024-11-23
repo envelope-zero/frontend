@@ -28,7 +28,7 @@
     "flowbite-react": "0.10.2",
     "http-proxy-middleware": "3.0.3",
     "i18next": "23.16.8",
-    "js-big-decimal": "2.0.7",
+    "js-big-decimal": "2.1.0",
     "postcss": "8.4.49",
     "prettier": "3.3.0",
     "react": "18.3.1",
