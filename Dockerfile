@@ -5,7 +5,6 @@ WORKDIR /app
 # copy package.json first to avoid unnecessary npm install when other files change
 # Unless packages change, this layer will be cached
 COPY package.json package-lock.json /app/
-COPY patches /app/patches
 
 RUN npm install --production
 
