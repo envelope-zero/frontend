@@ -112,8 +112,11 @@ describe('Transactions', () => {
 
     cy.getInputFor('Available From').should(
       'have.value',
-      setToFirstOfNextMonth(date.toISOString().split('T')[0])
+      setToFirstOfNextMonth(dateFromIsoString(date.toISOString()))
     )
+
+    cy.getInputFor('Available From').type(currentMonth)
+    cy.getInputFor('Available From').should('have.value', currentMonth)
 
     cy.getAutocompleteFor('Envelope').type('Onl')
     cy.contains('Only one').click()

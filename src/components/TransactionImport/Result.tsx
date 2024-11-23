@@ -21,6 +21,7 @@ import {
   dateFromIsoString,
   dateToIsoString,
   monthYearFromDate,
+  setToFirstOfTheMonth,
   setToFirstOfNextMonth,
 } from '../../lib/dates'
 import { api } from '../../lib/api/base'
@@ -446,7 +447,7 @@ const Result = (props: Props) => {
                   if (e.target.value) {
                     updateValue(
                       'availableFrom',
-                      dateToIsoString(e.target.value)
+                      dateToIsoString(setToFirstOfTheMonth(e.target.value))
                     )
                   }
                 }}
