@@ -102,7 +102,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                 .sort()
                 .map(letter => (
                   <div key={letter} className="relative">
-                    <div className="border-y border-gray-200 bg-gray-50 px-6  py-1 text-sm font-medium text-gray-500 dark:border-gray-900 dark:bg-gray-700">
+                    <div className="border-y border-gray-200 bg-gray-50 px-6 py-1 text-sm font-medium text-gray-500 dark:border-gray-900 dark:bg-gray-700">
                       <h3>{letter || t('untitled')}</h3>
                     </div>
                     <ul className="relative z-0">

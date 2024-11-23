@@ -137,7 +137,7 @@ const Autocomplete = <T extends ArchivableResource>({
                   value={item}
                   className={({ active }) =>
                     classNames(
-                      'relative cursor-default select-none py-2 pl-3 pr-9 ',
+                      'relative cursor-default select-none py-2 pl-3 pr-9',
                       active
                         ? 'bg-sky-600 text-white'
                         : 'text-gray-900 dark:text-gray-300'
