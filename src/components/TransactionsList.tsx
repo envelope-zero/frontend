@@ -220,7 +220,7 @@ const TransactionsList = ({ budget }: Props) => {
         ) : (
           <button
             type="button"
-            className="full-centered rounded-full  bg-red-800 px-2.5 py-1.5 text-sm text-gray-100"
+            className="full-centered rounded-full bg-red-800 px-2.5 py-1.5 text-sm text-gray-100"
             onClick={() => setShowFilters(!showFilters)}
             title={t('filterResource', {
               resource: t('transactions.transactions'),

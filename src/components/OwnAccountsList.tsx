@@ -120,7 +120,7 @@ const OwnAccountsList = ({ budget }: Props) => {
                 {accounts.map(account => (
                   <li
                     key={account.id}
-                    className="card col-span-1 flex cursor-pointer flex-col justify-between  divide-y divide-gray-200 p-0 hover:-translate-y-1 hover:shadow-xl dark:divide-gray-600"
+                    className="card col-span-1 flex cursor-pointer flex-col justify-between divide-y divide-gray-200 p-0 hover:-translate-y-1 hover:shadow-xl dark:divide-gray-600"
                   >
                     <Link
                       to={`${account.id}`}

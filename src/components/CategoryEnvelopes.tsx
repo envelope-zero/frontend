@@ -40,7 +40,7 @@ const CategoryEnvelopes = ({
 
         <div
           className={`grow ${
-            showEnvelopes || ' overflow-hidden text-ellipsis whitespace-nowrap'
+            showEnvelopes || 'overflow-hidden text-ellipsis whitespace-nowrap'
           }`}
         >
           <span className={!category.name ? 'italic' : ''}>
