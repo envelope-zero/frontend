@@ -216,3 +216,17 @@ jobs:
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+
+  cypress-merge-queue:
+    name: 'cypress: default-group (merge)'
+    if: github.event_name == 'merge_group'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This does not do anything, it just fixes the required checks for cypress, since the Status checks are reported differently for the merge queue and the PRs"
+
+  cypress-pr:
+    name: 'cypress: default-group'
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This does not do anything, it just fixes the required checks for cypress, since the Status checks are reported differently for the merge queue and the PRs"
