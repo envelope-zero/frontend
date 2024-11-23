@@ -1,0 +1,10 @@
+[
+  {
+    "platform": "linux/amd64",
+    "runOn": "always"
+  },
+  {
+    "platform": "linux/arm64",
+    "runOn": "tag"
+  }
+]
