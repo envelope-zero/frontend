@@ -5,6 +5,7 @@
     "group:recommended",
     "replacements:all",
     "workarounds:all",
+    "helpers:pinGitHubActionDigests",
     ":ignoreModulesAndTests"
   ],
   "dependencyDashboard": true,
