@@ -21,7 +21,7 @@ import {
   dateFromIsoString,
   dateToIsoString,
   monthYearFromDate,
-  setToFirstOfTheMonth,
+  setToFirstOfNextMonth,
 } from '../../lib/dates'
 import { api } from '../../lib/api/base'
 import { safeName } from '../../lib/name-helper'
@@ -436,7 +436,7 @@ const Result = (props: Props) => {
                 value={(isSupported.inputTypeMonth()
                   ? (date: string) => monthYearFromDate(new Date(date))
                   : (date: string) =>
-                      setToFirstOfTheMonth(dateFromIsoString(date)))(
+                      setToFirstOfNextMonth(dateFromIsoString(date)))(
                   currentTransaction().availableFrom ||
                     currentTransaction().date ||
                     new Date().toISOString()
@@ -446,7 +446,7 @@ const Result = (props: Props) => {
                   if (e.target.value) {
                     updateValue(
                       'availableFrom',
-                      dateToIsoString(setToFirstOfTheMonth(e.target.value))
+                      dateToIsoString(e.target.value)
                     )
                   }
                 }}

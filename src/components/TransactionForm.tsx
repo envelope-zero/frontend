@@ -8,7 +8,7 @@ import {
   dateFromIsoString,
   dateToIsoString,
   monthYearFromDate,
-  setToFirstOfTheMonth,
+  setToFirstOfNextMonth,
 } from '../lib/dates'
 import { safeName } from '../lib/name-helper'
 import {
@@ -413,7 +413,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                 value={(isSupported.inputTypeMonth()
                   ? (date: string) => monthYearFromDate(new Date(date))
                   : (date: string) =>
-                      setToFirstOfTheMonth(dateFromIsoString(date)))(
+                      setToFirstOfNextMonth(dateFromIsoString(date)))(
                   transaction.availableFrom ||
                     transaction.date ||
                     new Date().toISOString()
@@ -423,7 +423,7 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                   if (e.target.value) {
                     updateValue(
                       'availableFrom',
-                      dateToIsoString(setToFirstOfTheMonth(e.target.value))
+                      dateToIsoString(e.target.value)
                     )
                   }
                 }}

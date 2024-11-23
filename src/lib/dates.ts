@@ -23,9 +23,13 @@ const dateFromMonthYear = (date: string) => {
   return new Date(`${month}/15/${year}`)
 }
 
-const setToFirstOfTheMonth = (date: string) => {
-  const [year, month] = date.split('-')
-  return `${year}-${month}-01`
+const setToFirstOfNextMonth = (date: string) => {
+  const d = new Date(date)
+  d.setDate(1)
+  d.setMonth(d.getMonth() + 1)
+
+  // Return date part of ISO string
+  return d.toISOString().split('T')[0]
 }
 
 export {
@@ -33,7 +37,7 @@ export {
   dateToIsoString,
   monthYearFromDate,
   dateFromMonthYear,
-  setToFirstOfTheMonth,
+  setToFirstOfNextMonth,
   translatedMonthFormat,
   shortTranslatedMonthFormat,
 }

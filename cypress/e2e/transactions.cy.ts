@@ -6,15 +6,13 @@ import {
   createTransactions,
 } from '../support/setup'
 import { Budget, Account, Envelope } from '../../src/types'
-import { dateFromIsoString } from '../../src/lib/dates'
+import { dateFromIsoString, setToFirstOfNextMonth } from '../../src/lib/dates'
 
 describe('Transactions', () => {
   const date = new Date()
 
   // Get the current month in YYYY-MM-01 format
-  const currentMonth = `${new Date(Date.now())
-    .toISOString()
-    .substring(0, 7)}-01`
+  const currentMonth = `${date.toISOString().substring(0, 7)}-01`
 
   beforeEach(() => {
     // prepare a budget with two internal & one external accounts
@@ -112,8 +110,10 @@ describe('Transactions', () => {
     cy.getAutocompleteFor('Destination').type('Bank ac')
     cy.contains('Bank account').click()
 
-    cy.getInputFor('Available From').type(currentMonth)
-    cy.getInputFor('Available From').should('have.value', currentMonth)
+    cy.getInputFor('Available From').should(
+      'have.value',
+      setToFirstOfNextMonth(date.toISOString().split('T')[0])
+    )
 
     cy.getAutocompleteFor('Envelope').type('Onl')
     cy.contains('Only one').click()
