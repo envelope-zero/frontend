@@ -15,6 +15,9 @@ on:
   # Enables us to manually trigger the CI for earlier tags
   workflow_dispatch:
 
+  # Enable merge queue
+  merge_group:
+
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
