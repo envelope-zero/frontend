@@ -44,6 +44,7 @@
   ],
   "customManagers": [
     {
+      "customType": "regex",
       "fileMatch": ["^Dockerfile$"],
       "matchStrings": ["FROM node:(?<currentValue>.*?)-alpine"],
       "depNameTemplate": "node",
