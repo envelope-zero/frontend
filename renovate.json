@@ -15,7 +15,7 @@
   },
   "labels": ["renovate"],
   "rangeStrategy": "pin",
-  "rebaseWhen": "behind-base-branch",
+  "rebaseWhen": "conflicted",
   "semanticCommits": "enabled",
   "packageRules": [
     {
