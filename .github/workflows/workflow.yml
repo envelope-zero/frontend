@@ -83,10 +83,32 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  # This job generates the matrix depending on the branch.
+  # See .github/matrix.json
+  #
+  # Allowed values for "runOn" are
+  #  - a branch name
+  #  - "always" to run in any case
+  #  - "tag" to run when the reference is a tag
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.7
+
+      - id: set-matrix
+        run: |
+          branchName=$(echo '${{ github.ref }}' | sed 's,refs/heads/,,g')
+          matrix=$(jq --arg branchName "$branchName" 'map(
+              . | select((.runOn==$branchName) or (.runOn=="always") or (.runOn=="tag" and ($branchName | startswith("refs/tags"))))
+          )' .github/matrix.json)
+          echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
+
   build:
     needs:
-      - pre-commit
-      - cypress
+      - matrix
 
     runs-on: ubuntu-latest
     permissions:
@@ -95,10 +117,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
+      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
 
     steps:
       - name: Checkout repository
