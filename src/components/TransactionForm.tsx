@@ -8,6 +8,7 @@ import {
   dateFromIsoString,
   dateToIsoString,
   monthYearFromDate,
+  setToFirstOfTheMonth,
   setToFirstOfNextMonth,
 } from '../lib/dates'
 import { safeName } from '../lib/name-helper'
@@ -115,6 +116,18 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
 
   const updateValue = (key: keyof Transaction, value: any) => {
     setTransaction({ ...transaction, [key]: value })
+  }
+
+  const updateValues = (
+    values: { key: keyof UnpersistedTransaction; value: any }[]
+  ) => {
+    const newTransaction = { ...transaction }
+    values.forEach(
+      (value: { key: keyof UnpersistedTransaction; value: any }) => {
+        newTransaction[value.key] = value.value
+      }
+    )
+    setTransaction(newTransaction)
   }
 
   const createNewResources = async () => {
@@ -394,7 +407,15 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
               onChange={e => {
                 // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
                 if (e.target.value) {
-                  updateValue('date', dateToIsoString(e.target.value))
+                  updateValues([
+                    { key: 'date', value: dateToIsoString(e.target.value) },
+                    {
+                      key: 'availableFrom',
+                      value: dateToIsoString(
+                        setToFirstOfNextMonth(e.target.value)
+                      ),
+                    },
+                  ])
                 }
               }}
               options={{ disabled: transaction.reconciled || false }}
@@ -412,18 +433,19 @@ const TransactionForm = ({ budget, setNotification }: Props) => {
                 }`}
                 value={(isSupported.inputTypeMonth()
                   ? (date: string) => monthYearFromDate(new Date(date))
-                  : (date: string) =>
-                      setToFirstOfNextMonth(dateFromIsoString(date)))(
-                  transaction.availableFrom ||
-                    transaction.date ||
-                    new Date().toISOString()
+                  : (date: string) => date)(
+                  dateFromIsoString(transaction.availableFrom || '') ||
+                    setToFirstOfNextMonth(
+                      dateFromIsoString(transaction.date || '') ||
+                        new Date().toISOString()
+                    )
                 )}
                 onChange={e => {
                   // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
                   if (e.target.value) {
                     updateValue(
                       'availableFrom',
-                      dateToIsoString(e.target.value)
+                      dateToIsoString(setToFirstOfTheMonth(e.target.value))
                     )
                   }
                 }}
