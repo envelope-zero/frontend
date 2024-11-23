@@ -24,7 +24,7 @@
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jsx-a11y": "6.8.0",
     "eslint-plugin-react": "7.37.2",
-    "flowbite": "2.3.0",
+    "flowbite": "2.5.2",
     "flowbite-react": "0.10.2",
     "http-proxy-middleware": "3.0.3",
     "i18next": "23.16.8",
