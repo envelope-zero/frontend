@@ -15,6 +15,6 @@ repos:
   # Explicitly not using the renovate upstream hook because for some reason installing it is
   # excruciatingly slow (> 10 minutes in some cases)
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.29.4
+    rev: 0.30.0
     hooks:
       - id: check-renovate
