@@ -88,7 +88,7 @@ const Form = ({ accounts, setResult }: Props) => {
       ) : (
         <>
           <Error error={error} />
-          <div className="card md:mt-4">
+          <div className="card overflow-visible md:mt-4">
             <p
               className="mb-4 whitespace-pre-line dark:text-gray-400"
               dangerouslySetInnerHTML={{
