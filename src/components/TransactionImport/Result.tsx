@@ -12,6 +12,7 @@ import {
   Category,
   Envelope,
   UnpersistedAccount,
+  UnpersistedTransaction,
 } from '../../types'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 import FormFields from '../FormFields'
@@ -161,6 +162,20 @@ const Result = (props: Props) => {
       ...transactions[currentIndex].transaction,
       [name]: value,
     }
+    setTransactions(tmpTransactions)
+  }
+
+  const updateValues = (
+    values: { key: keyof UnpersistedTransaction; value: any }[]
+  ) => {
+    const tmpTransactions = [...transactions]
+
+    const newTransaction = tmpTransactions[currentIndex].transaction
+    values.forEach(value => {
+      newTransaction[value.key] = value.value
+    })
+
+    tmpTransactions[currentIndex].transaction = newTransaction
     setTransactions(tmpTransactions)
   }
 
@@ -422,7 +437,15 @@ const Result = (props: Props) => {
               onChange={e => {
                 // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
                 if (e.target.value) {
-                  updateValue('date', dateToIsoString(e.target.value))
+                  updateValues([
+                    { key: 'date', value: dateToIsoString(e.target.value) },
+                    {
+                      key: 'availableFrom',
+                      value: dateToIsoString(
+                        setToFirstOfNextMonth(e.target.value)
+                      ),
+                    },
+                  ])
                 }
               }}
             />
@@ -436,11 +459,12 @@ const Result = (props: Props) => {
                 tooltip={t('transactions.availableFromExplanation')}
                 value={(isSupported.inputTypeMonth()
                   ? (date: string) => monthYearFromDate(new Date(date))
-                  : (date: string) =>
-                      setToFirstOfNextMonth(dateFromIsoString(date)))(
-                  currentTransaction().availableFrom ||
-                    currentTransaction().date ||
-                    new Date().toISOString()
+                  : (date: string) => date)(
+                  dateFromIsoString(currentTransaction().availableFrom || '') ||
+                    setToFirstOfNextMonth(
+                      dateFromIsoString(currentTransaction().date || '') ||
+                        new Date().toISOString()
+                    )
                 )}
                 onChange={e => {
                   // value is empty string for invalid dates (e.g. when prefixing month with 0 while typing) – we want to ignore that and keep the previous input
