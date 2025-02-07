@@ -185,3 +185,12 @@ export type RecentEnvelope = {
   name: string
   id: UUID | null
 }
+
+export type MatchRule = ApiObject & {
+  id: UUID
+  match?: string
+  accountId?: UUID
+  priority?: uint
+  createdAt?: string // This is set by the backend on creation
+  toDelete?: boolean // Set when the match rule should be deleted from the backend
+}

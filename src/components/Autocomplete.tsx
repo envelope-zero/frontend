@@ -4,6 +4,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
+import { valueOrDefault } from '../lib/prop-helper'
 
 function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ')
@@ -22,13 +23,6 @@ type Props<T> = {
   wrapperClass?: string
   labelClass?: string
   inputWrapperClass?: string
-}
-
-const valueOrDefault = (customValue: any, defaultValue: any) => {
-  if (typeof customValue === 'undefined') {
-    return defaultValue
-  }
-  return customValue
 }
 
 const Autocomplete = <T extends ArchivableResource>({
