@@ -1,12 +1,17 @@
 import { useTranslation } from 'react-i18next'
 import { Translation, Budget, Theme } from '../types'
 import submitOnMetaEnter from '../lib/submit-on-meta-enter'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { updateBudget } from '../lib/api/budgets'
 import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
+import Modal from './Modal'
 import { Link } from 'react-router-dom'
+import { api } from '../lib/api/base'
+import { MatchRule } from '../types'
+import { QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
   budget: Budget
@@ -24,12 +29,34 @@ const Settings = ({
   setNotification,
 }: Props) => {
   const { t }: Translation = useTranslation()
+  const navigate = useNavigate()
   const [tmpBudget, setTmpBudget] = useState(budget)
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+  const [openMatchRuleHelp, setOpenMatchRuleHelp] = useState(false)
+  const [openUnsavedChanges, setOpenUnsavedChanges] = useState(false)
+  const [unsavedChanges, setUnsavedChanges] = useState(false)
+
+  const matchRuleApi = api('matchRules')
+  const [matchRules, setMatchRules] = useState<MatchRule[]>([])
+
+  useEffect(() => {
+    if (!isLoading) {
+      setIsLoading(true)
+    }
+    matchRuleApi
+      .getAll(budget)
+      .then(data => {
+        setMatchRules(data)
+        setIsLoading(false)
+      })
+      .catch(err => setError(err.message))
+  }, [budget])
 
   return (
     <form
       onKeyDown={submitOnMetaEnter}
+      onChange={() => setUnsavedChanges(true)}
       onSubmit={e => {
         e.preventDefault()
         updateBudget(tmpBudget)
@@ -74,6 +101,7 @@ const Settings = ({
                   setTmpBudget({ ...tmpBudget, currency: e.target.value })
                 }
               />
+
               <div>
                 <label htmlFor="budget-note" className="form-field--label">
                   {t('budgets.note')}
@@ -89,6 +117,68 @@ const Settings = ({
                     }
                     className="input"
                   />
+                </div>
+              </div>
+
+              <div>
+                <div className="form-field--label">
+                  {t('matchRules.matchRules')}
+                  <button
+                    type="button"
+                    onClick={() => setOpenMatchRuleHelp(true)}
+                    className="ml-1"
+                  >
+                    <span className="aria-hidden">
+                      <QuestionMarkCircleIcon className="icon-xs" />
+                    </span>
+                    <span className="sr-only">{t('help')}</span>
+                  </button>
+                  <Modal
+                    open={openMatchRuleHelp}
+                    setOpen={open => setOpenMatchRuleHelp(open)}
+                  >
+                    <div className="absolute right-0 top-0 pr-4 pt-4">
+                      <button
+                        type="button"
+                        className="rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+                        onClick={() => {
+                          setOpenMatchRuleHelp(false)
+                          if (error) {
+                            setError('')
+                          }
+                        }}
+                      >
+                        <span className="sr-only">{t('close')}</span>
+                        <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+                      </button>
+                    </div>
+                    <div className="mb-2 text-base font-semibold">
+                      {t('matchRules.matchRules')}
+                    </div>
+                    <p className="text-sm">{t('matchRules.description')}</p>
+                  </Modal>
+                </div>
+                <div>
+                  {t('matchRules.count', {
+                    count: matchRules.length,
+                  })}
+                  {' - '}
+                  <Link
+                    to={'match-rules'}
+                    title={t('matchRules.edit')}
+                    className="link-blue"
+                    onClick={e => {
+                      e.preventDefault()
+
+                      if (unsavedChanges) {
+                        setOpenUnsavedChanges(true)
+                      } else {
+                        navigate('match-rules')
+                      }
+                    }}
+                  >
+                    {t('edit')}
+                  </Link>
                 </div>
               </div>
             </FormFields>
@@ -136,6 +226,51 @@ const Settings = ({
       </div>
 
       <div className="button-group mt-10">
+        <Modal
+          open={openUnsavedChanges}
+          setOpen={open => setOpenUnsavedChanges(open)}
+        >
+          <div className="absolute right-0 top-0 pr-4 pt-4">
+            <button
+              type="button"
+              className="rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+              onClick={() => {
+                setOpenUnsavedChanges(false)
+                if (error) {
+                  setError('')
+                }
+              }}
+            >
+              <span className="sr-only">{t('close')}</span>
+              <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="mb-2 text-base font-semibold">
+            {t('unsavedChanges')}
+          </div>
+          <div>{t('discardUnsavedChanges')}</div>
+          <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                navigate('match-rules')
+              }}
+              className="btn-secondary shadow-xs inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold sm:col-start-2"
+            >
+              {t('discard')}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setOpenUnsavedChanges(false)
+              }}
+              className="btn-primary shadow-xs mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold sm:col-start-1 sm:mt-0"
+            >
+              {t('cancel')}
+            </button>
+          </div>
+        </Modal>
+
         <button type="submit" className="btn-primary">
           {t('save')}
         </button>

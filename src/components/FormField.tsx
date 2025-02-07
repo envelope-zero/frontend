@@ -13,6 +13,8 @@ type Props = {
   note?: string
   tooltip?: string
   className?: string
+  inputWrapperClass?: string
+  labelClass?: string
 }
 
 const FormField = ({
@@ -27,6 +29,8 @@ const FormField = ({
   note,
   tooltip,
   className,
+  inputWrapperClass,
+  labelClass,
 }: Props) => {
   if (type === 'number' && typeof options?.step === 'undefined') {
     options = { ...options, step: 'any' }
@@ -34,7 +38,7 @@ const FormField = ({
 
   return (
     <div className={className || ''}>
-      <label htmlFor={name} className="form-field--label">
+      <label htmlFor={name} className={labelClass ?? 'form-field--label'}>
         <span className="flex items-center">
           {label}
           {typeof tooltip !== 'undefined' ? (
@@ -55,7 +59,7 @@ const FormField = ({
         </span>
       </label>
 
-      <div className={'input--outer sm:col-span-2'}>
+      <div className={inputWrapperClass ?? 'input--outer sm:col-span-2'}>
         <input
           className="input"
           type={type}
