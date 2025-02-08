@@ -6,7 +6,8 @@
     "replacements:all",
     "workarounds:all",
     "helpers:pinGitHubActionDigests",
-    ":ignoreModulesAndTests"
+    ":ignoreModulesAndTests",
+    ":disableRateLimiting"
   ],
   "dependencyDashboard": true,
   "platformAutomerge": true,
