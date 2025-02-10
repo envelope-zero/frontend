@@ -154,7 +154,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
 
       <Error error={error} />
 
-      <div className={`card p-4 md:my-4 ${hideHelp && 'hidden'}`}>
+      <div className={`card my-4 p-4 ${hideHelp && 'hidden'}`}>
         <p className="whitespace-pre-line dark:text-gray-400">
           {t('matchRules.help')}
           <button
