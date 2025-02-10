@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Translation, Budget, Theme } from '../types'
+import { Translation, Budget } from '../types'
 import { useEffect, useState } from 'react'
 import {
   ArrowLongDownIcon,
