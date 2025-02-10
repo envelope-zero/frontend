@@ -230,9 +230,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
                     }}
                     value={
                       (accounts.find(
-                        account =>
-                          account.id === matchRule.accountId &&
-                          !account.archived
+                        account => account.id === matchRule.accountId
                       ) as Account) || ''
                     }
                   />
