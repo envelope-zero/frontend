@@ -71,6 +71,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
 
   const saveMatchRules = async () => {
     const updatedMatchRules: MatchRule[] = []
+    const errors: string[] = []
 
     const requests = matchRules.map((rule, index) => {
       // If the rule should be deleted, we delete it. This is done before checking validity, because
@@ -78,7 +79,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
       //
       // Rules that have not been created yet are also skipped, since they will be gone with the re-render
       if (rule.toDelete && rule.createdAt) {
-        return matchRuleApi.delete(rule).catch(err => setError(err.message))
+        return matchRuleApi.delete(rule).catch(err => errors.push(err.message))
       }
 
       // If the rule is missing an account ID or a match, it is invalid, so we discard it
@@ -95,7 +96,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
           .then(updatedRule => {
             updatedMatchRules.push(updatedRule)
           })
-          .catch(err => setError(err.message))
+          .catch(err => errors.push(err.message))
       } else {
         // This is a new rule, it needs to be created
         rule.priority = index
@@ -104,11 +105,15 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
           .then(newRule => {
             updatedMatchRules.push(newRule)
           })
-          .catch(err => setError(err.message))
+          .catch(err => errors.push(err.message))
       }
     })
 
     await Promise.all(requests)
+
+    if (errors.length > 0) {
+      setError(errors.join(', '))
+    }
 
     setMatchRules(updatedMatchRules.sort((a, b) => a.priority - b.priority))
     setNotification(t('changesSaved'))
