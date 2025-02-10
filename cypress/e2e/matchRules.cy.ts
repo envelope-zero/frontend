@@ -40,7 +40,6 @@ describe('Account: Creation', () => {
     cy.getByTitle('Save').click()
     cy.contains('Changes saved successfully')
 
-    // FIXME: Does not click/delete yet
     cy.contains('Delete').first().click({ force: true })
     cy.contains('Groceries*').should('not.exist')
 
@@ -48,9 +47,7 @@ describe('Account: Creation', () => {
     cy.contains('Changes saved successfully')
 
     cy.reload()
-    // We need to wait for a second so that the awaitLoading can actually
-    // see the loading spinner and wait for it to disappear
-    cy.wait(1000)
+    cy.get('#loading').should('exist')
     cy.awaitLoading()
 
     // Verify that only one match rule exists
