@@ -69,7 +69,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
   }
 
   const saveMatchRules = async () => {
-    let updatedMatchRules: MatchRule[] = []
+    const updatedMatchRules: MatchRule[] = []
 
     const requests = matchRules.map((rule, index) => {
       // If the rule should be deleted, we delete it. This is done before checking validity, because
@@ -195,7 +195,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
                     type="text"
                     value={matchRule.match ?? ''}
                     onChange={match => {
-                      let newMatchRules = [...matchRules]
+                      const newMatchRules = [...matchRules]
                       const ruleIndex = matchRules.findIndex(
                         rule => rule.id === matchRule.id
                       )
