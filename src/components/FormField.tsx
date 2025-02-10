@@ -1,6 +1,5 @@
 import { QuestionMarkCircleIcon } from '@heroicons/react/20/solid'
 import { Tooltip } from 'flowbite-react'
-import { valueOrDefault } from '../lib/prop-helper'
 
 type Props = {
   type: string
@@ -39,10 +38,7 @@ const FormField = ({
 
   return (
     <div className={className || ''}>
-      <label
-        htmlFor={name}
-        className={`${valueOrDefault(labelClass, 'form-field--label')}`}
-      >
+      <label htmlFor={name} className={labelClass ?? 'form-field--label'}>
         <span className="flex items-center">
           {label}
           {typeof tooltip !== 'undefined' ? (
@@ -63,12 +59,7 @@ const FormField = ({
         </span>
       </label>
 
-      <div
-        className={`${valueOrDefault(
-          inputWrapperClass,
-          'input--outer sm:col-span-2'
-        )}`}
-      >
+      <div className={inputWrapperClass ?? 'input--outer sm:col-span-2'}>
         <input
           className="input"
           type={type}
