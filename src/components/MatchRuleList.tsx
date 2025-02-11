@@ -18,7 +18,6 @@ import { ReactSortable } from 'react-sortablejs'
 import Autocomplete from './Autocomplete'
 import { safeName } from '../lib/name-helper'
 import LoadingSpinner from './LoadingSpinner'
-import { Button } from 'flowbite-react'
 
 const matchRuleApi = api('matchRules')
 const accountApi = api('accounts')
@@ -243,12 +242,11 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
                   />
                 </div>
               </div>
-              <button>
-                <TrashIcon
-                  title={t('delete')}
-                  onClick={() => deleteMatchRule(matchRule.id)}
-                  className="icon-sm icon-red cursor-auto sm:invisible group-hover:visible"
-                />
+              <button
+                title={t('delete')}
+                onClick={() => deleteMatchRule(matchRule.id)}
+              >
+                <TrashIcon className="icon-sm icon-red cursor-auto sm:invisible group-hover:visible" />
               </button>
             </div>
           ))}

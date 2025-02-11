@@ -39,21 +39,36 @@ describe('Account: Creation', () => {
 
     cy.getByTitle('Save').click()
     cy.contains('Changes saved successfully')
+      .parent()
+      .siblings()
+      .get('[title=Close]')
+      .click()
 
-    cy.contains('Delete').first().click({ force: true })
-    cy.contains('Groceries*').should('not.exist')
+    // Delete the first matchRule and then check that only one exists still
+    cy.get('[title=Delete]').first().click({ force: true })
+    cy.get('[name=match]').should('have.length', 1)
+
+    // FIXME: If we don't have this, the "Changes saved" banner does not appear again
+    // I think that has to do with the transition, but not sure.
+    // Needs to be fixed before merging this or in a follow-up.
+    cy.wait(3000)
 
     cy.getByTitle('Save').click()
     cy.contains('Changes saved successfully')
+      .parent()
+      .siblings()
+      .get('[title=Close]')
+      .click()
 
+    // Reload the page to verify that the deletion has been carried out against the backend
     cy.reload()
     cy.get('#loading').should('exist')
     cy.awaitLoading()
 
-    // Verify that only one match rule exists
-    cy.getInputFor('Match').should('have.length', 1)
+    // Verify that only one match rule exists. This means the deletion was successful in the backend
+    cy.get('[name=match]').should('have.length', 1)
 
     // Verify that correct match rule still exists
-    cy.getInputFor('Match').first().should('have.value', 'Restaurant*')
+    cy.getInputFor('Match').should('have.value', 'Restaurant*')
   })
 })
