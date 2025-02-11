@@ -1,12 +1,16 @@
 import { useTranslation } from 'react-i18next'
 import { Translation, Budget, Theme } from '../types'
 import submitOnMetaEnter from '../lib/submit-on-meta-enter'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { updateBudget } from '../lib/api/budgets'
 import Error from './Error'
 import FormFields from './FormFields'
 import FormField from './FormField'
 import { Link } from 'react-router-dom'
+import { api } from '../lib/api/base'
+import { MatchRule } from '../types'
+import { Modal } from 'flowbite-react'
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 
 type Props = {
   budget: Budget
@@ -26,6 +30,24 @@ const Settings = ({
   const { t }: Translation = useTranslation()
   const [tmpBudget, setTmpBudget] = useState(budget)
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+  const [openMatchRuleHelp, setOpenMatchRuleHelp] = useState(false)
+
+  const matchRuleApi = api('matchRules')
+  const [matchRules, setMatchRules] = useState<MatchRule[]>([])
+
+  useEffect(() => {
+    if (!isLoading) {
+      setIsLoading(true)
+    }
+    matchRuleApi
+      .getAll(budget)
+      .then(data => {
+        setMatchRules(data)
+        setIsLoading(false)
+      })
+      .catch(err => setError(err.message))
+  }, [budget])
 
   return (
     <form
@@ -47,24 +69,6 @@ const Settings = ({
       <Error error={error} />
 
       <div className="space-y-10 divide-y divide-gray-900/10 dark:divide-gray-200/10">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
-          <div className="px-4 sm:px-0">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              {t('settings.matchRules')}
-            </h2>
-          </div>
-
-          <div className="md:col-span-2">
-            <Link
-              to={'match-rules'}
-              title={t('matchRules.edit')}
-              className="btn-primary"
-            >
-              {t('matchRules.edit')}
-            </Link>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
           <div className="px-4 sm:px-0">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -92,6 +96,7 @@ const Settings = ({
                   setTmpBudget({ ...tmpBudget, currency: e.target.value })
                 }
               />
+
               <div>
                 <label htmlFor="budget-note" className="form-field--label">
                   {t('budgets.note')}
@@ -107,6 +112,43 @@ const Settings = ({
                     }
                     className="input"
                   />
+                </div>
+              </div>
+
+              <div>
+                <div className="form-field--label">
+                  {t('matchRules.matchRules')}
+                  <button
+                    type="button"
+                    onClick={() => setOpenMatchRuleHelp(true)}
+                  >
+                    <span className="aria-hidden">
+                      <QuestionMarkCircleIcon className="icon-sm" />
+                    </span>
+                    <span className="sr-only">{t('help')}</span>
+                  </button>
+                  <Modal
+                    show={openMatchRuleHelp}
+                    size="sm"
+                    popup
+                    onClose={() => setOpenMatchRuleHelp(false)}
+                  >
+                    <Modal.Header>{t('matchRules.matchRules')}</Modal.Header>
+                    <Modal.Body>{t('matchRules.description')}</Modal.Body>
+                  </Modal>
+                </div>
+                <div>
+                  {t('matchRules.count', {
+                    count: matchRules.length,
+                  })}
+                  {' - '}
+                  <Link
+                    to={'match-rules'}
+                    title={t('matchRules.edit')}
+                    className="link-blue"
+                  >
+                    {t('edit')}
+                  </Link>
                 </div>
               </div>
             </FormFields>
