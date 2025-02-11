@@ -192,5 +192,4 @@ export type MatchRule = ApiObject & {
   accountId?: UUID
   priority?: uint
   createdAt?: string // This is set by the backend on creation
-  toDelete?: boolean // Set when the match rule should be deleted from the backend
 }

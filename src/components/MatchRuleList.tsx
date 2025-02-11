@@ -37,6 +37,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
 
   const [matchRules, setMatchRules] = useState<MatchRule[]>([])
   const [accounts, setAccounts] = useState<Account[]>([])
+  const [toDelete, setToDelete] = useState<MatchRule[]>([])
   const accountGroups = [
     {
       title: t('accounts.internalAccounts'),
@@ -59,29 +60,27 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
     ])
   }
 
-  const deleteMatchRule = (id: string) => {
-    console.log(id)
-    let newMatchRules = [...matchRules]
+  // To delete a rule when saving, we add it to the toDelete array
+  const deleteMatchRule = async (id: string) => {
     const ruleIndex = matchRules.findIndex(rule => rule.id === id)
-
-    newMatchRules[ruleIndex].toDelete = true
-    console.log(newMatchRules)
-    setMatchRules(newMatchRules)
+    setToDelete([...toDelete, matchRules[ruleIndex]])
   }
 
   const saveMatchRules = async () => {
     const updatedMatchRules: MatchRule[] = []
     const errors: string[] = []
 
-    const requests = matchRules.map((rule, index) => {
-      // If the rule should be deleted, we delete it. This is done before checking validity, because
-      // a rule might have been edited to be invalid and then deleted
-      //
-      // Rules that have not been created yet are also skipped, since they will be gone with the re-render
-      if (rule.toDelete && rule.createdAt) {
+    toDelete.forEach(rule => {
+      // Rules that have not been created yet are skipped, since they will be gone with the re-render anyways
+      if (rule.createdAt) {
         return matchRuleApi.delete(rule).catch(err => errors.push(err.message))
       }
+    })
 
+    // After saving, the list of rules to delete should be empty again.
+    setToDelete([])
+
+    const requests = matchRules.map((rule, index) => {
       // If the rule is missing an account ID or a match, it is invalid, so we discard it
       if (!rule.accountId || !rule.match) {
         return true
@@ -118,6 +117,11 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
     setMatchRules(updatedMatchRules.sort((a, b) => a.priority - b.priority))
     setNotification(t('changesSaved'))
   }
+
+  // Delete matchRule when it is added to toDelete
+  useEffect(() => {
+    setMatchRules(matchRules.filter(matchRule => !toDelete.includes(matchRule)))
+  }, [toDelete])
 
   useEffect(() => {
     if (!isLoading) {
@@ -174,7 +178,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
 
       {isLoading ? (
         <LoadingSpinner />
-      ) : matchRules.filter(r => !r.toDelete).length ? (
+      ) : matchRules.length > 0 ? (
         <ReactSortable
           list={matchRules}
           setList={setMatchRules}
@@ -183,9 +187,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
         >
           {matchRules.map(matchRule => (
             <div
-              className={`group flex w-full flex-wrap items-center gap-x-1 gap-y-4 py-4 sm:gap-x-3 sm:gap-y-2 sm:py-2 ${
-                (matchRule.toDelete && 'hidden') || ''
-              }`}
+              className="group flex w-full flex-wrap items-center gap-x-1 gap-y-4 py-4 sm:gap-x-3 sm:gap-y-2 sm:py-2"
               key={matchRule.id}
             >
               <div>
