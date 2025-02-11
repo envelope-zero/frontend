@@ -160,13 +160,25 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
             <PlusIcon className="icon-sm" />
           </button>
 
-          <button onClick={() => saveMatchRules()} title={t('save')}>
-            <CloudArrowUpIcon className="icon-sm" />
+          <button
+            onClick={() => saveMatchRules()}
+            title={t('save')}
+            className="btn-primary hidden sm:block"
+          >
+            {t('save')}
           </button>
         </div>
       </div>
 
       <Error error={error} />
+
+      <button
+        onClick={() => saveMatchRules()}
+        title={t('save')}
+        className="btn-primary mb-3 sm:hidden"
+      >
+        {t('save')}
+      </button>
 
       <div className={`card my-4 p-4 ${hideHelp && 'hidden'}`}>
         <p className="whitespace-pre-line dark:text-gray-400">

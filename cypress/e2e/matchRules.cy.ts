@@ -15,7 +15,7 @@ describe('Match Rule: invalid rule', () => {
   it('displays an error for an invalid rule', () => {
     cy.getByTitle('Add match rule').first().click()
     cy.getInputFor('Match').first().type('Some string')
-    cy.getByTitle('Save').click()
+    cy.getByTitle('Save').first().click()
 
     cy.contains(
       'The rule with match "Some string" and account "" is invalid. Both match and account need to be set.'
@@ -60,7 +60,7 @@ describe('Match Rule: Creation and Deletion', () => {
     cy.getAutocompleteFor('Account').first().type('Grocery')
     cy.contains('The Grocery').click()
 
-    cy.getByTitle('Save').click()
+    cy.getByTitle('Save').first().click()
     cy.contains('Changes saved successfully')
       .parent()
       .siblings()
@@ -76,7 +76,7 @@ describe('Match Rule: Creation and Deletion', () => {
     // Needs to be fixed before merging this or in a follow-up.
     cy.wait(3000)
 
-    cy.getByTitle('Save').click()
+    cy.getByTitle('Save').first().click()
     cy.contains('Changes saved successfully')
       .parent()
       .siblings()
