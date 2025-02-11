@@ -203,11 +203,12 @@
     }
   },
   "matchRules": {
-    "match": "Match",
-    "matchRules": "Match Rules",
+    "add": "Add match rule",
     "edit": "Edit match rules",
     "emptyList": "No match rules found. Create a new one now!",
-    "add": "Add match rule",
-    "help": "Match rules can automatically set the source and destination accounts for imported transactions. When transactions are imported, both the parsed source and destination account name are matched against these rules.\n\nMatching is case sensitive and you can use the \"*\" character as a wildcard that matches anything.\n\nMatch rules are checked in the order they are shown here. Only the first matching rule is applied. Drag them in the order you want!\n\nWhen done, save your changes. If you accidentally deleted a rule, just reload the page without saving."
+    "help": "Match rules can automatically set the source and destination accounts for imported transactions. When transactions are imported, both the parsed source and destination account name are matched against these rules.\n\nMatching is case sensitive and you can use the \"*\" character as a wildcard that matches anything.\n\nMatch rules are checked in the order they are shown here. Only the first matching rule is applied. Drag them in the order you want!\n\nWhen done, save your changes. If you accidentally deleted a rule, just reload the page without saving.",
+    "invalid": "The rule with match \"{{match}}\" and account \"{{account}}\" is invalid. Both match and account need to be set.",
+    "match": "Match",
+    "matchRules": "Match Rules"
   }
 }

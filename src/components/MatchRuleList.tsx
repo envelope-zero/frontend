@@ -82,6 +82,12 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
     const requests = matchRules.map((rule, index) => {
       // If the rule is missing an account ID or a match, it is invalid, so we discard it
       if (!rule.accountId || !rule.match) {
+        errors.push(
+          t('matchRules.invalid', {
+            match: rule.match || '',
+            account: rule.accountId || '',
+          })
+        )
         return true
       }
 

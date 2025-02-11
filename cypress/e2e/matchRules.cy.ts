@@ -1,6 +1,29 @@
 import { createAccount, createBudget } from '../support/setup'
 
-describe('Account: Creation', () => {
+describe('Match Rule: invalid rule', () => {
+  beforeEach(() => {
+    // prepare & select a budget
+    cy.wrap(createBudget({ name: 'Invalid Match Rule Test' })).then(budget => {
+      cy.wrap(budget).as('budget')
+      cy.visit('/').get('li').contains('Open').click()
+      cy.contains('Settings').click()
+      cy.getByTitle('Edit match rules').first().click()
+      cy.awaitLoading()
+    })
+  })
+
+  it('displays an error for an invalid rule', () => {
+    cy.getByTitle('Add match rule').first().click()
+    cy.getInputFor('Match').first().type('Some string')
+    cy.getByTitle('Save').click()
+
+    cy.contains(
+      'The rule with match "Some string" and account "" is invalid. Both match and account need to be set.'
+    )
+  })
+})
+
+describe('Match Rule: Creation and Deletion', () => {
   beforeEach(() => {
     // prepare & select a budget
     cy.wrap(createBudget({ name: 'Match Rule Test' })).then(budget => {
