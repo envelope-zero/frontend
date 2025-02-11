@@ -9,8 +9,9 @@ import FormField from './FormField'
 import { Link } from 'react-router-dom'
 import { api } from '../lib/api/base'
 import { MatchRule } from '../types'
-import { Modal } from 'flowbite-react'
+import { Button, Modal } from 'flowbite-react'
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
   budget: Budget
@@ -28,10 +29,13 @@ const Settings = ({
   setNotification,
 }: Props) => {
   const { t }: Translation = useTranslation()
+  const navigate = useNavigate()
   const [tmpBudget, setTmpBudget] = useState(budget)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [openMatchRuleHelp, setOpenMatchRuleHelp] = useState(false)
+  const [openUnsavedChanges, setOpenUnsavedChanges] = useState(false)
+  const [unsavedChanges, setUnsavedChanges] = useState(false)
 
   const matchRuleApi = api('matchRules')
   const [matchRules, setMatchRules] = useState<MatchRule[]>([])
@@ -52,6 +56,7 @@ const Settings = ({
   return (
     <form
       onKeyDown={submitOnMetaEnter}
+      onChange={() => setUnsavedChanges(true)}
       onSubmit={e => {
         e.preventDefault()
         updateBudget(tmpBudget)
@@ -146,6 +151,15 @@ const Settings = ({
                     to={'match-rules'}
                     title={t('matchRules.edit')}
                     className="link-blue"
+                    onClick={e => {
+                      e.preventDefault()
+
+                      if (unsavedChanges) {
+                        setOpenUnsavedChanges(true)
+                      } else {
+                        navigate('match-rules')
+                      }
+                    }}
                   >
                     {t('edit')}
                   </Link>
@@ -196,6 +210,33 @@ const Settings = ({
       </div>
 
       <div className="button-group mt-10">
+        <Modal show={openUnsavedChanges} size="sm" popup>
+          <Modal.Header>{t('unsavedChanges')}</Modal.Header>
+          <Modal.Body>
+            <div>{t('discardUnsavedChanges')}</div>
+            <div className="flex justify-center gap-4 p-3">
+              <Button
+                className="btn-primary p-1"
+                title={t('cancel')}
+                onClick={() => {
+                  setOpenUnsavedChanges(false)
+                }}
+              >
+                {t('cancel')}
+              </Button>
+              <Button
+                className="btn-secondary p-1"
+                title={t('discard')}
+                onClick={() => {
+                  navigate('match-rules')
+                }}
+              >
+                {t('discard')}
+              </Button>
+            </div>
+          </Modal.Body>
+        </Modal>
+
         <button type="submit" className="btn-primary">
           {t('save')}
         </button>

@@ -19,6 +19,8 @@
   "or": "or",
   "help": "Help",
   "hide": "Hide",
+  "unsavedChanges": "Unsaved Changes",
+  "discard": "Discard",
   "discardUnsavedChanges": "Discard unsaved changes?",
   "changesSaved": "Changes saved successfully",
   "archived": "Archived",
