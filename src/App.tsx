@@ -13,6 +13,7 @@ import BudgetForm from './components/BudgetForm'
 import OwnAccountsList from './components/OwnAccountsList'
 import ExternalAccountsList from './components/ExternalAccountsList'
 import AccountForm from './components/AccountForm'
+import MatchRuleList from './components/MatchRuleList'
 import TransactionsList from './components/TransactionsList'
 import TransactionForm from './components/TransactionForm'
 import EnvelopesList from './components/EnvelopesList'
@@ -191,6 +192,16 @@ const App = () => {
                     setBudget={setBudget}
                     theme={theme}
                     setTheme={updateTheme}
+                    setNotification={setNotification}
+                  />
+                }
+              />
+
+              <Route
+                path="/settings/match-rules"
+                element={
+                  <MatchRuleList
+                    budget={budget}
                     setNotification={setNotification}
                   />
                 }

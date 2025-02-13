@@ -24,13 +24,6 @@ type Props<T> = {
   inputWrapperClass?: string
 }
 
-const valueOrDefault = (customValue: any, defaultValue: any) => {
-  if (typeof customValue === 'undefined') {
-    return defaultValue
-  }
-  return customValue
-}
-
 const Autocomplete = <T extends ArchivableResource>({
   groups,
   label,
@@ -84,12 +77,10 @@ const Autocomplete = <T extends ArchivableResource>({
       disabled={disabled}
       className={wrapperClass ?? ''}
     >
-      <Combobox.Label
-        className={valueOrDefault(labelClass, 'form-field--label')}
-      >
+      <Combobox.Label className={labelClass ?? 'form-field--label'}>
         {label}
       </Combobox.Label>
-      <div className={`${valueOrDefault(inputWrapperClass, 'input--outer')}`}>
+      <div className={inputWrapperClass ?? 'input--outer'}>
         <Combobox.Input
           className="input"
           onChange={event => setQuery(event.target.value)}

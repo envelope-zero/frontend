@@ -17,6 +17,10 @@
   "version": "Version",
   "seeAll": "See All",
   "or": "or",
+  "help": "Help",
+  "hide": "Hide",
+  "unsavedChanges": "Unsaved Changes",
+  "discard": "Discard",
   "discardUnsavedChanges": "Discard unsaved changes?",
   "changesSaved": "Changes saved successfully",
   "archived": "Archived",
@@ -191,6 +195,7 @@
   "settings": {
     "settings": "Settings",
     "budget": "Budget Settings",
+    "matchRules": "Match Rules",
     "app": "App Settings",
     "theme": "Theme",
     "themes": {
@@ -198,5 +203,17 @@
       "light": "Light",
       "default": "System Default"
     }
+  },
+  "matchRules": {
+    "add": "Add match rule",
+    "count_one": "{{count}} match rule active",
+    "count_other": "{{count}} match rules active",
+    "description": "With match rules, you can automatically assign source and destination accounts when importing transactions.",
+    "edit": "Edit match rules",
+    "emptyList": "No match rules found. Create a new one now!",
+    "help": "Match rules can automatically set the source and destination accounts for imported transactions. When transactions are imported, both the parsed source and destination account name are matched against these rules.\n\nMatching is case sensitive and you can use the \"*\" character as a wildcard that matches anything.\n\nMatch rules are checked in the order they are shown here. Only the first matching rule is applied. Drag them in the order you want!\n\nWhen done, save your changes. If you accidentally deleted a rule, just reload the page without saving.",
+    "invalid": "The rule with match \"{{match}}\" and account \"{{account}}\" is invalid. Both match and account need to be set.",
+    "match": "Match",
+    "matchRules": "Match Rules"
   }
 }
