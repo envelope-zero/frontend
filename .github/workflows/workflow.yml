@@ -71,7 +71,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Run cypress
-        uses: cypress-io/github-action@7271bed2a170d73c0b08939cd192db51a1c46c50 # v6.7.10
+        uses: cypress-io/github-action@d8ecebb25c9eaf9d4df9ad1aef88297ef2cb6f3c # v6.7.11
         timeout-minutes: 5
         with:
           start: npm run start-ci
