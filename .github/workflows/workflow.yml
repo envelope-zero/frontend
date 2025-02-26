@@ -132,7 +132,7 @@ jobs:
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@4574d27a4764455b42196d70a065bc6853246a25 # v3.4.0
+        uses: docker/setup-qemu-action@5964de0df58d5ad28b04d8fe2e6b80ad47105b91 # v3.5.0
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3.7.1
