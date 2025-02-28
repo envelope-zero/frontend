@@ -2,6 +2,8 @@ import { useState, Fragment, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
+import { useTranslation } from 'react-i18next'
+import { Translation } from '../types'
 
 type Props = {
   notification: string
@@ -11,6 +13,7 @@ type Props = {
 const animationDuration = 100
 
 const Notification = ({ notification, setNotification }: Props) => {
+  const { t }: Translation = useTranslation()
   const [show, setShow] = useState(true)
 
   useEffect(() => {
@@ -55,12 +58,13 @@ const Notification = ({ notification, setNotification }: Props) => {
                 <div className="ml-4 flex flex-shrink-0">
                   <button
                     type="button"
+                    title={t('close')}
                     className="inline-flex rounded-md bg-green-100 text-green-700 hover:text-green-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     onClick={() => {
                       setShow(false)
                     }}
                   >
-                    <span className="sr-only">Close</span>
+                    <span className="sr-only">{t('close')}</span>
                     <XMarkIcon className="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>

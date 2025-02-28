@@ -23,7 +23,10 @@ const Modal = ({ open, setOpen, children }: Props) => {
           <div className="fixed inset-0 bg-gray-800/[.8] transition-opacity dark:bg-slate-700/[.8]" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto">
+        <div
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClick={() => setOpen(false)}
+        >
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
               as={Fragment}
