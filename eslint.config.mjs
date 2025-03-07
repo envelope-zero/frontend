@@ -22,5 +22,5 @@ export default [
       '**/env.d.ts',
     ],
   },
-  ...fixupConfigRules(compat.extends('react-app')),
+  ...fixupConfigRules(compat.extends('plugin:jsx-a11y/recommended')),
 ]
