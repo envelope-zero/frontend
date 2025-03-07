@@ -7,6 +7,7 @@ Contributions are welcome. Please note the [Code of Conduct](CODE_OF_CONDUCT.md)
 You will need to:
 
 - Install [pre-commit](https://pre-commit.com/)
+- Install and set up [nodenv](https://github.com/nodenv/nodenv). This will ensure you always have the correct version of node running.
 
 Once these steps are done, run `make setup` to perform the repository setup.
 
