@@ -56,7 +56,12 @@
     "workbox-range-requests": "7.3.0",
     "workbox-routing": "7.3.0",
     "workbox-strategies": "7.3.0",
-    "workbox-streams": "7.3.0"
+    "workbox-streams": "7.3.0",
+    "@eslint/compat": "1.2.7",
+    "@eslint/eslintrc": "3.3.0",
+    "@eslint/js": "9.21.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "prettier-plugin-tailwindcss": "0.6.11"
   },
   "scripts": {
     "start": "vite --open",
@@ -82,12 +87,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@eslint/compat": "1.2.7",
-    "@eslint/eslintrc": "3.3.0",
-    "@eslint/js": "9.21.0",
-    "eslint-plugin-jsx-a11y": "6.10.2",
-    "prettier-plugin-tailwindcss": "0.6.11"
   }
 }
