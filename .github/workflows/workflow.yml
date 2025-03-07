@@ -35,10 +35,14 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: Cache dependencies
+      - name: Get node version
+        id: version
+        run: echo "version=$(cat .node-version)" >> $GITHUB_OUTPUT
+
+      - name: Setup node & cache dependencies
         uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
         with:
-          node-version: '20'
+          node-version: ${{ steps.version.outputs.version }}
           cache: 'npm'
 
       - name: install node modules
@@ -69,6 +73,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Get node version
+        id: version
+        run: echo "version=$(cat .node-version)" >> $GITHUB_OUTPUT
+
+      - name: Setup node & cache dependencies
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version: ${{ steps.version.outputs.version }}
+          cache: 'npm'
 
       - name: Run cypress
         uses: cypress-io/github-action@9c318d4f950c2f0ff2e96fa4dc4279e5706efd8e # v6.7.14
