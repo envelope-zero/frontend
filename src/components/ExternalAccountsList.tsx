@@ -137,7 +137,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                                     !account.name ? 'italic' : ''
                                   } flex justify-between text-sm font-medium text-gray-900 dark:text-gray-100`}
                                 >
-                                  <span className="full-centered">
+                                  <span className="truncate">
                                     {account.archived ? (
                                       <ArchiveBoxIcon
                                         className="icon-sm link-blue mr-2 inline stroke-2"
@@ -146,7 +146,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
                                     ) : null}
                                     {safeName(account, 'account')}
                                   </span>
-                                  <PencilIcon className="icon-red" />
+                                  <PencilIcon className="icon-red icon-xs" />
                                 </div>
                                 <p className="truncate text-sm text-gray-500">
                                   {account.note}
