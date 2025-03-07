@@ -41,6 +41,9 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+      - name: install correct node version
+        run: npm install --no-save node@"$(cat .node-version)"
+
       - name: install node modules
         run: npm ci
 
