@@ -124,6 +124,15 @@ describe('Dashboard', () => {
       .find('span')
       .contains('12.00')
 
+    // display error
+    cy.get('[aria-label*="Edit Allocation for First Envelope"]')
+      .filter(':visible')
+      .click()
+    cy.getInputFor('Set to amount').clear()
+    cy.get('button[type="submit"]').click()
+    cy.contains('Error')
+    cy.get('button[type="reset"]').click()
+
     // select content of allocation input field when focusing it
     cy.get('[aria-label*="Edit Allocation for First Envelope"]')
       .filter(':visible')

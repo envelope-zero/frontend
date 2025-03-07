@@ -16,6 +16,7 @@ import AllocationInputs from './AllocationInputs'
 import { safeName } from '../lib/name-helper'
 import { replaceMonthInLinks } from '../lib/month-helper'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
+import Error from './Error'
 
 type props = {
   envelope: EnvelopeMonthType
@@ -25,7 +26,6 @@ type props = {
   editingEnvelope?: UUID
   editEnvelope: (id?: UUID) => void
   reloadBudgetMonth: () => void
-  setError: (message: string) => void
 }
 
 const EnvelopeMonth = ({
@@ -36,13 +36,14 @@ const EnvelopeMonth = ({
   editingEnvelope,
   editEnvelope,
   reloadBudgetMonth,
-  setError,
 }: props) => {
   const { t }: Translation = useTranslation()
   const [allocatedAmount, setAllocatedAmount] = useState(envelope.allocation)
+  const [allocationError, setAllocationError] = useState('')
 
   const closeInput = () => {
     editEnvelope(undefined)
+    setAllocationError('')
   }
 
   const localMonth = translatedMonthFormat.format(month)
@@ -89,7 +90,7 @@ const EnvelopeMonth = ({
               updateAllocation()
                 .then(closeInput)
                 .then(reloadBudgetMonth)
-                .catch(setError)
+                .catch(setAllocationError)
             }}
             onReset={e => {
               e.preventDefault()
@@ -97,6 +98,7 @@ const EnvelopeMonth = ({
               closeInput()
             }}
           >
+            <Error error={allocationError} />
             <div>
               <div className="mt-3 text-center sm:mt-5">
                 <h3 className="text-lg font-medium leading-6">

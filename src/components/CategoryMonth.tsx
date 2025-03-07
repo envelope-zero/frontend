@@ -18,7 +18,6 @@ type props = {
   editingEnvelope?: UUID
   editEnvelope: (id?: UUID) => void
   reloadBudgetMonth: () => void
-  setError: (message: string) => void
 }
 
 const CategoryMonth = ({
@@ -28,7 +27,6 @@ const CategoryMonth = ({
   editingEnvelope,
   editEnvelope,
   reloadBudgetMonth,
-  setError,
 }: props) => {
   const { t }: Translation = useTranslation()
   const [showEnvelopes, setShowEnvelopes] = useState(true)
@@ -83,7 +81,6 @@ const CategoryMonth = ({
             editingEnvelope={editingEnvelope}
             editEnvelope={editEnvelope}
             reloadBudgetMonth={reloadBudgetMonth}
-            setError={setError}
           ></EnvelopeMonth>
         ))
       ) : (

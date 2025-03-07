@@ -178,7 +178,6 @@ const Dashboard = ({ budget }: DashboardProps) => {
                             reloadBudgetMonth={() => {
                               reloadBudgetMonth()
                             }}
-                            setError={setError}
                           />
                         ))}
                     </tbody>
