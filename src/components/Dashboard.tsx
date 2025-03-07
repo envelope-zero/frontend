@@ -91,10 +91,10 @@ const Dashboard = ({ budget }: DashboardProps) => {
 
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="mt-4 flex flex-col py-2">
-              <div className="card -mx-4 -my-2 overflow-x-auto px-0 py-2 sm:-mx-6 lg:-mx-8">
+              <div className="card -mx-4 -my-2 px-0 py-2 sm:-mx-6 lg:-mx-8">
                 <div className="inline-block w-full align-middle">
                   <table className="w-full table-fixed">
-                    <thead className="bg-white uppercase dark:bg-slate-800">
+                    <thead className="bg-white uppercase dark:bg-slate-800 md:sticky md:top-0">
                       <tr>
                         <th
                           scope="col"
