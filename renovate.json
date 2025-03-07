@@ -45,6 +45,11 @@
     {
       "matchDepNames": ["prettier"],
       "prHeader": ":information_source: If the pre-commit check fails for this PR, check it out locally, run `npm i && npm run format` and then push a new commit with the changes."
+    },
+    {
+      "description": "Group eslint updates",
+      "groupName": "eslint",
+      "matchDepNames": ["pre-commit/mirrors-eslint", "eslint"]
     }
   ],
   "customManagers": [

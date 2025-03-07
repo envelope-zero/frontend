@@ -6,12 +6,12 @@ WORKDIR /app
 # Unless packages change, this layer will be cached
 COPY package.json package-lock.json /app/
 
-RUN npm install --production
+RUN npm install
 
 # Copy app files
 COPY src /app/src
 COPY public /app/public
-COPY vite.config.ts tsconfig.json tailwind.config.js index.html .eslintrc.js postcss.config.js /app/
+COPY vite.config.ts tsconfig.json tailwind.config.js index.html eslint.config.mjs postcss.config.js /app/
 
 ARG VITE_VERSION=0.0.0
 
