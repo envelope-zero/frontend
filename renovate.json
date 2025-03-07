@@ -41,6 +41,10 @@
       "matchDepNames": "node",
       "matchManagers": "dockerfile",
       "enabled": false
+    },
+    {
+      "matchDepNames": ["prettier"],
+      "prHeader": ":information_source: If the pre-commit check fails for this PR, check it out locally, run `npm i && npm run format` and then push a new commit with the changes."
     }
   ],
   "customManagers": [
