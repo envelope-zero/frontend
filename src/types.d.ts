@@ -166,6 +166,7 @@ export type FilterOptions = {
   amountLessOrEqual?: string
   fromDate?: string
   untilDate?: string
+  search?: string
 }
 
 export type MonthConfig = {

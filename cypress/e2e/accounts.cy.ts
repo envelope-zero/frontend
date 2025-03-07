@@ -38,6 +38,10 @@ describe('Account: Creation', () => {
     cy.clickAndWait('Save')
     cy.contains('Cash Test Account')
 
+    cy.getInputFor('Search').type('Non-existent account{enter}')
+    cy.contains('Cash Test Account').should('not.exist')
+    cy.contains('No accounts found')
+
     cy.contains('Own Accounts').click()
     cy.contains('Cash Test Account').should('not.exist')
   })
