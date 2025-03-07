@@ -7,10 +7,13 @@ repos:
         files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
         types: [file]
 
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.1.0
+  - repo: local
     hooks:
       - id: prettier
+        name: prettier
+        language: node
+        pass_filenames: false
+        entry: npm run format
 
   # Explicitly not using the renovate upstream hook because for some reason installing it is
   # excruciatingly slow (> 10 minutes in some cases)
