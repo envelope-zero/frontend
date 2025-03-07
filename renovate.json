@@ -50,6 +50,11 @@
       "description": "Group eslint updates",
       "groupName": "eslint",
       "matchDepNames": ["pre-commit/mirrors-eslint", "eslint"]
+    },
+    {
+      "description": "Replace range for npm instead of pinning, to not require us to install specific npm versions",
+      "matchDepNames": ["npm"],
+      "rangeStrategy": "replace"
     }
   ],
   "customManagers": [
