@@ -14,12 +14,13 @@ import { api } from '../lib/api/base'
 import { safeName } from '../lib/name-helper'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import SearchBar from './SearchBar'
 
 const accountApi = api('accounts')
 
 const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
   const { t }: Translation = useTranslation()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const archived = searchParams.get('archived') === 'true'
 
   const [isLoading, setIsLoading] = useState(true)
@@ -32,7 +33,11 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
     }
 
     accountApi
-      .getAll(budget, { external: true, archived: Boolean(archived) })
+      .getAll(budget, {
+        external: true,
+        archived: Boolean(archived),
+        search: searchParams.get('search') ?? '',
+      })
       .then(data => {
         const groupedAccounts = data.reduce(
           (object: { [letter: string]: Account[] }, account: Account) => {
@@ -55,7 +60,7 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
         setError(err.message)
         setIsLoading(false)
       })
-  }, [budget, archived]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [budget, archived, searchParams]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -72,7 +77,20 @@ const ExternalAccountsList = ({ budget }: { budget: Budget }) => {
 
       <AccountListSwitch selected="external" />
       <Error error={error} />
-      {/* TODO: search bar */}
+
+      <SearchBar
+        resourceLabel={t('accounts.accounts')}
+        value={searchParams.get('search')}
+        onSubmit={search => {
+          if (search) {
+            searchParams.set('search', search)
+            setSearchParams(searchParams)
+          } else {
+            searchParams.delete('search')
+            setSearchParams(searchParams)
+          }
+        }}
+      />
 
       {isLoading ? (
         <LoadingSpinner />
