@@ -30,7 +30,15 @@ const setToFirstOfTheMonth = (date: string) => {
 
 const setToFirstOfNextMonth = (date: string) => {
   const d = new Date(date)
+
+  // Because timezones and dates are fucked, we set the hours to 12 so that daylight savings
+  // does not suddenly change the date
+  d.setHours(12)
+
+  // Set to the first
   d.setDate(1)
+
+  // Set to the next month
   d.setMonth(d.getMonth() + 1)
 
   // Return date in YYYY-MM-DD format
