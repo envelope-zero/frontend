@@ -157,7 +157,10 @@ const EnvelopeForm = ({ budget }: Props) => {
                   safeName(category, 'category', t('categories.category'))
                 }
                 onChange={category => {
-                  if (!category.id) {
+                  if (!category) {
+                    // This should not happen by user interaction, but can happen programatically, e.g. with cypresses "clear()"
+                    return
+                  } else if (!category.id) {
                     setCategoryToCreate(category)
                   } else {
                     setCategoryToCreate(undefined)

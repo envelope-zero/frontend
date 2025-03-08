@@ -42,7 +42,7 @@ const Layout = ({
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [showImportBanner, setShowImportBanner] = useState<boolean>(false)
-  const headerRef = useRef<HTMLElement>()
+  const headerRef = useRef<HTMLElement>(undefined)
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -103,7 +103,7 @@ const Layout = ({
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Dialog.Overlay className="fixed inset-0 bg-gray-600/[.75] dark:bg-slate-900/[.8]" />
+                <div className="fixed inset-0 bg-gray-600/[.75] dark:bg-slate-900/[.8]" />
               </Transition.Child>
               <Transition.Child
                 as={Fragment}
@@ -114,7 +114,7 @@ const Layout = ({
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <div className="relative flex w-full max-w-xs flex-1 flex-col bg-white dark:bg-slate-800">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white dark:bg-slate-800">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -216,7 +216,7 @@ const Layout = ({
                       </div>
                     </div>
                   </div>
-                </div>
+                </Dialog.Panel>
               </Transition.Child>
               <div className="w-14 flex-shrink-0">
                 {/* Force sidebar to shrink to fit close icon */}
@@ -302,11 +302,10 @@ const Layout = ({
           </div>
         </>
       )}
-
       <div className={`${hideNav ? '' : 'lg:pl-64'} flex flex-1 flex-col`}>
         <div
           className="sticky top-0 z-10 bg-gray-100 px-6 pt-4 dark:bg-slate-900 lg:hidden"
-          ref={headerRef as React.RefObject<HTMLDivElement>}
+          ref={headerRef as React.RefObject<HTMLDivElement | null>}
         >
           <button
             type="button"

@@ -224,16 +224,25 @@ const Result = (props: Props) => {
     })
   }
 
+  useEffect(() => {
+    if (
+      transactions.every(
+        (transaction: TransactionPreview) => transaction.processed
+      )
+    ) {
+      console.log('All imports done, cleaning')
+      props.setNotification(t('transactions.import.complete'))
+      localStorage.removeItem('importTransactions')
+      localStorage.removeItem('importIndex')
+      navigate('/transactions')
+    }
+  }, [transactions])
+
   const goToNextTransaction = () => {
     if (nextIndex() <= transactions.length - 1) {
       setCurrentIndex(nextIndex())
     } else if (previousIndex() >= 0) {
       setCurrentIndex(previousIndex())
-    } else {
-      props.setNotification(t('transactions.import.complete'))
-      localStorage.removeItem('importTransactions')
-      localStorage.removeItem('importIndex')
-      navigate('/transactions')
     }
   }
 
@@ -349,7 +358,10 @@ const Result = (props: Props) => {
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.sourceAccountId')}
               onChange={account => {
-                if (!account.id) {
+                if (!account) {
+                  // This should not happen by user interaction, but can happen programatically, e.g. with cypresses "clear()"
+                  return
+                } else if (!account.id) {
                   setSourceAccountToCreate(account)
                   updateValue('sourceAccountId', undefined)
                   updatePreviewValue('sourceAccountName', account.name || '')
@@ -378,7 +390,10 @@ const Result = (props: Props) => {
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.destinationAccountId')}
               onChange={account => {
-                if (!account.id) {
+                if (!account) {
+                  // This should not happen by user interaction, but can happen programatically, e.g. with cypresses "clear()"
+                  return
+                } else if (!account.id) {
                   setDestinationAccountToCreate(account)
                   updateValue('destinationAccountId', undefined)
                   updatePreviewValue(
