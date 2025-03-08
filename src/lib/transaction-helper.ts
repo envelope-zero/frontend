@@ -61,7 +61,11 @@ const isIncome = (
 
   return (
     !hasEnvelope &&
+    // We can only decide if a transaction is income if it has a source account set
+    transaction.sourceAccountId &&
     isExternal(transaction.sourceAccountId, accounts) &&
+    // We can only decide if a transaction is income if it has a destination account set
+    transaction.destinationAccountId &&
     !isExternal(transaction.destinationAccountId, accounts)
   )
 }

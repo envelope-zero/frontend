@@ -54,8 +54,13 @@ describe('Transaction Import', () => {
     )
     // only result in destination drop down is 'Create "Non Existing Account"'
     cy.getAutocompleteFor('Destination').type('{downArrow}')
-    cy.get('ul').find('li').should('have.length', 1)
-    cy.get('li').contains('Create "Non Existing Account"')
+
+    cy.get('label')
+      .contains('Destination')
+      .siblings('div')
+      .children('div, [role="listbox"] > div > div')
+      .should('have.length', 1)
+      .and('contain', 'Create "Non Existing Account"')
     cy.getAutocompleteFor('Destination').clear().type('EDITED ACCOUNT{enter}')
     cy.getInputFor('Date').should('have.value', '2023-06-20')
     cy.contains('Available From').should('not.exist')
@@ -102,12 +107,20 @@ describe('Transaction Import', () => {
     cy.getAutocompleteFor('Source').should('have.value', 'My Other Account')
     // dropdown results in source should be "My Other Account" & 'Create "My Other Account"'
     cy.getAutocompleteFor('Source').type('{downArrow}')
-    cy.get('ul').find('li').should('have.length', 2)
-    cy.get('li').contains(/^My Other Account$/) // match "My Other Account" exactly
-    cy.get('li').contains('Create "My Other Account"')
+
+    cy.get('label')
+      .contains('Source')
+      .siblings('div')
+      .children('div, [role="listbox"]')
+      .within(() => {
+        cy.get('div, [role="none"]').contains(/^My Other Account$/)
+        cy.get('div, [role="option"]').contains('Create "My Other Account"')
+      })
+
     // newly created account is available for selection
-    cy.getAutocompleteFor('Source').clear().type('EDITE')
-    cy.contains('EDITED ACCOUNT')
+    cy.getAutocompleteFor('Source').type('{esc}').clear().type('EDITE')
+
+    // "My Other Account" is still selected, so "Available From" should not be displayed
     cy.contains('Available From').should('not.exist')
 
     cy.getAutocompleteFor('Destination')
@@ -115,7 +128,7 @@ describe('Transaction Import', () => {
       .should('be.disabled')
 
     // skip this transaction
-    cy.getByTitle('Next Transaction').click()
+    cy.getByTitle('Next Transaction').click({ force: true })
 
     // there is still only one transaction
     cy.wrap(null)

@@ -349,7 +349,10 @@ const Result = (props: Props) => {
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.sourceAccountId')}
               onChange={account => {
-                if (!account.id) {
+                if (!account) {
+                  // This should not happen by user interaction, but can happen programatically, e.g. with cypresses "clear()"
+                  return
+                } else if (!account.id) {
                   setSourceAccountToCreate(account)
                   updateValue('sourceAccountId', undefined)
                   updatePreviewValue('sourceAccountName', account.name || '')
@@ -378,7 +381,10 @@ const Result = (props: Props) => {
               itemId={account => account.id || safeName(account, 'account')}
               label={t('transactions.destinationAccountId')}
               onChange={account => {
-                if (!account.id) {
+                if (!account) {
+                  // This should not happen by user interaction, but can happen programatically, e.g. with cypresses "clear()"
+                  return
+                } else if (!account.id) {
                   setDestinationAccountToCreate(account)
                   updateValue('destinationAccountId', undefined)
                   updatePreviewValue(
