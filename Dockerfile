@@ -11,7 +11,7 @@ RUN npm install
 # Copy app files
 COPY src /app/src
 COPY public /app/public
-COPY vite.config.ts tsconfig.json tailwind.config.js index.html eslint.config.mjs postcss.config.js /app/
+COPY vite.config.mts tsconfig.json tailwind.config.js index.html eslint.config.mjs postcss.config.js /app/
 
 ARG VITE_VERSION=0.0.0
 
