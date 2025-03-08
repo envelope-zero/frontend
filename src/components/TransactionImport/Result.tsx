@@ -224,16 +224,25 @@ const Result = (props: Props) => {
     })
   }
 
+  useEffect(() => {
+    if (
+      transactions.every(
+        (transaction: TransactionPreview) => transaction.processed
+      )
+    ) {
+      console.log('All imports done, cleaning')
+      props.setNotification(t('transactions.import.complete'))
+      localStorage.removeItem('importTransactions')
+      localStorage.removeItem('importIndex')
+      navigate('/transactions')
+    }
+  }, [transactions])
+
   const goToNextTransaction = () => {
     if (nextIndex() <= transactions.length - 1) {
       setCurrentIndex(nextIndex())
     } else if (previousIndex() >= 0) {
       setCurrentIndex(previousIndex())
-    } else {
-      props.setNotification(t('transactions.import.complete'))
-      localStorage.removeItem('importTransactions')
-      localStorage.removeItem('importIndex')
-      navigate('/transactions')
     }
   }
 
