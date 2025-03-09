@@ -1,0 +1,10 @@
+;
+"Umsätze Girokonto - 12345678";"Zeitraum: 01.02.2025 - 09.02.2025";
+"Neuer Kontostand";"1.312,00 EUR";
+
+"Buchungstag";"Wertstellung (Valuta)";"Vorgang";"Buchungstext";"Umsatz in EUR";
+"03.02.2025";"03.02.2025";"Kartenverfügung";" Buchungstext: Some Merchant, Reimbursement ";"10,00";
+"07.02.2025";"07.02.2025";"Kartenverfügung";" Buchungstext: Some Other Merchant, Spending";"-3,50";
+
+"Alter Kontostand";"161,00 EUR";
+

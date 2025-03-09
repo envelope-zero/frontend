@@ -234,4 +234,36 @@ describe('Transaction Import', () => {
     cy.contains('Submit').click()
     cy.contains('This file can not be parsed.')
   })
+
+  // This is a regression test for "Untitled Account" being displayed as the source/destination account name
+  // See https://github.com/envelope-zero/frontend/issues/1763
+  it('shows an empty account name if it is unset', function () {
+    cy.get('nav').contains('Transactions').click()
+    cy.getByTitle('Import Transactions').click()
+    cy.awaitLoading()
+
+    cy.getAutocompleteFor('Account').type('account')
+    cy.contains('My Account').click()
+
+    cy.getInputFor('File').selectFile(
+      'cypress/fixtures/import-untitled-account.csv'
+    )
+
+    cy.contains('Submit').click()
+
+    // Verify that the Source account is not "Untitled Account", but empty
+    cy.getAutocompleteFor('Source')
+      .should('have.value', '')
+      .type('External Acc{enter}')
+    cy.get('button').contains('Import').click()
+
+    // Verify that the Source account is not "Untitled Account", but empty
+    cy.getAutocompleteFor('Destination')
+      .should('have.value', '')
+      .type('External Acc{enter}')
+    cy.get('button').contains('Import').click()
+
+    // Import should be finished
+    cy.contains('Import complete')
+  })
 })

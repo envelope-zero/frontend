@@ -104,19 +104,23 @@ const Result = (props: Props) => {
     const transactionPreview = transactions[currentIndex]
     const { transaction } = transactionPreview
 
-    if (!accounts.some(account => account.id === transaction.sourceAccountId)) {
+    if (
+      transactionPreview.sourceAccountName &&
+      !accounts.some(account => account.id === transaction.sourceAccountId)
+    ) {
       setSourceAccountToCreate({
-        name: transactionPreview.sourceAccountName || '',
+        name: transactionPreview.sourceAccountName,
       })
     } else {
       setSourceAccountToCreate(undefined)
     }
 
     if (
+      transactionPreview.destinationAccountName &&
       !accounts.some(account => account.id === transaction.destinationAccountId)
     ) {
       setDestinationAccountToCreate({
-        name: transactionPreview.destinationAccountName || '',
+        name: transactionPreview.destinationAccountName,
       })
     } else {
       setDestinationAccountToCreate(undefined)
