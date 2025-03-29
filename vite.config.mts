@@ -11,6 +11,11 @@ export default defineConfig({
       stream: 'stream-browserify', // Needed so that charset detection for ynap-parsers works
     },
   },
+  build: {
+    rollupOptions: {
+      external: ['tailwindcss/version.js'],
+    },
+  },
   server: {
     open: false,
     port: 3000,
