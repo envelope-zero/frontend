@@ -5,7 +5,7 @@ volumes:
 
 services:
   backend:
-    image: ghcr.io/envelope-zero/backend:v7.0.1
+    image: ghcr.io/envelope-zero/backend:v7.1.0
     user: root
     volumes:
       - ez-dev-data:/data
