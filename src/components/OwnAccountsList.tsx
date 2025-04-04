@@ -162,13 +162,13 @@ const OwnAccountsList = ({ budget }: Props) => {
                             ) : null}
                           </div>
                           {!account.onBudget && (
-                            <span className="inline-flex flex-shrink-0 items-center rounded-full bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800">
+                            <span className="inline-flex shrink-0 items-center rounded-full bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800">
                               {t('accounts.offBudget')}
                             </span>
                           )}
                         </div>
 
-                        <p className="mt-1 whitespace-pre-line text-sm text-gray-500 dark:text-gray-400">
+                        <p className="mt-1 text-sm whitespace-pre-line text-gray-500 dark:text-gray-400">
                           {account.note}
                         </p>
                       </div>

@@ -41,10 +41,10 @@ const Notification = ({ notification, setNotification }: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-green-100 shadow-lg ring-1 ring-black ring-opacity-5">
+          <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-green-100 shadow-lg ring-1 ring-black">
             <div className="p-4">
               <div className="flex items-start">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <CheckCircleIcon
                     className="h-6 w-6 text-green-400"
                     aria-hidden="true"
@@ -55,11 +55,11 @@ const Notification = ({ notification, setNotification }: Props) => {
                     {notification}
                   </p>
                 </div>
-                <div className="ml-4 flex flex-shrink-0">
+                <div className="ml-4 flex shrink-0">
                   <button
                     type="button"
                     title={t('close')}
-                    className="inline-flex rounded-md bg-green-100 text-green-700 hover:text-green-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="inline-flex rounded-md bg-green-100 text-green-700 hover:text-green-800 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
                     onClick={() => {
                       setShow(false)
                     }}

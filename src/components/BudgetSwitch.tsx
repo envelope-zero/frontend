@@ -106,7 +106,7 @@ const BudgetSwitch = (props: BudgetSwitchProps) => {
                         )}
                       </div>
                       <Link
-                        className="flex-shrink-0"
+                        className="shrink-0"
                         to={`/budgets/${budget.id}`}
                         title={t('edit')}
                       >

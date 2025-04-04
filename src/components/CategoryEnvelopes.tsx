@@ -90,7 +90,7 @@ const CategoryEnvelopes = ({
                     />
                   ) : null}
                 </span>
-                <ChevronRightIcon className="mr-3 h-6 flex-shrink-0" />
+                <ChevronRightIcon className="mr-3 h-6 shrink-0" />
               </Link>
             ))}
         </div>

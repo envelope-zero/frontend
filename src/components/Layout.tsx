@@ -127,7 +127,7 @@ const Layout = ({
                     <div className="-mr-12 pt-2">
                       <button
                         type="button"
-                        className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none"
+                        className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-hidden"
                         onClick={() => setSidebarOpen(false)}
                       >
                         <span className="sr-only">
@@ -137,9 +137,9 @@ const Layout = ({
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex h-0 flex-1 flex-col justify-between overflow-y-auto pb-4 pt-5">
+                  <div className="flex h-0 flex-1 flex-col justify-between overflow-y-auto pt-5 pb-4">
                     <div>
-                      <div className="flex flex-shrink-0 items-center px-4">
+                      <div className="flex shrink-0 items-center px-4">
                         <div>
                           <div className="text-lg font-bold text-gray-900 dark:text-gray-100">
                             {safeName(budget, 'budget')}
@@ -158,7 +158,7 @@ const Layout = ({
                         onClick={() => setSidebarOpen(false)}
                         className="group my-4 flex items-center border-y p-4 text-base font-medium text-sky-600 shadow-inner dark:border-gray-900 dark:text-sky-400"
                       >
-                        <BoltIcon className="mr-4 inline h-6 w-6 flex-shrink-0" />
+                        <BoltIcon className="mr-4 inline h-6 w-6 shrink-0" />
                         {t('transactions.add')}
                       </Link>
                       <nav className="space-y-1">
@@ -184,7 +184,7 @@ const Layout = ({
                                       isActive
                                         ? 'text-red-800 dark:text-red-600'
                                         : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-200',
-                                      'mr-4 h-6 w-6 flex-shrink-0'
+                                      'mr-4 h-6 w-6 shrink-0'
                                     )}
                                     aria-hidden="true"
                                   />
@@ -208,7 +208,7 @@ const Layout = ({
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <ExclamationTriangleIcon className="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100" />{' '}
+                        <ExclamationTriangleIcon className="mr-4 h-6 w-6 shrink-0 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100" />{' '}
                         {t('navigation.bugReport')}
                       </a>
                       <div className="flex items-center justify-end px-4 text-sm font-medium text-gray-400">
@@ -218,7 +218,7 @@ const Layout = ({
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
-              <div className="w-14 flex-shrink-0">
+              <div className="w-14 shrink-0">
                 {/* Force sidebar to shrink to fit close icon */}
               </div>
             </Dialog>
@@ -227,9 +227,9 @@ const Layout = ({
           {/* Static sidebar for desktop */}
           <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
             <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white dark:border-gray-900 dark:bg-slate-800">
-              <div className="flex flex-1 flex-col justify-between overflow-y-auto pb-4 pt-5">
+              <div className="flex flex-1 flex-col justify-between overflow-y-auto pt-5 pb-4">
                 <div>
-                  <div className="flex flex-shrink-0 items-center px-4">
+                  <div className="flex shrink-0 items-center px-4">
                     <div>
                       <div className="text-base font-bold text-gray-900 dark:text-gray-100">
                         {safeName(budget, 'budget')}
@@ -248,7 +248,7 @@ const Layout = ({
                     className="link-blue group my-4 flex items-center border-y p-4 text-sm font-medium shadow-inner hover:bg-gray-50 dark:border-gray-900 dark:hover:bg-slate-700"
                     onClick={() => setSidebarOpen(false)}
                   >
-                    <BoltIcon className="mr-3 h-6 w-6 flex-shrink-0" />
+                    <BoltIcon className="mr-3 h-6 w-6 shrink-0" />
                     {t('transactions.add')}
                   </Link>
                   <nav className="mt-5 flex-1 space-y-1 bg-white dark:bg-slate-800">
@@ -272,7 +272,7 @@ const Layout = ({
                                 isActive
                                   ? 'text-red-800 dark:text-red-600'
                                   : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-200',
-                                'mr-3 h-6 w-6 flex-shrink-0'
+                                'mr-3 h-6 w-6 shrink-0'
                               )}
                               aria-hidden="true"
                             />
@@ -290,7 +290,7 @@ const Layout = ({
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <ExclamationTriangleIcon className="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100" />{' '}
+                    <ExclamationTriangleIcon className="mr-3 h-6 w-6 shrink-0 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100" />{' '}
                     {t('navigation.bugReport')}
                   </a>
                   <div className="flex items-center px-4 text-sm font-medium text-gray-400">
@@ -304,12 +304,12 @@ const Layout = ({
       )}
       <div className={`${hideNav ? '' : 'lg:pl-64'} flex flex-1 flex-col`}>
         <div
-          className="sticky top-0 z-10 bg-gray-100 px-6 pt-4 dark:bg-slate-900 lg:hidden"
+          className="sticky top-0 z-10 bg-gray-100 px-6 pt-4 lg:hidden dark:bg-slate-900"
           ref={headerRef as React.RefObject<HTMLDivElement | null>}
         >
           <button
             type="button"
-            className={`-ml-0.5 -mt-0.5 inline-flex h-12 items-center rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 ${
+            className={`-mt-0.5 -ml-0.5 inline-flex h-12 items-center rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 ${
               hideNav ? 'invisible' : 'visible'
             }`}
             onClick={() => {

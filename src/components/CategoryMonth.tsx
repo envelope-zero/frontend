@@ -54,7 +54,7 @@ const CategoryMonth = ({
         <th
           colSpan={4}
           scope="colgroup"
-          className="text-ellipsis px-4 py-2 text-left text-sm font-bold text-gray-900 dark:text-gray-300 sm:px-6"
+          className="px-4 py-2 text-left text-sm font-bold text-ellipsis text-gray-900 sm:px-6 dark:text-gray-300"
         >
           <span
             className={`flex items-center ${!category.name ? 'italic' : ''}`}
@@ -85,13 +85,13 @@ const CategoryMonth = ({
         ))
       ) : (
         <tr className="cursor-pointer bg-gray-50 dark:bg-slate-700">
-          <td className="overflow-hidden text-ellipsis whitespace-nowrap pb-2 pl-10 pr-1 text-sm font-medium italic text-gray-500 dark:text-gray-400 sm:pl-12">
+          <td className="overflow-hidden pr-1 pb-2 pl-10 text-sm font-medium text-ellipsis whitespace-nowrap text-gray-500 italic sm:pl-12 dark:text-gray-400">
             {t('envelopes.envelopesWithCount', {
               count: envelopes.length,
             })}
           </td>
           <td
-            className={`hidden whitespace-nowrap px-1 pb-2 text-right text-sm md:table-cell ${
+            className={`hidden px-1 pb-2 text-right text-sm whitespace-nowrap md:table-cell ${
               Number(allocation) < 0
                 ? 'negative'
                 : 'text-gray-500 dark:text-gray-400'
@@ -102,7 +102,7 @@ const CategoryMonth = ({
             })}
           </td>
           <td
-            className={`hidden whitespace-nowrap px-1 pb-2 text-right text-sm md:table-cell ${
+            className={`hidden px-1 pb-2 text-right text-sm whitespace-nowrap md:table-cell ${
               Number(spent) > 0
                 ? 'positive'
                 : 'text-gray-500 dark:text-gray-400'
@@ -111,7 +111,7 @@ const CategoryMonth = ({
             {formatMoney(spent, budget.currency)}
           </td>
           <td
-            className={`whitespace-nowrap pb-2 pl-1 pr-4 text-right text-sm sm:pr-6 ${
+            className={`pr-4 pb-2 pl-1 text-right text-sm whitespace-nowrap sm:pr-6 ${
               Number(balance) < 0
                 ? 'negative'
                 : 'text-gray-500 dark:text-gray-400'

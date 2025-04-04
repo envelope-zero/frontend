@@ -52,10 +52,10 @@ const QuickAllocationForm = ({ link, reloadBudgetMonth }: Props) => {
         }}
       >
         <Error error={error} />
-        <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
+        <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
           <button
             type="button"
-            className="rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:hover:text-gray-300"
+            className="rounded-md text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden dark:hover:text-gray-300"
             onClick={() => {
               setShowPopup(false)
               if (error) {
@@ -68,7 +68,7 @@ const QuickAllocationForm = ({ link, reloadBudgetMonth }: Props) => {
           </button>
         </div>
         <div className="space-y-2 text-center">
-          <h3 className="text-lg font-medium leading-6">
+          <h3 className="text-lg leading-6 font-medium">
             {t('dashboard.quickAllocation')}
           </h3>
           <p className="text-sm text-gray-500 dark:text-gray-400">
