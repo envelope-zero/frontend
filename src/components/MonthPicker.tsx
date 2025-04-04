@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ArrowLongRightIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { translatedMonthFormat } from '../lib/dates'
 import { Translation } from '../types'
 
@@ -15,6 +15,8 @@ type Props = {
 
 const MonthPicker = ({ open, setOpen, activeMonth, route = '' }: Props) => {
   const { t }: Translation = useTranslation()
+  const navigate = useNavigate()
+
   const [selectedDate, setSelectedDate] = useState(`${activeMonth}-01`)
 
   return (
@@ -36,9 +38,14 @@ const MonthPicker = ({ open, setOpen, activeMonth, route = '' }: Props) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg border bg-white px-4 pb-4 pt-6 text-left shadow-xl transition-all dark:border-gray-500 dark:bg-slate-800 sm:max-w-sm sm:p-6">
-                <div>
+                <form
+                  onSubmit={() => {
+                    setOpen(false)
+                    navigate(`/${route}?month=${selectedDate}`)
+                  }}
+                >
                   <button
-                    type="button"
+                    type="reset"
                     title={t('close')}
                     className="absolute right-2 top-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
                     onClick={e => {
@@ -72,16 +79,15 @@ const MonthPicker = ({ open, setOpen, activeMonth, route = '' }: Props) => {
                             }
                           }}
                         ></input>
-                        <Link
-                          to={`/${route}?month=${selectedDate}`}
-                          onClick={() => setOpen(false)}
+                        <button
+                          type="submit"
                           className="pl-2"
                           title={translatedMonthFormat.format(
                             new Date(selectedDate)
                           )}
                         >
                           <ArrowLongRightIcon className="icon-red inline" />
-                        </Link>
+                        </button>
                       </div>
                       <Link
                         to={`/${route}`}
@@ -92,7 +98,7 @@ const MonthPicker = ({ open, setOpen, activeMonth, route = '' }: Props) => {
                       </Link>
                     </div>
                   </div>
-                </div>
+                </form>
               </Dialog.Panel>
             </Transition.Child>
           </div>
