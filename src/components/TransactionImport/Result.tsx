@@ -52,6 +52,7 @@ const Result = (props: Props) => {
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [accounts, setAccounts] = useState(props.accounts)
   const [currentIndex, setCurrentIndex] = useState(
     JSON.parse(localStorage.getItem('importIndex') || '0')
@@ -280,6 +281,13 @@ const Result = (props: Props) => {
       <form
         onSubmit={e => {
           e.preventDefault()
+
+          if (isSubmitting) {
+            return
+          }
+
+          setIsSubmitting(true)
+
           createTransaction()
             .then(() => {
               updatePreviewValue('processed', true)
@@ -289,6 +297,9 @@ const Result = (props: Props) => {
             })
             .catch(err => {
               setError(err.message)
+            })
+            .finally(() => {
+              setIsSubmitting(false)
             })
         }}
       >
@@ -512,9 +523,13 @@ const Result = (props: Props) => {
               <XCircleIcon className="icon-red mr-1" />
               {t('dismiss')}
             </button>
-            <button type="submit" className="btn-primary">
+            <button
+              type="submit"
+              className="btn-primary"
+              disabled={isSubmitting}
+            >
               <CheckCircleIcon className="icon mr-1" />
-              {t('import')}
+              {isSubmitting ? t('importing') : t('import')}
             </button>
             <div className="col-span-2 flex justify-center text-gray-600 dark:text-gray-400">
               {t('transactions.import.youCanCloseAndResume')}

@@ -104,7 +104,7 @@
   }
 
   .btn-primary {
-    @apply full-centered w-full min-w-32 rounded-md bg-blue-800 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-900 dark:hover:bg-blue-700 md:w-auto;
+    @apply full-centered w-full min-w-32 rounded-md bg-blue-800 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-900 disabled:cursor-not-allowed disabled:bg-blue-800/50 disabled:hover:bg-blue-900/50 dark:hover:bg-blue-700 disabled:dark:hover:bg-blue-700/50 md:w-auto;
   }
 
   .btn-secondary {
