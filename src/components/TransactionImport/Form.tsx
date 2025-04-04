@@ -95,7 +95,7 @@ const Form = ({ accounts, setResult }: Props) => {
                 __html: t('transactions.import.description'),
               }}
             ></p>
-            <FormFields className="grid-cols-2 gap-x-4 space-y-6 md:grid md:gap-y-6 md:space-y-0">
+            <FormFields className="grid-cols-2 space-y-6 gap-x-4 md:grid md:space-y-0 md:gap-y-6">
               <Autocomplete<Account>
                 groups={[{ items: accounts }]}
                 allowNewCreation={false}

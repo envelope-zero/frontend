@@ -2,10 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import viteTsconfigPaths from 'vite-tsconfig-paths'
 import eslint from 'vite-plugin-eslint'
+import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), eslint(), viteTsconfigPaths()],
+  plugins: [react(), eslint(), viteTsconfigPaths(), tailwindcss()],
   resolve: {
     alias: {
       stream: 'stream-browserify', // Needed so that charset detection for ynap-parsers works

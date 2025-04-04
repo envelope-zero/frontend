@@ -88,20 +88,20 @@ const Autocomplete = <T extends ArchivableResource>({
           placeholder={t('select')}
           autoComplete="off"
         />
-        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-hidden">
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"
           />
         </Combobox.Button>
 
-        <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-800 sm:text-sm">
+        <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black focus:outline-hidden sm:text-sm dark:bg-slate-800">
           {emptyOption && query.length === 0 ? (
             <Combobox.Option
               value={null}
               className={({ active }) =>
                 classNames(
-                  'relative cursor-default select-none py-2 pl-3 pr-9',
+                  'relative cursor-default py-2 pr-9 pl-3 select-none',
                   active
                     ? 'bg-sky-600 text-white'
                     : 'text-gray-900 dark:text-gray-300'
@@ -117,7 +117,7 @@ const Autocomplete = <T extends ArchivableResource>({
           {filteredGroups.map((group, i) => (
             <div key={i}>
               {filteredGroups.length > 1 ? (
-                <div className="relative bg-gray-200 py-2 pl-3 pr-9 text-gray-800 dark:bg-slate-700 dark:text-gray-200">
+                <div className="relative bg-gray-200 py-2 pr-9 pl-3 text-gray-800 dark:bg-slate-700 dark:text-gray-200">
                   {group.title}
                 </div>
               ) : null}
@@ -128,7 +128,7 @@ const Autocomplete = <T extends ArchivableResource>({
                   value={item}
                   className={({ active }) =>
                     classNames(
-                      'relative cursor-default select-none py-2 pl-3 pr-9',
+                      'relative cursor-default py-2 pr-9 pl-3 select-none',
                       active
                         ? 'bg-sky-600 text-white'
                         : 'text-gray-900 dark:text-gray-300'
@@ -179,7 +179,7 @@ const Autocomplete = <T extends ArchivableResource>({
               value={{ name: query }}
               className={({ active }) =>
                 classNames(
-                  'relative cursor-default select-none border-t py-2 pl-3 pr-9 dark:border-gray-900',
+                  'relative cursor-default border-t py-2 pr-9 pl-3 select-none dark:border-gray-900',
                   active
                     ? 'bg-sky-600 text-white'
                     : 'text-gray-900 dark:text-gray-300'

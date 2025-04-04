@@ -60,10 +60,10 @@ const GroupedTransactions = ({
                             ? `${transaction.note} (${counterparties})`
                             : counterparties}
                         </p>
-                        <div className="flex flex-shrink-0 items-center">
+                        <div className="flex shrink-0 items-center">
                           <div className="flex items-center pl-2">
                             <p
-                              className={`inline-flex rounded-full px-2 text-xs font-bold leading-5 ${color}`}
+                              className={`inline-flex rounded-full px-2 text-xs leading-5 font-bold ${color}`}
                             >
                               {sign}
                               {formatMoney(

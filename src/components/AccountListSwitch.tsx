@@ -13,7 +13,7 @@ const AccountListSwitch = ({ selected }: Props) => {
   const { t }: Translation = useTranslation()
 
   return (
-    <div className="card mb-6 flex p-1 shadow-sm dark:text-gray-100">
+    <div className="card mb-6 flex p-1 shadow-xs dark:text-gray-100">
       <Link to="/own-accounts" className={tabClasses(selected === 'internal')}>
         {t('accounts.internalAccounts')}
       </Link>

@@ -279,7 +279,7 @@ const MatchRuleList = ({ budget, setNotification }: Props) => {
                 title={t('delete')}
                 onClick={() => deleteMatchRule(matchRule.id)}
               >
-                <TrashIcon className="icon-sm icon-red sm:invisible group-hover:visible" />
+                <TrashIcon className="icon-sm icon-red group-hover:visible sm:invisible" />
               </button>
             </div>
           ))}

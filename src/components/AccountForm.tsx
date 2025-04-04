@@ -135,7 +135,7 @@ const AccountForm = ({ budget, type }: Props) => {
                 <>
                   <div className="relative col-span-full flex items-start">
                     <div
-                      className="col-span-2 mt-px flex justify-end pr-2 pt-2 sm:block"
+                      className="col-span-2 mt-px flex justify-end pt-2 pr-2 sm:block"
                       onClick={e => {
                         e.preventDefault()
                         updateValue('onBudget', !account.onBudget)
@@ -146,7 +146,7 @@ const AccountForm = ({ budget, type }: Props) => {
                           account.onBudget
                             ? 'bg-lime-600 dark:bg-lime-500'
                             : 'bg-gray-200 dark:bg-slate-700'
-                        } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2`}
+                        } relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-within:ring-2 focus-within:ring-offset-2 focus-within:outline-hidden`}
                       >
                         <span
                           aria-hidden="true"
@@ -154,7 +154,7 @@ const AccountForm = ({ budget, type }: Props) => {
                             account?.onBudget
                               ? 'translate-x-5'
                               : 'translate-x-0'
-                          } pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
+                          } pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out`}
                         ></span>
                         <input
                           type="checkbox"

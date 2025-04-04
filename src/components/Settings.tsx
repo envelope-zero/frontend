@@ -76,7 +76,7 @@ const Settings = ({
       <div className="space-y-10 divide-y divide-gray-900/10 dark:divide-gray-200/10">
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
           <div className="px-4 sm:px-0">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
+            <h2 className="text-base leading-7 font-semibold text-gray-900">
               {t('settings.budget')}
             </h2>
           </div>
@@ -137,7 +137,7 @@ const Settings = ({
                     open={openMatchRuleHelp}
                     setOpen={open => setOpenMatchRuleHelp(open)}
                   >
-                    <div className="absolute right-0 top-0 pr-4 pt-4">
+                    <div className="absolute top-0 right-0 pt-4 pr-4">
                       <button
                         type="button"
                         className="rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
@@ -187,7 +187,7 @@ const Settings = ({
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
           <div className="px-4 sm:px-0">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
+            <h2 className="text-base leading-7 font-semibold text-gray-900">
               {t('settings.app')}
             </h2>
           </div>
@@ -230,7 +230,7 @@ const Settings = ({
           open={openUnsavedChanges}
           setOpen={open => setOpenUnsavedChanges(open)}
         >
-          <div className="absolute right-0 top-0 pr-4 pt-4">
+          <div className="absolute top-0 right-0 pt-4 pr-4">
             <button
               type="button"
               className="rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
@@ -255,7 +255,7 @@ const Settings = ({
               onClick={() => {
                 navigate('match-rules')
               }}
-              className="btn-secondary shadow-xs inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold sm:col-start-2"
+              className="btn-secondary inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-xs sm:col-start-2"
             >
               {t('discard')}
             </button>
@@ -264,7 +264,7 @@ const Settings = ({
               onClick={() => {
                 setOpenUnsavedChanges(false)
               }}
-              className="btn-primary shadow-xs mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold sm:col-start-1 sm:mt-0"
+              className="btn-primary mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-xs sm:col-start-1 sm:mt-0"
             >
               {t('cancel')}
             </button>

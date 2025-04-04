@@ -74,7 +74,7 @@ const EnvelopeMonth = ({
       <td>
         <Link
           to={`/envelopes/${envelope.id}`}
-          className={`block h-full overflow-hidden text-ellipsis whitespace-nowrap py-4 pl-4 pr-1 text-sm font-medium text-gray-900 dark:text-gray-300 sm:pl-6 ${
+          className={`block h-full overflow-hidden py-4 pr-1 pl-4 text-sm font-medium text-ellipsis whitespace-nowrap text-gray-900 sm:pl-6 dark:text-gray-300 ${
             !envelope.name ? 'italic' : ''
           }`}
         >
@@ -101,7 +101,7 @@ const EnvelopeMonth = ({
             <Error error={allocationError} />
             <div>
               <div className="mt-3 text-center sm:mt-5">
-                <h3 className="text-lg font-medium leading-6">
+                <h3 className="text-lg leading-6 font-medium">
                   {t('editObject', {
                     object: t('dashboard.allocationForEnvelope', {
                       envelope: envelope.name,
@@ -131,7 +131,7 @@ const EnvelopeMonth = ({
       </td>
 
       <td
-        className={`hidden whitespace-nowrap px-1 py-4 text-right text-sm md:table-cell ${
+        className={`hidden px-1 py-4 text-right text-sm whitespace-nowrap md:table-cell ${
           Number(allocatedAmount) < 0
             ? 'negative'
             : 'text-gray-500 dark:text-gray-400'
@@ -156,7 +156,7 @@ const EnvelopeMonth = ({
         </div>
       </td>
       <td
-        className={`hidden whitespace-nowrap px-1 py-4 text-right text-sm md:table-cell ${
+        className={`hidden px-1 py-4 text-right text-sm whitespace-nowrap md:table-cell ${
           Number(envelope.spent) > 0
             ? 'positive'
             : 'text-gray-500 dark:text-gray-400'
@@ -171,7 +171,7 @@ const EnvelopeMonth = ({
         </Link>
       </td>
       <td
-        className={`whitespace-nowrap py-4 pl-1 pr-4 text-right text-sm sm:pr-6 ${
+        className={`py-4 pr-4 pl-1 text-right text-sm whitespace-nowrap sm:pr-6 ${
           Number(envelope.balance) < 0
             ? 'negative'
             : 'text-gray-500 dark:text-gray-400'

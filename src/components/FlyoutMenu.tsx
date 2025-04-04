@@ -40,8 +40,8 @@ const FlyoutMenu = ({ items }: Props) => {
             leaveTo="opacity-0 translate-y-1"
           >
             <Popover.Panel className="absolute -right-10 z-10 mt-3 w-screen max-w-xs transform">
-              <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                <div className="relative grid gap-6 bg-white px-5 py-6 text-left dark:bg-slate-800 sm:gap-8">
+              <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black">
+                <div className="relative grid gap-6 bg-white px-5 py-6 text-left sm:gap-8 dark:bg-slate-800">
                   {items.map(item => (
                     <Link
                       key={item.name}
