@@ -9,7 +9,7 @@
     "@testing-library/react": "16.3.0",
     "@testing-library/user-event": "14.6.1",
     "@types/jest": "30.0.0",
-    "@types/node": "22.14.1",
+    "@types/node": "22.18.0",
     "@types/react": "19.1.12",
     "@types/react-dom": "19.1.8",
     "@types/sortablejs": "1.15.8",
@@ -91,6 +91,6 @@
   },
   "engines": {
     "npm": ">=10.0.0",
-    "node": "22.14.0"
+    "node": "22.18.0"
   }
 }
