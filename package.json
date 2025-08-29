@@ -15,7 +15,7 @@
     "@types/sortablejs": "1.15.8",
     "@typescript-eslint/eslint-plugin": "8.41.0",
     "@typescript-eslint/parser": "8.41.0",
-    "@vitejs/plugin-react": "4.7.0",
+    "@vitejs/plugin-react": "5.0.2",
     "autoprefixer": "10.4.21",
     "buffer": "6.0.3",
     "cypress": "15.0.0",
