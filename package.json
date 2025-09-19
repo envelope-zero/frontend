@@ -18,7 +18,7 @@
     "@vitejs/plugin-react": "5.0.3",
     "autoprefixer": "10.4.21",
     "buffer": "6.0.3",
-    "cypress": "15.1.0",
+    "cypress": "15.2.0",
     "eslint": "9.36.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
