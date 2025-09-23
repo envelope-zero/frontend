@@ -36,7 +36,7 @@
     "react-i18next": "15.7.3",
     "react-router-dom": "7.9.1",
     "react-sortablejs": "6.1.4",
-    "sass": "1.93.0",
+    "sass": "1.93.1",
     "sortablejs": "1.15.6",
     "stream-browserify": "3.0.0",
     "tailwindcss": "3.4.17",
