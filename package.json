@@ -33,7 +33,7 @@
     "react": "19.1.1",
     "react-device-detect": "2.2.3",
     "react-dom": "19.1.1",
-    "react-i18next": "15.7.3",
+    "react-i18next": "15.7.4",
     "react-router-dom": "7.9.2",
     "react-sortablejs": "6.1.4",
     "sass": "1.93.2",
