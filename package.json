@@ -61,7 +61,7 @@
     "@eslint/eslintrc": "3.3.1",
     "@eslint/js": "9.37.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
-    "prettier-plugin-tailwindcss": "0.7.0"
+    "prettier-plugin-tailwindcss": "0.7.1"
   },
   "scripts": {
     "start": "vite --open",
