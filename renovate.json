@@ -55,6 +55,11 @@
       "description": "Replace range for npm instead of pinning, to not require us to install specific npm versions",
       "matchDepNames": ["npm"],
       "rangeStrategy": "replace"
+    },
+    {
+      "description": "Disable minimum release age checks for internal dependencies",
+      "matchPackageNames": ["@envelope-zero/*"],
+      "minimumReleaseAge": null
     }
   ],
   "customManagers": [
