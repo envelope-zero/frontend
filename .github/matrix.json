@@ -5,6 +5,6 @@
   },
   {
     "platform": "linux/arm64",
-    "runOn": "tag"
+    "runOn": "always"
   }
 ]
