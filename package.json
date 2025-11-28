@@ -58,7 +58,7 @@
     "workbox-strategies": "7.4.0",
     "workbox-streams": "7.4.0",
     "@eslint/compat": "2.0.0",
-    "@eslint/eslintrc": "3.3.1",
+    "@eslint/eslintrc": "3.3.3",
     "@eslint/js": "9.39.1",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "prettier-plugin-tailwindcss": "0.7.1"
