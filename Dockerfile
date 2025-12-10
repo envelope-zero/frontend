@@ -19,7 +19,7 @@ ARG VITE_VERSION=0.0.0
 RUN npm run build
 
 # Bundle static assets with nginx
-FROM nginx:1.29.3-alpine
+FROM nginx:1.29.4-alpine
 ENV NODE_ENV=production
 
 COPY default.conf /etc/nginx/conf.d/default.conf
