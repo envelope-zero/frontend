@@ -85,7 +85,7 @@ jobs:
           cache: 'npm'
 
       - name: Run cypress
-        uses: cypress-io/github-action@e3ff965ee85ae28bdd2ea32c3e22a7fa12e02f2b # v6.10.5
+        uses: cypress-io/github-action@d842ab15a88774cf1311cc07f0e7112024c3dbd7 # v6.10.6
         timeout-minutes: 5
         with:
           start: npm run start-ci
