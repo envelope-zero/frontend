@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    image: ghcr.io/envelope-zero/backend:v7.1.0
+    image: ghcr.io/envelope-zero/backend:v7.1.1
     user: root
     ports:
       - 8081:8080
