@@ -1,14 +1,7 @@
 import { UUID, Translation, ArchivableResource } from '../types'
 import { useEffect, useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import {
-  Combobox,
-  Label,
-  ComboboxInput,
-  ComboboxButton,
-  ComboboxOption,
-  ComboboxOptions,
-} from '@headlessui/react'
+import { Combobox } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
 
@@ -84,25 +77,27 @@ const Autocomplete = <T extends ArchivableResource>({
       disabled={disabled}
       className={wrapperClass ?? ''}
     >
-      <Label className={labelClass ?? 'form-field--label'}>{label}</Label>
+      <Combobox.Label className={labelClass ?? 'form-field--label'}>
+        {label}
+      </Combobox.Label>
       <div className={inputWrapperClass ?? 'input--outer'}>
-        <ComboboxInput
+        <Combobox.Input
           className="input"
           onChange={event => setQuery(event.target.value)}
           displayValue={(item: T) => (item ? itemLabel(item) : '')}
           placeholder={t('select')}
           autoComplete="off"
         />
-        <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"
           />
-        </ComboboxButton>
+        </Combobox.Button>
 
-        <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-800 sm:text-sm">
+        <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-800 sm:text-sm">
           {emptyOption && query.length === 0 ? (
-            <ComboboxOption
+            <Combobox.Option
               value={null}
               className={({ active }) =>
                 classNames(
@@ -116,7 +111,7 @@ const Autocomplete = <T extends ArchivableResource>({
               <div className="flex items-center">
                 <span className="ml-3 truncate italic">{emptyOption}</span>
               </div>
-            </ComboboxOption>
+            </Combobox.Option>
           ) : null}
 
           {filteredGroups.map((group, i) => (
@@ -128,7 +123,7 @@ const Autocomplete = <T extends ArchivableResource>({
               ) : null}
 
               {group.items.map(item => (
-                <ComboboxOption
+                <Combobox.Option
                   key={itemId(item)}
                   value={item}
                   className={({ active }) =>
@@ -173,13 +168,13 @@ const Autocomplete = <T extends ArchivableResource>({
                       )}
                     </>
                   )}
-                </ComboboxOption>
+                </Combobox.Option>
               ))}
             </div>
           ))}
 
           {allowNewCreation && query.length ? (
-            <ComboboxOption
+            <Combobox.Option
               key={`new-${query}`}
               value={{ name: query }}
               className={({ active }) =>
@@ -198,19 +193,19 @@ const Autocomplete = <T extends ArchivableResource>({
                   })}
                 </span>
               </div>
-            </ComboboxOption>
+            </Combobox.Option>
           ) : null}
 
           {filteredGroups.length === 0 && !allowNewCreation && !emptyOption ? (
-            <ComboboxOption value={undefined} disabled>
+            <Combobox.Option value={undefined} disabled>
               <div className="flex items-center">
                 <span className="ml-3 truncate italic">
                   {t('autocomplete.empty')}
                 </span>
               </div>
-            </ComboboxOption>
+            </Combobox.Option>
           ) : null}
-        </ComboboxOptions>
+        </Combobox.Options>
       </div>
     </Combobox>
   )
