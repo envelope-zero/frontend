@@ -19,7 +19,7 @@
     "autoprefixer": "10.5.0",
     "buffer": "6.0.3",
     "cypress": "15.13.1",
-    "eslint": "9.39.4",
+    "eslint": "10.2.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-react": "7.37.5",
