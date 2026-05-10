@@ -75,7 +75,7 @@
     "test": "cypress run",
     "test:watch": "cypress open",
     "format": "prettier --write .",
-    "postinstall": "flowbite-react patch && flowbite-react register"
+    "postinstall": "flowbite-react register"
   },
   "browserslist": {
     "production": [
