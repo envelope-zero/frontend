@@ -23,7 +23,7 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-react": "7.37.5",
-    "flowbite": "4.0.1",
+    "flowbite": "4.0.2",
     "flowbite-react": "0.12.17",
     "http-proxy-middleware": "4.0.0",
     "i18next": "26.1.0",
