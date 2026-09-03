@@ -11,7 +11,7 @@
     "@types/jest": "30.0.0",
     "@types/node": "24.12.4",
     "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.6",
+    "@types/react-dom": "19.2.7",
     "@types/sortablejs": "1.15.9",
     "@typescript-eslint/eslint-plugin": "8.69.0",
     "@typescript-eslint/parser": "8.69.0",
