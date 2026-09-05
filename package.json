@@ -16,7 +16,7 @@
     "@typescript-eslint/eslint-plugin": "8.69.0",
     "@typescript-eslint/parser": "8.69.0",
     "@vitejs/plugin-react": "6.1.1",
-    "autoprefixer": "10.5.4",
+    "autoprefixer": "10.5.5",
     "buffer": "6.0.3",
     "cypress": "15.21.1",
     "eslint": "9.39.5",
