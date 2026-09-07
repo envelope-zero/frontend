@@ -57,7 +57,7 @@
     "workbox-routing": "7.4.1",
     "workbox-strategies": "7.4.1",
     "workbox-streams": "7.4.1",
-    "@eslint/compat": "2.1.0",
+    "@eslint/compat": "2.1.1",
     "@eslint/eslintrc": "3.3.7",
     "@eslint/js": "9.39.5",
     "eslint-plugin-jsx-a11y": "6.10.2",
