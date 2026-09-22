@@ -1,5 +1,7 @@
 # Envelope Zero frontend
 
+:warning: The Envelope Zero project is archived. No new releases will be published. Check the [project overview](https://github.com/envelope-zero) for more details.
+
 Envelope Zero is fundamentally rooted in two ideas:
 
 - Using the [envelope method](https://en.wikipedia.org/wiki/Envelope_system) to budget expenses into envelopes.
